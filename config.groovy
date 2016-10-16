@@ -1,5 +1,5 @@
 environments {
-    development { // 开发环境
+    development { // 本地开发环境，使用 MySQL
         staticBase = ''
 
         jdbc {
@@ -33,7 +33,7 @@ environments {
         }
     }
 
-    wxl { // 开发环境
+    wxl { // 文显龙的开发环境，使用 Oracle
         staticBase = ''
 
         jdbc {
