@@ -2,6 +2,7 @@ package com.xtuer.controller;
 
 import com.xtuer.bean.Demo;
 import com.xtuer.bean.Result;
+import com.xtuer.mapper.CertTypeMapper;
 import com.xtuer.mapper.DemoMapper;
 import com.xtuer.util.RedisUtils;
 import org.slf4j.Logger;
@@ -23,6 +24,9 @@ public class DemoController {
     private DemoMapper demoMapper;
 
     @Autowired
+    private CertTypeMapper certTypeMapper;
+
+    @Autowired
     private StringRedisTemplate redisTemplate;
 
     @GetMapping("/demos/{id}")
@@ -33,8 +37,14 @@ public class DemoController {
         // [3] 找不到则从数据库查询，查询结果放入 Redis
         Demo d = null;
         String redisKey = "demo_" + id;
+//        for (int i = 0; i < 10; ++i)
+//        d = RedisUtils.get(Demo.class, redisTemplate, redisKey, () -> demoMapper.findDemoById(id));
 
-        d = RedisUtils.get(Demo.class, redisTemplate, redisKey, () -> demoMapper.findDemoById(id));
+//        for (int i = 0; i < 10; ++i)
+//        d = demoMapper.findDemoById(id);
+
+        System.out.println(certTypeMapper.getAll());
+
         return d;
     }
 

@@ -76,6 +76,7 @@ dependencies {
             "org.springframework.session:spring-session-data-redis:$versions.sessionRedis"
     )
 
+//    compile files('lib/ojdbc6.jar')
     compileOnly("javax.servlet:javax.servlet-api:$versions.servlet")
     testCompile("junit:junit:$versions.junit")
 }
