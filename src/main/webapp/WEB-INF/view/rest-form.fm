@@ -1,0 +1,33 @@
+<!-- UUID: 982401A7-85F5-48AA-A2E6-D88A0960758D -->
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <style>
+        body { padding: 25px 50px; }
+        button { width: 100px; }
+    </style>
+</head>
+<body>
+    <!-- 测试 form 的不同 method，default HTML form 不支持 put and delete -->
+
+    <form action="/rest" method="get">
+        <input type="hidden" name="name"/>
+        <button type="submit">Get</button>
+    </form>
+
+    <form action="/rest" method="post">
+        <button type="submit">Post</button>
+    </form>
+
+    <form action="/rest" method="post">
+        <input type="hidden" name="_method" value="put"/>
+        <input type="hidden" name="name" value="Bob"/>
+        <button type="submit">Put</button>
+    </form>
+
+    <form action="/rest" method="post">
+        <input type="hidden" name="_method" value="delete"/>
+        <button type="submit">Delete</button>
+    </form>
+</body>
+</html>

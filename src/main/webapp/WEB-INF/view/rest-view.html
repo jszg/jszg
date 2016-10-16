@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>SpringMVC REST</title>
+    <script src="/lib/jquery.js" charset="utf-8"></script>
+    <script src="/js/jquery.rest.js" charset="utf-8"></script>
+</head>
+
+<body>
+    <script>
+        $(document).ready(function() {
+            $.rest.get({url: '/rest', data: {name: '黄彪'}, success: function(result) {
+                console.log(result);
+            }});
+
+            $.rest.create({url: '/rest', success: function(result) {
+                console.log(result);
+            }});
+
+            $.rest.update({url: '/rest', data: {name: 'Bob', age: 22}, success: function(result) {
+                console.log(result);
+            }});
+
+            $.rest.delete({url: '/rest', success: function(result) {
+                console.log(result);
+            }});
+
+            $.rest.get({url: '/rest/{id}', urlParams: {id: 121}, data: {name: '黄彪'}, success: function(result) {
+                console.log(result);
+            }, error: function(e) {
+                console.log(e);
+            }});
+        });
+    </script>
+</body>
+
+</html>

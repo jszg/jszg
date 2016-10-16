@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Demo</title>
+        <script src="${static}/lib/jquery.js" charset="utf-8"></script>
+    </head>
+    <body>
+        Welcome ${name!"Guest"} to SpringMVC!
+    </body>
+</html>

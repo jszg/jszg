@@ -1,0 +1,10 @@
+.idea/
+.gradle/
+*.log
+log.txt
+out/
+build/
+logs/
+@logsDir@/
+dump.rdb
+/**/.DS_Store

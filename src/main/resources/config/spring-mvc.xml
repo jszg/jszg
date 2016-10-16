@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    <import resource="classpath:config/spring-view-controller.xml"/>
+    <import resource="classpath:config/redis.xml"/>
+
+    <!-- ⾃自动扫描的包名:
+         在包名 com.xtuer.controller 下的标记为 @Controller, @Service, @Component 的类
+         都会⾃动的生成一个对象存储到 Spring Container ⾥
+    -->
+    <context:component-scan base-package="com.xtuer.controller"/>
+
+    <!-- 支持注解映射 -->
+    <mvc:annotation-driven>
+        <!--enableMatrixVariables="true">-->
+        <mvc:message-converters register-defaults="true">
+            <!-- StringHttpMessageConverter 编码为UTF-8，防止乱码 -->
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg value="UTF-8"/>
+                <property name="supportedMediaTypes">
+                    <list>
+                        <bean class="org.springframework.http.MediaType">
+                            <constructor-arg index="0" value="text"/>
+                            <constructor-arg index="1" value="plain"/>
+                            <constructor-arg index="2" value="UTF-8"/>
+                        </bean>
+                        <bean class="org.springframework.http.MediaType">
+                            <constructor-arg index="0" value="*"/>
+                            <constructor-arg index="1" value="*"/>
+                            <constructor-arg index="2" value="UTF-8"/>
+                        </bean>
+                    </list>
+                </property>
+            </bean>
+
+            <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter4">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>text/html;charset=UTF-8</value>
+                        <value>application/json;charset=UTF-8</value>
+                    </list>
+                </property>
+                <property name="fastJsonConfig">
+                    <bean class="com.alibaba.fastjson.support.config.FastJsonConfig">
+                        <property name="features">
+                            <list>
+                                <value>AllowArbitraryCommas</value>
+                                <value>AllowUnQuotedFieldNames</value>
+                                <value>DisableCircularReferenceDetect</value>
+                            </list>
+                        </property>
+                        <property name="dateFormat" value="yyyy-MM-dd HH:mm:ss"></property>
+                    </bean>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!-- Freemarker 视图解析器 -->
+    <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="prefix" value=""/>
+        <property name="order"  value="0"/>
+        <property name="cache"  value="true"/>
+        <property name="contentType" value="text/html; charset=UTF-8"/>
+    </bean>
+
+    <!-- Freemarker 文件放在目录 WEB-INF/view/ftl 下 -->
+    <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="/WEB-INF/view/"/>
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="defaultEncoding">UTF-8</prop>
+            </props>
+        </property>
+
+        <!-- 定义变量, 在模版里直接可以使用 -->
+        <property name="freemarkerVariables">
+            <map>
+                <entry key="static" value="@staticBase@"/>
+            </map>
+        </property>
+    </bean>
+
+    <!-- 对静态资源的访问，如 js, css, jpg, png -->
+    <!-- 如 HTML 里访问 /js/jquery.js, 则实际访问的是 /WEB-INF/asset/js/jquery.js -->
+    <mvc:resources mapping="/js/**"  location="/WEB-INF/static/js/"  cache-period="31556926"/>
+    <mvc:resources mapping="/css/**" location="/WEB-INF/static/css/" cache-period="31556926"/>
+    <mvc:resources mapping="/img/**" location="/WEB-INF/static/img/" cache-period="31556926"/>
+    <mvc:resources mapping="/lib/**" location="/WEB-INF/static/lib/" cache-period="31556926"/>
+    <mvc:resources mapping="/favicon.ico" location="/WEB-INF/static/img/favicon.ico" cache-period="31556926"/>
+</beans>
