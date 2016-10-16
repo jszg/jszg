@@ -1,10 +1,29 @@
-.idea/
-.gradle/
-*.log
-log.txt
-out/
+.gradle
+/build/
+!gradle/wrapper/gradle-wrapper.jar
+# Package Files #
+*.war
+*.ear
+
+### STS ###
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+classes
+
+### NetBeans ###
+nbproject/private/
 build/
-logs/
-@logsDir@/
-dump.rdb
-/**/.DS_Store
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/

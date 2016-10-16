@@ -29,8 +29,8 @@ gretty {
 }
 
 tasks.withType(JavaCompile) {
-    sourceCompatibility = JavaVersion.VERSION_1_7
-    targetCompatibility = JavaVersion.VERSION_1_7
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
