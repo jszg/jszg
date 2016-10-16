@@ -3,16 +3,15 @@ environments {
         staticBase = ''
 
         jdbc {
-//            driverClassName = 'com.mysql.jdbc.Driver'
-//            url = 'jdbc:mysql://192.168.10.116:3306/test?useUnicode=true&amp;characterEncoding=UTF-8'
-            driverClassName = 'oracle.jdbc.driver.OracleDriver'
-            url = 'jdbc:oracle:thin:@192.168.10.86:1521:orcl'
-            username = 'wenxl'
-            password = '123456'
+            driverClassName = 'com.mysql.jdbc.Driver'
+            url = 'jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=UTF-8'
+            username = 'root'
+            password = 'root'
+            validationQuery = 'SELECT 1'
         }
 
         redis {
-            host = '192.168.10.116'
+            host = '127.0.0.1'
             port = 6379
         }
     }
@@ -24,11 +23,29 @@ environments {
             driverClassName = 'com.mysql.jdbc.Driver'
             url = 'jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=UTF-8'
             username = 'root'
-            password = 'xxxx'
+            password = 'root'
+            validationQuery = 'SELECT 1'
         }
 
         redis {
             host = '127.0.0.1'
+            port = 6379
+        }
+    }
+
+    wxl { // 开发环境
+        staticBase = ''
+
+        jdbc {
+            driverClassName = 'oracle.jdbc.driver.OracleDriver'
+            url = 'jdbc:oracle:thin:@192.168.10.86:1521:orcl'
+            username = 'wenxl'
+            password = '123456'
+            validationQuery = 'SELECT 1 FROM dual'
+        }
+
+        redis {
+            host = '192.168.10.116'
             port = 6379
         }
     }

@@ -24,8 +24,8 @@
         <property name="poolPreparedStatements"    value="true"/>
         <property name="maxOpenPreparedStatements" value="10"/>
 
-        <!-- 给出一条简单的sql语句进行验证 -->
-        <property name="validationQuery" value="select NOW()"/>
+        <!-- 给出一条简单的sql语句进行验证: select NOW() 才能用 -->
+        <property name="validationQuery" value="@validationQuery@"/>
         <!-- 在取出连接时进行有效验证, 实现如服务器重启后自动重连 -->
         <property name="testOnBorrow"  value="false"/>
         <property name="testWhileIdle" value="true"/>

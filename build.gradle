@@ -76,7 +76,7 @@ dependencies {
             "org.springframework.session:spring-session-data-redis:$versions.sessionRedis"
     )
 
-//    compile files('lib/ojdbc6.jar')
+    compile fileTree(dir: 'src/main/webapp/WEB-INF/lib', include: ['*.jar']) // 本地的 Oracle 驱动等 jar 包
     compileOnly("javax.servlet:javax.servlet-api:$versions.servlet")
     testCompile("junit:junit:$versions.junit")
 }
@@ -99,3 +99,5 @@ processResources {
         filter(ReplaceTokens, tokens: loadConfiguration())
     }
 }
+
+war.archiveName 'jszg.war'

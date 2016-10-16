@@ -1,5 +1,6 @@
 package com.xtuer.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.xtuer.bean.Demo;
 import com.xtuer.bean.Result;
 import com.xtuer.mapper.CertTypeMapper;
@@ -37,13 +38,20 @@ public class DemoController {
         // [3] 找不到则从数据库查询，查询结果放入 Redis
         Demo d = null;
         String redisKey = "demo_" + id;
+        logger.debug("====================");
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");// 加载Oracle驱动程序
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        logger.debug("====================");
 //        for (int i = 0; i < 10; ++i)
 //        d = RedisUtils.get(Demo.class, redisTemplate, redisKey, () -> demoMapper.findDemoById(id));
 
 //        for (int i = 0; i < 10; ++i)
 //        d = demoMapper.findDemoById(id);
 
-        System.out.println(certTypeMapper.getAll());
+        System.out.println(JSON.toJSONString(certTypeMapper.getAll()));
 
         return d;
     }
