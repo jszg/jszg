@@ -9,9 +9,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
  * Created by SUNX on 2016/10/16.
  */
 public class RedisUtils {
-    private StringRedisTemplate redisTemplate;
-
-    public static <T> T get(StringRedisTemplate redisTemplate, String redisKey, Executor<T> executor, Class<T> clazz) {
+    public static <T> T get(Class<T> clazz, StringRedisTemplate redisTemplate, String redisKey, Executor<T> executor) {
         T d = null;
         String json = redisTemplate.opsForValue().get(redisKey);
 

@@ -34,7 +34,7 @@ public class DemoController {
         Demo d = null;
         String redisKey = "demo_" + id;
 
-        d = RedisUtils.get(redisTemplate, redisKey, () -> demoMapper.findDemoById(id), Demo.class);
+        d = RedisUtils.get(Demo.class, redisTemplate, redisKey, () -> demoMapper.findDemoById(id));
         return d;
     }
 
