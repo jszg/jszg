@@ -17,4 +17,8 @@
     <bean id="redisTemplate" class="org.springframework.data.redis.core.StringRedisTemplate">
         <property name="connectionFactory" ref="jedisConnectionFactory"/>
     </bean>
+
+    <bean id="redisUtils" class="com.xtuer.util.RedisUtils">
+        <property name="redisTemplate" ref="redisTemplate"/>
+    </bean>
 </beans>

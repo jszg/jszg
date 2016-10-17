@@ -1,14 +1,14 @@
 package com.xtuer.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.xtuer.bean.Demo;
 import com.xtuer.bean.Result;
+import com.xtuer.constant.UriView;
 import com.xtuer.mapper.CertTypeMapper;
 import com.xtuer.mapper.DemoMapper;
+import com.xtuer.util.RedisUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +27,7 @@ public class DemoController {
     private CertTypeMapper certTypeMapper;
 
     @Autowired
-    private StringRedisTemplate redisTemplate;
+    private RedisUtils redisUtils;
 
     @GetMapping("/demos/{id}")
     @ResponseBody
@@ -37,20 +37,7 @@ public class DemoController {
         // [3] 找不到则从数据库查询，查询结果放入 Redis
         Demo d = null;
         String redisKey = "demo_" + id;
-        logger.debug("====================");
-        try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");// 加载Oracle驱动程序
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        logger.debug("====================");
-//        for (int i = 0; i < 10; ++i)
-//        d = RedisUtils.get(Demo.class, redisTemplate, redisKey, () -> demoMapper.findDemoById(id));
-
-//        for (int i = 0; i < 10; ++i)
-//        d = demoMapper.findDemoById(id);
-
-        System.out.println(JSON.toJSONString(certTypeMapper.findAll()));
+        d = redisUtils.get(Demo.class, redisKey, () -> demoMapper.findDemoById(id));
 
         return d;
     }
@@ -73,11 +60,11 @@ public class DemoController {
         return "Welcome";
     }
 
-    @GetMapping(UriViewConstants.URI_HELLO)
+    @GetMapping(UriView.URI_HELLO)
     public String hello(ModelMap model) {
        model.put("name", "Biao");
 
-        return UriViewConstants.VIEW_HELLO;
+        return UriView.VIEW_HELLO;
     }
 
     @GetMapping("/ajax")

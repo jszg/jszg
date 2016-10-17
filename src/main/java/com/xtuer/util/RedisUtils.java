@@ -1,6 +1,7 @@
 package com.xtuer.util;
 
 import com.alibaba.fastjson.JSON;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.util.function.Supplier;
@@ -11,7 +12,9 @@ import java.util.function.Supplier;
  * Created by SUNX on 2016/10/16.
  */
 public class RedisUtils {
-    public static <T> T get(Class<T> clazz, StringRedisTemplate redisTemplate, String redisKey, Supplier<T> supplier) {
+    private StringRedisTemplate redisTemplate;
+
+    public <T> T get(Class<T> clazz, String redisKey, Supplier<T> supplier) {
         T d = null;
         String json = redisTemplate.opsForValue().get(redisKey);
 
@@ -33,5 +36,13 @@ public class RedisUtils {
         }
 
         return d;
+    }
+
+    public StringRedisTemplate getRedisTemplate() {
+        return redisTemplate;
+    }
+
+    public void setRedisTemplate(StringRedisTemplate redisTemplate) {
+        this.redisTemplate = redisTemplate;
     }
 }

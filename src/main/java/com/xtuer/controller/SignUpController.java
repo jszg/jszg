@@ -1,6 +1,8 @@
 package com.xtuer.controller;
 
 import com.xtuer.bean.Result;
+import com.xtuer.constant.RedisKey;
+import com.xtuer.constant.UriView;
 import com.xtuer.dto.CertType;
 import com.xtuer.dto.City;
 import com.xtuer.dto.Organization;
@@ -11,6 +13,7 @@ import com.xtuer.mapper.CityMapper;
 import com.xtuer.mapper.OrganizationMapper;
 import com.xtuer.mapper.ProvinceMapper;
 import com.xtuer.mapper.SubjectMapper;
+import com.xtuer.util.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
@@ -21,10 +24,77 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.Collections;
 import java.util.List;
 
-import static com.xtuer.util.RedisUtils.get;
-
 @Controller
 public class SignUpController {
+    // 所有资格种类
+    @GetMapping(UriView.REST_CERT_TYPE)
+    @ResponseBody
+    public Result<List<CertType>> getCertTypes() {
+        List<CertType> types = redisUtils.get(List.class, RedisKey.CERT_TYPES, () -> certTypeMapper.findAll());
+        return Result.ok(types);
+    }
+
+    // 所有的省
+    @GetMapping(UriView.REST_PROVINCES)
+    @ResponseBody
+    public Result<List<Province>> getProvinces() {
+        List<Province> provinces = redisUtils.get(List.class, RedisKey.PROVINCES, () -> provinceMapper.findAll());
+        return Result.ok(provinces);
+    }
+
+    // 省下面所有的市
+    @GetMapping(UriView.REST_CITIES_BY_PARENT)
+    @ResponseBody
+    public Result<List<City>> getCities(@PathVariable("provinceId") Integer id) {
+        String key = String.format(RedisKey.CITIES, id);
+        List<City> cities = redisUtils.get(List.class, key, () -> cityMapper.findByParentId(id));
+
+        return Result.ok(cities);
+    }
+
+    // 市或省下面的所有的认定机构
+    // 1-5 查市下面的所有的认定机构
+    // 6-7 查省下面的所有的认定机构
+    @GetMapping(UriView.REST_ORGS_BY_CITY_AND_CERT_TYPE)
+    @ResponseBody
+    public Result<List<Organization>> getOrgByCity(@PathVariable("cityId") Integer cityId, @PathVariable("certTypeId") Integer certTypeId) {
+        List<Organization> orgs = Collections.emptyList();
+        String key = String.format(RedisKey.ORGS, cityId, certTypeId);
+
+        if (certTypeId >= 1 && certTypeId <= 5) {
+            // 1-5 查市
+            orgs = redisUtils.get(List.class, key, () -> organizationMapper.findByCertTypeAndCity(cityId, certTypeId));
+        } else if (certTypeId >= 6 && certTypeId <= 7) {
+            // 6-7 查省
+            orgs = redisUtils.get(List.class, key, () -> organizationMapper.listByCertTypeAndProvince(cityId, certTypeId));
+        }
+
+        return Result.ok(orgs);
+    }
+
+    // 省下面的第一级任教学科
+    @GetMapping(UriView.REST_SUBJECTS_ROOT)
+    @ResponseBody
+    public Result<List<Subject>> getRootSubjects(@PathVariable("provinceId") int provinceId, @PathVariable("certTypeId") int certTypeId) {
+        String key = String.format(RedisKey.SUBJECTS_ROOT, provinceId, certTypeId);
+        List<Subject> subjects = redisUtils.get(List.class, key, () -> subjectMapper.findRoots(provinceId, certTypeId));
+
+        return Result.ok(subjects);
+    }
+
+    // 省下面指定父节点的任教学科
+    @GetMapping(UriView.REST_SUBJECTS_CHILDREN)
+    @ResponseBody
+    public Result<List<Subject>> getChildrenSubjects(@PathVariable("provinceId") int provinceId, @PathVariable("parentId") int parentId) {
+        String key = String.format(RedisKey.SUBJECTS_CHILDREN, provinceId, parentId);
+        List<Subject> subjects = redisUtils.get(List.class, key, () -> subjectMapper.findByParent(parentId, provinceId));
+
+        return Result.ok(subjects);
+    }
+
+    @Autowired
+    private RedisUtils redisUtils;
+
     @Autowired
     private CertTypeMapper certTypeMapper;
 
@@ -39,62 +109,4 @@ public class SignUpController {
 
     @Autowired
     private SubjectMapper subjectMapper;
-
-    @Autowired
-    private StringRedisTemplate redisTemplate;
-
-    @GetMapping(UriViewConstants.REST_CERT_TYPE)
-    @ResponseBody
-    public Result<List<CertType>> getCertTypes() {
-        List<CertType> types = get(List.class, redisTemplate, "certTypes", () -> certTypeMapper.findAll());
-        return Result.ok(types);
-    }
-
-
-    @GetMapping(UriViewConstants.REST_PROVINCES)
-    @ResponseBody
-    public Result<List<Province>> getProvinces() {
-        List<Province> provinces = get(List.class, redisTemplate, "provinces", () -> provinceMapper.findAll());
-        return Result.ok(provinces);
-    }
-
-    @GetMapping(UriViewConstants.REST_CITIES_BY_PARENT)
-    @ResponseBody
-    public Result<List<City>> getCities(@PathVariable("parentid") Integer id) {
-        List<City> cities = get(List.class, redisTemplate, "cities_" + id, () -> cityMapper.findByParentId(id));
-        return Result.ok(cities);
-    }
-
-    @GetMapping(UriViewConstants.REST_ORGS_BY_CT_AND_CITY)
-    @ResponseBody
-    public Result<List<Organization>> getOrgByCity(@PathVariable("city") Integer city, @PathVariable("certTypeId") Integer certTypeId) {
-        List<Organization> orgs = Collections.emptyList();
-
-        // 1-5 查市
-        if (certTypeId >= 1 && certTypeId <= 5) {
-            orgs = get(List.class, redisTemplate, "org_" + city + "_c_" + certTypeId,
-                    () -> organizationMapper.findByCertTypeAndCity(city, certTypeId));
-        } else if (certTypeId >= 6 && certTypeId <= 7) { // 6-7 查省
-            orgs = get(List.class, redisTemplate, "org_" + city + "_c_" + certTypeId,
-                    () -> organizationMapper.listByCertTypeAndProvince(city, certTypeId));
-        }
-        return Result.ok(orgs);
-    }
-
-    @GetMapping(UriViewConstants.REST_SUBJECTS_ROOT)
-    @ResponseBody
-    public Result<List<Subject>> getRootSubjects(@PathVariable("province") int province, @PathVariable("certTypeId") int certTypeId) {
-        List<Subject> subjects = get(List.class, redisTemplate, "subjects_root_" + province + "_" + certTypeId , () -> subjectMapper.findRoots
-                (province,
-                certTypeId));
-        return Result.ok(subjects);
-    }
-
-    @GetMapping(UriViewConstants.REST_SUBJECTS_CHILDREN)
-    @ResponseBody
-    public Result<List<Subject>> getChildrenSubjects(@PathVariable("parent") int parent, @PathVariable("province") int province) {
-        List<Subject> subjects = get(List.class, redisTemplate, "subjects_children_" + parent + "_" + province, () -> subjectMapper.findByParent
-                (parent, province));
-        return Result.ok(subjects);
-    }
 }
