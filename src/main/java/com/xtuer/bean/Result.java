@@ -24,7 +24,7 @@ public class Result<T> {
         return success;
     }
 
-    public Result setSuccess(boolean success) {
+    public Result<T> setSuccess(boolean success) {
         this.success = success;
         return this;
     }
@@ -33,7 +33,7 @@ public class Result<T> {
         return message;
     }
 
-    public Result setMessage(String message) {
+    public Result<T> setMessage(String message) {
         this.message = message;
         return this;
     }
@@ -42,17 +42,17 @@ public class Result<T> {
         return data;
     }
 
-    public Result setData(T data) {
+    public Result<T> setData(T data) {
         this.data = data;
         return this;
     }
 
-    public static Result ok() {
-        return new Result(true, "成功");
+    public static <T> Result<T> ok(T data) {
+        return new Result<T>(true, "成功", data);
     }
 
-    public static Result error() {
-        return new Result(false, "错误");
+    public static <T> Result<T> error(T data) {
+        return new Result (false, "错误", data);
     }
 
 }
