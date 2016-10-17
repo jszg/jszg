@@ -1,5 +1,6 @@
 package com.xtuer.controller;
 
+import com.xtuer.bean.Result;
 import com.xtuer.dto.CertType;
 import com.xtuer.mapper.CertTypeMapper;
 import com.xtuer.util.RedisUtils;
@@ -21,8 +22,10 @@ public class SignUpController {
 
     @GetMapping(UriViewConstants.REST_CERT_TYPE)
     @ResponseBody
-    public List<CertType> getCertTypes() {
+    public Result<List<CertType>> getCertTypes() {
         List<CertType> types = RedisUtils.get(List.class, redisTemplate, "certType", () -> certTypeMapper.getAll());
-        return types;
+        return Result.ok().setData(types);
     }
+
+
 }

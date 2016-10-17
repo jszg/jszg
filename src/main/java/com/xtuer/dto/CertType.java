@@ -6,15 +6,16 @@ package com.xtuer.dto;
  * select * from T_CERT_TYPE t
  */
 public class CertType {
-    private int id;
+    private Long id;
     private String name;
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public CertType setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {

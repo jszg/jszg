@@ -18,34 +18,34 @@ public class RestController {
     public Result handleGet(@PathVariable int id, @RequestParam String name, ModelMap map) {
         map.addAttribute("id", id);
         map.addAttribute("name", name);
-        return new Result(true, "GET handled", map);
+        return Result.ok().setMessage("GET handled").setData(map);
     }
 
     // 查询
     @GetMapping("/rest")
     @ResponseBody
     public Result handleGet(@RequestParam String name) {
-        return new Result(true, "GET handled", name);
+        return Result.ok().setMessage("GET handled").setData(name);
     }
 
     // 更新
     @PutMapping("/rest")
     @ResponseBody
     public Result handlePut(@RequestBody Map map) {
-        return new Result(true, "UPDATE handled", map);
+        return Result.ok().setMessage("UPDATE handled").setData(map);
     }
 
     // 创建
     @PostMapping("/rest")
     @ResponseBody
     public Result handlePost() {
-        return new Result(true, "CREATE handled");
+        return Result.ok().setMessage("CREATE handled");
     }
 
     // 删除
     @DeleteMapping("/rest")
     @ResponseBody
     public Result handleDelete() {
-        return new Result(true, "DELETE handled");
+        return Result.ok().setMessage("DELETE handled");
     }
 }
