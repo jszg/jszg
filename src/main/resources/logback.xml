@@ -25,6 +25,6 @@
     </root>
 
     <logger name="org.springframework" level="info"/>
-    <logger name="org.mybatis" level="debug"/>
+    <logger name="org.mybatis" level="off"/>
     <logger name="com.xtuer.mapper" level="debug"/>
 </configuration>
