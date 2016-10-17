@@ -23,7 +23,7 @@ public class SignUpController {
     @GetMapping(UriViewConstants.REST_CERT_TYPE)
     @ResponseBody
     public Result<List<CertType>> getCertTypes() {
-        List<CertType> types = RedisUtils.get(List.class, redisTemplate, "certType", () -> certTypeMapper.getAll());
+        List<CertType> types = RedisUtils.get(List.class, redisTemplate, "certTypes", () -> certTypeMapper.getAll());
         return Result.ok().setData(types);
     }
 
