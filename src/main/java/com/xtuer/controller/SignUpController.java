@@ -2,7 +2,7 @@ package com.xtuer.controller;
 
 import com.xtuer.bean.Result;
 import com.xtuer.dto.CertType;
-import com.xtuer.dto.Organization;
+import com.xtuer.dto.Province;
 import com.xtuer.mapper.CertTypeMapper;
 import com.xtuer.mapper.OrganizationMapper;
 import com.xtuer.util.RedisUtils;
@@ -37,8 +37,8 @@ public class SignUpController {
 
     @GetMapping(UriViewConstants.PROVINCES)
     @ResponseBody
-    public Result<List<Organization>> getProvinces() {
-        List<Organization> provinces = RedisUtils.get(List.class, redisTemplate, "provinces", () -> organizationMapper.listProvinces());
+    public Result<List<Province>> getProvinces() {
+        List<Province> provinces = RedisUtils.get(List.class, redisTemplate, "provinces", () -> organizationMapper.listProvinces());
         return Result.ok(provinces);
     }
 
