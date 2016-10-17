@@ -37,3 +37,20 @@ gradle -Denv=development clean appStartDebug
     ```
     http://{{host}}:{{port}}/rest/signUp/provinces/{provinceid}/cities
     ```
+
+* 认定机构
+
+    ```
+    http://{{host}}:{{port}}/rest/signUp/subjects/root/{province}/{certTypeId}
+    ```
+    
+* 任教学科
+
+    ```
+    # 根节点
+    http://{{host}}:{{port}}/rest/signUp/subjects/root/{province}/{certTypeId}
+    
+    # 子节点
+    http://{{host}}:{{port}}/rest/signUp/subjects/children/{parent}/{province}
+    ```
+    
