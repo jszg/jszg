@@ -2,7 +2,7 @@ package com.xtuer.dto;
 
 /**
  * 选择省 dto.Province: 所有的省
- * province: [{id, name}, {}]
+ * provinces: [{id, name}, {}]
  * select * from t_org t where t.org_type = 4 and t.status = 1 order by t.area_code
  */
 public class Province {

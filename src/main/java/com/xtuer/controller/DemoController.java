@@ -5,7 +5,6 @@ import com.xtuer.bean.Demo;
 import com.xtuer.bean.Result;
 import com.xtuer.mapper.CertTypeMapper;
 import com.xtuer.mapper.DemoMapper;
-import com.xtuer.util.RedisUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +50,7 @@ public class DemoController {
 //        for (int i = 0; i < 10; ++i)
 //        d = demoMapper.findDemoById(id);
 
-        System.out.println(JSON.toJSONString(certTypeMapper.getAll()));
+        System.out.println(JSON.toJSONString(certTypeMapper.findAll()));
 
         return d;
     }

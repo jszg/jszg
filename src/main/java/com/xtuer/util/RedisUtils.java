@@ -3,13 +3,15 @@ package com.xtuer.util;
 import com.alibaba.fastjson.JSON;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
+import java.util.function.Supplier;
+
 /**
  * RedisUtils
  *
  * Created by SUNX on 2016/10/16.
  */
 public class RedisUtils {
-    public static <T> T get(Class<T> clazz, StringRedisTemplate redisTemplate, String redisKey, Executor<T> executor) {
+    public static <T> T get(Class<T> clazz, StringRedisTemplate redisTemplate, String redisKey, Supplier<T> supplier) {
         T d = null;
         String json = redisTemplate.opsForValue().get(redisKey);
 
@@ -23,7 +25,7 @@ public class RedisUtils {
         }
 
         if (d == null) {
-            d = (T)executor.execute();
+            d = supplier.get();
 
             if (d != null) {
                 redisTemplate.opsForValue().set(redisKey, JSON.toJSONString(d));

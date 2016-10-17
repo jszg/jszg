@@ -1,6 +1,7 @@
 package com.xtuer.mapper;
 
 import com.xtuer.dto.Organization;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -11,6 +12,8 @@ import java.util.List;
  */
 public interface OrganizationMapper {
 
-    List<Organization> listByProvince();
+    List<Organization> findByCertTypeAndCity(@Param("city") Integer city, @Param("certTypeId") Integer certTypeId);
+
+    List<Organization> listByCertTypeAndProvince(@Param("province") Integer province, @Param("certTypeId") Integer certTypeId);
 
 }

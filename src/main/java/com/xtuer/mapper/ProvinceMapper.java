@@ -11,6 +11,6 @@ import java.util.List;
  */
 public interface ProvinceMapper {
 
-    List<Province> listProvinces();
+    List<Province> findAll();
 
 }

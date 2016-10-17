@@ -2,7 +2,7 @@ package com.xtuer.dto;
 
 /**
  * 资格种类 dto.CertType:
- * certType: [{id, name}, {id, name}]
+ * certTypes: [{id, name}, {id, name}]
  * select * from T_CERT_TYPE t
  */
 public class CertType {

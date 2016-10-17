@@ -5,5 +5,5 @@ import com.xtuer.dto.CertType;
 import java.util.List;
 
 public interface CertTypeMapper {
-    List<CertType> getAll();
+    List<CertType> findAll();
 }

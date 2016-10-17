@@ -6,7 +6,27 @@
 
 <!--namespace 非常重要：必须是 Mapper 类的全路径-->
 <mapper namespace="com.xtuer.mapper.OrganizationMapper">
-    <select id="listProvinces" resultType="Organization">
-        select ORG_ID as id, ORG_NAME as name from T_ORG WHERE ORG_TYPE = 5 AND STATUS = 1
+    <select id="findByCertTypeAndCity" resultType="Organization">
+        select ORG_ID as id, ORG_NAME as name
+        from T_ORG
+        where
+            (ORG_ID = #{city} or PARENT_ID = #{city})
+          and
+            ORG_TYPE = (select T_CERT_TYPE.ADMIN_LEVEL from T_CERT_TYPE where T_CERT_TYPE.CT_ID = #{certTypeId})
+          and
+            STATUS=1
+          order by AREA_CODE
+    </select>
+
+    <select id="listByCertTypeAndProvince" resultType="Organization">
+      select ORG_ID as id, ORG_NAME as name
+      from T_ORG
+      where
+      (ORG_ID = #{province} or PARENT_ID = #{province})
+      and
+      ORG_TYPE = (select T_CERT_TYPE.ADMIN_LEVEL from T_CERT_TYPE where T_CERT_TYPE.CT_ID = #{certTypeId})
+      and
+      STATUS=1
+      order by AREA_CODE
     </select>
 </mapper>

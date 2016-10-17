@@ -10,5 +10,5 @@ import java.util.List;
  * Created by microacup on 2016/10/17.
  */
 public interface CityMapper {
-    List<City> listCities(int parentId);
+    List<City> findByParentId(int parentId);
 }

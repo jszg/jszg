@@ -38,9 +38,9 @@ environments {
 
         jdbc {
             driverClassName = 'oracle.jdbc.driver.OracleDriver'
-            url = 'jdbc:oracle:thin:@192.168.10.86:1521:orcl'
-            username = 'wenxl'
-            password = '123456'
+            url = 'jdbc:oracle:thin:@192.168.10.86:1521:CERT'
+            username = 'certification'
+            password = '123456789'
             validationQuery = 'SELECT 1 FROM dual'
         }
 

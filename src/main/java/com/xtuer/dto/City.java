@@ -2,7 +2,7 @@ package com.xtuer.dto;
 
 /**
  * 选择市 dto.City: 省下面所有的市
- * city_provinceId: [{id, name}, {}]
+ * cities__provinceId: [{id, name}, {}]
  * select * from t_org t where t.parent_id = ? and t.org_type != 1 and t.status = 1
  */
 public class City {
