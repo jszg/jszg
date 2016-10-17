@@ -8,4 +8,6 @@ public interface UriViewConstants {
     String REST_PROVINCES = "/rest/signUp/provinces";
     String REST_CITIES_BY_PARENT = "/rest/signUp/provinces/{parentid}/cities";
     String REST_ORGS_BY_CT_AND_CITY = "/rest/signUp/orgs/{city}/{certTypeId}";
+    String REST_SUBJECTS_ROOT = "/rest/signUp/subjects/root/{province}/{certTypeId}";
+    String REST_SUBJECTS_CHILDREN = "/rest/signUp/subjects/children/{parent}/{province}";
 }

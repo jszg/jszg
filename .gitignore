@@ -18,7 +18,8 @@
 *.iml
 *.ipr
 
-classes
+classes/
+out/
 
 ### NetBeans ###
 nbproject/private/

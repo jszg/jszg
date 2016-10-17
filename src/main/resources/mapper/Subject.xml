@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace 非常重要：必须是 Mapper 类的全路径-->
+<mapper namespace="com.xtuer.mapper.SubjectMapper">
+  <select id="findRoots" resultType="Subject">
+        select SUBJECT_ID as id, NAME as name FROM T_SUBJECT t
+        where t.subject_type=(select c.teach_grade from t_cert_type c where c.ct_id = #{certTypeId} )
+            and ( t.exam_type=2 or t.exam_type=0 )
+            and (t.limit_type=0 or t.limit_type=3)
+            and ( t.province=#{province} or t.province is null)
+            and t.status=1
+            and ( t.parent_id is null )
+            order by t.subject_code
+  </select>
+
+  <select id="findByParent" resultType="Subject">
+        select SUBJECT_ID as id, NAME as name FROM T_SUBJECT s
+        where s.parent_id=#{parent}
+           and (s.limit_type=0 or s.limit_type=3 )
+           and (s.exam_type=2  or s.exam_type=0 )
+           and (s.province is null  or s.province=#{province} )
+           and s.status=1
+           order by s.subject_code
+  </select>
+</mapper>
