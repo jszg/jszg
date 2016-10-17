@@ -4,5 +4,5 @@ public interface UriViewConstants {
     String URI_HELLO  = "/hello";
     String VIEW_HELLO = "hello.fm";
 
-    String REST_CERT_TYPE = "/rest/signUp/certType";
+    String REST_CERT_TYPE = "/rest/signUp/certTypes";
 }
