@@ -5,8 +5,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <!--namespace 非常重要：必须是 Mapper 类的全路径-->
-<mapper namespace="com.xtuer.mapper.ProvinceMapper">
-    <select id="listProvinces" resultType="Province">
-        select ORG_ID as id, ORG_NAME as name from T_ORG WHERE ORG_TYPE = 4 AND STATUS = 1 ORDER BY AREA_CODE
+<mapper namespace="com.xtuer.mapper.CityMapper">
+    <select id="listCities" resultType="City">
+        select ORG_ID as id, ORG_NAME as name from T_ORG WHERE PARENT_ID = #{id} AND ORG_TYPE != 1 AND STATUS = 1 ORDER BY AREA_CODE
     </select>
 </mapper>

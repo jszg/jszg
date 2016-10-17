@@ -1,6 +1,6 @@
 package com.xtuer.mapper;
 
-import com.xtuer.dto.Organization;
+import com.xtuer.dto.Province;
 
 import java.util.List;
 
@@ -11,6 +11,6 @@ import java.util.List;
  */
 public interface ProvinceMapper {
 
-    List<Organization> listProvinces();
+    List<Province> listProvinces();
 
 }

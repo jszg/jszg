@@ -7,4 +7,7 @@ public interface UriViewConstants {
     String REST_CERT_TYPE = "/rest/signUp/certTypes";
 
     String PROVINCES = "/rest/signUp/provinces";
+
+    String CITIES_BY_PARENT = "/rest/signUp/provinces/{parentid}/cities";
+
 }

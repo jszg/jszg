@@ -11,6 +11,6 @@ import java.util.List;
  */
 public interface OrganizationMapper {
 
-    List<Organization> listProvinces();
+    List<Organization> listByProvince();
 
 }
