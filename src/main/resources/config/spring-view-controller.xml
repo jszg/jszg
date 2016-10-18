@@ -7,5 +7,5 @@
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/mvc
        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
-    <mvc:view-controller path="/rest-view" view-name="rest-view.html"/>
+    <mvc:view-controller path="/request" view-name="request.fm"/>
 </beans>

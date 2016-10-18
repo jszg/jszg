@@ -44,7 +44,7 @@ public class SignUpController {
     }
 
     // 省下面所有的市
-    @GetMapping(UriView.REST_CITIES_BY_PARENT)
+    @GetMapping(UriView.REST_CITIES_BY_PROVINCE)
     @ResponseBody
     public Result<List<City>> getCities(@PathVariable("provinceId") Integer id) {
         String key = String.format(RedisKey.CITIES, id);

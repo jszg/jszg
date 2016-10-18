@@ -8,11 +8,19 @@
     <script src="${static}/lib/jquery.js" charset="utf-8"></script>
     <script src="${static}/lib/ztree/jquery.ztree.core.js" charset="utf-8"></script>
     <script src="${static}/js/urls.js" charset="utf-8"></script>
-    <script src="${static}/js/util.js" charset="utf-8"></script>
+    <script src="${static}/js/utils.js" charset="utf-8"></script>
+    <script src="${static}/js/jquery.rest.js" charset="utf-8"></script>
+
+    <style media="screen">
+        .node_name {
+            font-size: 14px;
+        }
+    </style>
 </head>
 
 <body>
     Welcome ${name!"Guest"} to SpringMVC!
+    <button id="button">选择</button>
 
     <div class="zTreeDemoBackground left">
         <ul id="treeDemo" class="ztree"></ul>
@@ -25,26 +33,21 @@
                 url: loadSubjectsUrl,
                 type: 'GET',
                 dataFilter: filter
+            },
+            view: {
+                showIcon: false
             }
         };
 
-        function filter(treeId, parentNode, childNodes) {
-            childNodes = childNodes.data;
-            console.log(parentNode);
-            console.log(childNodes);
-            console.log('-----------------');
+        function filter(treeId, parentNode, result) {
+            if (!result) return null;
 
-            if (parentNode) {
-                parentNode.isParent = false;
-                parentNode.name = 'abx';
-                // window.treeObj.updateNode(parentNode);
-            }
+            var childNodes = result.data;
 
-            if (!childNodes) return null;
             for (var i = 0, l = childNodes.length; i < l; i++) {
-                childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
                 childNodes[i].isParent = true;
             }
+
             return childNodes;
         };
 
@@ -61,6 +64,10 @@
 
         $(document).ready(function() {
             window.treeObj = $.fn.zTree.init($("#treeDemo"), setting);
+
+            $('#button').click(function(event) {
+                console.log(window.treeObj.getSelectedNodes()[0].id);
+            });
         });
     </script>
 </body>
