@@ -41,16 +41,16 @@ gradle -Denv=development clean appStartDebug
 * 认定机构
 
     ```
-    http://{{host}}:{{port}}/rest/signUp/subjects/root/{province}/{certTypeId}
+    http://{{host}}:{{port}}/rest/signUp/cities/{cityId}/certTypes/{certTypeId}/orgs
     ```
     
 * 任教学科
 
     ```
     # 根节点
-    http://{{host}}:{{port}}/rest/signUp/subjects/root/{province}/{certTypeId}
+    http://{{host}}:{{port}}/rest/signUp/provinces/{provinceId}/certTypes/{certTypeId}/subjects/root
     
     # 子节点
-    http://{{host}}:{{port}}/rest/signUp/subjects/children/{parent}/{province}
+    http://{{host}}:{{port}}/rest/signUp/provinces/{provinceId}/{parentId}/subjects/children
     ```
     
