@@ -49,7 +49,7 @@ html,body{
     background-image: url(../img/request/bz-active.png);
 }
 
-.declare .bz8, .declare .bz8.active {
+.declare .bz.bz8, .declare .bz.bz8.active {
     background-position: left center;
 }
 

@@ -1,5 +1,5 @@
 /**
- * 使用到的 URL，放在 utils.js 里为了减少 js 的请求
+ * 使用到的 URL，放在 utils.js 里为了减少 js 文件的请求
  */
 Urls = {
     REST_CERT_TYPE: '/rest/signUp/certTypes',
@@ -8,6 +8,7 @@ Urls = {
     REST_SUBJECTS_ROOT: '/rest/signUp/provinces/{provinceId}/certTypes/{certTypeId}/subjects/root',
     REST_ORGS_BY_CITY_AND_CERT_TYPE: '/rest/signUp/cities/{cityId}/certTypes/{certTypeId}/orgs',
     REST_SUBJECTS_CHILDREN: '/rest/signUp/provinces/{provinceId}/{parentId}/subjects/children'
+    WEB_UPLOADER_SWF: 'https://cdn.staticfile.org/webuploader/0.1.5/Uploader.swf'
 }
 
 /**
