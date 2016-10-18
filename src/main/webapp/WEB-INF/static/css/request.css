@@ -50,7 +50,7 @@ html,body{
 }
 
 .declare .bz8, .declare .bz8.active {
-    background-position-x: left;
+    background-position: left center;
 }
 
 .declare li span {
