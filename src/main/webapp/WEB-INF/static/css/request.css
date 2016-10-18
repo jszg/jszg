@@ -42,8 +42,7 @@ html,body{
     color: #FFF;
     margin-left: -12px;
     background-image: url(../img/request/bz-inactive.png);
-    background-position-x: right;
-    background-position-y: center;
+    background-position: right center;
 }
 
 .declare .bz.active {
