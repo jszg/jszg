@@ -48,49 +48,78 @@ $(document).ready(function() {
 
     // 请求认证机构
 
-    /* 第一步的下一步 */
+    // 第一步的下一步
     $('#box-1-next').click(function(){
         $('#box-1').hide();
         $('#box-2').show();
-
         $('.bz2').addClass('active');
     });
 
-    /* 第二步的上一步 */
+    // 第二步的下一步
+    $('#box-2-next').click(function(){
+        if (!$('#_checkbox_bd').get(0).checked){
+            alert('请先阅读网上申报协议并同意后才可以申报！');
+            return;
+        }
+
+        $('#box-2').hide();
+        $('#box-3').show();
+        $('.bz3').addClass('active');
+    });
+
+    // 第三步的下一步
+    $('#box-3-next').click(function(){
+        $('#box-3').hide();
+        $('#box-4').show();
+        $('.bz4').addClass('active');
+    });
+
+    // 第四步的下一步
+    $('#box-4-next').click(function(){
+        $('#box-4').hide();
+        $('#box-5').show();
+        $('.bz5').addClass('active');
+    });
+
+    // 第五步的下一步
+    $('#box-5-next').click(function(){
+        $('#box-5').hide();
+        $('#box-6').show();
+        $('.bz6').addClass('active');
+    });
+
+    // 第六步的下一步
+    $('#box-6-next').click(function(){
+        $('#box-6').hide();
+        $('#box-7').show();
+        $('.bz7').addClass('active');
+    });
+
+    // 第七步的下一步
+    $('#box-7-next').click(function(){
+        $('#box-7').hide();
+        $('#box-8').show();
+        $('.bz8').addClass('active');
+    });
+
+    ////////////////////////////////////////////////////////////////////////
+    ///                                上一步                              //
+    ////////////////////////////////////////////////////////////////////////
+    // 第二步的上一步
     $('#box-2-previous').click(function(){
         $('#box-2').hide();
         $('#box-1').show();
         $('.bz2').removeClass('active');
     });
 
-    /* 第二步的下一步 */
-    $('#box-2-next').click(function(){
-        if ($('#_checkbox_bd').get(0).checked){
-            $('#box-2').hide();
-            $('#box-3').show();
-
-            $('.bz3').addClass('active');
-        }else{
-            alert('请先阅读网上申报协议并同意后才可以申报！');
-        }
-    });
-
-    /* 第三步的上一步 */
+    // 第三步的上一步
     $('#box-3-previous').click(function(){
         $('#box-3').hide();
         $('#box-2').show();
         $('.bz3').removeClass('active');
     });
 
-    /* 第三步的下一步 */
-    $('#box-3-next').click(function(){
-        $('#box-3').hide();
-        $('#box-4').show();
-
-        $('.bz4').addClass('active');
-    });
-
-    /* 第四步的上一步 */
+    // 第四步的上一步
     $('#box-4-previous').click(function(){
         $('#box-4').hide();
         $('#box-3').show();
@@ -98,57 +127,29 @@ $(document).ready(function() {
         $('.bz4').removeClass('active');
     });
 
-    /* 第四步的下一步 */
-    $('#box-4-next').click(function(){
-        $('#box-4').hide();
-        $('#box-5').show();
-        $('.bz5').addClass('active');
-    });
-
-    /* 第五步的上一步 */
+    // 第五步的上一步
     $('#box-5-previous').click(function(){
         $('#box-5').hide();
         $('#box-4').show();
         $('.bz5').removeClass('active');
     });
 
-    /*第五步的下一步*/
-    $('#box-5-next').click(function(){
-        $('#box-5').hide();
-        $('#box-6').show();
-        $('.bz6').addClass('active');
-    });
-
-    /*第六步的上一步*/
+    // 第六步的上一步
     $('#box-6-previous').click(function(){
         $('#box-6').hide();
         $('#box-5').show();
         $('.bz6').removeClass('active');
     });
 
-    /*第六步的下一步*/
-    $('#box-6-next').click(function(){
-        $('#box-6').hide();
-        $('#box-7').show();
-        $('.bz7').addClass('active');
-    });
-
-    /*第七步的上一步*/
+    // 第七步的上一步
     $('#box-7-previous').click(function(){
         $('#box-7').hide();
         $('#box-6').show();
         $('.bz7').removeClass('active');
     });
 
-    /*第七步的下一步*/
-    $('#box-7-next').click(function(){
-        $('#box-7').hide();
-        $('#box-8').show();
-        $('.bz8').addClass('active');
-    });
-
     /*****************弹出框***********************/
-    /*第三步的弹出框*/
+    // 第三步的弹出框
     $('#box-3 .ui-button-text-1').click(function(){
     $('#box-3 .popup-1').show();
         $('#box-3 .close-1').click(function(){

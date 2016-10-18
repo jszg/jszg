@@ -6,11 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>中国教师资格网</title>
-    <link  href="${static}/css/request.css" rel="stylesheet" type="text/css">
-    <link  href="${static}/css/generic.css" rel="stylesheet" type="text/css">
+    <link href="${static}/css/request.css" rel="stylesheet" type="text/css">
+    <link href="${static}/css/generic.css" rel="stylesheet" type="text/css">
+    <link href="${static}/lib/ztree/zTreeStyle.css" type="text/css" rel="stylesheet">
 
-    <script src="${static}/lib/jquery.js" type="text/javascript"></script>
-    <script src="${static}/js/urls.js" charset="utf-8"></script>
+    <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js" charset="utf-8"></script>
+    <script src="${static}/lib/ztree/jquery.ztree.core.js" charset="utf-8"></script>
     <script src="${static}/js/utils.js" charset="utf-8"></script>
     <script src="${static}/js/jquery.rest.js" charset="utf-8"></script>
     <script src="${static}/js/request.js" type="text/javascript"></script>
@@ -91,7 +92,7 @@
 
             </div>
             <div class="action-bar" id="action-bar-1">
-                <a href="#" target="_self" class="next-step">
+                <a href="javascript:void(0)" target="_self" class="next-step">
                     <img id="box-1-next" src="${static}/img/request/button09.gif" alt="下一步" border="0">
                 </a>
                 <br>
@@ -116,10 +117,10 @@
                 <input type="checkbox" id="_checkbox_bd" checked="true">&nbsp;已阅读并完全同意
             </div>
             <div class="action-bar">
-                <a href="#" target="_self" class="pre-step">
+                <a href="javascript:void(0)" target="_self" class="pre-step">
                     <img src="${static}/img/request/button10.gif" alt="上一步" border="0" id="box-2-previous">
                 </a>
-                <a href="#" target="_self" class="next-step">
+                <a href="javascript:void(0)" target="_self" class="next-step">
                     <img src="${static}/img/request/button09.gif" alt="下一步" border="0" id="box-2-next">
                 </a>
             </div>
@@ -212,10 +213,10 @@
 
             </div>
             <div class="action-bar">
-                <a href="#" target="_self" class="pre-step">
+                <a href="javascript:void(0)" target="_self" class="pre-step">
                     <img src="${static}/img/request/button10.gif" alt="上一步" border="0" id="box-3-previous">
                 </a>
-                <a href="#" target="_self" class="next-step">
+                <a href="javascript:void(0)" target="_self" class="next-step">
                     <img src="${static}/img/request/button09.gif" alt="下一步" border="0" id="box-3-next">
                 </a>
             </div>
@@ -260,10 +261,10 @@
                 </div>
             </div>
             <div class="action-bar">
-                <a href="#" target="_self" class="pre-step">
+                <a href="javascript:void(0)" target="_self" class="pre-step">
                     <img src="${static}/img/request/button10.gif" alt="上一步" border="0" id="box-4-previous">
                 </a>
-                <a href="#" target="_self" class="next-step">
+                <a href="javascript:void(0)" target="_self" class="next-step">
                     <img src="${static}/img/request/button09.gif" alt="下一步" border="0" id="box-4-next">
                 </a>
             </div>
@@ -346,10 +347,10 @@
                 <p></p>
             </div>
             <div class="action-bar">
-                <a href="#" target="_self" class="pre-step">
+                <a href="javascript:void(0)" target="_self" class="pre-step">
                     <img src="${static}/img/request/button10.gif" alt="上一步" border="0" id="box-5-previous">
                 </a>
-                <a href="#" target="_self" class="next-step">
+                <a href="javascript:void(0)" target="_self" class="next-step">
                     <img src="${static}/img/request/button11.gif" alt="下一步" border="0" id="box-5-next">
                 </a>
             </div>
@@ -415,10 +416,10 @@
                 </div>
             </div>
             <div class="action-bar">
-                <a href="#" target="_self" class="pre-step">
+                <a href="javascript:void(0)" target="_self" class="pre-step">
                     <img src="${static}/img/request/button10.gif" alt="上一步" border="0" id="box-6-previous">
                 </a>
-                <a href="#" target="_self" class="next-step">
+                <a href="javascript:void(0)" target="_self" class="next-step">
                     <img src="${static}/img/request/button09.gif" alt="下一步" border="0" id="box-6-next">
                 </a>
             </div>
@@ -1107,10 +1108,10 @@
                 </div>
             </div>
             <div class="action-bar">
-                <a href="#" target="_self" class="pre-step">
+                <a href="javascript:void(0)" target="_self" class="pre-step">
                     <img src="${static}/img/request/button10.gif" alt="上一步" border="0" id="box-7-previous">
                 </a>
-                <a href="#" target="_self" class="next-step">
+                <a href="javascript:void(0)" target="_self" class="next-step">
                     <img src="${static}/img/request/button09.gif" alt="下一步" border="0" id="box-7-next">
                 </a>
             </div>

@@ -1,50 +1,24 @@
-body,
-div,
-h2,
-h3,
-h4,
-h1,
-span,
-img,
-ul,
-li,
-input,
-select,
-form,
-p,
-dt,
-dd,
-dl,
-a {
+body, div, h2, h3, h4, h1, span, img, ul, li, input, select, form, p, dt, dd, dl, a {
     margin: 0;
     padding: 0;
 }
 
-li,
-ul {
+li, ul {
     list-style: none;
 }
 
-a,
-a:link,
-a:visited,
-a:hover,
-a:active {
+a, a:link, a:visited, a:hover, a:active {
     outline: none;
     text-decoration: none;
     color: #666;
 }
 
-ul,
-ol {
+ul, ol {
     margin-top: 0;
     margin-bottom: 0;
 }
 
-ul ul,
-ol ul,
-ul ol,
-ol ol {
+ul ul, ol ul, ul ol, ol ol {
     margin-bottom: 0;
 }
 
@@ -68,13 +42,34 @@ ol ol {
 
 body {
     font: 14px 'Helvetica Neue', Helvetica, '微软雅黑', Arial, Verdana;
-    color:black;
+    color: black;
     width: 100%;
 }
-.f15{font-size: 15px;}
-.f20{font-size: 20px;}
-.f23{font-size: 23px;}
-.lh69{line-height: 69px;}
-.lh77{line-height: 77px;}
-.fl {float: left;}
-.fr {float: right;}
+
+.f15 {
+    font-size: 15px;
+}
+
+.f20 {
+    font-size: 20px;
+}
+
+.f23 {
+    font-size: 23px;
+}
+
+.lh69 {
+    line-height: 69px;
+}
+
+.lh77 {
+    line-height: 77px;
+}
+
+.fl {
+    float: left;
+}
+
+.fr {
+    float: right;
+}

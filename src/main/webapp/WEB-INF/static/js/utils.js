@@ -1,6 +1,17 @@
 /**
- * 工具类，提供了
- *     判断函数，变量是否已经定义
+ * 使用到的 URL，放在 utils.js 里为了减少 js 的请求
+ */
+Urls = {
+    REST_CERT_TYPE: '/rest/signUp/certTypes',
+    REST_PROVINCES: '/rest/signUp/provinces',
+    REST_CITIES_BY_PROVINCE: '/rest/signUp/provinces/{provinceId}/cities',
+    REST_SUBJECTS_ROOT: '/rest/signUp/provinces/{provinceId}/certTypes/{certTypeId}/subjects/root',
+    REST_ORGS_BY_CITY_AND_CERT_TYPE: '/rest/signUp/cities/{cityId}/certTypes/{certTypeId}/orgs',
+    REST_SUBJECTS_CHILDREN: '/rest/signUp/provinces/{provinceId}/{parentId}/subjects/children'
+}
+
+/**
+ * 工具类
  */
 function Utils() {
 
