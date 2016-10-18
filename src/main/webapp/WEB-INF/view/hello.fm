@@ -21,8 +21,8 @@
         var setting = {
             async: {
                 enable: true,
-                url: getUrl,
-                type: "get",
+                url: loadSubjectsUrl,
+                type: 'GET',
                 dataFilter: filter
             }
         };
@@ -47,9 +47,9 @@
             return childNodes;
         };
 
-        function getUrl(treeId, treeNode) {
-            var provinceId = 8320;
-            var certTypeId = 2;
+        function loadSubjectsUrl(treeId, treeNode) {
+            var provinceId = 12911;
+            var certTypeId = 4;
 
     		if(!treeNode) {
                 return '/rest/signUp/provinces/{provinceId}/certTypes/{certTypeId}/subjects/root'
