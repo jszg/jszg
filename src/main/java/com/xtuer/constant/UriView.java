@@ -10,4 +10,5 @@ public interface UriView {
     String REST_ORGS_BY_CITY_AND_CERT_TYPE = "/rest/signUp/cities/{cityId}/certTypes/{certTypeId}/orgs";
     String REST_SUBJECTS_ROOT              = "/rest/signUp/provinces/{provinceId}/certTypes/{certTypeId}/subjects/root";
     String REST_SUBJECTS_CHILDREN          = "/rest/signUp/provinces/{provinceId}/{parentId}/subjects/children";
+    String REST_DICTS_BY_DICTTYPE          = "/rest/signUp/dicts/{dictTypeId}";
 }

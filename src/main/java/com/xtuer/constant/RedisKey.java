@@ -10,4 +10,5 @@ public interface RedisKey {
     String ORGS = "orgs_%d_%d"; // orgs_{cityId}_{certTypeId}
     String SUBJECTS_ROOT = "subjects_root_%d_%d"; // subjects_root_{provinceId}_{certTypeId}
     String SUBJECTS_CHILDREN = "subjects_children_%d_%d"; // subjects_children_{provinceId}_{parentId}
+    String DICTS = "dicts_%d"; // subjects_children_{provinceId}_{parentId}
 }

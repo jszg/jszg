@@ -5,17 +5,18 @@ import com.xtuer.constant.RedisKey;
 import com.xtuer.constant.UriView;
 import com.xtuer.dto.CertType;
 import com.xtuer.dto.City;
+import com.xtuer.dto.Dict;
 import com.xtuer.dto.Organization;
 import com.xtuer.dto.Province;
 import com.xtuer.dto.Subject;
 import com.xtuer.mapper.CertTypeMapper;
 import com.xtuer.mapper.CityMapper;
+import com.xtuer.mapper.DictMapper;
 import com.xtuer.mapper.OrganizationMapper;
 import com.xtuer.mapper.ProvinceMapper;
 import com.xtuer.mapper.SubjectMapper;
 import com.xtuer.util.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -92,6 +93,15 @@ public class SignUpController {
         return Result.ok(subjects);
     }
 
+    // 按照字典类型查询字典数据
+    @GetMapping(UriView.REST_DICTS_BY_DICTTYPE)
+    @ResponseBody
+    public Result<List<Dict>> getDicts(@PathVariable("dictTypeId") int dictTypeId) {
+        String key = String.format(RedisKey.DICTS, dictTypeId);
+        List<Dict> dicts = redisUtils.get(List.class, key, () -> dictMapper.findByDictType(dictTypeId));
+        return Result.ok(dicts);
+    }
+
     @Autowired
     private RedisUtils redisUtils;
 
@@ -109,4 +119,7 @@ public class SignUpController {
 
     @Autowired
     private SubjectMapper subjectMapper;
+
+    @Autowired
+    private DictMapper dictMapper;
 }

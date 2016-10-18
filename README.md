@@ -54,3 +54,9 @@ gradle -Denv=development clean appStartDebug
     http://{{host}}:{{port}}/rest/signUp/provinces/{provinceId}/{parentId}/subjects/children
     ```
     
+* 字典
+
+    ```
+    http://{{host}}:{{port}}/rest/signUp/dicts/{dictTypeId}
+    ```
+    
