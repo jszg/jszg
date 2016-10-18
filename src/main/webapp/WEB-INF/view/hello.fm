@@ -1,11 +1,69 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <title>Demo</title>
-        <script src="${static}/lib/jquery.js" charset="utf-8"></script>
-    </head>
-    <body>
-        Welcome ${name!"Guest"} to SpringMVC!
-    </body>
+
+<head>
+    <meta charset="utf-8">
+    <title>Demo</title>
+    <link href="${static}/lib/ztree/zTreeStyle.css" type="text/css" rel="stylesheet">
+    <script src="${static}/lib/jquery.js" charset="utf-8"></script>
+    <script src="${static}/lib/ztree/jquery.ztree.core.js" charset="utf-8"></script>
+    <script src="${static}/js/util.js" charset="utf-8"></script>
+</head>
+
+<body>
+    Welcome ${name!"Guest"} to SpringMVC!
+
+    <div class="zTreeDemoBackground left">
+        <ul id="treeDemo" class="ztree"></ul>
+    </div>
+
+    <script type="text/javascript">
+        var setting = {
+            async: {
+                enable: true,
+                url: getUrl,
+                type: "get",
+                dataFilter: filter
+            }
+        };
+
+        function filter(treeId, parentNode, childNodes) {
+            childNodes = childNodes.data;
+            console.log(parentNode);
+            console.log(childNodes);
+            console.log('-----------------');
+
+            if (parentNode) {
+                parentNode.isParent = false;
+                parentNode.name = 'abx';
+                // window.treeObj.updateNode(parentNode);
+            }
+
+            if (!childNodes) return null;
+            for (var i = 0, l = childNodes.length; i < l; i++) {
+                childNodes[i].name = childNodes[i].name.replace(/\.n/g, '.');
+                childNodes[i].isParent = true;
+            }
+            return childNodes;
+        };
+
+        function getUrl(treeId, treeNode) {
+            var provinceId = 8320;
+            var certTypeId = 2;
+
+    		if(!treeNode) {
+                return '/rest/signUp/provinces/{provinceId}/certTypes/{certTypeId}/subjects/root'
+                    .format({provinceId: provinceId, certTypeId: certTypeId});
+            } else {
+                return '/rest/signUp/provinces/{provinceId}/{parentId}/subjects/children'
+                    .format({provinceId: provinceId, parentId: treeNode.id});
+            }
+    	};
+
+        $(document).ready(function() {
+            window.treeObj = $.fn.zTree.init($("#treeDemo"), setting);
+        });
+    </script>
+</body>
+
 </html>
