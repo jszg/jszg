@@ -14,6 +14,7 @@
     <script src="http://cdn.bootcss.com/jquery/1.12.4/jquery.min.js" charset="utf-8"></script>
     <script src="http://cdn.staticfile.org/webuploader/0.1.5/webuploader.min.js" charset="utf-8"></script>
     <script src="http://cdn.bootcss.com/zTree.v3/3.5.24/js/jquery.ztree.core.min.js" charset="utf-8"></script>
+    <script src="http://cdn.staticfile.org/artTemplate.js/3.0/template.js" charset="utf-8"></script>
     <script src="${static}/lib/jquery.leanModal.min.js" charset="utf-8"></script>
     <script src="${static}/js/utils.js" charset="utf-8"></script>
     <script src="${static}/js/jquery.rest.js" charset="utf-8"></script>
