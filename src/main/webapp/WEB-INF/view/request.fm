@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>中国教师资格网</title>
 
-    <link  href="${static}/css/request.css" rel="stylesheet" type="text/css">
-    <link  href="${static}/css/generic.css" rel="stylesheet" type="text/css">
-    <link  href="http://cdn.staticfile.org/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css">
-    <link  href="http://cdn.bootcss.com/zTree.v3/3.5.24/css/zTreeStyle/zTreeStyle.min.css" rel="stylesheet" type="text/css">
+    <link href="${static}/css/request.css" rel="stylesheet" type="text/css">
+    <link href="${static}/css/generic.css" rel="stylesheet" type="text/css">
+    <link href="http://cdn.staticfile.org/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css">
+    <link href="http://cdn.bootcss.com/zTree.v3/3.5.24/css/zTreeStyle/zTreeStyle.min.css" rel="stylesheet" type="text/css">
     <script src="http://cdn.bootcss.com/jquery/1.12.4/jquery.min.js" charset="utf-8"></script>
     <script src="http://cdn.staticfile.org/webuploader/0.1.5/webuploader.min.js" charset="utf-8"></script>
     <script src="http://cdn.bootcss.com/zTree.v3/3.5.24/js/jquery.ztree.core.min.js" charset="utf-8"></script>
@@ -284,7 +284,8 @@
                     <span style="color: black; font-family: 宋体; font-size: 12pt; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt;" lang="EN-US">1</span>
                     <span style="color: black; font-family: 宋体; font-size: 12pt; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt;">、《教师资格认定申请表》（网上申报成功后自行
                         <span lang="EN-US">PDF</span>格式
-                        <span lang="EN-US">A4</span>纸双面打印两份）；</span>
+                        <span lang="EN-US">A4</span>纸双面打印两份）；
+                    </span>
                 </p>
                 <p class="MsoNormal" style="margin: 0cm 0cm 0pt; line-height: 20pt; text-indent: 24pt; layout-grid-mode: char; mso-char-indent-count: 2.0; mso-line-height-rule: exactly; mso-pagination: widow-orphan;">
                     <span style="color: black; font-family: 宋体; font-size: 12pt; mso-bidi-font-family: 宋体; mso-font-kerning: 0pt;" lang="EN-US">2</span>
@@ -429,9 +430,7 @@
         <!--第七步-->
         <div id="box-7">
             <div class="content_bd">
-                <h4>
-                基本信息：<b class="f_red f_size">（如要修改，请返回上一步）</b>
-            </h4>
+                <h4>基本信息：<b class="f_red f_size">（如要修改，请返回上一步）</b></h4>
                 <div class="ui-widget-content ui-corner-all">
                     <div class="ui-body">
                         <table class="ui-view">
@@ -508,9 +507,7 @@
             <div class="ui-status ui-state-highlight ui-corner-all" style="left: 566.5px; top: 338px; display: none;">
                 <p>正在操作...请稍等！</p>
             </div>
-            <h4>
-            登录信息：<b class="f_red f_size">（必须牢记登录信息）</b>
-        </h4>
+            <h4>登录信息：<b class="f_red f_size">（必须牢记登录信息）</b></h4>
             <div id="loginInfCrud" class="ui-widget ui-crud-widget ui-request">
                 <div>
                     <div class="ui-widget-header ui-corner-all ui-header"></div>
@@ -567,9 +564,7 @@
                     <p>正在操作...请稍等！</p>
                 </div>
             </div>
-            <h4>
-            请填写申请信息：<b class="f_red f_size"></b>
-        </h4>
+            <h4>请填写申请信息：<b class="f_red f_size"></b></h4>
             <div class="ui-widget-content ui-corner-all">
                 <div class="ui-body">
                     <form method="post" class="column-2">
@@ -883,11 +878,9 @@
                 </div>
                 <div class="ui-page-bar ui-page-bar-bottom ui-helper-hidden"></div>
                 <div class="ui-action-bar ui-action-bar-bottom" style="display:none"></div>
-                <h4 style="width: 1000px; margin: 0 auto">
-            个人简历：
-            <b class="f_red f_size">（简历按照时间先后顺序从本人小学毕业后填起（当地教育局有其他规定的，按其规定填写），不得空项，至少两条，最多八条，必须填写到至今。简历超过8条的，删减前边的简历保留至8条为止。）
-            </b>
-        </h4>
+                <h4 style="width: 1000px; margin: 0 auto">个人简历：
+                    <b class="f_red f_size">（简历按照时间先后顺序从本人小学毕业后填起（当地教育局有其他规定的，按其规定填写），不得空项，至少两条，最多八条，必须填写到至今。简历超过8条的，删减前边的简历保留至8条为止。）</b>
+                </h4>
                 <div id="resumeInfCrud">
                     <div class="ui-widget ui-crud-widget">
                         <div class="ui-widget-content ui-corner-all">
