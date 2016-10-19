@@ -29,8 +29,9 @@ import java.util.Map;
 
 @Controller
 public class SignUpController {
-    private static final int[] TYPES = {5, 7, 25, 22, 21, 2};
-    private static final String[] TYPENAMES = {"nation", "eduLevel", "schoolQuale", "workUnitType", "learnType", "normalMajor"};
+    private static final int[] TYPES = {5, 7, 25, 22, 21, 2, 3, 9, 24, 6, 4};
+    private static final String[] TYPENAMES = {"nation", "eduLevel", "schoolQuale", "workUnitType", "learnType",
+            "normalMajor", "political", "pthLevel", "postQuale", "degree", "occupation"};
 
     // 所有资格种类
     @GetMapping(UriView.REST_CERT_TYPE)
