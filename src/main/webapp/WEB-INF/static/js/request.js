@@ -121,27 +121,27 @@ $(document).ready(function() {
         var subjectId  = parseInt($('#subject').attr('data-subject-id'));
 
         if (-1 == certTypeId) {
-            alert('请选择资格种类');
+            alert('请选择: 资格种类');
             return;
         }
 
         if (-1 == provinceId) {
-            alert('请选择省');
+            alert('请选择: 省');
             return;
         }
 
         if (-1 == cityId) {
-            alert('请选择市');
+            alert('请选择: 市');
             return;
         }
 
         if (-1 == orgId) {
-            alert('请选择认定机构');
+            alert('请选择: 认定机构');
             return;
         }
 
         if (-1 == subjectId) {
-            alert('请选择任教学科');
+            alert('请选择: 任教学科');
             return;
         }
 
