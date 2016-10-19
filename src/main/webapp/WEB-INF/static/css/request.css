@@ -60,8 +60,6 @@ html,body{
     height: auto;
     padding: 10px;
     padding-left: 20px;
-    border-bottom: 1px dashed #ccc;
-    border-top: 1px dashed #ccc;
     line-height: 22px;
     margin: 10px 0;
 }
@@ -125,7 +123,7 @@ html,body{
     height: 32px;
 }
 .column-1 tr:nth-child(2){
-    height: 55px;
+       height: 32px;
 }
 .column-1 tr:nth-child(3){
     height: 32px;
@@ -189,10 +187,12 @@ table td, table td * {
     text-align: left;
 }
 
-td select {
+#box-3 td select {
     width: 100%;
 }
-
+#box-7 td select{
+     width: 50%;
+}
 table, td {
     padding: 5px;
 }
@@ -201,6 +201,21 @@ table, td {
     text-align: right;
     font-weight: bold;
     width: 90px;
+}
+.f_size{color: #de0000;font-size: 12px;}
+tr{border-bottom: 1px dashed #eee;}
+table{border-collapse:collapse;}
+#box-7 table th{
+     text-align: right;
+}
+.ph-12{
+    position: relative;top: -12px;
+}
+.ph-23{
+    position: relative;top: -23px;
+}
+#curriculum table tr td{
+    text-align: center;
 }
 
 #lean_overlay {
@@ -225,15 +240,16 @@ table, td {
     padding: 5px 10px;
     width: 500px;
     height: 550px;
-    overflow: scroll;
+    /*overflow: scroll;*/
 }
 
 #subjects-dialog-ztree {
     overflow: scroll;
+    height: 500px;
 }
 
 #subjects-dialog-buttons-holder {
-    
+    height: 50px;
 }
 
 .ztree .node_name {
