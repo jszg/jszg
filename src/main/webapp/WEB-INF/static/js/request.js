@@ -183,4 +183,8 @@ $(document).ready(function() {
 
     $('#box-1-next').click();
     $('#box-2-next').click();
+    $('#box-3-next').click();
+    $('#box-4-next').click();
+    $('#box-5-next').click();
+     $('#box-6-next').click();
 });
