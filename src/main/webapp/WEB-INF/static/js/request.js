@@ -76,7 +76,13 @@ $(document).ready(function() {
         $("#lean_overlay").click();
     });
     $('#subjects-dialog-buttons-holder .ok').click(function(event) {
-        console.log(window.subjectsTree.getSelectedNodes()[0].id);
+        var subjectNode = window.subjectsTree.getSelectedNodes()[0];
+        if (subjectNode) {
+            $('#subject').attr('data-subject-id', subjectNode.id).text(subjectNode.name);
+            $("#lean_overlay").click();
+        } else {
+            alert('没有选中任教学科');
+        }
     });
 
     ////////////////////////////////////////////////////////////////////////
