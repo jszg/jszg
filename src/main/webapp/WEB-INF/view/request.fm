@@ -455,13 +455,13 @@
                 </tr>
                 <tr>
                     <th>名族</th>
-                    <td><select name="1"><option>请选择</option></select></td>
+                    <td><select id="nations" name="1"><option selected="selected" value="-1">请选择</option></select></td>
                     <th>政治面貌</th>
-                    <td><select name="1"><option>请选择</option></select></td>
+                    <td><select id="politicals" name="1"><option selected="selected" value="-1">请选择</option></select></td>
                 </tr>
                 <tr>
                     <th class="ph-12">普通话水平</th>
-                    <td><select name="1"><option>请选择</option></select></td>
+                    <td><select id="pth-levels" name="1"><option value="-1">请选择</option></select></td>
                     <th class="ph-12">普通话证书编号</th>
                     <td><input type="text"><span> 如果没有普通话证书编号，请填写“无”</span></td>
                 </tr>
@@ -469,13 +469,18 @@
                     <th class="ph-12">普通话发证单位</th>
                     <td><input type="text"><span> 请填写普通话证书上的发证单位名称（盖章机构如果没有普通话发证单位，请填写“无”</span></td>
                     <th class="ph-12">是否在校生</th>
-                    <td><select name="1"><option>请选择</option></select></td>
+                    <td>
+                        <select name="graduateId" class="ui-field">
+                            <option selected="selected" value="">请选择</option>
+                            <option value="2">否</option><option value="1">是</option>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <th class="ph-12">毕业时间</th>
                     <td><input type="text"><span> 请按照申请认定所使用的学历进行填写</span></td>
                     <th class="ph-12">最高学历</th>
-                    <td><select name="1"><option>请选择</option></select><span> 请按照申请认定所使用的学历进行填写</span></td>
+                    <td><select id="degrees" name="1"><option value="-1">请选择</option></select><span> 请按照申请认定所使用的学历进行填写</span></td>
                 </tr>
                 <tr>
                     <th class="ph-12">最高学位</th>
@@ -490,18 +495,13 @@
                     <th class="ph-12">所学专业</th>
                     <td><button>选择</button>&nbsp;<span>请选择与申请认定时所使用的学历相同或相近的专业名称，或所学专业的上一级学科</span></td>
                     <th class="ph-12">专业类别</th>
-                    <td>
-                        <select name="1">
-                            <option>请选择</option>
-                        </select>
-                    </td>
+                    <td><select id="normal-majors" name="1"><option>请选择</option></select></td>
                 </tr>
                 <tr>
                     <th class="ph-12"><span>学习形式</span></th>
                     <td>
-                        <select name="1">
-                            <option>请选择</option>
-                        </select><span> 请按照申请认定所使用的学历进行填写</span>
+                        <select id="learn-types" name="1"><option value="-1">请选择</option></select>
+                        <span> 请按照申请认定所使用的学历进行填写</span>
                     </td>
                     <th class="ph-12">工作单位</th>
                     <td><input type="text"></td>
@@ -509,9 +509,7 @@
                 <tr>
                     <th>现从事职业</th>
                     <td>
-                        <select name="1">
-                            <option>请选择</option>
-                        </select>
+                        <select id="occupations" name="1"><option value="-1">请选择</option></select>
                     </td>
                     <th>职业技术职务</th>
                     <td><button>选择...</button></td>
@@ -622,6 +620,22 @@
         <a href="javascript:void(0)" class="next-step">
             <img src="${static}/img/request/button09.gif" alt="下一步" border="0" id="box-7-next">
         </a>
+    </div>
+</div>
+
+<!-- 第八步 -->
+    <div id="box-8">
+       <div class="content_bd">
+         <div class="box-8">
+         <p><span>XXX</span>,您好！</p>
+         <h2>您已完成注册！</h2>
+         <P>为确保注册信息无误，请您及时<a href="/portal/request/index">登录系统</a>获取报名号，查看、修改注册信息，了解现场确认注意事项，打印申报材料。</P>
+         <P>请记住进的如下登录信息：</P>
+         <P>姓名：<span>XXX</span></P>
+         <P>证件号码：<span>xxxxxxxxxxxxxx</span></P>
+         <P>密码招呼邮箱：<span>******************</span></P>
+         </div>
+       </div>
     </div>
 </div>
 

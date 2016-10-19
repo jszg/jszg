@@ -8,7 +8,7 @@ $(document).ready(function() {
         var $certTypes = $('#certTypes');
         var cts = result.data;
         for (var i = 0; i < cts.length; ++i) {
-            $certTypes.append('<option value="{id}">{name}</option>'.format({id: cts[i].id, name: cts[i].name}));
+            $certTypes.append(template('optionTemplate', cts[i]));
         }
     }});
 
@@ -21,7 +21,7 @@ $(document).ready(function() {
         var $provinces = $('#provinces');
         var ps = result.data;
         for (var i = 0; i < ps.length; ++i) {
-            $provinces.append('<option value="{id}">{name}</option>'.format({id: ps[i].id, name: ps[i].name}));
+            $provinces.append(template('optionTemplate', ps[i]));
         }
     }});
 
@@ -39,7 +39,7 @@ $(document).ready(function() {
                 var $citys = $('#citys');
                 var cs = result.data;
                 for (var i = 0; i < cs.length; ++i) {
-                    $citys.append('<option value="{id}">{name}</option>'.format({id: cs[i].id, name: cs[i].name}));
+                    $citys.append(template('optionTemplate', cs[i]));
                 }
             }});
         }
@@ -59,7 +59,7 @@ $(document).ready(function() {
                 var $orgs = $('#orgs');
                 var orgs = result.data;
                 for (var i = 0; i < orgs.length; ++i) {
-                    $orgs.append('<option value="{id}">{name}</option>'.format({id: orgs[i].id, name: orgs[i].name}));
+                    $orgs.append(template('optionTemplate', orgs[i]));
                 }
             }});
         }
@@ -84,6 +84,67 @@ $(document).ready(function() {
             alert('没有选中任教学科');
         }
     });
+
+    // 请求字典
+    $.rest.get({url: Urls.REST_DICTS, success: function(result) {
+        var data = result.data;
+        var i = 0;
+        // 名族
+        $('#nations option:gt(0)').remove();
+        var $nations = $('#nations');
+        var nations = data.nation;
+        for (i = 0; i < nations.length; ++i) {
+            $nations.append(template('optionTemplate', nations[i]));
+        }
+
+        // 政治面貌
+        $('#politicals option:gt(0)').remove();
+        var $politicals = $('#politicals');
+        var politicals = data.political;
+        for (i = 0; i < politicals.length; ++i) {
+            $politicals.append(template('optionTemplate', politicals[i]));
+        }
+
+        // 最高学历
+        $('#degrees option:gt(0)').remove();
+        var $degrees = $('#degrees');
+        var degrees = data.degree;
+        for (i = 0; i < degrees.length; ++i) {
+            $degrees.append(template('optionTemplate', degrees[i]));
+        }
+
+        // 普通话水平
+        $('#pth-levels option:gt(0)').remove();
+        var $pthLevels = $('#pth-levels');
+        var pthLevels = data.pthLevel;
+        for (i = 0; i < pthLevels.length; ++i) {
+            $pthLevels.append(template('optionTemplate', pthLevels[i]));
+        }
+
+        // 学习形式
+        $('#learn-types option:gt(0)').remove();
+        var $learnTypes = $('#learn-types');
+        var learnTypes = data.learnType;
+        for (i = 0; i < learnTypes.length; ++i) {
+            $learnTypes.append(template('optionTemplate', learnTypes[i]));
+        }
+
+        // 现从事职业
+        $('#occupations option:gt(0)').remove();
+        var $occupations = $('#occupations');
+        var occupations = data.occupation;
+        for (i = 0; i < occupations.length; ++i) {
+            $occupations.append(template('optionTemplate', occupations[i]));
+        }
+
+        // 专业类别
+        $('#normal-majors option:gt(0)').remove();
+        var $normalMajors = $('#normal-majors');
+        var normalMajors = data.normalMajor;
+        for (i = 0; i < normalMajors.length; ++i) {
+            $normalMajors.append(template('optionTemplate', normalMajors[i]));
+        }
+    }});
 
     ////////////////////////////////////////////////////////////////////////
     ///                                下一步                              //
@@ -114,36 +175,36 @@ $(document).ready(function() {
     // 认定机构 id 不能为 -1
     // 任教学科 id 不能为 -1
     $('#box-3-next').click(function() {
-        var certTypeId = parseInt($('#certTypes option:selected').val()); // #provinces option:selected
-        var provinceId = parseInt($('#provinces option:selected').val());
-        var cityId     = parseInt($('#citys option:selected').val());
-        var orgId      = parseInt($('#orgs option:selected').val());
-        var subjectId  = parseInt($('#subject').attr('data-subject-id'));
-
-        if (-1 == certTypeId) {
-            alert('请选择: 资格种类');
-            return;
-        }
-
-        if (-1 == provinceId) {
-            alert('请选择: 省');
-            return;
-        }
-
-        if (-1 == cityId) {
-            alert('请选择: 市');
-            return;
-        }
-
-        if (-1 == orgId) {
-            alert('请选择: 认定机构');
-            return;
-        }
-
-        if (-1 == subjectId) {
-            alert('请选择: 任教学科');
-            return;
-        }
+        // var certTypeId = parseInt($('#certTypes option:selected').val()); // #provinces option:selected
+        // var provinceId = parseInt($('#provinces option:selected').val());
+        // var cityId     = parseInt($('#citys option:selected').val());
+        // var orgId      = parseInt($('#orgs option:selected').val());
+        // var subjectId  = parseInt($('#subject').attr('data-subject-id'));
+        //
+        // if (-1 == certTypeId) {
+        //     alert('请选择: 资格种类');
+        //     return;
+        // }
+        //
+        // if (-1 == provinceId) {
+        //     alert('请选择: 省');
+        //     return;
+        // }
+        //
+        // if (-1 == cityId) {
+        //     alert('请选择: 市');
+        //     return;
+        // }
+        //
+        // if (-1 == orgId) {
+        //     alert('请选择: 认定机构');
+        //     return;
+        // }
+        //
+        // if (-1 == subjectId) {
+        //     alert('请选择: 任教学科');
+        //     return;
+        // }
 
         // 验证通过，进入第四步
         $('#box-3').hide();
@@ -246,7 +307,7 @@ $(document).ready(function() {
     $('#box-3-next').click();
     $('#box-4-next').click();
     $('#box-5-next').click();
-     $('#box-6-next').click();
+    $('#box-6-next').click();
 });
 
 /**
