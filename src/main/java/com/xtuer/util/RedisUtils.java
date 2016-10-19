@@ -1,7 +1,6 @@
 package com.xtuer.util;
 
 import com.alibaba.fastjson.JSON;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.util.function.Supplier;
@@ -14,6 +13,15 @@ import java.util.function.Supplier;
 public class RedisUtils {
     private StringRedisTemplate redisTemplate;
 
+    /**
+     * 缓存优先读取
+     *
+     * @param clazz 实体类型
+     * @param redisKey key
+     * @param supplier 缓存失败时的数据提供器， supplier == null 时 return null
+     * @param <T>   类型约束
+     * @return 实体对象
+     */
     public <T> T get(Class<T> clazz, String redisKey, Supplier<T> supplier) {
         T d = null;
         String json = redisTemplate.opsForValue().get(redisKey);
@@ -27,7 +35,7 @@ public class RedisUtils {
             }
         }
 
-        if (d == null) {
+        if (d == null && supplier != null) {
             d = supplier.get();
 
             if (d != null) {

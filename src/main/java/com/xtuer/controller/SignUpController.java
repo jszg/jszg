@@ -5,16 +5,22 @@ import com.xtuer.constant.RedisKey;
 import com.xtuer.constant.UriView;
 import com.xtuer.dto.CertType;
 import com.xtuer.dto.City;
+import com.xtuer.dto.College;
 import com.xtuer.dto.Dict;
+import com.xtuer.dto.Major;
 import com.xtuer.dto.Organization;
 import com.xtuer.dto.Province;
 import com.xtuer.dto.Subject;
+import com.xtuer.dto.TechnicalJob;
 import com.xtuer.mapper.CertTypeMapper;
 import com.xtuer.mapper.CityMapper;
+import com.xtuer.mapper.CollegeMapper;
 import com.xtuer.mapper.DictMapper;
+import com.xtuer.mapper.MajorMapper;
 import com.xtuer.mapper.OrganizationMapper;
 import com.xtuer.mapper.ProvinceMapper;
 import com.xtuer.mapper.SubjectMapper;
+import com.xtuer.mapper.TechnicalJobMappler;
 import com.xtuer.util.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,10 +29,16 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class SignUpController {
+    private static final int[] TYPES = {5, 7, 25, 22, 21, 2, 3, 9, 24, 6, 4};
+    private static final String[] TYPENAMES = {"nation", "eduLevel", "schoolQuale", "workUnitType", "learnType",
+            "normalMajor", "political", "pthLevel", "postQuale", "degree", "occupation"};
+
     // 所有资格种类
     @GetMapping(UriView.REST_CERT_TYPE)
     @ResponseBody
@@ -97,9 +109,89 @@ public class SignUpController {
     @GetMapping(UriView.REST_DICTS_BY_DICTTYPE)
     @ResponseBody
     public Result<List<Dict>> getDicts(@PathVariable("dictTypeId") int dictTypeId) {
-        String key = String.format(RedisKey.DICTS, dictTypeId);
+        String key = String.format(RedisKey.DICTS_BY_TYPE, dictTypeId);
         List<Dict> dicts = redisUtils.get(List.class, key, () -> dictMapper.findByDictType(dictTypeId));
         return Result.ok(dicts);
+    }
+
+    // 所有字典，按类型分类
+    @GetMapping(UriView.REST_DICTS)
+    @ResponseBody
+    public Result<Map<String, List<Dict>>> getDicts() {
+        String key = RedisKey.DICTS;
+        Map<String, List<Dict>> dicts  = redisUtils.get(Map.class, key, () -> {
+            Map<String, List<Dict>> map = new HashMap<String, List<Dict>>();
+            for (int i = 0; i < TYPES.length; i++) {
+                final int type = TYPES[i];
+                String subkey = String.format(RedisKey.DICTS_BY_TYPE, type);
+                map.put(TYPENAMES[i], redisUtils.get(List.class, subkey, () -> dictMapper.findByDictType(type)));
+            }
+            return map;
+        });
+        return Result.ok(dicts);
+    }
+
+    // 所有学校
+    @GetMapping(UriView.REST_COLLEGES)
+    @ResponseBody
+    public Result<List<College>> getColleges() {
+        String key = RedisKey.COLLEGES;
+        List<College> colleges = redisUtils.get(List.class, key, () -> collegeMapper.findAll());
+        return Result.ok(colleges);
+    }
+
+    // 注册的根节点
+    @GetMapping(UriView.REST_ZHUCE_MAJOR_PARENT)
+    @ResponseBody
+    public Result<List<Major>> getZhuceRootMajors() {
+        String key = RedisKey.MAJORS_ZHUCE_ROOT;
+        List<Major> majors = redisUtils.get(List.class, key, () -> majorMapper.findRoot());
+        return Result.ok(majors);
+    }
+
+    // 注册的子节点
+    @GetMapping(UriView.REST_ZHUCE_MAJOR_CHILDREN)
+    @ResponseBody
+    public Result<List<Major>> getZhuceChildrenMajors(@PathVariable("parentId") int parentId) {
+        String key = String.format(RedisKey.MAJORS_ZHUCE_CHILREN, parentId);
+        List<Major> majors = redisUtils.get(List.class, key, () -> majorMapper.findByParentId(parentId));
+        return Result.ok(majors);
+    }
+
+    // 认定的根节点
+    @GetMapping(UriView.REST_RENDING_MAJOR_PARENT)
+    @ResponseBody
+    public Result<List<Major>> getRendingRootMajors(@PathVariable("certTypeId") int certTypeId, @PathVariable("eduLevelId") int eduLevelId) {
+        String key = String.format(RedisKey.MAJORS_RENDING_ROOT, certTypeId, eduLevelId);
+        List<Major> majors = redisUtils.get(List.class, key, () -> majorMapper.findByCertTypeIdAndEduLevelId(certTypeId, eduLevelId));
+        return Result.ok(majors);
+    }
+
+    // 认定的子节点
+    @GetMapping(UriView.REST_RENDING_MAJOR_CHILDREN)
+    @ResponseBody
+    public Result<List<Major>> getRendingChildrenMajors(@PathVariable("provinceId") int provinceId, @PathVariable("parentId") int parentId) {
+        String key = String.format(RedisKey.MAJORS_RENDING_CHILDREN, provinceId, parentId);
+        List<Major> majors = redisUtils.get(List.class, key, () -> majorMapper.findByParentIdAndProvince(parentId, provinceId));
+        return Result.ok(majors);
+    }
+
+    // 专业技术职务根节点
+    @GetMapping(UriView.REST_TECHNICAL_JOB_ROOT)
+    @ResponseBody
+    public Result<List<TechnicalJob>> getRootTechnicalJobs() {
+        String key = RedisKey.TECHNICALJOBS;
+        List<TechnicalJob> jobs = redisUtils.get(List.class, key, () -> technicalJobMappler.findRoots());
+        return Result.ok(jobs);
+    }
+
+    // 专业技术职务子节点
+    @GetMapping(UriView.REST_TECHNICAL_JOB_CHILDREN)
+    @ResponseBody
+    public Result<List<TechnicalJob>> getChildrenTechnicalJobs(@PathVariable("parentId") int parentId) {
+        String key = String.format(RedisKey.TECHNICAL_JOB_CHILDREN, parentId);
+        List<TechnicalJob> jobs = redisUtils.get(List.class, key, () -> technicalJobMappler.findByParent(parentId));
+        return Result.ok(jobs);
     }
 
     @Autowired
@@ -122,4 +214,13 @@ public class SignUpController {
 
     @Autowired
     private DictMapper dictMapper;
+
+    @Autowired
+    private CollegeMapper collegeMapper;
+
+    @Autowired
+    private MajorMapper majorMapper;
+
+    @Autowired
+    private TechnicalJobMappler technicalJobMappler;
 }
