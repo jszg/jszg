@@ -57,6 +57,40 @@ gradle -Denv=development clean appStartDebug
 * 字典
 
     ```
+    # 所有
+    http://{{host}}:{{port}}/rest/signUp/dicts
+    
+    # 按类型    
     http://{{host}}:{{port}}/rest/signUp/dicts/{dictTypeId}
     ```
     
+* 毕业学校
+
+    ```
+    http://{{host}}:{{port}}/rest/signUp/colleges
+    ```
+    
+* 所学专业
+
+    ```
+    # 如果是认定的
+    # 根节点
+    http://{{host}}:{{port}}/rest/signUp/majors/root
+    # 子节点 
+    http://{{host}}:{{port}}/rest/signUp/{parentId}/majors/children
+        
+    # 如果是注册的
+    # 根节点
+    http://{{host}}:{{port}}/rest/signUp/certTypes/{certTypeId}/{eduLevelId}/majors/root
+    # 子节点 
+    http://{{host}}:{{port}}/rest/signUp/provinces/{provinceId}/{parentId}/majors/children
+    ```
+    
+* 专业技术职务    
+
+    ```
+    # 根节点
+    http://{{host}}:{{port}}/rest/signUp/technicaljobs/root
+    # 子节点
+    http://{{host}}:{{port}}/rest/signUp/{parentId}/technicaljobs/children
+    ```
