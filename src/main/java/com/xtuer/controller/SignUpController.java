@@ -23,10 +23,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class SignUpController {
+    private static final int[] TYPES = {5, 7, 25, 22, 21, 2};
+    private static final String[] TYPENAMES = {"nation", "eduLevel", "schoolQuale", "workUnitType", "learnType", "normalMajor"};
+
     // 所有资格种类
     @GetMapping(UriView.REST_CERT_TYPE)
     @ResponseBody
@@ -97,8 +102,24 @@ public class SignUpController {
     @GetMapping(UriView.REST_DICTS_BY_DICTTYPE)
     @ResponseBody
     public Result<List<Dict>> getDicts(@PathVariable("dictTypeId") int dictTypeId) {
-        String key = String.format(RedisKey.DICTS, dictTypeId);
+        String key = String.format(RedisKey.DICTS_BY_TYPE, dictTypeId);
         List<Dict> dicts = redisUtils.get(List.class, key, () -> dictMapper.findByDictType(dictTypeId));
+        return Result.ok(dicts);
+    }
+
+    @GetMapping(UriView.REST_DICTS)
+    @ResponseBody
+    public Result<Map<String, List<Dict>>> getDicts() {
+        String key = RedisKey.DICTS;
+        Map<String, List<Dict>> dicts  = redisUtils.get(Map.class, key, () -> {
+            Map<String, List<Dict>> map = new HashMap<String, List<Dict>>();
+            for (int i = 0; i < TYPES.length; i++) {
+                final int type = TYPES[i];
+                String subkey = String.format(RedisKey.DICTS_BY_TYPE, type);
+                map.put(TYPENAMES[i], redisUtils.get(List.class, subkey, () -> dictMapper.findByDictType(type)));
+            }
+            return map;
+        });
         return Result.ok(dicts);
     }
 

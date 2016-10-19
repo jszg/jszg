@@ -57,6 +57,10 @@ gradle -Denv=development clean appStartDebug
 * 字典
 
     ```
+    #所有
+    http://{{host}}:{{port}}/rest/signUp/dicts
+    
+    #按类型    
     http://{{host}}:{{port}}/rest/signUp/dicts/{dictTypeId}
     ```
     
