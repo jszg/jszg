@@ -89,14 +89,14 @@ $(document).ready(function() {
     ///                                下一步                              //
     ////////////////////////////////////////////////////////////////////////
     // 第一步的下一步
-    $('#box-1-next').click(function(){
+    $('#box-1-next').click(function() {
         $('#box-1').hide();
         $('#box-2').show();
         $('.bz2').addClass('active');
     });
 
     // 第二步的下一步
-    $('#box-2-next').click(function(){
+    $('#box-2-next').click(function() {
         if (!$('#_checkbox_bd').get(0).checked){
             alert('请先阅读网上申报协议并同意后才可以申报！');
             return;
@@ -108,35 +108,72 @@ $(document).ready(function() {
     });
 
     // 第三步的下一步
-    $('#box-3-next').click(function(){
+    // 资格种类  id 不能为 -1
+    // 省       id 不能为 -1
+    // 市       id 不能为 -1
+    // 认定机构 id 不能为 -1
+    // 任教学科 id 不能为 -1
+    $('#box-3-next').click(function() {
+        var certTypeId = parseInt($('#certTypes option:selected').val()); // #provinces option:selected
+        var provinceId = parseInt($('#provinces option:selected').val());
+        var cityId     = parseInt($('#citys option:selected').val());
+        var orgId      = parseInt($('#orgs option:selected').val());
+        var subjectId  = parseInt($('#subject').attr('data-subject-id'));
+
+        if (-1 == certTypeId) {
+            alert('请选择资格种类');
+            return;
+        }
+
+        if (-1 == provinceId) {
+            alert('请选择省');
+            return;
+        }
+
+        if (-1 == cityId) {
+            alert('请选择市');
+            return;
+        }
+
+        if (-1 == orgId) {
+            alert('请选择认定机构');
+            return;
+        }
+
+        if (-1 == subjectId) {
+            alert('请选择任教学科');
+            return;
+        }
+
+        // 验证通过，进入第四步
         $('#box-3').hide();
         $('#box-4').show();
         $('.bz4').addClass('active');
     });
 
     // 第四步的下一步
-    $('#box-4-next').click(function(){
+    $('#box-4-next').click(function() {
         $('#box-4').hide();
         $('#box-5').show();
         $('.bz5').addClass('active');
     });
 
     // 第五步的下一步
-    $('#box-5-next').click(function(){
+    $('#box-5-next').click(function() {
         $('#box-5').hide();
         $('#box-6').show();
         $('.bz6').addClass('active');
     });
 
     // 第六步的下一步
-    $('#box-6-next').click(function(){
+    $('#box-6-next').click(function() {
         $('#box-6').hide();
         $('#box-7').show();
         $('.bz7').addClass('active');
     });
 
     // 第七步的下一步
-    $('#box-7-next').click(function(){
+    $('#box-7-next').click(function() {
         $('#box-7').hide();
         $('#box-8').show();
         $('.bz8').addClass('active');
