@@ -90,6 +90,10 @@
         </property>
     </bean>
 
+    <bean id="propertiesConfig" class="org.apache.commons.configuration.PropertiesConfiguration">
+        <constructor-arg value="classpath:config/config.properties"/> <!-- 不要用 classpath: -->
+    </bean>
+
     <!-- 对静态资源的访问，如 js, css, jpg, png -->
     <!-- 如 HTML 里访问 /js/jquery.js, 则实际访问的是 /WEB-INF/asset/js/jquery.js -->
     <mvc:resources mapping="/js/**"  location="/WEB-INF/static/js/"  cache-period="31556926"/>

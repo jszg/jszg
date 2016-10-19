@@ -6,6 +6,7 @@ import com.xtuer.constant.UriView;
 import com.xtuer.mapper.CertTypeMapper;
 import com.xtuer.mapper.DemoMapper;
 import com.xtuer.util.RedisUtils;
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
 
 @Controller
 public class DemoController {
@@ -28,6 +31,9 @@ public class DemoController {
 
     @Autowired
     private RedisUtils redisUtils;
+
+    @Resource(name = "propertiesConfig")
+    private PropertiesConfiguration propertiesConfig;
 
     @GetMapping("/demos/{id}")
     @ResponseBody
@@ -50,6 +56,9 @@ public class DemoController {
 
         // 3. 可以使用 {} 的方式传入参数
         logger.debug("With params: time: {}, name: {}", System.nanoTime(), "Bingo");
+
+        System.out.println(propertiesConfig.getString("uploadPersonImageDir" + "........"));
+        System.out.println(propertiesConfig.getString("url"));
 
         return "Test logback";
     }
