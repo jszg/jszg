@@ -65,6 +65,19 @@ $(document).ready(function() {
         }
     });
 
+    $('#subjects-dialog-trigger').leanModal({top: 50, overlay : 0.4});
+    // $('#select-subjects').leanModal();
+    $('#select-subjects').click(function(event) {
+        // 判断
+        // 请求任教学科
+console.log('select-subjects click');
+        $('#subjects-dialog-trigger').click();
+        requestSubjects();
+    });
+
+    ////////////////////////////////////////////////////////////////////////
+    ///                                下一步                              //
+    ////////////////////////////////////////////////////////////////////////
     // 第一步的下一步
     $('#box-1-next').click(function(){
         $('#box-1').hide();
@@ -184,3 +197,49 @@ $(document).ready(function() {
     $('#box-1-next').click();
     $('#box-2-next').click();
 });
+
+function requestSubjects() {
+    var setting = {
+        async: {
+            enable: true,
+            url: loadSubjectsUrl,
+            type: 'GET',
+            dataFilter: filter
+        },
+        view: {
+            showIcon: false
+        }
+    };
+
+    function filter(treeId, parentNode, result) {
+        if (!result) return null;
+
+        var childNodes = result.data;
+
+        for (var i = 0, l = childNodes.length; i < l; i++) {
+            childNodes[i].isParent = true;
+        }
+
+        return childNodes;
+    }
+
+    function loadSubjectsUrl(treeId, treeNode) {
+        var provinceId = 12911;
+        var certTypeId = 4;
+
+        if(!treeNode) {
+            return Urls.REST_SUBJECTS_ROOT.format({provinceId: provinceId, certTypeId: certTypeId});
+        } else {
+            return Urls.REST_SUBJECTS_CHILDREN.format({provinceId: provinceId, parentId: treeNode.id});
+        }
+    }
+
+    // $(document).ready(function() {
+    // $.fn.zTree.destroy();
+    window.subjectsTree = $.fn.zTree.init($("#subjects"), setting);
+
+        // $('#button').click(function(event) {
+            // console.log(window.treeObj.getSelectedNodes()[0].id);
+        // });
+    // });
+}
