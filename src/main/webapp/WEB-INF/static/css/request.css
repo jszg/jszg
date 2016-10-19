@@ -245,11 +245,15 @@ table{border-collapse:collapse;}
 
 #subjects-dialog-ztree {
     overflow: scroll;
+    overflow-y: scroll;
     height: 500px;
 }
 
 #subjects-dialog-buttons-holder {
     height: 50px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
 }
 
 .ztree .node_name {
