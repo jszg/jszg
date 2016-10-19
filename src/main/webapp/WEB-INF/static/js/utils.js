@@ -9,7 +9,7 @@ Urls = {
     REST_ORGS_BY_CITY_AND_CERT_TYPE: '/rest/signUp/cities/{cityId}/certTypes/{certTypeId}/orgs',
     REST_SUBJECTS_CHILDREN: '/rest/signUp/provinces/{provinceId}/{parentId}/subjects/children',
     WEB_UPLOADER_SWF: 'https://cdn.staticfile.org/webuploader/0.1.5/Uploader.swf'
-}
+};
 
 /**
  * 工具类
@@ -32,7 +32,7 @@ function Utils() {
 String.prototype.format = function(replacements) {
     replacements = (typeof replacements === 'object') ? replacements : Array.prototype.slice.call(arguments, 0);
     return formatString(this, replacements);
-}
+};
 
 /**
  * 替换字符串中 {placeholder} 或者 {0}, {1} 等模式部分为参数中传入的字符串

@@ -30,103 +30,73 @@
         <div class="declare">
             <h2>网上申<br> 报流程</h2>
             <ul>
-                <li class="bz bz1 active" style="z-index: 10">
-                    <span>申报第一步</span>
-                    <br>
-                    <span>申报人必读</span>
-                </li>
-                <li class="bz bz2" style="z-index: 9">
-                    <span>申报第二步</span>
-                    <br>
-                    <span>确认服务条款</span>
-                </li>
-                <li class="bz bz3" style="z-index: 8">
-                    <span>申报第三步</span>
-                    <br>
-                    <span>选择认定机构</span>
-                </li>
-                <li class="bz bz4" style="z-index: 7">
-                    <span>申报第四步</span>
-                    <br>
-                    <span>选择确认点</span>
-                </li>
-                <li class="bz bz5" style="z-index: 6">
-                    <span>申报第五步</span>
-                    <br>
-                    <span>阅读注意事项</span>
-                </li>
-                <li class="bz bz6" style="z-index: 5">
-                    <span>申报第六步</span>
-                    <br>
-                    <span>填写身份信息</span>
-                </li>
-                <li class="bz bz7" style="z-index: 4">
-                    <span>申报第七步</span>
-                    <br>
-                    <span>填写申请材料</span>
-                </li>
-                <li class="bz bz8" style="z-index: 3">
-                    <span>申报第八步</span>
-                    <br>完成</li>
+                <li class="bz bz1 active" style="z-index: 10"><span>申报第一步</span><br/><span>申报人必读</span></li>
+                <li class="bz bz2" style="z-index: 9"><span>申报第二步</span><br/><span>确认服务条款</span></li>
+                <li class="bz bz3" style="z-index: 8"><span>申报第三步</span><br/><span>选择认定机构</span></li>
+                <li class="bz bz4" style="z-index: 7"><span>申报第四步</span><br/><span>选择确认点</span></li>
+                <li class="bz bz5" style="z-index: 6"><span>申报第五步</span><br/><span>阅读注意事项</span></li>
+                <li class="bz bz6" style="z-index: 5"><span>申报第六步</span><br/><span>填写身份信息</span></li>
+                <li class="bz bz7" style="z-index: 4"><span>申报第七步</span><br/><span>填写申请材料</span></li>
+                <li class="bz bz8" style="z-index: 3"><span>申报第八步</span><br>完成</li>
             </ul>
         </div>
-        <!-- 第一步-->
+
+        <!-- 第一步 -->
         <div id="box-1">
             <div class="content_bd">
                 <h4>申请人必读</h4>
                 <p>
-                    1.未达到国家法定退休年龄、具备《教师法》规定学历的中国公民均可申请认定教师资格。
-                    <br> 2.具备下列条件，经认定合格的，可以取得相应类别的教师资格。
-                    <br> （1）具备《教师法》规定的相应学历要求。
-                    <br> （2）遵守宪法和法律，热爱教育事业，具有良好的思想品德。
-                    <br> （3）有教育教学能力，包括：
-                    <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;具备承担教育教学工作所必须的基本素质和能力，修学教育学、心理学等课程并考试合格，参加教育教学能力测试（教育教学实践）合格；
-                    <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;普通话水平达到国家规定的标准；
-                    <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;具有良好的身心素质，在教师资格认定机构指定的县级以上医院体检合格。
-                    <br> 3.应届毕业生申请认定幼儿园、小学、初级中学教师资格时，认定机构可选择就读学校所在地或户籍所在地的区、县级教育局；申请认定高级中学、中等职业学校、中等职业学校实习指导教师资格时，认定机构可选择就读学校所在地或户籍所在地的地、州、市级教育局。
-                    <br> 在职教师或其他社会人员申请认定幼儿园、小学、初中教师资格可选择工作单位（人事档案）所在地或户籍所在地的区、县级教育局；申请认定高级中学、中等职业学校、中等职业学校实习指导教师资格可选择工作单位（人事档案）所在地或户籍所在地的地、州、市级教育局。
-                    <br> 高等学校拟聘或已聘任的教学科研人员申请认定高等学校教师资格只能选择任教（拟任教）学校所在地的省（自治区、直辖市）教育厅（教委）。
-                    <br>
+                    1. 未达到国家法定退休年龄、具备《教师法》规定学历的中国公民均可申请认定教师资格。
+                    <br/> 2. 具备下列条件，经认定合格的，可以取得相应类别的教师资格。
+                    <br/> （1）具备《教师法》规定的相应学历要求。
+                    <br/> （2）遵守宪法和法律，热爱教育事业，具有良好的思想品德。
+                    <br/> （3）有教育教学能力，包括：
+                    <br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;具备承担教育教学工作所必须的基本素质和能力，修学教育学、心理学等课程并考试合格，参加教育教学能力测试（教育教学实践）合格；
+                    <br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;普通话水平达到国家规定的标准；
+                    <br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;具有良好的身心素质，在教师资格认定机构指定的县级以上医院体检合格。
+                    <br/> 3. 应届毕业生申请认定幼儿园、小学、初级中学教师资格时，认定机构可选择就读学校所在地或户籍所在地的区、县级教育局；申请认定高级中学、中等职业学校、中等职业学校实习指导教师资格时，认定机构可选择就读学校所在地或户籍所在地的地、州、市级教育局。
+                    <br/> 在职教师或其他社会人员申请认定幼儿园、小学、初中教师资格可选择工作单位（人事档案）所在地或户籍所在地的区、县级教育局；申请认定高级中学、中等职业学校、中等职业学校实习指导教师资格可选择工作单位（人事档案）所在地或户籍所在地的地、州、市级教育局。
+                    <br/> 高等学校拟聘或已聘任的教学科研人员申请认定高等学校教师资格只能选择任教（拟任教）学校所在地的省（自治区、直辖市）教育厅（教委）。
+                    <br/>
                     <font style="color:red">在河北省申请认定幼儿园、小学、初级中学教师资格的申请人，认定机构选择市级教育局。</font>
-                    <br> 4.各省级教育行政部门对认定权限或申报条件另有规定的，按其规定执行。
+                    <br> 4. 各省级教育行政部门对认定权限或申报条件另有规定的，按其规定执行。
                     <br>
                 </p>
 
             </div>
             <div class="action-bar" id="action-bar-1">
-                <a href="javascript:void(0)" target="_self" class="next-step">
+                <a href="javascript:void(0)" class="next-step">
                     <img id="box-1-next" src="${static}/img/request/button09.gif" alt="下一步" border="0">
                 </a>
-                <br>
-                <span id="next_step_alert_span" style="line-height:40px;color:red;"></span>
             </div>
         </div>
-        <!--  第二步-->
+
+        <!-- 第二步 -->
         <div id="box-2">
             <div class="content_bd">
                 <h4>网上申报协议</h4>
                 <p>
-                    1.本网站网上申报系统的所有权归中国教师资格网。
-                    <br> 2.教师资格申请人已经认真阅读本网站中提供的“申请人必读”中的内容，符合国家规定的申请条件。
-                    <br> 3.教师资格申请人须保证提交的个人信息真实、准确，保证按照本系统做出的申请认定工作安排和有关规定申请认定教师资格。申请人承担由于信息不真实、不准确和个人疏漏引起的一切后果。
-                    <br> 4.教师资格申请人注册成功后，须妥善保管个人密码，因保管不善所引起的一切后果由申请人承担。
-                    <br> 5.教师资格申请人理解并同意由于不可抗力所引起的无法正常申请的情况，本网站不承担任何直接或间接的责任。
-                    <br> 6.教师资格申请人必须在规定的日期内，登录网上申报系统执行相关操作。因个人原因未履行相关责任而导致的申报异常，由申请人本人承担所有责任。
-                    <br> 7.本网站尊重并保护申请人网上申报留存的个人申请信息，非经申请人本人同意，本网站不会主动公开、编辑、披露或透露任何申请人个人申请信息，但根据法律法规规定必须披露的或司法部门或其他法律授权的机关依照法定程序要求提供的除外。
-                    <br>
+                    1. 本网站网上申报系统的所有权归中国教师资格网。<br/>
+                    2. 教师资格申请人已经认真阅读本网站中提供的“申请人必读”中的内容，符合国家规定的申请条件。<br/>
+                    3. 教师资格申请人须保证提交的个人信息真实、准确，保证按照本系统做出的申请认定工作安排和有关规定申请认定教师资格。申请人承担由于信息不真实、不准确和个人疏漏引起的一切后果。<br/>
+                    4. 教师资格申请人注册成功后，须妥善保管个人密码，因保管不善所引起的一切后果由申请人承担。<br/>
+                    5. 教师资格申请人理解并同意由于不可抗力所引起的无法正常申请的情况，本网站不承担任何直接或间接的责任。<br/>
+                    6. 教师资格申请人必须在规定的日期内，登录网上申报系统执行相关操作。因个人原因未履行相关责任而导致的申报异常，由申请人本人承担所有责任。<br/>
+                    7. 本网站尊重并保护申请人网上申报留存的个人申请信息，非经申请人本人同意，本网站不会主动公开、编辑、披露或透露任何申请人个人申请信息，但根据法律法规规定必须披露的或司法部门或其他法律授权的机关依照法定程序要求提供的除外。<br/>
                 </p>
-                <p>&nbsp;</p>
-                <input type="checkbox" id="_checkbox_bd" checked="true">&nbsp;已阅读并完全同意
+                <br/>
+                <input type="checkbox" id="_checkbox_bd" checked="true"> <label for="_checkbox_bd">已阅读并完全同意</label>
             </div>
             <div class="action-bar">
-                <a href="javascript:void(0)" target="_self" class="pre-step">
+                <a href="javascript:void(0)" class="pre-step">
                     <img src="${static}/img/request/button10.gif" alt="上一步" border="0" id="box-2-previous">
                 </a>
-                <a href="javascript:void(0)" target="_self" class="next-step">
+                <a href="javascript:void(0)" class="next-step">
                     <img src="${static}/img/request/button09.gif" alt="下一步" border="0" id="box-2-next">
                 </a>
             </div>
         </div>
+
         <!--第三步-->
         <div id="box-3">
             <!--第一个弹出框-->
@@ -138,91 +108,76 @@
                 <span class="close-2">×第2个弹出框</span>
             </div>
             <div class="content_bd">
-                <h4>请选择资格种类和认定机构<font style="font-size:95%;color:red">（在河北省申请认定中小学和幼儿园教师资格的申请人，认定机构请选择市级（含省直管县）教育局）</font>
-            </h4>
+                <h4>请选择资格种类和认定机构<font style="font-size:95%;color:red">（在河北省申请认定中小学和幼儿园教师资格的申请人，认定机构请选择市级（含省直管县）教育局）</font></h4>
+
                 <div class="ui-body">
-                    <form method="post" class="column-1">
-                        <table border='0' cellspacing="0" cellpadding="0">
-                            <tbody>
-                                <tr>
-                                    <td style="text-align:right;width:60px;">
-                                        <label class="ui-required-false">资格种类</label>
-                                    </td>
-                                    <td class="ui-field-certType" style="text-align:left;">
-                                        <select id="certType" name="certType" class="ui-field">
-                                            <option selected="selected" value="-1">请选择</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align:right;width:60px;">
-                                        <label class="ui-required-false">选择省</label>
-                                    </td>
-                                    <td class="ui-field-province" style="text-align:left;">
-                                        <select id="province" name="province" class="ui-field ref-certType">
-                                            <option selected="selected" value="-1">请选择</option>
-                                        </select>
-                                        <span class="ui-field-desc"></span>
-                                        <span class="ui-error-msg err_msg_province"></span>
-                                        <span><font>在职教师或其他社会人员选择工作单位（人事档案）所在地或户籍所在地的省份和地、州、市（含省直管县）；应届毕业生只能在毕业前最后一学期申请认定，应届毕业生选择就读学校所在地的省份和地、州、市（含省直管县）。</font></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align:right;width:60px;">
-                                        <label class="ui-required-false">选择市</label>
-                                    </td>
-                                    <td class="ui-field-city" style="text-align:left;">
-                                        <select id="city" name="city" class="ui-field ref-province">
-                                            <option selected="selected" value="-1">请选择</option>
-                                        </select>
-                                        <span class="ui-field-desc"></span>
-                                        <span class="ui-error-msg err_msg_city"></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align:right;width:60px;">
-                                        <label class="ui-required-false">认定机构</label>
-                                    </td>
-                                    <td class="ui-field-org" style="text-align:left;">
-                                        <span idfield="id" dictype="URL" labelfield="orgName" multisel="false" url="/public/pro/certtype/org" class="dictionary_org ref-city"></span>
-                                        <select id="org" name="org">
-                                            <option selected="selected" value="-1">请选择</option>
-                                        </select>
-                                        <span class="ui-field-desc"></span>
-                                        <span class="ui-error-msg err_msg_org"></span>
-                                        <span><font>申请认定幼儿园、小学、初级中学教师资格时，认定机构选择区、县级教育局；申请认定高级中学、中等职业学校、中等职业学校实习指导教师资格时，认定机构选择地、州、市级教育局。<br></font><font color="red">河北省认定中小学和幼儿园教师资格的认定权限已经调整，“认定机构”只能选择系统提供的教育局名称。<br></font><font>高等学校拟聘或已聘任的教学科研人员申请认定高等学校教师资格只能选择任教（拟任教）学校所在地的省（自治区、直辖市）教育厅（教委）。</font></span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="text-align:right;width:60px;">
-                                        <label class="ui-required-false">任教学科</label>
-                                    </td>
-                                    <td class="ui-field-subject" style="text-align:left;">
-                                        <span idfield="id" dictype="TREE" labelfield="name" multisel="false" url="/public/pro/certtype/subject/tree" class="dictionary_subject ref-province">
-                                        </span>
-                                        <button type="button" class="ui-button-value-select select-type-TREE ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" field="subject" role="button" aria-disabled="false">
-                                            <span class="ui-button-text-2">选择...</span>
-                                        </button>
-                                        <span class="ui-field-desc"></span>
-                                        <span class="ui-error-msg err_msg_subject"></span>
-                                    </td>
-                                </tr>
+                    <table border='0' cellspacing="0" cellpadding="0">
+                        <!-- 选择资格种类 -->
+                        <tr>
+                            <td class="operation"><label>资格种类</label></td>
+                            <td style="width: 140px;">
+                                <select id="certTypes" name="certTypes" class="ui-field">
+                                    <option selected="selected" value="-1">请选择</option>
+                                </select>
+                            </td>
+                        </tr>
 
-                            </tbody>
-                        </table>
-                    </form>
+                        <!-- 选择省 -->
+                        <tr>
+                            <td class="operation"><label>选择省</label></td>
+                            <td>
+                                <select id="provinces" name="provinces">
+                                    <option selected="selected" value="-1">请选择</option>
+                                </select>
+                            </td>
+                            <td>
+                                <span><font>在职教师或其他社会人员选择工作单位（人事档案）所在地或户籍所在地的省份和地、州、市（含省直管县）；应届毕业生只能在毕业前最后一学期申请认定，应届毕业生选择就读学校所在地的省份和地、州、市（含省直管县）。</font></span>
+                            </td>
+                        </tr>
+
+                        <!-- 选择市 -->
+                        <tr>
+                            <td class="operation"><label>选择市</label></td>
+                            <td>
+                                <select id="citys" name="citys">
+                                    <option selected="selected" value="-1">请选择</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                        <!-- 选择认定机构 -->
+                        <tr>
+                            <td class="operation"><label class="ui-required-false">认定机构</label></td>
+                            <td>
+                                <select id="orgs" name="orgs">
+                                    <option selected="selected" value="-1">请选择</option>
+                                </select>
+                            </td>
+                            <td>
+                                <span class="description"><fon>申请认定幼儿园、小学、初级中学教师资格时，认定机构选择区、县级教育局；申请认定高级中学、中等职业学校、中等职业学校实习指导教师资格时，认定机构选择地、州、市级教育局。<br></font><font color="red">河北省认定中小学和幼儿园教师资格的认定权限已经调整，“认定机构”只能选择系统提供的教育局名称。<br></font><font>高等学校拟聘或已聘任的教学科研人员申请认定高等学校教师资格只能选择任教（拟任教）学校所在地的省（自治区、直辖市）教育厅（教委）。</font></span>
+                            </td>
+                        </tr>
+
+                        <!-- 选择任教学科 -->
+                        <tr>
+                            <td class="operation"><label>任教学科</label></td>
+                            <td>
+                                <button type="button">选择...</button>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
-
             </div>
             <div class="action-bar">
-                <a href="javascript:void(0)" target="_self" class="pre-step">
+                <a href="javascript:void(0)" class="pre-step">
                     <img src="${static}/img/request/button10.gif" alt="上一步" border="0" id="box-3-previous">
                 </a>
-                <a href="javascript:void(0)" target="_self" class="next-step">
+                <a href="javascript:void(0)" class="next-step">
                     <img src="${static}/img/request/button09.gif" alt="下一步" border="0" id="box-3-next">
                 </a>
             </div>
         </div>
+        
         <!-- 第四步-->
         <div id="box-4">
             <div class="content_bd">
@@ -263,10 +218,10 @@
                 </div>
             </div>
             <div class="action-bar">
-                <a href="javascript:void(0)" target="_self" class="pre-step">
+                <a href="javascript:void(0)" class="pre-step">
                     <img src="${static}/img/request/button10.gif" alt="上一步" border="0" id="box-4-previous">
                 </a>
-                <a href="javascript:void(0)" target="_self" class="next-step">
+                <a href="javascript:void(0)" class="next-step">
                     <img src="${static}/img/request/button09.gif" alt="下一步" border="0" id="box-4-next">
                 </a>
             </div>
@@ -350,10 +305,10 @@
                 <p></p>
             </div>
             <div class="action-bar">
-                <a href="javascript:void(0)" target="_self" class="pre-step">
+                <a href="javascript:void(0)" class="pre-step">
                     <img src="${static}/img/request/button10.gif" alt="上一步" border="0" id="box-5-previous">
                 </a>
-                <a href="javascript:void(0)" target="_self" class="next-step">
+                <a href="javascript:void(0)" class="next-step">
                     <img src="${static}/img/request/button11.gif" alt="下一步" border="0" id="box-5-next">
                 </a>
             </div>
@@ -419,10 +374,10 @@
                 </div>
             </div>
             <div class="action-bar">
-                <a href="javascript:void(0)" target="_self" class="pre-step">
+                <a href="javascript:void(0)" class="pre-step">
                     <img src="${static}/img/request/button10.gif" alt="上一步" border="0" id="box-6-previous">
                 </a>
-                <a href="javascript:void(0)" target="_self" class="next-step">
+                <a href="javascript:void(0)" class="next-step">
                     <img src="${static}/img/request/button09.gif" alt="下一步" border="0" id="box-6-next">
                 </a>
             </div>
@@ -1103,10 +1058,10 @@
                 </div>
             </div>
             <div class="action-bar">
-                <a href="javascript:void(0)" target="_self" class="pre-step">
+                <a href="javascript:void(0)" class="pre-step">
                     <img src="${static}/img/request/button10.gif" alt="上一步" border="0" id="box-7-previous">
                 </a>
-                <a href="javascript:void(0)" target="_self" class="next-step">
+                <a href="javascript:void(0)" class="next-step">
                     <img src="${static}/img/request/button09.gif" alt="下一步" border="0" id="box-7-next">
                 </a>
             </div>
