@@ -74,9 +74,11 @@ $(document).ready(function() {
         // 请求任教学科
         requestSubjects();
     });
+    // 点击取消按钮隐藏对话匡
     $('#subjects-dialog-buttons-holder .cancel').click(function(event) {
         $("#lean_overlay").click();
     });
+    // 点击确定按钮，设置选中的学科，并隐藏对话框
     $('#subjects-dialog-buttons-holder .ok').click(function(event) {
         var subjectNode = window.subjectsTree.getSelectedNodes()[0];
         if (subjectNode) {
@@ -171,47 +173,13 @@ $(document).ready(function() {
     });
 
     // 第三步的下一步
-    // 资格种类  id 不能为 -1
-    // 省       id 不能为 -1
-    // 市       id 不能为 -1
-    // 认定机构 id 不能为 -1
-    // 任教学科 id 不能为 -1
     $('#box-3-next').click(function() {
-        // var certTypeId = parseInt($('#certTypes option:selected').val()); // #provinces option:selected
-        // var provinceId = parseInt($('#provinces option:selected').val());
-        // var cityId     = parseInt($('#citys option:selected').val());
-        // var orgId      = parseInt($('#orgs option:selected').val());
-        // var subjectId  = parseInt($('#subject').attr('data-subject-id'));
-        //
-        // if (-1 == certTypeId) {
-        //     alert('请选择: 资格种类');
-        //     return;
+        // if (validate3thStep()) {
+            // 验证通过，进入第四步
+            $('#box-3').hide();
+            $('#box-4').show();
+            $('.bz4').addClass('active');
         // }
-        //
-        // if (-1 == provinceId) {
-        //     alert('请选择: 省');
-        //     return;
-        // }
-        //
-        // if (-1 == cityId) {
-        //     alert('请选择: 市');
-        //     return;
-        // }
-        //
-        // if (-1 == orgId) {
-        //     alert('请选择: 认定机构');
-        //     return;
-        // }
-        //
-        // if (-1 == subjectId) {
-        //     alert('请选择: 任教学科');
-        //     return;
-        // }
-
-        // 验证通过，进入第四步
-        $('#box-3').hide();
-        $('#box-4').show();
-        $('.bz4').addClass('active');
     });
 
     // 第四步的下一步
@@ -288,21 +256,7 @@ $(document).ready(function() {
         $('.bz7').removeClass('active');
     });
 
-    /*****************弹出框***********************/
-    // 第三步的弹出框
-    $('#box-3 .ui-button-text-1').click(function(){
-    $('#box-3 .popup-1').show();
-        $('#box-3 .close-1').click(function(){
-            $('#box-3 .popup-1').hide();
-        });
-    });
-
-    $('#box-3 .ui-button-text-2').click(function(){
-        $('#box-3 .popup-2').show();
-        $('#box-3 .close-2').click(function(){
-            $('#box-3 .popup-2').hide();
-        });
-    });
+    $('tr:last', $('table')).css('border-bottom', 'none'); // 删除最后一行的 border-bottom
 
     $('#box-1-next').click();
     $('#box-2-next').click();
@@ -412,4 +366,48 @@ function initWebUploader() {
             $('#photo img').attr('src', src);
         }, 114, 156); // 100 * 100 为缩略图多大小
     };
+}
+
+/**
+ * 第三步校验:
+ *      资格种类  id 不能为 -1
+ *      省       id 不能为 -1
+ *      市       id 不能为 -1
+ *      认定机构 id 不能为 -1
+ *      任教学科 id 不能为 -1
+ * @return {bool} true 为验证通过，false 为验证不通过
+ */
+function validate3thStep() {
+    var certTypeId = parseInt($('#certTypes option:selected').val()); // #provinces option:selected
+    var provinceId = parseInt($('#provinces option:selected').val());
+    var cityId     = parseInt($('#citys option:selected').val());
+    var orgId      = parseInt($('#orgs option:selected').val());
+    var subjectId  = parseInt($('#subject').attr('data-subject-id'));
+
+    if (-1 == certTypeId) {
+        alert('请选择: 资格种类');
+        return false;
+    }
+
+    if (-1 == provinceId) {
+        alert('请选择: 省');
+        return false;
+    }
+
+    if (-1 == cityId) {
+        alert('请选择: 市');
+        return false;
+    }
+
+    if (-1 == orgId) {
+        alert('请选择: 认定机构');
+        return false;
+    }
+
+    if (-1 == subjectId) {
+        alert('请选择: 任教学科');
+        return false;
+    }
+
+    return true;
 }

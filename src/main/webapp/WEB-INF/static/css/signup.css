@@ -1,0 +1,222 @@
+html, body {
+    background: #ededed;
+}
+
+table td {
+    vertical-align: top;
+    text-align: left;
+}
+
+table, td {
+    padding: 5px;
+}
+
+button {
+    width: 80px;
+    text-align: center !important;;
+}
+
+.operation {
+    text-align: right;
+    font-weight: bold;
+}
+
+.description {
+    color: #888;
+}
+
+.request {
+    width: 1000px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.request h1 {
+    text-indent: 35px;
+    color: rgb(222, 0, 0);
+    margin-bottom: 10px;
+    background: url("../img/signup/icon_15.jpg") left center no-repeat;
+    font: normal 16px/ 30px "微软雅黑";
+}
+
+/*******************************************************************************************/
+/*                                          报名步骤                                        */
+/*******************************************************************************************/
+.declare {
+    height: 48px;
+    background: url("../img/signup/sbbg.gif") left top no-repeat;
+    padding: 4px 8px 8px 8px;
+}
+
+.declare h2 {
+    width: 75px;
+    height: 40px;
+    font-size: 14px;
+    color: #fff;
+    line-height: 20px;
+    float: left;
+    margin: 2px 0px 3px 4px;
+}
+
+.declare .bz {
+    position: relative;
+    width: auto;
+    height: 38px;
+    padding: 4px 20px 4px 16px;
+    float: left;
+    font-size: 14px;
+    font-weight: bold;
+    color: #FFF;
+    margin-left: -12px;
+    background-image: url(../img/signup/bz-inactive.png);
+    background-position: right center;
+}
+
+.declare .bz.active {
+    background-image: url(../img/signup/bz-active.png);
+}
+
+.declare .bz.bz8, .declare .bz.bz8.active {
+    background-position: left center;
+}
+
+.declare li span {
+    font-size: 12px;
+}
+
+/*******************************************************************************************/
+/*                                        每一步的 box                                      */
+/*******************************************************************************************/
+#box-1 {
+    display: block;
+    padding-bottom: 10px;
+}
+
+#box-2, #box-3, #box-4, #box-5, #box-6, #box-7, #box-8 {
+    display: none;
+    padding-bottom: 10px;
+}
+
+#box-3 td select, #box-6 td select, #box-7 td select,
+#box-3 td input, #box-6 td input, #box-7 td input {
+    width: 100%;
+}
+
+#box-5 li {
+    margin-left: 20px;
+}
+
+.content_bd {
+    height: auto;
+    padding: 10px;
+    padding-left: 20px;
+    line-height: 22px;
+    margin: 10px 0;
+}
+
+.content_bd h4 {
+    font-weight: bold;
+    color: #3372a4;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    line-height: 30px;
+    margin-top: 5px;
+}
+
+.content_bd p {
+    font-size: 14px;
+    line-height: 24px;
+}
+
+.request .action-bar {
+    text-align: center;
+}
+
+.ui-crud-widget .ui-header {
+    border: none;
+    font-weight: bold;
+    color: #3372a4;
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    line-height: 30px;
+    margin-top: 5px;
+    background: none;
+}
+
+.ui-body {
+    border: 1px solid #a6c9e2;
+    border-radius: 4px;
+}
+
+.ui-body table tr {
+    border-bottom: 1px dashed #dfdfdf;
+    text-align: center;
+}
+
+.f_size{color: #de0000;font-size: 12px;}
+tr{border-bottom: 1px dashed #eee;}
+table{border-collapse:collapse;}
+
+#lean_overlay {
+    position: fixed;
+    z-index: 100;
+    top: 0px;
+    left: 0px;
+    height:100%;
+    width:100%;
+    background: #000;
+    /*opacity: 0.4;*/
+    display: none;
+}
+
+#subjects-dialog {
+    z-index:1000;
+    display: none;
+    background: white;
+    border: solid 1px gray;
+    border-radius: 6px;
+    box-shadow: 0px 0px 8px #666;
+    padding: 5px 10px;
+    width: 500px;
+    height: 550px;
+    /*overflow: scroll;*/
+}
+
+#subjects-dialog-ztree {
+    overflow: scroll;
+    overflow-y: scroll;
+    height: 500px;
+}
+
+#subjects-dialog-buttons-holder {
+    height: 50px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+}
+
+.ztree .node_name {
+    font-size: 14px;
+}
+
+#photo{
+    display: block;
+    height: 156px;
+    width: 114px;
+    background: #f3f3f3;
+    border: solid 1px #DDD;
+}
+
+#filePicker {
+    margin-top: 2px;
+    width: 116px;
+}
+
+.webuploader-pick {
+    width: 100%;
+    padding: 0 !important;
+}
