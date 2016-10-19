@@ -43,6 +43,10 @@
     </ul>
 </div>
 
+<script id="optionTemplate" type="text/html">
+    <option value="{{id}}">{{name}}</option>
+</script>
+
 <!-- 第一步 -->
 <div id="box-1">
     <div class="content_bd">
