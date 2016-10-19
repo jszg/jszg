@@ -12,5 +12,9 @@ public interface UriView {
     String REST_SUBJECTS_CHILDREN          = "/rest/signUp/provinces/{provinceId}/{parentId}/subjects/children";
     String REST_DICTS                      = "/rest/signUp/dicts";
     String REST_DICTS_BY_DICTTYPE          = "/rest/signUp/dicts/{dictTypeId}";
-
+    String REST_COLLEGES                   = "/rest/signUp/colleges";
+    String REST_ZHUCE_MAJOR_PARENT         = "/rest/signUp/majors/root";
+    String REST_ZHUCE_MAJOR_CHILDREN       = "/rest/signUp/{parentId}/majors/children";
+    String REST_RENDING_MAJOR_PARENT       = "/rest/signUp/certTypes/{certTypeId}/{eduLevelId}/majors/root";
+    String REST_RENDING_MAJOR_CHILDREN     = "/rest/signUp/provinces/{provinceId}/{parentId}/majors/children";
 }

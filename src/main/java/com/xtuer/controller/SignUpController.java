@@ -5,13 +5,17 @@ import com.xtuer.constant.RedisKey;
 import com.xtuer.constant.UriView;
 import com.xtuer.dto.CertType;
 import com.xtuer.dto.City;
+import com.xtuer.dto.College;
 import com.xtuer.dto.Dict;
+import com.xtuer.dto.Major;
 import com.xtuer.dto.Organization;
 import com.xtuer.dto.Province;
 import com.xtuer.dto.Subject;
 import com.xtuer.mapper.CertTypeMapper;
 import com.xtuer.mapper.CityMapper;
+import com.xtuer.mapper.CollegeMapper;
 import com.xtuer.mapper.DictMapper;
+import com.xtuer.mapper.MajorMapper;
 import com.xtuer.mapper.OrganizationMapper;
 import com.xtuer.mapper.ProvinceMapper;
 import com.xtuer.mapper.SubjectMapper;
@@ -108,6 +112,7 @@ public class SignUpController {
         return Result.ok(dicts);
     }
 
+    // 所有字典，按类型分类
     @GetMapping(UriView.REST_DICTS)
     @ResponseBody
     public Result<Map<String, List<Dict>>> getDicts() {
@@ -122,6 +127,51 @@ public class SignUpController {
             return map;
         });
         return Result.ok(dicts);
+    }
+
+    // 所有学校
+    @GetMapping(UriView.REST_COLLEGES)
+    @ResponseBody
+    public Result<List<College>> getColleges() {
+        String key = RedisKey.COLLEGES;
+        List<College> colleges = redisUtils.get(List.class, key, () -> collegeMapper.findAll());
+        return Result.ok(colleges);
+    }
+
+    // 注册的根节点
+    @GetMapping(UriView.REST_ZHUCE_MAJOR_PARENT)
+    @ResponseBody
+    public Result<List<Major>> getZhuceRootMajors() {
+        String key = RedisKey.MAJORS_ZHUCE_ROOT;
+        List<Major> majors = redisUtils.get(List.class, key, () -> majorMapper.findRoot());
+        return Result.ok(majors);
+    }
+
+    // 注册的非根节点
+    @GetMapping(UriView.REST_ZHUCE_MAJOR_CHILDREN)
+    @ResponseBody
+    public Result<List<Major>> getZhuceChildrenMajors(@PathVariable("parentId") int parentId) {
+        String key = String.format(RedisKey.MAJORS_ZHUCE_CHILREN, parentId);
+        List<Major> majors = redisUtils.get(List.class, key, () -> majorMapper.findByParentId(parentId));
+        return Result.ok(majors);
+    }
+
+    // 认定的根节点
+    @GetMapping(UriView.REST_RENDING_MAJOR_PARENT)
+    @ResponseBody
+    public Result<List<Major>> getRendingRootMajors(@PathVariable("certTypeId") int certTypeId, @PathVariable("eduLevelId") int eduLevelId) {
+        String key = String.format(RedisKey.MAJORS_RENDING_ROOT, certTypeId, eduLevelId);
+        List<Major> majors = redisUtils.get(List.class, key, () -> majorMapper.findByCertTypeIdAndEduLevelId(certTypeId, eduLevelId));
+        return Result.ok(majors);
+    }
+
+    // 认定的非根节点
+    @GetMapping(UriView.REST_RENDING_MAJOR_CHILDREN)
+    @ResponseBody
+    public Result<List<Major>> getRendingChildrenMajors(@PathVariable("provinceId") int provinceId, @PathVariable("parentId") int parentId) {
+        String key = String.format(RedisKey.MAJORS_RENDING_CHILDREN, provinceId, parentId);
+        List<Major> majors = redisUtils.get(List.class, key, () -> majorMapper.findByParentIdAndProvince(parentId, provinceId));
+        return Result.ok(majors);
     }
 
     @Autowired
@@ -144,4 +194,10 @@ public class SignUpController {
 
     @Autowired
     private DictMapper dictMapper;
+
+    @Autowired
+    private CollegeMapper collegeMapper;
+
+    @Autowired
+    private MajorMapper majorMapper;
 }
