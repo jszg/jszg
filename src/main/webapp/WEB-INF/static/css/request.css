@@ -264,6 +264,15 @@ table{border-collapse:collapse;}
     height: 156px;
     width: 114px;
     background: #f3f3f3;
+    border: solid 1px #DDD;
+}
+#filePicker {
+    margin-top: 2px;
+    width: 116px;
+}
+.webuploader-pick {
+    width: 100%;
+    padding: 0 !important;
 }
 .btn-photo{
     width: 113px;
