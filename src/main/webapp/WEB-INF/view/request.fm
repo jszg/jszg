@@ -14,6 +14,7 @@
     <script src="http://cdn.bootcss.com/jquery/1.12.4/jquery.min.js" charset="utf-8"></script>
     <script src="http://cdn.staticfile.org/webuploader/0.1.5/webuploader.min.js" charset="utf-8"></script>
     <script src="http://cdn.bootcss.com/zTree.v3/3.5.24/js/jquery.ztree.core.min.js" charset="utf-8"></script>
+    <script src="${static}/lib/jquery.leanModal.min.js" charset="utf-8"></script>
     <script src="${static}/js/utils.js" charset="utf-8"></script>
     <script src="${static}/js/jquery.rest.js" charset="utf-8"></script>
     <script src="${static}/js/request.js" type="text/javascript"></script>
@@ -161,9 +162,7 @@
                 <!-- 选择任教学科 -->
                 <tr>
                     <td class="operation"><label>任教学科</label></td>
-                    <td>
-                        <button type="button">选择...</button>
-                    </td>
+                    <td><button id="select-subjects" type="button">选择...</button></td>
                 </tr>
             </table>
         </div>
@@ -175,6 +174,22 @@
         <a href="javascript:void(0)" class="next-step">
             <img src="${static}/img/request/button09.gif" alt="下一步" border="0" id="box-3-next">
         </a>
+    </div>
+</div>
+
+<!-- LeanModal 对话框的 Mask -->
+<div id="lean_overlay"></div>
+
+<!-- 任教学科对话框 -->
+<a id="subjects-dialog-trigger" href="#subjects-dialog" style="display: none">显示任教学科对话框</a>
+<div id="subjects-dialog">
+    <div id="subjects-dialog-ztree">
+        <ul id="subjects" class="ztree"></ul>
+    </div>
+
+    <div id="subjects-dialog-buttons-holder">
+        <button class="cancel" type="button">取消</button>
+        <button class="ok" type="button">确定</button>
     </div>
 </div>
 

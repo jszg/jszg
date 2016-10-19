@@ -204,7 +204,7 @@ table, td {
 }
 .f_size{color: #de0000;font-size: 12px;}
 tr{border-bottom: 1px dashed #eee;}
-table{border-collapse:collapse;} 
+table{border-collapse:collapse;}
 #box-7 table th{
      text-align: right;
 }
@@ -216,4 +216,42 @@ table{border-collapse:collapse;}
 }
 #curriculum table tr td{
     text-align: center;
+}
+
+#lean_overlay {
+    position: fixed;
+    z-index: 100;
+    top: 0px;
+    left: 0px;
+    height:100%;
+    width:100%;
+    background: #000;
+    /*opacity: 0.4;*/
+    display: none;
+}
+
+#subjects-dialog {
+    z-index:1000;
+    display: none;
+    background: white;
+    border: solid 1px gray;
+    border-radius: 6px;
+    box-shadow: 0px 0px 8px #666;
+    padding: 5px 10px;
+    width: 500px;
+    height: 550px;
+    /*overflow: scroll;*/
+}
+
+#subjects-dialog-ztree {
+    overflow: scroll;
+    height: 500px;
+}
+
+#subjects-dialog-buttons-holder {
+    height: 50px;
+}
+
+.ztree .node_name {
+    font-size: 14px;
 }
