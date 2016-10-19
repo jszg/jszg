@@ -20,4 +20,6 @@ public interface UriView {
     String REST_RENDING_MAJOR_CHILDREN     = "/rest/signUp/provinces/{provinceId}/{parentId}/majors/children";
     String REST_TECHNICAL_JOB_ROOT         = "/rest/signUp/technicaljobs/root";
     String REST_TECHNICAL_JOB_CHILDREN     = "/rest/signUp/{parentId}/technicaljobs/children";
+
+    String URI_UPLOAD_PERSON_IMAGE         = "/upload-person-image";
 }
