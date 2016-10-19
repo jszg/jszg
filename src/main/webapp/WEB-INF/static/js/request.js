@@ -70,9 +70,13 @@ $(document).ready(function() {
     $('#select-subjects').click(function(event) {
         // 判断
         // 请求任教学科
-console.log('select-subjects click');
-        $('#subjects-dialog-trigger').click();
         requestSubjects();
+    });
+    $('#subjects-dialog-buttons-holder .cancel').click(function(event) {
+        $("#lean_overlay").click();
+    });
+    $('#subjects-dialog-buttons-holder .ok').click(function(event) {
+        console.log(window.subjectsTree.getSelectedNodes()[0].id);
     });
 
     ////////////////////////////////////////////////////////////////////////
@@ -198,6 +202,9 @@ console.log('select-subjects click');
     $('#box-2-next').click();
 });
 
+/**
+ * 请求任教学科
+ */
 function requestSubjects() {
     var setting = {
         async: {
@@ -234,12 +241,7 @@ function requestSubjects() {
         }
     }
 
-    // $(document).ready(function() {
-    // $.fn.zTree.destroy();
+    $.fn.zTree.destroy();
     window.subjectsTree = $.fn.zTree.init($("#subjects"), setting);
-
-        // $('#button').click(function(event) {
-            // console.log(window.treeObj.getSelectedNodes()[0].id);
-        // });
-    // });
+    $('#subjects-dialog-trigger').click(); // 显示对话框
 }
