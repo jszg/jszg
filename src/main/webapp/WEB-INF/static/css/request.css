@@ -259,3 +259,14 @@ table{border-collapse:collapse;}
 .ztree .node_name {
     font-size: 14px;
 }
+#photo{ 
+    display: block;
+    height: 156px;
+    width: 114px;
+    background: #f3f3f3;
+}
+.btn-photo{
+    width: 113px;
+    text-align: center;
+    margin: 5px 0px;
+}

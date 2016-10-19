@@ -458,7 +458,7 @@
                     <th class="ph-12">普通话水平</th>
                     <td><select name="1"><option>请选择</option></select></td>
                     <th class="ph-12">普通话证书编号</th>
-                    <td><input type="text"><span>果没有普通话证书编号，请填写“无”</span></td>
+                    <td><input type="text"><span> 如果没有普通话证书编号，请填写“无”</span></td>
                 </tr>
                 <tr>
                     <th class="ph-12">普通话发证单位</th>
@@ -468,17 +468,17 @@
                 </tr>
                 <tr>
                     <th class="ph-12">毕业时间</th>
-                    <td><input type="text"><span>请按照申请认定所使用的学历进行填写</span></td>
+                    <td><input type="text"><span> 请按照申请认定所使用的学历进行填写</span></td>
                     <th class="ph-12">最高学历</th>
-                    <td><select name="1"><option>请选择</option></select><span>请按照申请认定所使用的学历进行填写</span></td>
+                    <td><select name="1"><option>请选择</option></select><span> 请按照申请认定所使用的学历进行填写</span></td>
                 </tr>
                 <tr>
                     <th class="ph-12">最高学位</th>
-                    <td><input type="text"><span>请按照申请认定所使用的学位进行填写</span></td>
+                    <td><input type="text"><span> 请按照申请认定所使用的学位进行填写</span></td>
                     <th class="ph-12">毕业学校</th>
                     <td>
                         <button>选择...</button>
-                        <span>请按照申请认定所使用的学历进行填写</span>
+                        <span> 请按照申请认定所使用的学历进行填写</span>
                     </td>
                 </tr>
                 <tr>
@@ -496,7 +496,7 @@
                     <td>
                         <select name="1">
                             <option>请选择</option>
-                        </select><span>请按照申请认定所使用的学历进行填写</span>
+                        </select><span> 请按照申请认定所使用的学历进行填写</span>
                     </td>
                     <th class="ph-12">工作单位</th>
                     <td><input type="text"></td>
@@ -513,7 +513,7 @@
                 </tr>
                 <tr>
                     <th class="ph-12">户籍所在地</th>
-                    <td><input type="text"><span>请按户口簿上的内容填写（或按照认定机构的要求填写）</span></td>
+                    <td><input type="text"><span> 请按户口簿上的内容填写（或按照认定机构的要求填写）</span></td>
                     <th class="ph-12">出生地</th>
                     <td><input type="text"></td>
                 </tr>
@@ -521,18 +521,19 @@
                     <th>通讯地址</th>
                     <td><input type="text"></td>
                     <th>通讯地的邮编</th>
-                    <td><input type="text"> <span>请填写6位阿拉伯数字</span></td>
+                    <td><input type="text"> <span> 请填写6位阿拉伯数字</span></td>
                 </tr>
                 <tr>
                     <th>联系电话</th>
-                    <td><input type="text"><span>请填写阿拉伯数字</span></td>
+                    <td><input type="text"><span> 请填写阿拉伯数字</span></td>
                     <th>手机号码</th>
-                    <td><input type="text"> <span>请填写11位阿拉伯数字</span></td>
+                    <td><input type="text"> <span> 请填写11位阿拉伯数字</span></td>
                 </tr>
                 <tr>
                     <th>照片</th>
-                    <td>&nbsp;</td>
-                    <td colspan="2" align="left"><button>选择...</button><span>申请人近3个月内的彩色证件照，淡蓝色、红色或白色背景，无边框；正面照，免冠，无头饰。现场确认时提交的照片与此电子照片同一底版，建议照片宽度为114像素，高度为156像素。  须按照要求由申请人本人上传，且必须与教师资格申请表上所贴照片底版相同</span></td>
+                    <td><span id="photo"></span><button class="btn-photo">选择...</button></td>
+                  <td colspan="2" align="left" valign="middle">申请人近3个月内的彩色证件照，淡蓝色、红色或白色背景，无边框；正面照，免冠，无头饰。现场确认时提交的照片与此电子照片同一底版，建议照片宽度为114像素，高度为156像素。  须按照要求由申请人本人上传，且必须与教师资格申请表上所贴照片底版相同
+                  </td>
                 </tr>
             </table>
         </div>
