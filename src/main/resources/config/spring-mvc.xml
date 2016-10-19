@@ -93,8 +93,9 @@
     <!-- 支持上传文件 -->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 
+    <!-- 配置文件 -->
     <bean id="propertiesConfig" class="org.apache.commons.configuration.PropertiesConfiguration">
-        <constructor-arg value="classpath:config/config.properties"/> <!-- 不要用 classpath: -->
+        <constructor-arg value="classpath:config/config.properties"/>
     </bean>
 
     <!-- 对静态资源的访问，如 js, css, jpg, png -->
