@@ -90,6 +90,9 @@
         </property>
     </bean>
 
+    <!-- 支持上传文件 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+
     <bean id="propertiesConfig" class="org.apache.commons.configuration.PropertiesConfiguration">
         <constructor-arg value="classpath:config/config.properties"/> <!-- 不要用 classpath: -->
     </bean>

@@ -534,7 +534,7 @@
                 </tr>
                 <tr>
                     <th>照片</th>
-                    <td><span id="photo"></span><button class="btn-photo">选择...</button></td>
+                    <td><span id="photo"><img></span><div id="filePicker">选择照片</div></td>
                   <td colspan="2" align="left" valign="middle">申请人近3个月内的彩色证件照，淡蓝色、红色或白色背景，无边框；正面照，免冠，无头饰。现场确认时提交的照片与此电子照片同一底版，建议照片宽度为114像素，高度为156像素。  须按照要求由申请人本人上传，且必须与教师资格申请表上所贴照片底版相同
                   </td>
                 </tr>

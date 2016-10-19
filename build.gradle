@@ -58,7 +58,8 @@ ext.versions = [
     dbcp:          '2.1.1',
     redis:         '1.7.4.RELEASE',
     sessionRedis:  '1.2.2.RELEASE',
-    commonsConfig: '1.10'
+    commonsConfig: '1.10',
+    commonsFile: '1.3.1'
 ]
 
 dependencies {
@@ -76,7 +77,8 @@ dependencies {
             "org.apache.commons:commons-dbcp2:$versions.dbcp",     // 数据库
             "org.springframework.data:spring-data-redis:$versions.redis",
             "org.springframework.session:spring-session-data-redis:$versions.sessionRedis",
-            "commons-configuration:commons-configuration:$versions.commonsConfig"
+            "commons-configuration:commons-configuration:$versions.commonsConfig",
+            "commons-fileupload:commons-fileupload:$versions.commonsFile"
     )
 
     compile fileTree(dir: 'src/main/webapp/WEB-INF/lib', include: ['*.jar']) // 本地的 Oracle 驱动等 jar 包

@@ -1,7 +1,7 @@
 environments {
     development { // 本地开发环境，使用 MySQL
         staticBase = ''
-        uploadPersonImageDir = ''
+        uploadPersonImageDir = 'build'
 
         jdbc {
             driverClassName = 'com.mysql.jdbc.Driver'
@@ -37,7 +37,7 @@ environments {
 
     wxl { // 文显龙的开发环境，使用 Oracle
         staticBase = ''
-        uploadPersonImageDir = ''
+        uploadPersonImageDir = 'build'
 
         jdbc {
             driverClassName = 'oracle.jdbc.driver.OracleDriver'
