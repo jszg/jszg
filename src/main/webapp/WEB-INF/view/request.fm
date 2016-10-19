@@ -185,9 +185,9 @@
                                     </td>
                                     <td class="ui-field-org" style="text-align:left;">
                                         <span idfield="id" dictype="URL" labelfield="orgName" multisel="false" url="/public/pro/certtype/org" class="dictionary_org ref-city"></span>
-                                        <button type="button" class="ui-button-value-select select-type-URL ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" field="org" role="button" aria-disabled="false">
-                                            <span class="ui-button-text-1">选择...</span>
-                                        </button>
+                                        <select id="org" name="org">
+                                            <option selected="selected" value="-1">请选择</option>
+                                        </select>
                                         <span class="ui-field-desc"></span>
                                         <span class="ui-error-msg err_msg_org"></span>
                                         <span><font>申请认定幼儿园、小学、初级中学教师资格时，认定机构选择区、县级教育局；申请认定高级中学、中等职业学校、中等职业学校实习指导教师资格时，认定机构选择地、州、市级教育局。<br></font><font color="red">河北省认定中小学和幼儿园教师资格的认定权限已经调整，“认定机构”只能选择系统提供的教育局名称。<br></font><font>高等学校拟聘或已聘任的教学科研人员申请认定高等学校教师资格只能选择任教（拟任教）学校所在地的省（自治区、直辖市）教育厅（教委）。</font></span>
