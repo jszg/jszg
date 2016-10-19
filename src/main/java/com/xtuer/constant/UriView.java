@@ -17,4 +17,6 @@ public interface UriView {
     String REST_ZHUCE_MAJOR_CHILDREN       = "/rest/signUp/{parentId}/majors/children";
     String REST_RENDING_MAJOR_PARENT       = "/rest/signUp/certTypes/{certTypeId}/{eduLevelId}/majors/root";
     String REST_RENDING_MAJOR_CHILDREN     = "/rest/signUp/provinces/{provinceId}/{parentId}/majors/children";
+    String REST_TECHNICAL_JOB_ROOT         = "/rest/signUp/technicaljobs/root";
+    String REST_TECHNICAL_JOB_CHILDREN     = "/rest/signUp/{parentId}/technicaljobs/children";
 }

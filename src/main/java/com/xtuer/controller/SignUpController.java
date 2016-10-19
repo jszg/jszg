@@ -11,6 +11,7 @@ import com.xtuer.dto.Major;
 import com.xtuer.dto.Organization;
 import com.xtuer.dto.Province;
 import com.xtuer.dto.Subject;
+import com.xtuer.dto.TechnicalJob;
 import com.xtuer.mapper.CertTypeMapper;
 import com.xtuer.mapper.CityMapper;
 import com.xtuer.mapper.CollegeMapper;
@@ -19,6 +20,7 @@ import com.xtuer.mapper.MajorMapper;
 import com.xtuer.mapper.OrganizationMapper;
 import com.xtuer.mapper.ProvinceMapper;
 import com.xtuer.mapper.SubjectMapper;
+import com.xtuer.mapper.TechnicalJobMappler;
 import com.xtuer.util.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -147,7 +149,7 @@ public class SignUpController {
         return Result.ok(majors);
     }
 
-    // 注册的非根节点
+    // 注册的子节点
     @GetMapping(UriView.REST_ZHUCE_MAJOR_CHILDREN)
     @ResponseBody
     public Result<List<Major>> getZhuceChildrenMajors(@PathVariable("parentId") int parentId) {
@@ -165,13 +167,31 @@ public class SignUpController {
         return Result.ok(majors);
     }
 
-    // 认定的非根节点
+    // 认定的子节点
     @GetMapping(UriView.REST_RENDING_MAJOR_CHILDREN)
     @ResponseBody
     public Result<List<Major>> getRendingChildrenMajors(@PathVariable("provinceId") int provinceId, @PathVariable("parentId") int parentId) {
         String key = String.format(RedisKey.MAJORS_RENDING_CHILDREN, provinceId, parentId);
         List<Major> majors = redisUtils.get(List.class, key, () -> majorMapper.findByParentIdAndProvince(parentId, provinceId));
         return Result.ok(majors);
+    }
+
+    // 专业技术职务根节点
+    @GetMapping(UriView.REST_TECHNICAL_JOB_ROOT)
+    @ResponseBody
+    public Result<List<TechnicalJob>> getRootTechnicalJobs() {
+        String key = RedisKey.TECHNICALJOBS;
+        List<TechnicalJob> jobs = redisUtils.get(List.class, key, () -> technicalJobMappler.findRoots());
+        return Result.ok(jobs);
+    }
+
+    // 专业技术职务子节点
+    @GetMapping(UriView.REST_TECHNICAL_JOB_CHILDREN)
+    @ResponseBody
+    public Result<List<TechnicalJob>> getChildrenTechnicalJobs(@PathVariable("parentId") int parentId) {
+        String key = String.format(RedisKey.TECHNICAL_JOB_CHILDREN, parentId);
+        List<TechnicalJob> jobs = redisUtils.get(List.class, key, () -> technicalJobMappler.findByParent(parentId));
+        return Result.ok(jobs);
     }
 
     @Autowired
@@ -200,4 +220,7 @@ public class SignUpController {
 
     @Autowired
     private MajorMapper majorMapper;
+
+    @Autowired
+    private TechnicalJobMappler technicalJobMappler;
 }
