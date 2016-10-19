@@ -162,8 +162,8 @@
                 <!-- 选择任教学科 -->
                 <tr>
                     <td class="operation"><label>任教学科</label></td>
-                    <td><button id="select-subjects" type="button">选择...</button></td>
-                    <td><span id="subject" data-subject-id="-1">无</span></td>
+                    <td><span id="subject" data-subject-id="-1"></span></td>
+                    <td><button id="select-subjects" type="button">请选择...</button></td>
                 </tr>
             </table>
         </div>
