@@ -67,7 +67,11 @@ gradle -Denv=development clean appStartDebug
 * 毕业学校
 
     ```
+    # 所有
     http://{{host}}:{{port}}/rest/signUp/colleges
+    
+    # 按省份找
+    http://{{host}}:{{port}}/rest/signUp/provinces/{provinceId}/colleges
     ```
     
 * 所学专业

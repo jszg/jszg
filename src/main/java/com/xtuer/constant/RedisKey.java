@@ -13,6 +13,7 @@ public interface RedisKey {
     String DICTS = "dicts"; // dicts
     String DICTS_BY_TYPE = "dicts_%d"; // dicts_{dictTypeId}
     String COLLEGES = "colleges"; // colleges
+    String COLLEGES_BY_PROVINCE = "colleges_p_%d"; // colleges_p_{provinceId}
     String MAJORS_ZHUCE_ROOT = "majors_root";
     String MAJORS_ZHUCE_CHILREN = "majors_children_%d"; // majors_chilren_{parentId}
     String MAJORS_RENDING_ROOT = "majors_rending_root_%d_%d"; // majors_rending_root_{certTypeId}_{eduLevelId}

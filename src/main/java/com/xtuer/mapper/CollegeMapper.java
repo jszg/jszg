@@ -1,6 +1,7 @@
 package com.xtuer.mapper;
 
 import com.xtuer.dto.College;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -11,5 +12,5 @@ import java.util.List;
  */
 public interface CollegeMapper {
     List<College> findAll();
-
+    List<College> findByProvinceId(@Param("provinceId") int provinceId);
 }

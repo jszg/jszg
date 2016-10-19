@@ -140,6 +140,15 @@ public class SignUpController {
         return Result.ok(colleges);
     }
 
+    // 按省份找学校
+    @GetMapping(UriView.REST_COLLEGES_BY_PROVINCE)
+    @ResponseBody
+    public Result<List<College>> getCollegesByProvinceId(@PathVariable("provinceId") int provinceId) {
+        String key = String.format(RedisKey.COLLEGES_BY_PROVINCE, provinceId);
+        List<College> colleges = redisUtils.get(List.class, key, () -> collegeMapper.findByProvinceId(provinceId));
+        return Result.ok(colleges);
+    }
+
     // 注册的根节点
     @GetMapping(UriView.REST_ZHUCE_MAJOR_PARENT)
     @ResponseBody

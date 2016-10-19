@@ -9,4 +9,8 @@
   <select id="findAll" resultType="College">
         select COLLEGE_ID as id, NAME as name FROM T_COLLEGE
   </select>
+
+  <select id="findByProvinceId" resultType="College">
+    select COLLEGE_ID as id, NAME as name FROM T_COLLEGE WHERE PROVINCE = #{provinceId}
+  </select>
 </mapper>
