@@ -183,3 +183,22 @@ width: 50px;
     background: #a6c9e2;
     display: none;
 }
+
+table td, table td * {
+    vertical-align: top;
+    text-align: left;
+}
+
+td select {
+    width: 100%;
+}
+
+table, td {
+    padding: 5px;
+}
+
+.operation {
+    text-align: right;
+    font-weight: bold;
+    width: 90px;
+}

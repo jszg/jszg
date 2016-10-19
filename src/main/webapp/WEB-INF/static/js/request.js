@@ -3,12 +3,12 @@ $(document).ready(function() {
     $.rest.get({url: Urls.REST_CERT_TYPE, success: function(result) {
         // [1] 删除所有的资格种类
         // [2] 查询资格种类
-        // [3] 添加资格种类到 #certType 下
-        $('#certType option:gt(0)').remove();
-        var $certType = $('#certType');
+        // [3] 添加资格种类到 #certTypes 下
+        $('#certTypes option:gt(0)').remove();
+        var $certTypes = $('#certTypes');
         var cts = result.data;
         for (var i = 0; i < cts.length; ++i) {
-            $certType.append('<option value="{id}">{name}</option>'.format({id: cts[i].id, name: cts[i].name}));
+            $certTypes.append('<option value="{id}">{name}</option>'.format({id: cts[i].id, name: cts[i].name}));
         }
     }});
 
@@ -16,37 +16,54 @@ $(document).ready(function() {
     $.rest.get({url: Urls.REST_PROVINCES, success: function(result) {
         // [1] 删除所有的省
         // [2] 查询所有的省
-        // [3] 添加到省的 #province 下
-        $('#province option:gt(0)').remove();
-        var $province = $('#province');
+        // [3] 添加省到 #provinces 下
+        $('#provinces option:gt(0)').remove();
+        var $provinces = $('#provinces');
         var ps = result.data;
         for (var i = 0; i < ps.length; ++i) {
-            $province.append('<option value="{id}">{name}</option>'.format({id: ps[i].id, name: ps[i].name}));
+            $provinces.append('<option value="{id}">{name}</option>'.format({id: ps[i].id, name: ps[i].name}));
         }
     }});
 
     // 请求市
-    $('#province').change(function() {
+    $('#provinces').change(function() {
         // [1] 删除所有的市
         // [2] 查询省下的所有市
-        // [3] 添加到市的 #city 下
-        $('#city option:gt(0)').remove();
-        var $p = $(this).find("option:selected");
-        var provinceId = parseInt($p.val());
+        // [3] 添加市到 #citys 下
+        $('#citys option:gt(0)').remove();
+        var provinceId = parseInt($('#provinces option:selected').val());
 
         // provinceId 为 -1 表示选择了 "请选择"
         if (-1 != provinceId) {
             $.rest.get({url: Urls.REST_CITIES_BY_PROVINCE, urlParams: {provinceId: provinceId}, success: function(result) {
-                var $city = $('#city');
+                var $citys = $('#citys');
                 var cs = result.data;
                 for (var i = 0; i < cs.length; ++i) {
-                    $city.append('<option value="{id}">{name}</option>'.format({id: cs[i].id, name: cs[i].name}));
+                    $citys.append('<option value="{id}">{name}</option>'.format({id: cs[i].id, name: cs[i].name}));
                 }
             }});
         }
     });
 
-    // 请求认证机构
+    // 资格总类或者市变化时请求认证机构
+    $('#citys, #certTypes').change(function() {
+        // [1] 删除所有的认证机构
+        // [2] 使用资格种类和市查询认证机构
+        // [3] 添加认证机构到 #orgs 下
+        $('#orgs option:gt(0)').remove();
+        var cityId = parseInt($('#citys option:selected').val());
+        var certTypeId = parseInt($('#certTypes option:selected').val());
+
+        if (-1 != certTypeId && -1 != cityId) {
+            $.rest.get({url: Urls.REST_ORGS_BY_CITY_AND_CERT_TYPE, urlParams: {cityId: cityId, certTypeId: certTypeId}, success: function(result) {
+                var $orgs = $('#orgs');
+                var orgs = result.data;
+                for (var i = 0; i < orgs.length; ++i) {
+                    $orgs.append('<option value="{id}">{name}</option>'.format({id: orgs[i].id, name: orgs[i].name}));
+                }
+            }});
+        }
+    });
 
     // 第一步的下一步
     $('#box-1-next').click(function(){
