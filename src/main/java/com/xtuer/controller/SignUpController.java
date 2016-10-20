@@ -117,15 +117,18 @@ public class SignUpController {
     // 所有字典，按类型分类
     @GetMapping(UriView.REST_DICTS)
     @ResponseBody
-    public Result<Map<String, List<Dict>>> getDicts() {
+    public Result<Map<String, List<Object>>> getDicts() {
         String key = RedisKey.DICTS;
-        Map<String, List<Dict>> dicts  = redisUtils.get(Map.class, key, () -> {
-            Map<String, List<Dict>> map = new HashMap<String, List<Dict>>();
+        Map<String, List<Object>> dicts  = redisUtils.get(Map.class, key, () -> {
+            Map<String, List<Object>> map = new HashMap<String, List<Object>>();
             for (int i = 0; i < TYPES.length; i++) {
                 final int type = TYPES[i];
                 String subkey = String.format(RedisKey.DICTS_BY_TYPE, type);
                 map.put(TYPENAMES[i], redisUtils.get(List.class, subkey, () -> dictMapper.findByDictType(type)));
             }
+
+            map.put(RedisKey.PROVINCES, redisUtils.get(List.class, RedisKey.PROVINCES, () -> provinceMapper.findAll()));
+            map.put(RedisKey.CERT_TYPES, redisUtils.get(List.class, RedisKey.CERT_TYPES, () -> certTypeMapper.findAll()));
             return map;
         });
         return Result.ok(dicts);
