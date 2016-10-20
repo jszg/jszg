@@ -99,16 +99,12 @@ button {
     padding-bottom: 10px;
 }
 
-#box-3 td select,  #box-6 td select, #box-7 td select,
-#box-3 td input, #box-6 td input, #box-7 td input {
+#box-3 td input, #box-4 td input, #box-6 td input, #box-7 td input,
+#box-3 td select, #box-4 td select, #box-6 td select, #box-7 td select {
     width: 100%;
 }
-#box-4 td select{
-    width: 75%;
-}
 
-
-#box-5 li {
+#box-5 li, #box-6 li {
     margin-left: 20px;
 }
 
@@ -137,18 +133,6 @@ button {
 
 .request .action-bar {
     text-align: center;
-}
-
-.ui-crud-widget .ui-header {
-    border: none;
-    font-weight: bold;
-    color: #3372a4;
-    font-size: 14px;
-    margin: 0;
-    padding: 0;
-    line-height: 30px;
-    margin-top: 5px;
-    background: none;
 }
 
 .ui-body {
@@ -223,7 +207,4 @@ table{border-collapse:collapse;}
 .webuploader-pick {
     width: 100%;
     padding: 0 !important;
-}
-#box-4 .mytable td select{
-    width: 22%;
 }

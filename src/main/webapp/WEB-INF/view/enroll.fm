@@ -51,14 +51,12 @@
 <div id="box-1">
     <div class="content_bd">
         <h4>温馨提示</h4>
-        <p>
-            1. 为保证申请人顺利网报，建议申请人尽量避开第一天的报名高峰，更不要在最后一天突击报名。
-            <br/> 2. 申请人在进行网上报名过程中，如因不能顺利使用报名系统，请及时在办公时间联系我中心加以解决。联系电话：010-58806103/58800171。 
-            <br/> 3.中小学教师资格定期注册制度试点工作目前只在部分省份的部分市县开展。没有开展此项试点工作的省份和地区的在职教师暂不进行定期注册，何时开始
+        <ul>
+            <li>1. 为保证申请人顺利网报，建议申请人尽量避开第一天的报名高峰，更不要在最后一天突击报名。<li>
+            <li>2. 申请人在进行网上报名过程中，如因不能顺利使用报名系统，请及时在办公时间联系我中心加以解决。联系电话：010-58806103/58800171。<li>
+            <li>3. 中小学教师资格定期注册制度试点工作目前只在部分省份的部分市县开展。没有开展此项试点工作的省份和地区的在职教师暂不进行定期注册，何时开始<li>
    此项工作，请关注当地教育行政部门的通知。
-            
-        </p>
-
+        </ul>
     </div>
     <div class="action-bar" id="action-bar-1">
         <a href="javascript:void(0)" class="next-step">
@@ -71,21 +69,16 @@
 <div id="box-2">
     <div class="content_bd">
         <h4>网上申报协议</h4>
-        <p>
-            1. 本网站网上申报系统的所有权归中国教师资格网。<br/>
-            2.教师资格定期注册申请人须保证提交的个人信息真实、准确，保证按照本系统做出的定期注册工作安排和有关规定申请教师资格定期注册。申请人承担由于信息不真实、不准确和个人疏漏而造成的一切后果。<br/>
-            3.教师资格定期注册申请人信息填报成功后，须妥善保管个人密码，因保管不善而造成的一切后果由申请人承担。<br/>
-            4. 教师资格定期注册申请人理解并同意由于不可抗力所导致的无法正常申请的情况，本网站不承担任何直接或间接的责任。<br/>
-            5. 教师资格定期注册申请人必须在规定的日期内，登录网上申报系统执行相关操作。因个人原因未履行相关责任而导致的申报异常，由申请人本人承担所有责任。<br/>
-            6. 本网站尊重并保护申请人网上申报留存的个人申请信息，非经申请人本人同意，本网站不会主动公开、编辑、披露或透露任何申请人个人申请信息，但根据法律法规规定必须披露的或司法部门及其他法律授权的机关依照法定程序要求提供的除外。
-        </p>
-       
-    </div>
-    <div class="content_bd">
-          <h4>是否接受以上协议？</h4>
-          <br>
-           <input type="radio" id="not-accept" checked="true" name="accept-s"> <label for="not-accept">不同意</label>
-           <input type="radio" id="accept" name="accept-s"> <label for="accept" >同意</label>
+        <ul>
+            <li>1. 本网站网上申报系统的所有权归中国教师资格网。</li>
+            <li>2. 教师资格定期注册申请人须保证提交的个人信息真实、准确，保证按照本系统做出的定期注册工作安排和有关规定申请教师资格定期注册。申请人承担由于信息不真实、不准确和个人疏漏而造成的一切后果。</li>
+            <li>3. 教师资格定期注册申请人信息填报成功后，须妥善保管个人密码，因保管不善而造成的一切后果由申请人承担。</li>
+            <li>4. 教师资格定期注册申请人理解并同意由于不可抗力所导致的无法正常申请的情况，本网站不承担任何直接或间接的责任。</li>
+            <li>5. 教师资格定期注册申请人必须在规定的日期内，登录网上申报系统执行相关操作。因个人原因未履行相关责任而导致的申报异常，由申请人本人承担所有责任。</li>
+            <li>6. 本网站尊重并保护申请人网上申报留存的个人申请信息，非经申请人本人同意，本网站不会主动公开、编辑、披露或透露任何申请人个人申请信息，但根据法律法规规定必须披露的或司法部门及其他法律授权的机关依照法定程序要求提供的除外。</li>
+        </ul>
+        <br/>
+        <input type="checkbox" id="agree-checkbox" checked="true"> <label for="agree-checkbox">已阅读并完全同意</label>
     </div>
     <div class="action-bar">
         <a href="javascript:void(0)" class="pre-step">
@@ -97,35 +90,29 @@
     </div>
 </div>
 
-<!--第三步-->
+<!-- 第三步 -->
 <div id="box-3">
     <div class="content_bd">
         <h4>填写身份信息 <b class="f_red f_size">(本栏信息请从上至下逐行填写)</b></h4>
         <div class="ui-body">
             <table width="960" border="0" cellspacing="0" cellpadding="0">
-                <tbody>
                 <tr>
                     <td width="130" class="operation">证件类型</td>
                     <td width="150">
-                        <select name="idType">
-                            <option selected="selected" value="7">身份证</option>
-                        </select>
+                        <select name="idType"><option selected="selected" value="7">身份证</option></select>
                     </td>
                     <td></td>
                 </tr>
                 <tr>
                     <td class="operation">身份证件号码</td>
                     <td><input type="text"></td>
-                    <td>请输入二代身份证号码（18位）</td>
+                    <td><span class="description">请输入二代身份证号码（18位）<span></td>
                 </tr>
                 <tr>
-                    <td class="operation">教师资格证书号码  </td>
-                    <td>
-                        <input class="ui-field" name="idNo" value="">
-                    </td>
+                    <td class="operation">教师资格证书号码</td>
+                    <td><input class="ui-field" name="idNo" value=""></td>
                     <td></td>
                 </tr>
-                </tbody>
             </table>
         </div>
     </div>
@@ -139,16 +126,16 @@
     </div>
 </div>
 
-<!-- 第四步-->
+<!-- 第四步 -->
 <div id="box-4">
     <div class="content_bd">
         <h4>您是第1次参加教师资格注册，请确认您的证书号码。如果无误，请填写证书的其它信息。否则，请返回上一步。</h4>
         <div class="ui-body">
-             <table width="960" border="0" cellspacing="0" cellpadding="0" class="ui-view">
-                <tr style="border-bottom: 1px dashed #eee;">
-                    <th width="193" align="right"  height="33">证件类型</th>
+             <table width="960" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="193" class="operation">证件类型</td>
                     <td width="289"></td>
-                    <th width="194" align="right">身份证件号码</th>
+                    <td width="194" class="operation">身份证件号码</td>
                     <td width="238"></td>
                 </tr>
                 <tr>
@@ -157,9 +144,6 @@
                     <th align="right"></th>
                     <td>&nbsp;</td>
                 </tr>
-                <tr>
-                   <td height="26"></td>
-                </tr>
             </table>
         </div>
     </div>
@@ -167,40 +151,43 @@
         <h4>请按教师资格证书上的内容如实填写下列信息项 <b class="f_red f_size">(本栏信息请从左至右逐行填写)</b></h4>
         <div class="ui-body">
            <table width="960" border="0" cellspacing="0" cellpadding="0" class="ui-view">
-                <tr style="border-bottom: 1px dashed #eee;">
-                    <th width="145" align="right"  height="33">证书签发日期</th>
-                    <td width="204"><input type="text"></td>
-                    <td colspan="2">可直接输入，格式为YYYY-MM-DD，如1981-06-01 </td>
-                    <th width="90" align="right">资格种类</th>
-                    <td width="116"><select name="idType"><option selected="selected" value="7">身份证</option></select></td>
+                <tr>
+                    <td width="100" class="operation">证书签发日期</td>
+                    <td width="150"><input type="text"></td>
+                    <td width="300"><span class="description">可直接输入，格式为 YYYY-MM-DD，如 1981-06-01<span></td>
+                    <td width="80" class="operation">资格种类</td>
+                    <td width="150"><select name="idType"><option selected="selected" value="-1">身份证</option></select></td>
                 </tr>
                 <tr>
-                    <th align="right">认定机构</th>
+                    <td class="operation">认定机构</td>
                     <td><button>选择...</button></td>
-                    <td>任教学科</td>
-                    <td><button>选择...</button></td>
-                    <th align="right">&nbsp;</th>
                     <td></td>
+                    <td class="operation">任教学科</td>
+                    <td><button>选择...</button></td>
                 </tr>
-                
+
                  <tr>
-                    <th align="right">姓名</th>
+                    <td class="operation">姓名</td>
                     <td><input type="text"></td>
-                    <td align="right">性别</td>
-                    <td>&nbsp;</td>
-                    <th align="right">&nbsp;</th>
                     <td></td>
+                    <td class="operation">性别</td>
+                    <td>
+                        <select name="idType">
+                            <option selected="selected" value="-1">请选择</option>
+                            <option value="1">男</option>
+                            <option value="2">女</option>
+                        </select>
+                    </td>
                 </tr>
-                
+
                  <tr>
-                    <th align="right">出生日期</th>
-                    <td>&nbsp;</td>
-                    <td width="203" align="right">民族</td>
-                    <td width="202"><select name="idType2"><option selected="selected" value="7">请选择</option></select></td>
-                    <th align="right">&nbsp;</th>
-                    <td>&nbsp;</td>
+                    <td class="operation">出生日期</td>
+                    <td></td>
+                    <td></td>
+                    <td class="operation">民族</td>
+                    <td><select name="idType2"><option selected="selected" value="7">请选择</option></select></td>
                 </tr>
-                
+
             </table>
         </div>
     </div>
@@ -209,32 +196,28 @@
 
         <div class="ui-body">
            <table width="960" border="0" cellspacing="0" cellpadding="0" class="mytable">
-                  <tr>
-                    <th width="135" align="right">现任教学段</th>
-                    <td width="805"><select name="idType2"><option selected="selected" value="7">请选择</option></select></td>
-                  </tr>
-                  <tr>
-                    <th align="right">所在省</th>
-                    <td><select name="idType">
-                      <option selected="selected" value="7">请选择</option>
-                    </select></td>
-                  </tr>
-                  <tr>
-                    <th align="right">所在市</th>
-                    <td><select name="idType3">
-                      <option selected="selected" value="7">请选择</option>
-                    </select></td>
-                  </tr>
-                  <tr>
-                    <th align="right">注册机构</th>
+                <tr>
+                    <td width="130" class="operation">现任教学段</td>
+                    <td width="150"><select name="idType2"><option selected="selected" value="7">请选择</option></select></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="operation">所在省</td>
+                    <td><select name="idType"><option selected="selected" value="7">请选择</option></select></td>
+                </tr>
+                <tr>
+                    <td class="operation">所在市</td>
+                    <td><select name="idType3"><option selected="selected" value="7">请选择</option></select></td>
+                </tr>
+                <tr>
+                    <td class="operation">注册机构</td>
                     <td><button>请选择...</button></td>
-                  </tr>
-                  <tr>
-                    <th align="right">现任教学科</th>
+                </tr>
+                <tr>
+                    <td class="operation">现任教学科</td>
                     <td><button>请选择...</button></td>
-                  </tr>
+                </tr>
             </table>
-
         </div>
     </div>
     <div class="action-bar">
@@ -246,7 +229,8 @@
         </a>
     </div>
 </div>
-<!-- 第五步-->
+
+<!-- 第五步 -->
 <div id="box-5">
     <div class="content_bd">
         <h4>选择确认点:</h4>
@@ -292,7 +276,8 @@
         </a>
     </div>
 </div>
-<!-- 第六步-->
+
+<!-- 第六步 -->
 <div id="box-6">
     <div class="content_bd">
         <h4>注意事项</h4>
@@ -325,241 +310,187 @@
         </a>
     </div>
 </div>
-<!--第七步-->
+
+<!-- 第七步 -->
 <div id="box-7">
     <div class="content_bd">
-        <h4>基本信息：<b class="f_red f_size">（如要修改，请返回上一步）</b></h4>
+        <h4>您证书的基本信息：<b class="f_red f_size">（如要修改，请返回第三步）</b></h4>
         <div class="ui-body">
-            <table width="960" border="0" cellspacing="0" cellpadding="0" class="ui-view">
-                <tr style="border-bottom: 1px dashed #eee;">
-                    <th width="193" align="right">姓名</th>
-                    <td width="289"></td>
-                    <th width="194" align="right">证件类型</th>
-                    <td width="238">&nbsp;</td>
-                </tr>
-                <tr>
-                    <th align="right">身份证件号码</th>
-                    <td>&nbsp;</td>
-                    <th align="right">申请资格种类</th>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <th align="right">任教学科</th>
-                    <td>&nbsp;</td>
-                    <th align="right">确认点</th>
-                    <td>&nbsp;</td>
-                </tr>
-                <tr>
-                    <th align="right">认定机构</th>
-                    <td>&nbsp;</td>
-                    <td colspan="2">&nbsp;</td>
-                </tr>
-            </table>
-            </div>
+               <table width="960" border="0" cellspacing="0" cellpadding="0" class="ui-view">
+                    <tr style="border-bottom: 1px dashed #eee;">
+                        <th width="250" align="right">证书签发日期:</th>
+                        <td width="279">2000-10-08</td>
+                        <th width="205" align="right">姓名:</th>
+                        <td width="251">梁杨</td>
+                    </tr>
+                    <tr>
+                        <th align="right">性别:</th>
+                        <td>男</td>
+                        <th align="right">证件类型:</th>
+                        <td>身份证</td>
+                    </tr>
+                    <tr>
+                        <th align="right">身份证号码:</th>
+                        <td>130125199408064511</td>
+                        <th align="right">出生日期:</th>
+                        <td>1994-08-06</td>
+                    </tr>
+                    <tr>
+                        <th align="right">名族:</th>
+                        <td>汉族</td>
+                        <th align="right">申请资格种类:</th>
+                        <td>初级中学教师资格</td>
+                    </tr>
+                    <tr>
+                      <th align="right">任教学科:</th>
+                      <td>无</td>
+                      <th align="right">教师资格证书号码:</th>
+                      <td>20021309531000655</td>
+                    </tr>
+                    <tr>
+                      <th align="right">认定机构:</th>
+                      <td>大兴区教育局</td>
+                      <td colspan="2">&nbsp;</td>
+                    </tr>
+                </table>
+        </div>
     </div>
     <div class="content_bd">
-        <h4>登录信息：<b class="f_red f_size">（如要修改，请返回上一步）</b></h4>
+        <h4>您选择的注册机构：<b class="f_red f_size">（如要修改，请返回第四步）</b></h4>
         <div class="ui-body">
-            <table width="960" border="0" cellspacing="0" cellpadding="0">
-                <tr>
-                    <td width="130" class="operation">系统登录密码</td>
-                    <td width="150"><input type="password"></td>
-                    <td><span class="description">密码不少于 8 位，包含数字、字母和特殊字符，特殊字符需从“#、%、*、-、_、!、@、$、&”中选择 请牢记个人登录密码。将用于您登录查看、修改您的报名信息和打印认定申请表等</span></td>
-                </tr>
-                <tr>
-                    <td class="operation">密码确认</td>
-                    <td><input type="password"></td>
-                </tr>
-                <tr>
-                    <td class="operation">密码找回邮箱</th>
-                    <td><input type="text"></td>
-                </tr>
-            </table>
+               <table width="960" border="0" cellspacing="0" cellpadding="0" class="ui-view">
+                    <tr style="border-bottom: 1px dashed #eee;">
+                        <th width="250" align="right">现任教学段:</th>
+                        <td width="279">幼儿园</td>
+                        <th width="205" align="right">所在省:</th>
+                        <td width="251">北京市教育局</td>
+                    </tr>
+                    <tr>
+                        <th align="right">注册机构:</th>
+                        <td>大兴区教育局</td>
+                        <th align="right">现任教学科:</th>
+                        <td>幼儿园</td>
+                    </tr>
+                </table>
         </div>
     </div>
 
-    <div class="content_bd content-box-7">
-        <h4>请填写申请信息：</h4>
+    <div class="content_bd">
+        <h4>请填写您的登录信息：<b class="f_red f_size"> (本栏信息请从上至下逐行填写)</b></h4>
         <div class="ui-body">
-            <table width="960" border="0" cellspacing="0" cellpadding="0">
-                <tr>
-                    <td width="130" class="operation">性别</td>
-                    <td width="150"><span id="gender"></span></td>
-                    <td width="200"></td>
-                    <td width="130" class="operation">出生日期</td>
-                    <td width="150"><span id="birthday"></span></td>
-                    <td width="200"></td>
-                </tr>
-                <tr>
-                    <td class="operation">民族</td>
-                    <td><select id="nations" name="1"><option selected="selected" value="-1">请选择</option></select></td>
-                    <td></td>
-                    <td class="operation">政治面貌</td>
-                    <td><select id="politicals" name="1"><option selected="selected" value="-1">请选择</option></select></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td class="operation">普通话水平</th>
-                    <td><select id="pth-levels" name="1"><option value="-1">请选择</option></select></td>
-                    <td></td>
-                    <td class="operation">普通话证书编号</td>
-                    <td><input type="text"/></td>
-                    <td><span class="description">如果没有普通话证书编号，请填写 “无”<span></td>
-                </tr>
-                <tr>
-                    <td class="operation">普通话发证单位</td>
-                    <td><input type="text"></td>
-                    <td><span class="description">请填写普通话证书上的发证单位名称（盖章机构如果没有普通话发证单位，请填写“无”</span></td>
-                    <td class="operation">是否在校生</td>
-                    <td>
-                        <select name="graduateId" class="ui-field">
-                            <option selected="selected" value="">请选择</option>
-                            <option value="2">否</option>
-                            <option value="1">是</option>
-                        </select>
-                    </td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td class="operation">毕业时间</td>
-                    <td><input type="text"></td>
-                    <td><span class="description">请按照申请认定所使用的学历进行填写</span></td>
-                    <td class="operation">最高学历</td>
-                    <td><select id="degrees" name="1"><option value="-1">请选择</option></select></td>
-                    <td><span class="description">请按照申请认定所使用的学历进行填写</span></td>
-                </tr>
-                <tr>
-                    <td class="operation">最高学位</td>
-                    <td><input type="text"></td>
-                    <td><span class="description">请按照申请认定所使用的学位进行填写</span></td>
-                    <td class="operation">毕业学校</td>
-                    <td>
-                        <select id="provinces-for-school" name="1"><option value="-1">请选择省</option></select>
-                        <select id="graduation-school" name="1"><option value="-1">请选择</option></select>
-                    </td>
-                    <td><span class="description">请按照申请认定所使用的学历进行填写</span></td>
-                </tr>
-                <tr>
-                    <td class="operation">所学专业</td>
-                    <td><button>选择</button></td>
-                    <td><span class="description">请选择与申请认定时所使用的学历相同或相近的专业名称，或所学专业的上一级学科</span></td>
-                    <td class="operation">专业类别</td>
-                    <td><select id="normal-majors" name="1"><option>请选择</option></select></td>
-                </tr>
-                <tr>
-                    <td class="operation">学习形式</td>
-                    <td><select id="learn-types" name="1"><option value="-1">请选择</option></select></td>
-                    <td><span class="description">请按照申请认定所使用的学历进行填写</span></td>
-                    <td class="operation">工作单位</td>
-                    <td><input type="text"></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td class="operation">现从事职业</td>
-                    <td><select id="occupations" name="1"><option value="-1">请选择</option></select></td>
-                    <td></td>
-                    <td class="operation">职业技术职务</td>
-                    <td><button>选择...</button></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td class="operation">户籍所在地</td>
-                    <td><input type="text"></td>
-                    <td><span class="description">请按户口簿上的内容填写（或按照认定机构的要求填写）</span></td>
-                    <td class="operation">出生地</td>
-                    <td><input type="text"></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td class="operation">通讯地址</td>
-                    <td colspan="2"><input type="text"></td>
-                    <td class="operation">通讯地的邮编</td>
-                    <td><input type="text"></td>
-                    <td><span class="description">请填写 6 位阿拉伯数字</span></td>
-                </tr>
-                <tr>
-                    <td class="operation">联系电话</td>
-                    <td><input type="text"></td>
-                    <td><span class="description">请填写阿拉伯数字</span></td>
-                    <td class="operation">手机号码</td>
-                    <td><input type="text"></td>
-                    <td><span class="description">请填写 11 位阿拉伯数字</span></td>
-                </tr>
-                <tr>
-                    <td class="operation">照片</td>
-                    <td><span id="photo"><img></span><div id="filePicker">选择照片</div></td>
-                    <td colspan="4"><span class="description">申请人近 3 个月内的彩色证件照，淡蓝色、红色或白色背景，无边框；正面照，免冠，无头饰。现场确认时提交的照片与此电子照片同一底版，建议照片宽度为 114 像素，高度为 156 像素。  须按照要求由申请人本人上传，且必须与教师资格申请表上所贴照片底版相同</span></td>
-                </tr>
-            </table>
+               <table width="960" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td width="174" class="operation">系统登录密码</td>
+                        <td width="234"><input type="text"></td>
+                        <td width="552"><span class="description">密码不少于 8 位，包含数字、字母和特殊字符，特殊字符需从 &ldquo;#、%、*、-、_、!、@、$、&amp;&rdquo; 中选择。请牢记个人登录密码，将用于您登录查看、修改您的报名信息和打印定期注册申请表等</span></td>
+                    </tr>
+                    <tr>
+                        <td class="operation">密码确认</td>
+                        <td><input type="text"></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td class="operation">密码找回邮箱</td>
+                        <td><input type="text"></td>
+                        <td><spen class="description">找回密码用，请填写个人常用 E-mail 地址</spen></td>
+                    </tr>
+                </table>
         </div>
     </div>
+
     <div class="content_bd">
-          <h4>个人简历：<b class="f_red f_size">（简历按照时间先后顺序从本人小学毕业后填起（当地教育局有其他规定的，按其规定填写），不得空项，至少两条，最多八条，必须填写到至今。简历超过8条的，删减前边的简历保留至 8 条为止。）</b></h4>
-          <div class="ui-body" id="curriculum">
-              <table width="960" border="0" cellspacing="0" cellpadding="0">
-                  <tr>
-                    <td align="center">开始时间</td>
-                    <td align="center">结束时间</td>
-                    <td align="center">单位</td>
-                    <td align="center">职务</td>
-                    <td align="center">证明人</td>
-                  </tr>
-                  <tr>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                  </tr>
-                  <tr>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                  </tr>
-                  <tr>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                  </tr>
-                  <tr>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                  </tr>
-                  <tr>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                  </tr>
-                  <tr>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                  </tr>
-                  <tr>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                  </tr>
-                  <tr>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                    <td><input type="text"></td>
-                  </tr>
+          <h4>请填写现阶段工作相关信息：<b class="f_red f_size"> (本栏信息请从左至右逐行填写)</b></h4>
+          <div class="ui-body" id="box-7-conct">
+                <table width="960" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td width="140" align="right" class="operation">最高学位</td>
+                        <td width="150"><select><option selected="selected" value="7">请选择</option></select></td>
+                        <td width="190"></td>
+                        <td width="140" class="operation">最高学历</td>
+                        <td width="150"><select name="select5"><option selected="selected" value="7">请选择</option></select></td>
+                        <td width="190"></td>
+                    </tr>
+                    <tr>
+                        <td align="right" class="operation">最高学历毕业学校</td>
+                        <td><button>选择...</button></td>
+                        <td></td>
+                        <td class="operation">现任教学校性质</td>
+                        <td><select name="select6"><option selected="selected" value="7">请选择</option></select></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td align="right" class="operation">任教学校所在地</td>
+                        <td><select name="select"><option selected="selected" value="7">请选择</option></select></td>
+                        <td></td>
+                        <td class="operation">最高学历毕业时间</td>
+                        <td width="180"><input type="text"></td>
+                        <td width="123"><span class="description">可直接输入，格式为 YYYY-MM-DD，如 1981-06-01</span></td>
+                    </tr>
+                    <tr>
+                        <td align="right" class="operation">最高学历学习形式</td>
+                        <td><select name="select2"><option selected="selected" value="7">请选择</option></select></td>
+                        <td></td>
+                        <td class="operation">最高学历所学专业</td>
+                        <td><button>请选择...</button></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td align="right" class="operation">最高学历专业类别</td>
+                        <td><select name="select3"><option selected="selected" value="7">请选择</option></select></td>
+                        <td></td>
+                        <td class="operation">政治面貌</td>
+                        <td><select name="select7"><option selected="selected" value="7">请选择</option></select></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td align="right" class="operation">普通话水平</td>
+                        <td><select name="select4"><option selected="selected" value="7">请选择</option></select></td>
+                        <td></td>
+                        <td class="operation">现任教学校聘用<br/>起始日期</td>
+                        <td><input type="text"></td>
+                        <td><span class="description">请填写第一次与现工作单位签订聘任合同的日期，格式为 YYYY-MM-DD，如 1981-06-01</span></td>
+                    </tr>
+                    <tr>
+                        <td align="right" class="operation">现任教学校</td>
+                        <td width="186"><input type="text"></td>
+                        <td width="114"><span class="description">请填写现工作单位的全称</span></td>
+                        <td class="operation">岗位性质</td>
+                        <td><select name="select8"><option selected="selected" value="7">请选择</option></select></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td align="right" class="operation">开始参加工作时间</td>
+                        <td><input type="text"></td>
+                        <td><span class="description">请填写首次参加工作的时间，格式为 YYYY-MM-DD，如 1981-06-01 </span></td>
+                        <td class="operation">教师职务（职称）</td>
+                        <td colspan="2"><button>请选择...</button></td>
+                    </tr>
+                    <tr>
+                        <td align="right" class="operation">出生地</td>
+                        <td colspan="2"><input type="text"></td>
+                        <td class="operation">户籍所在地</td>
+                        <td colspan="2"><input type="text"><br/><span class="description">请按户口簿上的内容填写（或按照初审注册机构的要求填写）</span></td>
+                    </tr>
+                    <tr>
+                        <td align="right" class="operation">通讯地址</td>
+                        <td colspan="2"><input type="text"></td>
+                        <td class="operation">通讯地的邮编</td>
+                        <td><input type="text"></td>
+                        <td><span class="description">请填写 6 位阿拉伯数字</span></td>
+                    </tr>
+                    <tr>
+                        <td align="right" class="operation">联系电话</td>
+                        <td><input type="text"></td>
+                        <td class="description">请填写阿拉伯数字</td>
+                        <td class="operation">手机</td>
+                        <td><input type="text"></td>
+                        <td><span class="description">请填写 11 位阿拉伯数字</span></td>
+                    </tr>
+                    <tr>
+                        <td class="operation">照片</td>
+                        <td><span id="photo"><img></span><div id="filePicker">选择照片</div></td>
+                        <td colspan="4"><span class="description">须按要求由申请人本人上传，且必须与教师资格定期注册申请表上所贴照片底版相同 </span></td>
+                    </tr>
                 </table>
           </div>
     </div>
@@ -577,17 +508,17 @@
     <div id="box-8">
        <div class="content_bd">
          <div class="box-8">
-         <p><span>XXX</span>,您好！</p>
-         <h2>您已完成注册！</h2>
-         <P>为确保注册信息无误，请您及时<a href="/portal/request/index">登录系统</a>获取报名号，查看、修改注册信息，了解现场确认注意事项，打印申报材料。</P>
-         <P>请记住进的如下登录信息：</P>
-         <P>姓名：<span>XXX</span></P>
-         <P>证件号码：<span>xxxxxxxxxxxxxx</span></P>
-         <P>密码招呼邮箱：<span>******************</span></P>
+            <p><span>XXX</span>,您好！</p>
+            <h2>您已完成注册！</h2>
+            <P>请妥善保存您的如下登录信息：</P>
+            <P>身份证件号码：<span>411321198711133419</span></P>
+            <P>教师资格证书号码：<span>20021309531000656</span></P>
+            <P>密码找回邮箱：<span>wen68580610@126.com</span></P>
+            <P>为确保注册信息无误，请您及时<a href="#">登录系统。</a>获取报名号。</P>
+            <P>如果您需要查看或修改注册信息、了解现场确认注意事项、打印申报材料，请<a href="#">登录系统。</a></P>
          </div>
        </div>
     </div>
-</div>
 </div>
 
 <!-- 任教学科对话框 -->

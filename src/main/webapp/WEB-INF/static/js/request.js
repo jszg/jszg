@@ -1,6 +1,6 @@
 $(document).ready(function() {
     handleNextAndPreviousEvents(); // 处理下一步，上一步的动作
-    skipSteps(2); // 跳过前面几步，测试使用
+    toStep(7); // 到第 N 步，测试使用
     initWebUploader(); // 初始化上传照片控件
     requestDicts(); // 请求字典数据，初始化省，政治面貌等
 
@@ -88,17 +88,9 @@ $(document).ready(function() {
     $('tr:last', $('table')).css('border-bottom', 'none'); // 删除最后一行的 border-bottom
 });
 
-function skipSteps(step) {
-    $('#box-1').hide();
-
-    switch(step) {
-        case 1: $('#box-1-next').click(); break;
-        case 2: $('#box-2-next').click(); break;
-        case 3: $('#box-3-next').click(); break;
-        case 4: $('#box-4-next').click(); break;
-        case 5: $('#box-5-next').click(); break;
-        case 6: $('#box-6-next').click(); break;
-        case 7: $('#box-7-next').click(); break;
+function toStep(step) {
+    for (var i = 1; i < step; ++i) {
+        $('#box-' + i + '-next').click();
     }
 }
 
@@ -352,7 +344,7 @@ function handleNextAndPreviousEvents() {
 
     // 第二步的下一步
     $('#box-2-next').click(function() {
-        if (!$('#_checkbox_bd').get(0).checked){
+        if (!$('#agree-checkbox').get(0).checked){
             alert('请先阅读网上申报协议并同意后才可以申报！');
             return;
         }
