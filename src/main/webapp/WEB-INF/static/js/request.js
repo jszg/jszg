@@ -1,67 +1,58 @@
 $(document).ready(function() {
     initWebUploader();
+    requestDicts();
 
-    // 请求资格种类
-    $.rest.get({url: Urls.REST_CERT_TYPE, success: function(result) {
-        // [1] 删除所有的资格种类
-        // [2] 查询资格种类
-        // [3] 添加资格种类到 #certTypes 下
-        $('#certTypes option:gt(0)').remove();
-        var $certTypes = $('#certTypes');
-        var cts = result.data;
-        for (var i = 0; i < cts.length; ++i) {
-            $certTypes.append(template('optionTemplate', cts[i]));
-        }
-    }});
-
-    // 请求省
-    $.rest.get({url: Urls.REST_PROVINCES, success: function(result) {
-        // [1] 删除所有的省
-        // [2] 查询所有的省
-        // [3] 添加省到 #provinces 下
-        $('#provinces option:gt(0)').remove();
-        var $provinces = $('#provinces');
-        var ps = result.data;
-        for (var i = 0; i < ps.length; ++i) {
-            $provinces.append(template('optionTemplate', ps[i]));
-        }
-    }});
-
-    // 请求市
+    // 省变化时加载市
     $('#provinces').change(function() {
         // [1] 删除所有的市
         // [2] 查询省下的所有市
-        // [3] 添加市到 #citys 下
-        $('#citys option:gt(0)').remove();
+        // [3] 添加市到 #cities 下
+        $('#cities option:gt(0)').remove();
         var provinceId = parseInt($('#provinces option:selected').val());
 
         // provinceId 为 -1 表示选择了 "请选择"
         if (-1 != provinceId) {
             $.rest.get({url: Urls.REST_CITIES_BY_PROVINCE, urlParams: {provinceId: provinceId}, success: function(result) {
-                var $citys = $('#citys');
-                var cs = result.data;
+                var cities = result.data;
+                var $cities = $('#cities');
                 for (var i = 0; i < cs.length; ++i) {
-                    $citys.append(template('optionTemplate', cs[i]));
+                    $cities.append(template('optionTemplate', cities[i]));
                 }
             }});
         }
     });
 
     // 资格总类或者市变化时请求认证机构
-    $('#citys, #certTypes').change(function() {
+    $('#cities, #certTypes').change(function() {
         // [1] 删除所有的认证机构
         // [2] 使用资格种类和市查询认证机构
         // [3] 添加认证机构到 #orgs 下
         $('#orgs option:gt(0)').remove();
-        var cityId = parseInt($('#citys option:selected').val());
+        var cityId = parseInt($('#cities option:selected').val());
         var certTypeId = parseInt($('#certTypes option:selected').val());
 
         if (-1 != certTypeId && -1 != cityId) {
             $.rest.get({url: Urls.REST_ORGS_BY_CITY_AND_CERT_TYPE, urlParams: {cityId: cityId, certTypeId: certTypeId}, success: function(result) {
-                var $orgs = $('#orgs');
                 var orgs = result.data;
+                var $orgs = $('#orgs');
                 for (var i = 0; i < orgs.length; ++i) {
                     $orgs.append(template('optionTemplate', orgs[i]));
+                }
+            }});
+        }
+    });
+
+    // 第七步的省变化时加载这个省的毕业院校
+    $('#provinces-for-college').change(function() {
+        $('#graduation-colleges option:gt(0)').remove();
+        var provinceId = parseInt($('#provinces-for-college option:selected').val());
+
+        if (-1 != provinceId) {
+            $.rest.get({url: Urls.REST_COLLEGES_BY_PROVINCE, urlParams: {provinceId: provinceId}, success: function(result) {
+                var colleges = result.data;
+                var $colleges = $('#graduation-colleges');
+                for (var i = 0; i< colleges.length; ++i) {
+                    $colleges.append(template('optionTemplate', colleges[i]));
                 }
             }});
         }
@@ -88,67 +79,6 @@ $(document).ready(function() {
             alert('没有选中任教学科');
         }
     });
-
-    // 请求字典
-    $.rest.get({url: Urls.REST_DICTS, success: function(result) {
-        var data = result.data;
-        var i = 0;
-        // 名族
-        $('#nations option:gt(0)').remove();
-        var $nations = $('#nations');
-        var nations = data.nation;
-        for (i = 0; i < nations.length; ++i) {
-            $nations.append(template('optionTemplate', nations[i]));
-        }
-
-        // 政治面貌
-        $('#politicals option:gt(0)').remove();
-        var $politicals = $('#politicals');
-        var politicals = data.political;
-        for (i = 0; i < politicals.length; ++i) {
-            $politicals.append(template('optionTemplate', politicals[i]));
-        }
-
-        // 最高学历
-        $('#degrees option:gt(0)').remove();
-        var $degrees = $('#degrees');
-        var degrees = data.degree;
-        for (i = 0; i < degrees.length; ++i) {
-            $degrees.append(template('optionTemplate', degrees[i]));
-        }
-
-        // 普通话水平
-        $('#pth-levels option:gt(0)').remove();
-        var $pthLevels = $('#pth-levels');
-        var pthLevels = data.pthLevel;
-        for (i = 0; i < pthLevels.length; ++i) {
-            $pthLevels.append(template('optionTemplate', pthLevels[i]));
-        }
-
-        // 学习形式
-        $('#learn-types option:gt(0)').remove();
-        var $learnTypes = $('#learn-types');
-        var learnTypes = data.learnType;
-        for (i = 0; i < learnTypes.length; ++i) {
-            $learnTypes.append(template('optionTemplate', learnTypes[i]));
-        }
-
-        // 现从事职业
-        $('#occupations option:gt(0)').remove();
-        var $occupations = $('#occupations');
-        var occupations = data.occupation;
-        for (i = 0; i < occupations.length; ++i) {
-            $occupations.append(template('optionTemplate', occupations[i]));
-        }
-
-        // 专业类别
-        $('#normal-majors option:gt(0)').remove();
-        var $normalMajors = $('#normal-majors');
-        var normalMajors = data.normalMajor;
-        for (i = 0; i < normalMajors.length; ++i) {
-            $normalMajors.append(template('optionTemplate', normalMajors[i]));
-        }
-    }});
 
     ////////////////////////////////////////////////////////////////////////
     ///                                下一步                              //
@@ -266,6 +196,89 @@ $(document).ready(function() {
     $('#box-6-next').click();
 });
 
+function requestDicts() {
+    // 请求字典
+    $.rest.get({url: Urls.REST_DICTS, success: function(result) {
+        var i = 0;
+        var data = result.data;
+
+        // 资格种类
+        $('#certTypes option:gt(0)').remove();
+        var certTypes = data.certTypes;
+        var $certTypes = $('#certTypes');
+        for (i = 0; i < certTypes.length; ++i) {
+            $certTypes.append(template('optionTemplate', certTypes[i]));
+        }
+
+        // 省
+        $('#provinces option:gt(0)').remove();
+        $('#provinces-for-college option:gt(0)').remove();
+        var provinces = data.provinces;
+        var $provinces = $('#provinces');
+        var $provincesForCollege = $('#provinces-for-college');
+        for (i = 0; i < provinces.length; ++i) {
+            $provinces.append(template('optionTemplate', provinces[i]));
+            $provincesForCollege.append(template('optionTemplate', provinces[i]));
+        }
+
+        // 民族
+        $('#nations option:gt(0)').remove();
+        var nations = data.nation;
+        var $nations = $('#nations');
+        for (i = 0; i < nations.length; ++i) {
+            $nations.append(template('optionTemplate', nations[i]));
+        }
+
+        // 政治面貌
+        $('#politicals option:gt(0)').remove();
+        var politicals = data.political;
+        var $politicals = $('#politicals');
+        for (i = 0; i < politicals.length; ++i) {
+            $politicals.append(template('optionTemplate', politicals[i]));
+        }
+
+        // 最高学历
+        $('#degrees option:gt(0)').remove();
+        var degrees = data.degree;
+        var $degrees = $('#degrees');
+        for (i = 0; i < degrees.length; ++i) {
+            $degrees.append(template('optionTemplate', degrees[i]));
+        }
+
+        // 普通话水平
+        $('#pth-levels option:gt(0)').remove();
+        var pthLevels = data.pthLevel;
+        var $pthLevels = $('#pth-levels');
+        for (i = 0; i < pthLevels.length; ++i) {
+            $pthLevels.append(template('optionTemplate', pthLevels[i]));
+        }
+
+        // 学习形式
+        $('#learn-types option:gt(0)').remove();
+        var learnTypes = data.learnType;
+        var $learnTypes = $('#learn-types');
+        for (i = 0; i < learnTypes.length; ++i) {
+            $learnTypes.append(template('optionTemplate', learnTypes[i]));
+        }
+
+        // 现从事职业
+        $('#occupations option:gt(0)').remove();
+        var occupations = data.occupation;
+        var $occupations = $('#occupations');
+        for (i = 0; i < occupations.length; ++i) {
+            $occupations.append(template('optionTemplate', occupations[i]));
+        }
+
+        // 专业类别
+        $('#normal-majors option:gt(0)').remove();
+        var normalMajors = data.normalMajor;
+        var $normalMajors = $('#normal-majors');
+        for (i = 0; i < normalMajors.length; ++i) {
+            $normalMajors.append(template('optionTemplate', normalMajors[i]));
+        }
+    }});
+}
+
 /**
  * 请求任教学科
  */
@@ -380,7 +393,7 @@ function initWebUploader() {
 function validate3thStep() {
     var certTypeId = parseInt($('#certTypes option:selected').val()); // #provinces option:selected
     var provinceId = parseInt($('#provinces option:selected').val());
-    var cityId     = parseInt($('#citys option:selected').val());
+    var cityId     = parseInt($('#cities option:selected').val());
     var orgId      = parseInt($('#orgs option:selected').val());
     var subjectId  = parseInt($('#subject').attr('data-subject-id'));
 

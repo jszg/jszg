@@ -138,7 +138,7 @@
                 <tr>
                     <td class="operation"><label>选择市</label></td>
                     <td>
-                        <select id="citys" name="citys">
+                        <select id="cities" name="cities">
                             <option selected="selected" value="-1">请选择</option>
                         </select>
                     </td>
@@ -406,8 +406,8 @@
                     <td><span class="description">请按照申请认定所使用的学位进行填写</span></td>
                     <td class="operation">毕业学校</td>
                     <td>
-                        <select id="provinces-for-school" name="1"><option value="-1">请选择省</option></select>
-                        <select id="graduation-school" name="1"><option value="-1">请选择</option></select>
+                        <select id="provinces-for-college" name="1"><option value="-1">请选择-省</option></select>
+                        <select id="graduation-colleges" name="1"><option value="-1">请选择</option></select>
                     </td>
                     <td><span class="description">请按照申请认定所使用的学历进行填写</span></td>
                 </tr>

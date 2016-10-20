@@ -10,7 +10,8 @@ Urls = {
     REST_SUBJECTS_CHILDREN: '/rest/signUp/provinces/{provinceId}/{parentId}/subjects/children',
     WEB_UPLOADER_SWF: 'https://cdn.staticfile.org/webuploader/0.1.5/Uploader.swf',
     REST_DICTS: '/rest/signUp/dicts',
-    URI_UPLOAD_PERSON_IMAGE: '/upload-person-image'
+    URI_UPLOAD_PERSON_IMAGE: '/upload-person-image',
+    REST_COLLEGES_BY_PROVINCE: '/rest/signUp/provinces/{provinceId}/colleges'
 };
 
 /**
