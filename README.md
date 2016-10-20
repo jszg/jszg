@@ -95,6 +95,33 @@ gradle -Denv=development clean appStartDebug
     ```
     # 根节点
     http://{{host}}:{{port}}/rest/signUp/technicaljobs/root
+    
     # 子节点
     http://{{host}}:{{port}}/rest/signUp/{parentId}/technicaljobs/children
+    ```
+    
+*  证书上的任教学科
+
+    ```
+    # 根节点
+    http://{{host}}:{{port}}/rest/signUp/certTypes/{certTypeId}/subjects
+    
+    # 子节点
+    http://{{host}}:{{port}}/rest/signUp/{parentId}/subjects
+    ```
+    
+* 民族
+
+    ```
+    http://{{host}}:{{port}}/rest/signUp/nations
+    ```
+    
+ * 证书上的机构
+ 
+    ```
+    # 根节点
+    http://{{host}}:{{port}}/rest/signUp/orgtypes/{orgType}/orgs
+    
+    # 子节点
+    http://{{host}}:{{port}}/rest/signUp/{parentId}/orgs
     ```

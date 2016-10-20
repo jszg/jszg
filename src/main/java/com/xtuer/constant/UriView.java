@@ -9,7 +9,7 @@ public interface UriView {
     String REST_CITIES_BY_PROVINCE         = "/rest/signUp/provinces/{provinceId}/cities";
 
     String REST_ORGS_BY_CITY_AND_CERT_TYPE = "/rest/signUp/cities/{cityId}/certTypes/{certTypeId}/orgs";
-    String REST_ORGS_BY_ORGTYPE            = "/rest/signUp/orgtype/{orgType}/orgs";
+    String REST_ORGS_BY_ORGTYPE            = "/rest/signUp/orgtypes/{orgType}/orgs";
     String REST_ORGS_BY_PARENT             = "/rest/signUp/{parentId}/orgs";
 
     String REST_SUBJECTS_ROOT              = "/rest/signUp/provinces/{provinceId}/certTypes/{certTypeId}/subjects/root";
