@@ -18,6 +18,7 @@
     <script src="${static}/lib/jquery.leanModal.min.js" charset="utf-8"></script>
     <script src="${static}/js/utils.js" charset="utf-8"></script>
     <script src="${static}/js/jquery.rest.js" charset="utf-8"></script>
+    <script src="${static}/js/enroll.js" charset="utf-8"></script>
 
     <!--[if lt IE 9]>
     <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -33,10 +34,10 @@
     <ul>
         <li class="bz bz1 active" style="z-index: 10"><span>申报第一步</span><br/><span>申报人必读</span></li>
         <li class="bz bz2" style="z-index: 9"><span>申报第二步</span><br/><span>确认服务条款</span></li>
-        <li class="bz bz3" style="z-index: 8"><span>申报第三步</span><br/><span>选择认定机构</span></li>
-        <li class="bz bz4" style="z-index: 7"><span>申报第四步</span><br/><span>选择确认点</span></li>
-        <li class="bz bz5" style="z-index: 6"><span>申报第五步</span><br/><span>阅读注意事项</span></li>
-        <li class="bz bz6" style="z-index: 5"><span>申报第六步</span><br/><span>填写身份信息</span></li>
+        <li class="bz bz3" style="z-index: 8"><span>申报第三步</span><br/><span>填写身份信息</span></li>
+        <li class="bz bz4" style="z-index: 7"><span>申报第四步</span><br/><span>选择注册机构</span></li>
+        <li class="bz bz5" style="z-index: 6"><span>申报第五步</span><br/><span>选择确认点</span></li>
+        <li class="bz bz6" style="z-index: 5"><span>申报第六步</span><br/><span>阅读注意事项</span></li>
         <li class="bz bz7" style="z-index: 4"><span>申报第七步</span><br/><span>填写申请材料</span></li>
         <li class="bz bz8" style="z-index: 3"><span>申报第八步</span><br>完成</li>
     </ul>
@@ -49,23 +50,13 @@
 <!-- 第一步 -->
 <div id="box-1">
     <div class="content_bd">
-        <h4>申请人必读</h4>
+        <h4>温馨提示</h4>
         <p>
-            1. 未达到国家法定退休年龄、具备《教师法》规定学历的中国公民均可申请认定教师资格。
-            <br/> 2. 具备下列条件，经认定合格的，可以取得相应类别的教师资格。
-            <br/> （1）具备《教师法》规定的相应学历要求。
-            <br/> （2）遵守宪法和法律，热爱教育事业，具有良好的思想品德。
-            <br/> （3）有教育教学能力，包括：
-            <br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;具备承担教育教学工作所必须的基本素质和能力，修学教育学、心理学等课程并考试合格，参加教育教学能力测试（教育教学实践）合格；
-            <br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;普通话水平达到国家规定的标准；
-            <br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;具有良好的身心素质，在教师资格认定机构指定的县级以上医院体检合格。
-            <br/> 3. 应届毕业生申请认定幼儿园、小学、初级中学教师资格时，认定机构可选择就读学校所在地或户籍所在地的区、县级教育局；申请认定高级中学、中等职业学校、中等职业学校实习指导教师资格时，认定机构可选择就读学校所在地或户籍所在地的地、州、市级教育局。
-            <br/> 在职教师或其他社会人员申请认定幼儿园、小学、初中教师资格可选择工作单位（人事档案）所在地或户籍所在地的区、县级教育局；申请认定高级中学、中等职业学校、中等职业学校实习指导教师资格可选择工作单位（人事档案）所在地或户籍所在地的地、州、市级教育局。
-            <br/> 高等学校拟聘或已聘任的教学科研人员申请认定高等学校教师资格只能选择任教（拟任教）学校所在地的省（自治区、直辖市）教育厅（教委）。
-            <br/>
-            <font style="color:red">在河北省申请认定幼儿园、小学、初级中学教师资格的申请人，认定机构选择市级教育局。</font>
-            <br> 4. 各省级教育行政部门对认定权限或申报条件另有规定的，按其规定执行。
-            <br>
+            1. 为保证申请人顺利网报，建议申请人尽量避开第一天的报名高峰，更不要在最后一天突击报名。
+            <br/> 2. 申请人在进行网上报名过程中，如因不能顺利使用报名系统，请及时在办公时间联系我中心加以解决。联系电话：010-58806103/58800171。 
+            <br/> 3.中小学教师资格定期注册制度试点工作目前只在部分省份的部分市县开展。没有开展此项试点工作的省份和地区的在职教师暂不进行定期注册，何时开始
+   此项工作，请关注当地教育行政部门的通知。
+            
         </p>
 
     </div>
@@ -82,15 +73,19 @@
         <h4>网上申报协议</h4>
         <p>
             1. 本网站网上申报系统的所有权归中国教师资格网。<br/>
-            2. 教师资格申请人已经认真阅读本网站中提供的“申请人必读”中的内容，符合国家规定的申请条件。<br/>
-            3. 教师资格申请人须保证提交的个人信息真实、准确，保证按照本系统做出的申请认定工作安排和有关规定申请认定教师资格。申请人承担由于信息不真实、不准确和个人疏漏引起的一切后果。<br/>
-            4. 教师资格申请人注册成功后，须妥善保管个人密码，因保管不善所引起的一切后果由申请人承担。<br/>
-            5. 教师资格申请人理解并同意由于不可抗力所引起的无法正常申请的情况，本网站不承担任何直接或间接的责任。<br/>
-            6. 教师资格申请人必须在规定的日期内，登录网上申报系统执行相关操作。因个人原因未履行相关责任而导致的申报异常，由申请人本人承担所有责任。<br/>
-            7. 本网站尊重并保护申请人网上申报留存的个人申请信息，非经申请人本人同意，本网站不会主动公开、编辑、披露或透露任何申请人个人申请信息，但根据法律法规规定必须披露的或司法部门或其他法律授权的机关依照法定程序要求提供的除外。<br/>
+            2.教师资格定期注册申请人须保证提交的个人信息真实、准确，保证按照本系统做出的定期注册工作安排和有关规定申请教师资格定期注册。申请人承担由于信息不真实、不准确和个人疏漏而造成的一切后果。<br/>
+            3.教师资格定期注册申请人信息填报成功后，须妥善保管个人密码，因保管不善而造成的一切后果由申请人承担。<br/>
+            4. 教师资格定期注册申请人理解并同意由于不可抗力所导致的无法正常申请的情况，本网站不承担任何直接或间接的责任。<br/>
+            5. 教师资格定期注册申请人必须在规定的日期内，登录网上申报系统执行相关操作。因个人原因未履行相关责任而导致的申报异常，由申请人本人承担所有责任。<br/>
+            6. 本网站尊重并保护申请人网上申报留存的个人申请信息，非经申请人本人同意，本网站不会主动公开、编辑、披露或透露任何申请人个人申请信息，但根据法律法规规定必须披露的或司法部门及其他法律授权的机关依照法定程序要求提供的除外。
         </p>
-        <br/>
-        <input type="checkbox" id="_checkbox_bd" checked="true"> <label for="_checkbox_bd">已阅读并完全同意</label>
+       
+    </div>
+    <div class="content_bd">
+          <h4>是否接受以上协议？</h4>
+          <br>
+           <input type="radio" id="not-accept" checked="true" name="accept-s"> <label for="not-accept">不同意</label>
+           <input type="radio" id="accept" name="accept-s"> <label for="accept" >同意</label>
     </div>
     <div class="action-bar">
         <a href="javascript:void(0)" class="pre-step">
@@ -105,64 +100,32 @@
 <!--第三步-->
 <div id="box-3">
     <div class="content_bd">
-        <h4>请选择资格种类和认定机构<font style="font-size:95%;color:red">（在河北省申请认定中小学和幼儿园教师资格的申请人，认定机构请选择市级（含省直管县）教育局）</font></h4>
-
+        <h4>填写身份信息 <b class="f_red f_size">(本栏信息请从上至下逐行填写)</b></h4>
         <div class="ui-body">
-            <table border='0' cellspacing="0" cellpadding="0">
-                <!-- 选择资格种类 -->
+            <table width="960" border="0" cellspacing="0" cellpadding="0">
+                <tbody>
                 <tr>
-                    <td width="100" class="operation"><label>资格种类</label></td>
+                    <td width="130" class="operation">证件类型</td>
                     <td width="150">
-                        <select id="certTypes" name="certTypes" class="ui-field">
-                            <option selected="selected" value="-1">请选择</option>
+                        <select name="idType">
+                            <option selected="selected" value="7">身份证</option>
                         </select>
                     </td>
                     <td></td>
                 </tr>
-
-                <!-- 选择省 -->
                 <tr>
-                    <td class="operation"><label>选择省</label></td>
-                    <td>
-                        <select id="provinces" name="provinces">
-                            <option selected="selected" value="-1">请选择</option>
-                        </select>
-                    </td>
-                    <td>
-                        <span><font>在职教师或其他社会人员选择工作单位（人事档案）所在地或户籍所在地的省份和地、州、市（含省直管县）；应届毕业生只能在毕业前最后一学期申请认定，应届毕业生选择就读学校所在地的省份和地、州、市（含省直管县）。</font></span>
-                    </td>
+                    <td class="operation">身份证件号码</td>
+                    <td><input type="text"></td>
+                    <td>请输入二代身份证号码（18位）</td>
                 </tr>
-
-                <!-- 选择市 -->
                 <tr>
-                    <td class="operation"><label>选择市</label></td>
+                    <td class="operation">教师资格证书号码  </td>
                     <td>
-                        <select id="citys" name="citys">
-                            <option selected="selected" value="-1">请选择</option>
-                        </select>
+                        <input class="ui-field" name="idNo" value="">
                     </td>
                     <td></td>
                 </tr>
-
-                <!-- 选择认定机构 -->
-                <tr>
-                    <td class="operation"><label class="ui-required-false">认定机构</label></td>
-                    <td>
-                        <select id="orgs" name="orgs">
-                            <option selected="selected" value="-1">请选择</option>
-                        </select>
-                    </td>
-                    <td>
-                        <span class="description"><fon>申请认定幼儿园、小学、初级中学教师资格时，认定机构选择区、县级教育局；申请认定高级中学、中等职业学校、中等职业学校实习指导教师资格时，认定机构选择地、州、市级教育局。<br></font><font color="red">河北省认定中小学和幼儿园教师资格的认定权限已经调整，“认定机构”只能选择系统提供的教育局名称。<br></font><font>高等学校拟聘或已聘任的教学科研人员申请认定高等学校教师资格只能选择任教（拟任教）学校所在地的省（自治区、直辖市）教育厅（教委）。</font></span>
-                    </td>
-                </tr>
-
-                <!-- 选择任教学科 -->
-                <tr>
-                    <td class="operation"><label>任教学科</label></td>
-                    <td><span id="subject" data-subject-id="-1"></span></td>
-                    <td><button id="select-subjects" type="button">请选择...</button></td>
-                </tr>
+                </tbody>
             </table>
         </div>
     </div>
@@ -179,37 +142,98 @@
 <!-- 第四步-->
 <div id="box-4">
     <div class="content_bd">
-        <h4>选择确认点:</h4>
+        <h4>您是第1次参加教师资格注册，请确认您的证书号码。如果无误，请填写证书的其它信息。否则，请返回上一步。</h4>
         <div class="ui-body">
-            <div>
-                <p>确认点: <input type="text"></p>
-                <button>搜索</button>
-                <button>列出全部</button>
-            </div>
-            <div class="ui-body1">
-                <table class="ui-list">
-                    <thead>
-                    <tr>
-                        <th style="width:50px;">&nbsp;</th>
-                        <th>确认点</th>
-                        <th>确认开始时间</th>
-                        <th>确认结束时间</th>
-                        <th>确认范围</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr class="row-136395">
-                        <td>
-                            <input type="radio" name="ui_radio" value="136395" class="ui-check ui-radio">
-                        </td>
-                        <td class="ui-list-column" name="localeName">辛集市教育局</td>
-                        <td class="ui-list-column" name="beginDate">2016-11-08 08:38</td>
-                        <td class="ui-list-column" name="endDate">2016-11-10 17:00</td>
-                        <td class="ui-list-column" name="confirmRange">辛集市范围内申请高中、中职、初中、小学及幼儿园教师资格人员</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+             <table width="960" border="0" cellspacing="0" cellpadding="0" class="ui-view">
+                <tr style="border-bottom: 1px dashed #eee;">
+                    <th width="193" align="right"  height="33">证件类型</th>
+                    <td width="289"></td>
+                    <th width="194" align="right">身份证件号码</th>
+                    <td width="238"></td>
+                </tr>
+                <tr>
+                    <th align="right">教师资格证书号码</th>
+                    <td>&nbsp;</td>
+                    <th align="right"></th>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                   <td height="26"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="content_bd">
+        <h4>请按教师资格证书上的内容如实填写下列信息项 <b class="f_red f_size">(本栏信息请从左至右逐行填写)</b></h4>
+        <div class="ui-body">
+           <table width="960" border="0" cellspacing="0" cellpadding="0" class="ui-view">
+                <tr style="border-bottom: 1px dashed #eee;">
+                    <th width="145" align="right"  height="33">证书签发日期</th>
+                    <td width="204"><input type="text"></td>
+                    <td colspan="2">可直接输入，格式为YYYY-MM-DD，如1981-06-01 </td>
+                    <th width="90" align="right">资格种类</th>
+                    <td width="116"><select name="idType"><option selected="selected" value="7">身份证</option></select></td>
+                </tr>
+                <tr>
+                    <th align="right">认定机构</th>
+                    <td><button>选择...</button></td>
+                    <td>任教学科</td>
+                    <td><button>选择...</button></td>
+                    <th align="right">&nbsp;</th>
+                    <td></td>
+                </tr>
+                
+                 <tr>
+                    <th align="right">姓名</th>
+                    <td><input type="text"></td>
+                    <td align="right">性别</td>
+                    <td>&nbsp;</td>
+                    <th align="right">&nbsp;</th>
+                    <td></td>
+                </tr>
+                
+                 <tr>
+                    <th align="right">出生日期</th>
+                    <td>&nbsp;</td>
+                    <td width="203" align="right">民族</td>
+                    <td width="202"><select name="idType2"><option selected="selected" value="7">请选择</option></select></td>
+                    <th align="right">&nbsp;</th>
+                    <td>&nbsp;</td>
+                </tr>
+                
+            </table>
+        </div>
+    </div>
+    <div class="content_bd">
+        <h4>请按现阶段工作情况选择下列信息 <b class="f_red f_size">(本栏信息请从上至下逐行填写)</b></h4>
+
+        <div class="ui-body">
+           <table width="960" border="0" cellspacing="0" cellpadding="0" class="mytable">
+                  <tr>
+                    <th width="135" align="right">现任教学段</th>
+                    <td width="805"><select name="idType2"><option selected="selected" value="7">请选择</option></select></td>
+                  </tr>
+                  <tr>
+                    <th align="right">所在省</th>
+                    <td><select name="idType">
+                      <option selected="selected" value="7">请选择</option>
+                    </select></td>
+                  </tr>
+                  <tr>
+                    <th align="right">所在市</th>
+                    <td><select name="idType3">
+                      <option selected="selected" value="7">请选择</option>
+                    </select></td>
+                  </tr>
+                  <tr>
+                    <th align="right">注册机构</th>
+                    <td><button>请选择...</button></td>
+                  </tr>
+                  <tr>
+                    <th align="right">现任教学科</th>
+                    <td><button>请选择...</button></td>
+                  </tr>
+            </table>
 
         </div>
     </div>
@@ -224,6 +248,52 @@
 </div>
 <!-- 第五步-->
 <div id="box-5">
+    <div class="content_bd">
+        <h4>选择确认点:</h4>
+        <div class="ui-body">
+            <div>
+                <p>确认点: <input type="text"></p>
+                <button>搜索</button>
+                <button>列出全部</button>
+            </div>
+            <div class="ui-body1">
+                <table width="960" border="0" cellspacing="0" cellpadding="0" class="ui-view">
+                    <thead>
+                    <tr>
+                        <th width="62" style="width:50px;">&nbsp;</th>
+                        <th width="118">确认点</th>
+                        <th width="129">确认开始时间</th>
+                        <th width="305">确认结束时间</th>
+                        <th width="346">确认范围</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="row-136395">
+                        <td align="right">
+                            <input type="radio" name="ui_radio" value="136395" class="ui-check ui-radio">
+                        </td>
+                        <td class="ui-list-column" name="localeName">辛集市教育局</td>
+                        <td class="ui-list-column" name="beginDate">2016-11-08 08:38</td>
+                        <td class="ui-list-column" name="endDate" style="text-align: center;">2016-11-10 17:00</td>
+                        <td class="ui-list-column" name="confirmRange">辛集市范围内申请高中、中职、初中、小学及幼儿园教师资格人员</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <div class="action-bar">
+        <a href="javascript:void(0)" class="pre-step">
+            <img src="${static}/img/signup/button-prev.gif" alt="上一步" border="0" id="box-5-previous">
+        </a>
+        <a href="javascript:void(0)" class="next-step">
+            <img src="${static}/img/signup/button-next.gif" alt="下一步" border="0" id="box-5-next">
+        </a>
+    </div>
+</div>
+<!-- 第六步-->
+<div id="box-6">
     <div class="content_bd">
         <h4>注意事项</h4>
         <p></p>
@@ -248,51 +318,10 @@
     </div>
     <div class="action-bar">
         <a href="javascript:void(0)" class="pre-step">
-            <img src="${static}/img/signup/button-prev.gif" alt="上一步" border="0" id="box-5-previous">
-        </a>
-        <a href="javascript:void(0)" class="next-step">
-            <img src="${static}/img/signup/button-next-with-read.gif" alt="下一步" border="0" id="box-5-next">
-        </a>
-    </div>
-</div>
-<!-- 第六步-->
-<div id="box-6">
-    <div class="content_bd">
-        <h4>填写身份信息</h4>
-        <div class="ui-body">
-            <table width="960" border="0" cellspacing="0" cellpadding="0">
-                <tbody>
-                <tr>
-                    <td width="130" class="operation">姓名</td>
-                    <td width="150"><input class="ui-field" name="name" value="二级"></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td class="operation">证件类型</td>
-                    <td>
-                        <select name="idType">
-                            <option selected="selected" value="7">身份证</option>
-                        </select>
-                    </td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td class="operation">身份证件号码</td>
-                    <td>
-                        <input class="ui-field" name="idNo" value="">
-                    </td>
-                    <td></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="action-bar">
-        <a href="javascript:void(0)" class="pre-step">
             <img src="${static}/img/signup/button-prev.gif" alt="上一步" border="0" id="box-6-previous">
         </a>
         <a href="javascript:void(0)" class="next-step">
-            <img src="${static}/img/signup/button-next.gif" alt="下一步" border="0" id="box-6-next">
+            <img src="${static}/img/signup/button-next-with-read.gif" alt="下一步" border="0" id="box-6-next">
         </a>
     </div>
 </div>
