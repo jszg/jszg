@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>中国教师资格网</title>
+
+    <link href="${static}/css/signup.css" rel="stylesheet" type="text/css">
+    <link href="${static}/css/generic.css" rel="stylesheet" type="text/css">
+    <link href="http://cdn.staticfile.org/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css">
+    <link href="http://cdn.bootcss.com/zTree.v3/3.5.24/css/zTreeStyle/zTreeStyle.min.css" rel="stylesheet" type="text/css">
+    <script src="http://cdn.bootcss.com/jquery/1.12.4/jquery.min.js" charset="utf-8"></script>
+    <script src="http://cdn.staticfile.org/webuploader/0.1.5/webuploader.min.js" charset="utf-8"></script>
+    <script src="http://cdn.bootcss.com/zTree.v3/3.5.24/js/jquery.ztree.core.min.js" charset="utf-8"></script>
+    <script src="http://cdn.staticfile.org/artTemplate.js/3.0/template.js" charset="utf-8"></script>
+    <script src="${static}/lib/jquery.leanModal.min.js" charset="utf-8"></script>
+    <script src="${static}/js/utils.js" charset="utf-8"></script>
+    <script src="${static}/js/jquery.rest.js" charset="utf-8"></script>
+
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<div class="request">
+<h1>欢迎使用教师资格认定管理-网上申报系统</h1>
+<div class="declare">
+    <h2>网上申<br>报流程</h2>
+    <ul>
+        <li class="bz bz1 active" style="z-index: 10"><span>申报第一步</span><br/><span>申报人必读</span></li>
+        <li class="bz bz2" style="z-index: 9"><span>申报第二步</span><br/><span>确认服务条款</span></li>
+        <li class="bz bz3" style="z-index: 8"><span>申报第三步</span><br/><span>选择认定机构</span></li>
+        <li class="bz bz4" style="z-index: 7"><span>申报第四步</span><br/><span>选择确认点</span></li>
+        <li class="bz bz5" style="z-index: 6"><span>申报第五步</span><br/><span>阅读注意事项</span></li>
+        <li class="bz bz6" style="z-index: 5"><span>申报第六步</span><br/><span>填写身份信息</span></li>
+        <li class="bz bz7" style="z-index: 4"><span>申报第七步</span><br/><span>填写申请材料</span></li>
+        <li class="bz bz8" style="z-index: 3"><span>申报第八步</span><br>完成</li>
+    </ul>
+</div>
+
+<script id="optionTemplate" type="text/html">
+    <option value="{{id}}">{{name}}</option>
+</script>
+
+<!-- 第一步 -->
+<div id="box-1">
+    <div class="content_bd">
+        <h4>申请人必读</h4>
+        <p>
+            1. 未达到国家法定退休年龄、具备《教师法》规定学历的中国公民均可申请认定教师资格。
+            <br/> 2. 具备下列条件，经认定合格的，可以取得相应类别的教师资格。
+            <br/> （1）具备《教师法》规定的相应学历要求。
+            <br/> （2）遵守宪法和法律，热爱教育事业，具有良好的思想品德。
+            <br/> （3）有教育教学能力，包括：
+            <br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;具备承担教育教学工作所必须的基本素质和能力，修学教育学、心理学等课程并考试合格，参加教育教学能力测试（教育教学实践）合格；
+            <br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;普通话水平达到国家规定的标准；
+            <br/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;具有良好的身心素质，在教师资格认定机构指定的县级以上医院体检合格。
+            <br/> 3. 应届毕业生申请认定幼儿园、小学、初级中学教师资格时，认定机构可选择就读学校所在地或户籍所在地的区、县级教育局；申请认定高级中学、中等职业学校、中等职业学校实习指导教师资格时，认定机构可选择就读学校所在地或户籍所在地的地、州、市级教育局。
+            <br/> 在职教师或其他社会人员申请认定幼儿园、小学、初中教师资格可选择工作单位（人事档案）所在地或户籍所在地的区、县级教育局；申请认定高级中学、中等职业学校、中等职业学校实习指导教师资格可选择工作单位（人事档案）所在地或户籍所在地的地、州、市级教育局。
+            <br/> 高等学校拟聘或已聘任的教学科研人员申请认定高等学校教师资格只能选择任教（拟任教）学校所在地的省（自治区、直辖市）教育厅（教委）。
+            <br/>
+            <font style="color:red">在河北省申请认定幼儿园、小学、初级中学教师资格的申请人，认定机构选择市级教育局。</font>
+            <br> 4. 各省级教育行政部门对认定权限或申报条件另有规定的，按其规定执行。
+            <br>
+        </p>
+
+    </div>
+    <div class="action-bar" id="action-bar-1">
+        <a href="javascript:void(0)" class="next-step">
+            <img id="box-1-next" src="${static}/img/signup/button-next.gif" alt="下一步" border="0">
+        </a>
+    </div>
+</div>
+
+<!-- 第二步 -->
+<div id="box-2">
+    <div class="content_bd">
+        <h4>网上申报协议</h4>
+        <p>
+            1. 本网站网上申报系统的所有权归中国教师资格网。<br/>
+            2. 教师资格申请人已经认真阅读本网站中提供的“申请人必读”中的内容，符合国家规定的申请条件。<br/>
+            3. 教师资格申请人须保证提交的个人信息真实、准确，保证按照本系统做出的申请认定工作安排和有关规定申请认定教师资格。申请人承担由于信息不真实、不准确和个人疏漏引起的一切后果。<br/>
+            4. 教师资格申请人注册成功后，须妥善保管个人密码，因保管不善所引起的一切后果由申请人承担。<br/>
+            5. 教师资格申请人理解并同意由于不可抗力所引起的无法正常申请的情况，本网站不承担任何直接或间接的责任。<br/>
+            6. 教师资格申请人必须在规定的日期内，登录网上申报系统执行相关操作。因个人原因未履行相关责任而导致的申报异常，由申请人本人承担所有责任。<br/>
+            7. 本网站尊重并保护申请人网上申报留存的个人申请信息，非经申请人本人同意，本网站不会主动公开、编辑、披露或透露任何申请人个人申请信息，但根据法律法规规定必须披露的或司法部门或其他法律授权的机关依照法定程序要求提供的除外。<br/>
+        </p>
+        <br/>
+        <input type="checkbox" id="_checkbox_bd" checked="true"> <label for="_checkbox_bd">已阅读并完全同意</label>
+    </div>
+    <div class="action-bar">
+        <a href="javascript:void(0)" class="pre-step">
+            <img src="${static}/img/signup/button-prev.gif" alt="上一步" border="0" id="box-2-previous">
+        </a>
+        <a href="javascript:void(0)" class="next-step">
+            <img src="${static}/img/signup/button-next.gif" alt="下一步" border="0" id="box-2-next">
+        </a>
+    </div>
+</div>
+
+<!--第三步-->
+<div id="box-3">
+    <div class="content_bd">
+        <h4>请选择资格种类和认定机构<font style="font-size:95%;color:red">（在河北省申请认定中小学和幼儿园教师资格的申请人，认定机构请选择市级（含省直管县）教育局）</font></h4>
+
+        <div class="ui-body">
+            <table border='0' cellspacing="0" cellpadding="0">
+                <!-- 选择资格种类 -->
+                <tr>
+                    <td width="100" class="operation"><label>资格种类</label></td>
+                    <td width="150">
+                        <select id="certTypes" name="certTypes" class="ui-field">
+                            <option selected="selected" value="-1">请选择</option>
+                        </select>
+                    </td>
+                    <td></td>
+                </tr>
+
+                <!-- 选择省 -->
+                <tr>
+                    <td class="operation"><label>选择省</label></td>
+                    <td>
+                        <select id="provinces" name="provinces">
+                            <option selected="selected" value="-1">请选择</option>
+                        </select>
+                    </td>
+                    <td>
+                        <span><font>在职教师或其他社会人员选择工作单位（人事档案）所在地或户籍所在地的省份和地、州、市（含省直管县）；应届毕业生只能在毕业前最后一学期申请认定，应届毕业生选择就读学校所在地的省份和地、州、市（含省直管县）。</font></span>
+                    </td>
+                </tr>
+
+                <!-- 选择市 -->
+                <tr>
+                    <td class="operation"><label>选择市</label></td>
+                    <td>
+                        <select id="citys" name="citys">
+                            <option selected="selected" value="-1">请选择</option>
+                        </select>
+                    </td>
+                    <td></td>
+                </tr>
+
+                <!-- 选择认定机构 -->
+                <tr>
+                    <td class="operation"><label class="ui-required-false">认定机构</label></td>
+                    <td>
+                        <select id="orgs" name="orgs">
+                            <option selected="selected" value="-1">请选择</option>
+                        </select>
+                    </td>
+                    <td>
+                        <span class="description"><fon>申请认定幼儿园、小学、初级中学教师资格时，认定机构选择区、县级教育局；申请认定高级中学、中等职业学校、中等职业学校实习指导教师资格时，认定机构选择地、州、市级教育局。<br></font><font color="red">河北省认定中小学和幼儿园教师资格的认定权限已经调整，“认定机构”只能选择系统提供的教育局名称。<br></font><font>高等学校拟聘或已聘任的教学科研人员申请认定高等学校教师资格只能选择任教（拟任教）学校所在地的省（自治区、直辖市）教育厅（教委）。</font></span>
+                    </td>
+                </tr>
+
+                <!-- 选择任教学科 -->
+                <tr>
+                    <td class="operation"><label>任教学科</label></td>
+                    <td><span id="subject" data-subject-id="-1"></span></td>
+                    <td><button id="select-subjects" type="button">请选择...</button></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="action-bar">
+        <a href="javascript:void(0)" class="pre-step">
+            <img src="${static}/img/signup/button-prev.gif" alt="上一步" border="0" id="box-3-previous">
+        </a>
+        <a href="javascript:void(0)" class="next-step">
+            <img src="${static}/img/signup/button-next.gif" alt="下一步" border="0" id="box-3-next">
+        </a>
+    </div>
+</div>
+
+<!-- 第四步-->
+<div id="box-4">
+    <div class="content_bd">
+        <h4>选择确认点:</h4>
+        <div class="ui-body">
+            <div>
+                <p>确认点: <input type="text"></p>
+                <button>搜索</button>
+                <button>列出全部</button>
+            </div>
+            <div class="ui-body1">
+                <table class="ui-list">
+                    <thead>
+                    <tr>
+                        <th style="width:50px;">&nbsp;</th>
+                        <th>确认点</th>
+                        <th>确认开始时间</th>
+                        <th>确认结束时间</th>
+                        <th>确认范围</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="row-136395">
+                        <td>
+                            <input type="radio" name="ui_radio" value="136395" class="ui-check ui-radio">
+                        </td>
+                        <td class="ui-list-column" name="localeName">辛集市教育局</td>
+                        <td class="ui-list-column" name="beginDate">2016-11-08 08:38</td>
+                        <td class="ui-list-column" name="endDate">2016-11-10 17:00</td>
+                        <td class="ui-list-column" name="confirmRange">辛集市范围内申请高中、中职、初中、小学及幼儿园教师资格人员</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <div class="action-bar">
+        <a href="javascript:void(0)" class="pre-step">
+            <img src="${static}/img/signup/button-prev.gif" alt="上一步" border="0" id="box-4-previous">
+        </a>
+        <a href="javascript:void(0)" class="next-step">
+            <img src="${static}/img/signup/button-next.gif" alt="下一步" border="0" id="box-4-next">
+        </a>
+    </div>
+</div>
+<!-- 第五步-->
+<div id="box-5">
+    <div class="content_bd">
+        <h4>注意事项</h4>
+        <p></p>
+        <p>按文件要求带齐相关证件，按时进行体检。</p>
+        <p class="MsoNormal">
+            <span>申请人现场确认时须提交的材料</span>
+        </p>
+        <ul>
+            <li> 1、《教师资格认定申请表》（网上申报成功后自行 PDF 格式 A4 纸双面打印两份）；</li>
+            <li> 2、身份证件原件及复印件；</li>
+            <li> 3、毕业证书原件及复印件；</li>
+            <li> 4、教育部出具的《学历认证报告》的原件及复印件或学信网上自行打印的《教育部学历证书电子注册备案表》；</li>
+            <li> 5、《申请教师资格人员体检表》需双面打印，当次有效；</li>
+            <li> 6、《普通话水平测试等级证书》原件及复印件；</li>
+            <li> 7、《申请人思想品德鉴定表》 网上申报时自行打印，按要求填写并加盖 工作单位或者所在乡镇（街道）公章 ；</li>
+            <li> 8、近期 3 个月淡蓝色，白色或红色背景，免冠无头饰正面小二寸证件照片 1 张，（与网上注册及申请表格照片同版）。背面注明身份证号及姓名 ,教师资格证书上使用；</li>
+            <li> 9、参加考试人员需提交 教师资格考试合格证明原件和复印件一份； 2015 年下半年以后考试合格的考生，只需自行通过中小学教师资格考试网站下载、打印 PDF 格式 “网页版 ”的考试合格证明；</li>
+            <li>10、申请认定中等职业学校实习指导教师资格者，须提交相当助理工程师及以上专业技术职务或者中级以上工人技术等级证书原件和复印件一份；</li>
+            <li>11、户籍在本省的需要携带户口簿 (本人页 )原件及复印件，非本省户籍但在本省工作的需提供人事代理机构出具的证明原件及复印件；</li>
+        </ul>
+        <p>所有复印件统一用 A4 纸按身份证、学历证明、普通话证书、考试合格证明书、户口簿（本人页）或人事代理机构出具的证明等顺序排列装订。</p>
+    </div>
+    <div class="action-bar">
+        <a href="javascript:void(0)" class="pre-step">
+            <img src="${static}/img/signup/button-prev.gif" alt="上一步" border="0" id="box-5-previous">
+        </a>
+        <a href="javascript:void(0)" class="next-step">
+            <img src="${static}/img/signup/button-next-with-read.gif" alt="下一步" border="0" id="box-5-next">
+        </a>
+    </div>
+</div>
+<!-- 第六步-->
+<div id="box-6">
+    <div class="content_bd">
+        <h4>填写身份信息</h4>
+        <div class="ui-body">
+            <table width="960" border="0" cellspacing="0" cellpadding="0">
+                <tbody>
+                <tr>
+                    <td width="130" class="operation">姓名</td>
+                    <td width="150"><input class="ui-field" name="name" value="二级"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="operation">证件类型</td>
+                    <td>
+                        <select name="idType">
+                            <option selected="selected" value="7">身份证</option>
+                        </select>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="operation">身份证件号码</td>
+                    <td>
+                        <input class="ui-field" name="idNo" value="">
+                    </td>
+                    <td></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="action-bar">
+        <a href="javascript:void(0)" class="pre-step">
+            <img src="${static}/img/signup/button-prev.gif" alt="上一步" border="0" id="box-6-previous">
+        </a>
+        <a href="javascript:void(0)" class="next-step">
+            <img src="${static}/img/signup/button-next.gif" alt="下一步" border="0" id="box-6-next">
+        </a>
+    </div>
+</div>
+<!--第七步-->
+<div id="box-7">
+    <div class="content_bd">
+        <h4>基本信息：<b class="f_red f_size">（如要修改，请返回上一步）</b></h4>
+        <div class="ui-body">
+            <table width="960" border="0" cellspacing="0" cellpadding="0" class="ui-view">
+                <tr style="border-bottom: 1px dashed #eee;">
+                    <th width="193" align="right">姓名</th>
+                    <td width="289"></td>
+                    <th width="194" align="right">证件类型</th>
+                    <td width="238">&nbsp;</td>
+                </tr>
+                <tr>
+                    <th align="right">身份证件号码</th>
+                    <td>&nbsp;</td>
+                    <th align="right">申请资格种类</th>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <th align="right">任教学科</th>
+                    <td>&nbsp;</td>
+                    <th align="right">确认点</th>
+                    <td>&nbsp;</td>
+                </tr>
+                <tr>
+                    <th align="right">认定机构</th>
+                    <td>&nbsp;</td>
+                    <td colspan="2">&nbsp;</td>
+                </tr>
+            </table>
+            </div>
+    </div>
+    <div class="content_bd">
+        <h4>登录信息：<b class="f_red f_size">（如要修改，请返回上一步）</b></h4>
+        <div class="ui-body">
+            <table width="960" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="130" class="operation">系统登录密码</td>
+                    <td width="150"><input type="password"></td>
+                    <td><span class="description">密码不少于 8 位，包含数字、字母和特殊字符，特殊字符需从“#、%、*、-、_、!、@、$、&”中选择 请牢记个人登录密码。将用于您登录查看、修改您的报名信息和打印认定申请表等</span></td>
+                </tr>
+                <tr>
+                    <td class="operation">密码确认</td>
+                    <td><input type="password"></td>
+                </tr>
+                <tr>
+                    <td class="operation">密码找回邮箱</th>
+                    <td><input type="text"></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="content_bd content-box-7">
+        <h4>请填写申请信息：</h4>
+        <div class="ui-body">
+            <table width="960" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="130" class="operation">性别</td>
+                    <td width="150"><span id="gender"></span></td>
+                    <td width="200"></td>
+                    <td width="130" class="operation">出生日期</td>
+                    <td width="150"><span id="birthday"></span></td>
+                    <td width="200"></td>
+                </tr>
+                <tr>
+                    <td class="operation">民族</td>
+                    <td><select id="nations" name="1"><option selected="selected" value="-1">请选择</option></select></td>
+                    <td></td>
+                    <td class="operation">政治面貌</td>
+                    <td><select id="politicals" name="1"><option selected="selected" value="-1">请选择</option></select></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="operation">普通话水平</th>
+                    <td><select id="pth-levels" name="1"><option value="-1">请选择</option></select></td>
+                    <td></td>
+                    <td class="operation">普通话证书编号</td>
+                    <td><input type="text"/></td>
+                    <td><span class="description">如果没有普通话证书编号，请填写 “无”<span></td>
+                </tr>
+                <tr>
+                    <td class="operation">普通话发证单位</td>
+                    <td><input type="text"></td>
+                    <td><span class="description">请填写普通话证书上的发证单位名称（盖章机构如果没有普通话发证单位，请填写“无”</span></td>
+                    <td class="operation">是否在校生</td>
+                    <td>
+                        <select name="graduateId" class="ui-field">
+                            <option selected="selected" value="">请选择</option>
+                            <option value="2">否</option>
+                            <option value="1">是</option>
+                        </select>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="operation">毕业时间</td>
+                    <td><input type="text"></td>
+                    <td><span class="description">请按照申请认定所使用的学历进行填写</span></td>
+                    <td class="operation">最高学历</td>
+                    <td><select id="degrees" name="1"><option value="-1">请选择</option></select></td>
+                    <td><span class="description">请按照申请认定所使用的学历进行填写</span></td>
+                </tr>
+                <tr>
+                    <td class="operation">最高学位</td>
+                    <td><input type="text"></td>
+                    <td><span class="description">请按照申请认定所使用的学位进行填写</span></td>
+                    <td class="operation">毕业学校</td>
+                    <td>
+                        <select id="provinces-for-school" name="1"><option value="-1">请选择省</option></select>
+                        <select id="graduation-school" name="1"><option value="-1">请选择</option></select>
+                    </td>
+                    <td><span class="description">请按照申请认定所使用的学历进行填写</span></td>
+                </tr>
+                <tr>
+                    <td class="operation">所学专业</td>
+                    <td><button>选择</button></td>
+                    <td><span class="description">请选择与申请认定时所使用的学历相同或相近的专业名称，或所学专业的上一级学科</span></td>
+                    <td class="operation">专业类别</td>
+                    <td><select id="normal-majors" name="1"><option>请选择</option></select></td>
+                </tr>
+                <tr>
+                    <td class="operation">学习形式</td>
+                    <td><select id="learn-types" name="1"><option value="-1">请选择</option></select></td>
+                    <td><span class="description">请按照申请认定所使用的学历进行填写</span></td>
+                    <td class="operation">工作单位</td>
+                    <td><input type="text"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="operation">现从事职业</td>
+                    <td><select id="occupations" name="1"><option value="-1">请选择</option></select></td>
+                    <td></td>
+                    <td class="operation">职业技术职务</td>
+                    <td><button>选择...</button></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="operation">户籍所在地</td>
+                    <td><input type="text"></td>
+                    <td><span class="description">请按户口簿上的内容填写（或按照认定机构的要求填写）</span></td>
+                    <td class="operation">出生地</td>
+                    <td><input type="text"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="operation">通讯地址</td>
+                    <td colspan="2"><input type="text"></td>
+                    <td class="operation">通讯地的邮编</td>
+                    <td><input type="text"></td>
+                    <td><span class="description">请填写 6 位阿拉伯数字</span></td>
+                </tr>
+                <tr>
+                    <td class="operation">联系电话</td>
+                    <td><input type="text"></td>
+                    <td><span class="description">请填写阿拉伯数字</span></td>
+                    <td class="operation">手机号码</td>
+                    <td><input type="text"></td>
+                    <td><span class="description">请填写 11 位阿拉伯数字</span></td>
+                </tr>
+                <tr>
+                    <td class="operation">照片</td>
+                    <td><span id="photo"><img></span><div id="filePicker">选择照片</div></td>
+                    <td colspan="4"><span class="description">申请人近 3 个月内的彩色证件照，淡蓝色、红色或白色背景，无边框；正面照，免冠，无头饰。现场确认时提交的照片与此电子照片同一底版，建议照片宽度为 114 像素，高度为 156 像素。  须按照要求由申请人本人上传，且必须与教师资格申请表上所贴照片底版相同</span></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="content_bd">
+          <h4>个人简历：<b class="f_red f_size">（简历按照时间先后顺序从本人小学毕业后填起（当地教育局有其他规定的，按其规定填写），不得空项，至少两条，最多八条，必须填写到至今。简历超过8条的，删减前边的简历保留至 8 条为止。）</b></h4>
+          <div class="ui-body" id="curriculum">
+              <table width="960" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td align="center">开始时间</td>
+                    <td align="center">结束时间</td>
+                    <td align="center">单位</td>
+                    <td align="center">职务</td>
+                    <td align="center">证明人</td>
+                  </tr>
+                  <tr>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                  </tr>
+                  <tr>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                    <td><input type="text"></td>
+                  </tr>
+                </table>
+          </div>
+    </div>
+    <div class="action-bar">
+        <a href="javascript:void(0)" class="pre-step">
+            <img src="${static}/img/signup/button-prev.gif" alt="上一步" border="0" id="box-7-previous">
+        </a>
+        <a href="javascript:void(0)" class="next-step">
+            <img src="${static}/img/signup/button-next.gif" alt="下一步" border="0" id="box-7-next">
+        </a>
+    </div>
+</div>
+
+<!-- 第八步 -->
+    <div id="box-8">
+       <div class="content_bd">
+         <div class="box-8">
+         <p><span>XXX</span>,您好！</p>
+         <h2>您已完成注册！</h2>
+         <P>为确保注册信息无误，请您及时<a href="/portal/request/index">登录系统</a>获取报名号，查看、修改注册信息，了解现场确认注意事项，打印申报材料。</P>
+         <P>请记住进的如下登录信息：</P>
+         <P>姓名：<span>XXX</span></P>
+         <P>证件号码：<span>xxxxxxxxxxxxxx</span></P>
+         <P>密码招呼邮箱：<span>******************</span></P>
+         </div>
+       </div>
+    </div>
+</div>
+</div>
+
+<!-- 任教学科对话框 -->
+<a id="subjects-dialog-trigger" href="#subjects-dialog" style="display: none">显示任教学科对话框</a>
+<div id="subjects-dialog">
+    <div id="subjects-dialog-ztree">
+        <ul id="subjects" class="ztree"></ul>
+    </div>
+
+    <div id="subjects-dialog-buttons-holder">
+        <button class="cancel" type="button">取消</button>
+        <button class="ok" type="button">确定</button>
+    </div>
+</div>
+<!-- LeanModal 对话框的 Mask -->
+<div id="lean_overlay"></div>
+
+</body>
+
+</html>
