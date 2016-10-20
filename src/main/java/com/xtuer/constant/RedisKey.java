@@ -17,6 +17,7 @@ public interface RedisKey {
     String SUBJECTS_CHILDREN = "subjects_children_%d_%d"; // subjects_children_{provinceId}_{parentId}
     String SUBJECTS_BY_CERTTYPE = "subjects_ct_%d"; // subjects_ct_{certTypeId}
     String SUBJECTS_BY_PARENT = "subjects_p_%d"; // subjects_p_{parentId}
+    String SUBJECTS_TEASUBJECT = "subjects_t_%d_%d"; // subjects_t_{subjectType}_{provinceId}
 
     String DICTS = "dicts"; // dicts
     String DICTS_BY_TYPE = "dicts_%d"; // dicts_{dictTypeId}

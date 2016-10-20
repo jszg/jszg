@@ -159,6 +159,15 @@ public class SignUpController {
         return Result.ok(subjects);
     }
 
+    // 现任教学科 父节点, 子节点@see getChildrenSubjects
+    @GetMapping(UriView.REST_SUBJECTS_TEASUBJECT)
+    @ResponseBody
+    public Result<List<Subject>> getTeaSubjects(@PathVariable("provinceId") int provinceId, @PathVariable("subjectType") int subjectType) {
+        String key = String.format(RedisKey.SUBJECTS_TEASUBJECT, subjectType, provinceId);
+        List<Subject> list = redisUtils.get(List.class, key, () -> subjectMapper.findBySubjectTypeAndProvince(subjectType, provinceId));
+        return Result.ok(list);
+    }
+
     // 按照字典类型查询字典数据
     @GetMapping(UriView.REST_DICTS_BY_DICTTYPE)
     @ResponseBody

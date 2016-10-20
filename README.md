@@ -138,3 +138,13 @@ gradle -Denv=development clean appStartDebug
     ```
     http://{{host}}:{{port}}/rest/signUp/cities/{cityId}/orgs
     ```
+    
+* 现任教学科
+
+   ```
+   # 父节点
+   http://{{host}}:{{port}}/rest/signUp/provinces/{provinceId}/subjectTypes/{subjectType}/subjects
+   
+   # 子节点
+   http://{{host}}:{{port}}/rest/signUp/provinces/{provinceId}/{parentId}/subjects/children
+   ```
