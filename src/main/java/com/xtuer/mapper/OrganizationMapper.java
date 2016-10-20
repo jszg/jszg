@@ -14,6 +14,13 @@ public interface OrganizationMapper {
 
     List<Organization> findByCertTypeAndCity(@Param("city") Integer city, @Param("certTypeId") Integer certTypeId);
 
-    List<Organization> listByCertTypeAndProvince(@Param("province") Integer province, @Param("certTypeId") Integer certTypeId);
+    List<Organization> findByCertTypeAndProvince(@Param("province") Integer province, @Param("certTypeId") Integer certTypeId);
+
+    List<Organization> findByOrgType(@Param("orgType") int orgType);
+
+    // 查询OrgType==4的Organization
+    List<Organization> findByOrgTypeEq4();
+
+    List<Organization> findByParentId(@Param("parentId") int parentId);
 
 }

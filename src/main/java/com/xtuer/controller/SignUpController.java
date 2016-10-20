@@ -79,10 +79,36 @@ public class SignUpController {
             orgs = redisUtils.get(List.class, key, () -> organizationMapper.findByCertTypeAndCity(cityId, certTypeId));
         } else if (certTypeId >= 6 && certTypeId <= 7) {
             // 6-7 查省
-            orgs = redisUtils.get(List.class, key, () -> organizationMapper.listByCertTypeAndProvince(cityId, certTypeId));
+            orgs = redisUtils.get(List.class, key, () -> organizationMapper.findByCertTypeAndProvince(cityId, certTypeId));
         }
 
         return Result.ok(orgs);
+    }
+
+
+    // 证书上的机构 和选择的证书签发日期有关(CertTypeOrgTreeController)
+    // 父机构
+    @GetMapping(UriView.REST_ORGS_BY_ORGTYPE)
+    @ResponseBody
+    public Result<List<Organization>> getOrgByOrgType(@PathVariable("orgType") int orgType) {
+        String key = String.format(RedisKey.ORGS_BY_ORGTYPE, orgType);
+
+        List<Organization> organizations = Collections.emptyList();
+        if (orgType == 4) {
+            organizations = redisUtils.get(List.class, key, () -> organizationMapper.findByOrgTypeEq4());
+        } else {
+            organizations = redisUtils.get(List.class, key, () -> organizationMapper.findByOrgType(orgType));
+        }
+        return Result.ok(organizations);
+    }
+
+    // 子机构
+    @GetMapping(UriView.REST_ORGS_BY_PARENT)
+    @ResponseBody
+    public Result<List<Organization>> getOrgByParentId(@PathVariable("parentId") int parentId) {
+        String key = String.format(RedisKey.ORGS_BY_PARENT, parentId);
+        List<Organization> list = redisUtils.get(List.class, key, () -> organizationMapper.findByParentId(parentId));
+        return Result.ok(list);
     }
 
     // 省下面的第一级任教学科
@@ -100,8 +126,27 @@ public class SignUpController {
     @ResponseBody
     public Result<List<Subject>> getChildrenSubjects(@PathVariable("provinceId") int provinceId, @PathVariable("parentId") int parentId) {
         String key = String.format(RedisKey.SUBJECTS_CHILDREN, provinceId, parentId);
-        List<Subject> subjects = redisUtils.get(List.class, key, () -> subjectMapper.findByParent(parentId, provinceId));
+        List<Subject> subjects = redisUtils.get(List.class, key, () -> subjectMapper.findByParentAndProvince(parentId, provinceId));
 
+        return Result.ok(subjects);
+    }
+
+    // 证书上的任教学科 (OrgCertTypeSubjectTreeController)
+    // 父节点
+    @GetMapping(UriView.REST_SUBJECTS_BY_CERT_TYPE)
+    @ResponseBody
+    public Result<List<Subject>> getSubjectByCertType(@PathVariable("certTypeId") int certTypeId) {
+        String key = String.format(RedisKey.SUBJECTS_BY_CERTTYPE, certTypeId);
+        List<Subject> list = redisUtils.get(List.class, key, () -> subjectMapper.findByCertType(certTypeId));
+        return Result.ok(list);
+    }
+
+    // 子节点
+    @GetMapping(UriView.REST_SUBJECTS_BY_PARENT)
+    @ResponseBody
+    public Result<List<Subject>> getSubjectByParent(@PathVariable("parentId") int parentId) {
+        String key = String.format(RedisKey.SUBJECTS_BY_PARENT, parentId);
+        List<Subject> subjects = redisUtils.get(List.class, key, () -> subjectMapper.findByParent(parentId));
         return Result.ok(subjects);
     }
 
@@ -132,6 +177,13 @@ public class SignUpController {
             return map;
         });
         return Result.ok(dicts);
+    }
+
+    // 民族
+    @GetMapping(UriView.REST_NATIONS)
+    @ResponseBody
+    public Result<List<Dict>> getNations() {
+        return getDicts(5);
     }
 
     // 所有学校

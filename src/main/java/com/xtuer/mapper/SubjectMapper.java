@@ -12,5 +12,7 @@ import java.util.List;
  */
 public interface SubjectMapper {
     List<Subject> findRoots(@Param("province") int province, @Param("certTypeId") int certTypeId);
-    List<Subject> findByParent(@Param("parent") int parent, @Param("province") int province);
+    List<Subject> findByParentAndProvince(@Param("parent") int parent, @Param("province") int province);
+    List<Subject> findByCertType(@Param("certTypeId") int certTypeId);
+    List<Subject> findByParent(@Param("parent")int parent);
 }

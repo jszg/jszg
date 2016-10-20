@@ -18,7 +18,7 @@
           order by AREA_CODE
     </select>
 
-    <select id="listByCertTypeAndProvince" resultType="Organization">
+    <select id="findByCertTypeAndProvince" resultType="Organization">
       select ORG_ID as id, ORG_NAME as name
       from T_ORG
       where
@@ -28,5 +28,21 @@
       and
       STATUS=1
       order by AREA_CODE
+    </select>
+
+    <select id="findByOrgType" resultType="Organization">
+      select o.ORG_ID as id, o.ORG_NAME as name
+      from T_ORG o
+      where o.ORG_TYPE= #{orgType}  and o.STATUS = 1  order by o.AREA_CODE
+    </select>
+
+    <select id="findByOrgTypeEq4" resultType="Organization">
+      select o.ORG_ID as id, o.ORG_NAME as name
+      from T_ORG o
+      where o.ORG_TYPE= 4  and o.STATUS = 1  order by o.AREA_CODE
+    </select>
+
+    <select id="findByParentId" resultType="Organization">
+        select ORG_ID as id, ORG_NAME as name from T_ORG where PARENT_ID = #{parentId}
     </select>
 </mapper>

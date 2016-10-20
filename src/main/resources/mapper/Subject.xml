@@ -7,7 +7,7 @@
 <!--namespace 非常重要：必须是 Mapper 类的全路径-->
 <mapper namespace="com.xtuer.mapper.SubjectMapper">
   <select id="findRoots" resultType="Subject">
-        select SUBJECT_ID as id, NAME as name FROM T_SUBJECT t
+        select t.SUBJECT_ID as id, t.NAME as name FROM T_SUBJECT t
         where t.subject_type=(select c.teach_grade from t_cert_type c where c.ct_id = #{certTypeId} )
             and ( t.exam_type=2 or t.exam_type=0 )
             and (t.limit_type=0 or t.limit_type=3)
@@ -17,8 +17,8 @@
             order by t.subject_code
   </select>
 
-  <select id="findByParent" resultType="Subject">
-        select SUBJECT_ID as id, NAME as name FROM T_SUBJECT s
+  <select id="findByParentAndProvince" resultType="Subject">
+        select s.SUBJECT_ID as id, s.NAME as name FROM T_SUBJECT s
         where s.parent_id=#{parent}
            and (s.limit_type=0 or s.limit_type=3 )
            and (s.exam_type=2  or s.exam_type=0 )
@@ -26,4 +26,18 @@
            and s.status=1
            order by s.subject_code
   </select>
+
+  <select id="findByCertType" resultType="Subject">
+      select s.SUBJECT_ID as id, s.NAME as name
+      FROM T_SUBJECT s
+      where s.subject_type=(select ct.teach_grade from T_CERT_TYPE ct  where ct.ct_id=#{certTypeId})
+        and s.status=1 and ( s.parent_id is null ) order by s.subject_code
+  </select>
+
+  <select id="findByParent" resultType="Subject">
+     select s.SUBJECT_ID as id, s.NAME as name
+     from T_SUBJECT s
+     where s.parent_id= #{parent}  and s.status=1  order by s.subject_code
+  </select>
+
 </mapper>
