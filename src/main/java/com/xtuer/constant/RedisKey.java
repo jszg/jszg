@@ -11,6 +11,7 @@ public interface RedisKey {
     String ORGS = "orgs_%d_%d"; // orgs_{cityId}_{certTypeId}
     String ORGS_BY_ORGTYPE = "orgs_ct_%d"; // orgs_ct_{orgType}
     String ORGS_BY_PARENT = "orgs_p_%d"; // orgs_p_{parentId}
+    String ORGS_BY_CITY = "orgs_c_%d"; // orgs_c_ {cityId}
 
     String SUBJECTS_ROOT = "subjects_root_%d_%d"; // subjects_root_{provinceId}_{certTypeId}
     String SUBJECTS_CHILDREN = "subjects_children_%d_%d"; // subjects_children_{provinceId}_{parentId}
@@ -19,6 +20,7 @@ public interface RedisKey {
 
     String DICTS = "dicts"; // dicts
     String DICTS_BY_TYPE = "dicts_%d"; // dicts_{dictTypeId}
+    String TEAGRADES = "teaGrades"; // teaGrades
 
     String COLLEGES = "colleges"; // colleges
     String COLLEGES_BY_PROVINCE = "colleges_p_%d"; // colleges_p_{provinceId}

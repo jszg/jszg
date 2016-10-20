@@ -9,4 +9,12 @@
     <select id="findByDictType" resultType="Dict">
         SELECT DIC_ID as id, NAME as name FROM T_DICT WHERE DT_ID = #{dt_id}
     </select>
+
+    <select id="findTeaGrade" resultType="Dict">
+        select d.DIC_ID as id, d.NAME as name
+        from t_dict d
+        where d.dt_id = 23 and
+          <![CDATA[rownum <= 5]]>
+        order by d.code
+    </select>
 </mapper>

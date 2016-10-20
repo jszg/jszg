@@ -14,4 +14,6 @@ import java.util.List;
 public interface DictMapper {
 
     List<Dict> findByDictType(@Param("dt_id") int dictTypeId);
+
+    List<Dict> findTeaGrade();
 }

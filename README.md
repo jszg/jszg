@@ -125,3 +125,16 @@ gradle -Denv=development clean appStartDebug
     # 子节点
     http://{{host}}:{{port}}/rest/signUp/{parentId}/orgs
     ```
+    
+    
+* 现任教学段 
+
+    ```
+    http://{{host}}:{{port}}/rest/signUp/teaGrades
+    ```
+    
+* 注册机构
+
+    ```
+    http://{{host}}:{{port}}/rest/signUp/cities/{cityId}/orgs
+    ```

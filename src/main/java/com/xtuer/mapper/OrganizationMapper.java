@@ -12,8 +12,10 @@ import java.util.List;
  */
 public interface OrganizationMapper {
 
+    // 认定机构 1-5
     List<Organization> findByCertTypeAndCity(@Param("city") Integer city, @Param("certTypeId") Integer certTypeId);
 
+    // 认定机构 6-7
     List<Organization> findByCertTypeAndProvince(@Param("province") Integer province, @Param("certTypeId") Integer certTypeId);
 
     List<Organization> findByOrgType(@Param("orgType") int orgType);
@@ -22,5 +24,8 @@ public interface OrganizationMapper {
     List<Organization> findByOrgTypeEq4();
 
     List<Organization> findByParentId(@Param("parentId") int parentId);
+
+    // 注册机构ProTeaGradeOrgListController  问号取city
+    List<Organization> findByParentIdAndOrgTypeNot1(@Param("cityId") int cityId);
 
 }

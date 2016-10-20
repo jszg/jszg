@@ -111,6 +111,15 @@ public class SignUpController {
         return Result.ok(list);
     }
 
+    // 注册机构
+    @GetMapping(UriView.REST_ORGS_BY_CITY)
+    @ResponseBody
+    public Result<List<Organization>> getOrgByCity(@PathVariable("cityId") int cityId) {
+        String key = String.format(RedisKey.ORGS_BY_CITY, cityId);
+        List<Organization> list = redisUtils.get(List.class, key, () -> organizationMapper.findByParentIdAndOrgTypeNot1(cityId));
+        return Result.ok(list);
+    }
+
     // 省下面的第一级任教学科
     @GetMapping(UriView.REST_SUBJECTS_ROOT)
     @ResponseBody
@@ -184,6 +193,15 @@ public class SignUpController {
     @ResponseBody
     public Result<List<Dict>> getNations() {
         return getDicts(5);
+    }
+
+    // 现任教学段
+    @GetMapping(UriView.REST_TEAGRADES)
+    @ResponseBody
+    public Result<List<Dict>> getTeaGrades() {
+        String key = RedisKey.TEAGRADES;
+        List<Dict> list = redisUtils.get(List.class, key, () -> dictMapper.findTeaGrade());
+        return Result.ok(list);
     }
 
     // 所有学校
