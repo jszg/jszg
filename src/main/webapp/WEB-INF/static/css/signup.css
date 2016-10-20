@@ -99,10 +99,14 @@ button {
     padding-bottom: 10px;
 }
 
-#box-3 td select, #box-6 td select, #box-7 td select,
+#box-3 td select,  #box-6 td select, #box-7 td select,
 #box-3 td input, #box-6 td input, #box-7 td input {
     width: 100%;
 }
+#box-4 td select{
+    width: 75%;
+}
+
 
 #box-5 li {
     margin-left: 20px;
@@ -219,4 +223,7 @@ table{border-collapse:collapse;}
 .webuploader-pick {
     width: 100%;
     padding: 0 !important;
+}
+#box-4 .mytable td select{
+    width: 22%;
 }
