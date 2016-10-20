@@ -271,7 +271,7 @@
                 <tr>
                     <td class="operation">证件类型</td>
                     <td>
-                        <select name="idType">
+                        <select id="id-types">
                             <option selected="selected" value="7">身份证</option>
                         </select>
                     </td>

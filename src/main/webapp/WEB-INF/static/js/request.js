@@ -1,6 +1,8 @@
 $(document).ready(function() {
-    initWebUploader();
-    requestDicts();
+    handleNextAndPreviousEvents(); // 处理下一步，上一步的动作
+    skipSteps(2); // 跳过前面几步，测试使用
+    initWebUploader(); // 初始化上传照片控件
+    requestDicts(); // 请求字典数据，初始化省，政治面貌等
 
     // 省变化时加载市
     $('#provinces').change(function() {
@@ -13,9 +15,10 @@ $(document).ready(function() {
         // provinceId 为 -1 表示选择了 "请选择"
         if (-1 != provinceId) {
             $.rest.get({url: Urls.REST_CITIES_BY_PROVINCE, urlParams: {provinceId: provinceId}, success: function(result) {
+                console.log(result);
                 var cities = result.data;
                 var $cities = $('#cities');
-                for (var i = 0; i < cs.length; ++i) {
+                for (var i = 0; i < cities.length; ++i) {
                     $cities.append(template('optionTemplate', cities[i]));
                 }
             }});
@@ -58,8 +61,10 @@ $(document).ready(function() {
         }
     });
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //                                                  任教学科对话框                                                 //
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     $('#subjects-dialog-trigger').leanModal({top: 50, overlay : 0.4});
-    // $('#select-subjects').leanModal();
     $('#select-subjects').click(function(event) {
         // 判断
         // 请求任教学科
@@ -80,121 +85,22 @@ $(document).ready(function() {
         }
     });
 
-    ////////////////////////////////////////////////////////////////////////
-    ///                                下一步                              //
-    ////////////////////////////////////////////////////////////////////////
-    // 第一步的下一步
-    $('#box-1-next').click(function() {
-        $('#box-1').hide();
-        $('#box-2').show();
-        $('.bz2').addClass('active');
-    });
-
-    // 第二步的下一步
-    $('#box-2-next').click(function() {
-        if (!$('#_checkbox_bd').get(0).checked){
-            alert('请先阅读网上申报协议并同意后才可以申报！');
-            return;
-        }
-
-        $('#box-2').hide();
-        $('#box-3').show();
-        $('.bz3').addClass('active');
-    });
-
-    // 第三步的下一步
-    $('#box-3-next').click(function() {
-        // if (validate3thStep()) {
-            // 验证通过，进入第四步
-            $('#box-3').hide();
-            $('#box-4').show();
-            $('.bz4').addClass('active');
-        // }
-    });
-
-    // 第四步的下一步
-    $('#box-4-next').click(function() {
-        $('#box-4').hide();
-        $('#box-5').show();
-        $('.bz5').addClass('active');
-    });
-
-    // 第五步的下一步
-    $('#box-5-next').click(function() {
-        $('#box-5').hide();
-        $('#box-6').show();
-        $('.bz6').addClass('active');
-    });
-
-    // 第六步的下一步
-    $('#box-6-next').click(function() {
-        $('#box-6').hide();
-        $('#box-7').show();
-        $('.bz7').addClass('active');
-    });
-
-    // 第七步的下一步
-    $('#box-7-next').click(function() {
-        $('#box-7').hide();
-        $('#box-8').show();
-        $('.bz8').addClass('active');
-    });
-
-    ////////////////////////////////////////////////////////////////////////
-    ///                                上一步                              //
-    ////////////////////////////////////////////////////////////////////////
-    // 第二步的上一步
-    $('#box-2-previous').click(function(){
-        $('#box-2').hide();
-        $('#box-1').show();
-        $('.bz2').removeClass('active');
-    });
-
-    // 第三步的上一步
-    $('#box-3-previous').click(function(){
-        $('#box-3').hide();
-        $('#box-2').show();
-        $('.bz3').removeClass('active');
-    });
-
-    // 第四步的上一步
-    $('#box-4-previous').click(function(){
-        $('#box-4').hide();
-        $('#box-3').show();
-
-        $('.bz4').removeClass('active');
-    });
-
-    // 第五步的上一步
-    $('#box-5-previous').click(function(){
-        $('#box-5').hide();
-        $('#box-4').show();
-        $('.bz5').removeClass('active');
-    });
-
-    // 第六步的上一步
-    $('#box-6-previous').click(function(){
-        $('#box-6').hide();
-        $('#box-5').show();
-        $('.bz6').removeClass('active');
-    });
-
-    // 第七步的上一步
-    $('#box-7-previous').click(function(){
-        $('#box-7').hide();
-        $('#box-6').show();
-        $('.bz7').removeClass('active');
-    });
-
     $('tr:last', $('table')).css('border-bottom', 'none'); // 删除最后一行的 border-bottom
-
-    $('#box-1-next').click();
-    $('#box-2-next').click();
-    $('#box-3-next').click();
-    $('#box-4-next').click();
-    $('#box-5-next').click();
-    $('#box-6-next').click();
 });
+
+function skipSteps(step) {
+    $('#box-1').hide();
+
+    switch(step) {
+        case 1: $('#box-1-next').click(); break;
+        case 2: $('#box-2-next').click(); break;
+        case 3: $('#box-3-next').click(); break;
+        case 4: $('#box-4-next').click(); break;
+        case 5: $('#box-5-next').click(); break;
+        case 6: $('#box-6-next').click(); break;
+        case 7: $('#box-7-next').click(); break;
+    }
+}
 
 function requestDicts() {
     // 请求字典
@@ -219,6 +125,14 @@ function requestDicts() {
         for (i = 0; i < provinces.length; ++i) {
             $provinces.append(template('optionTemplate', provinces[i]));
             $provincesForCollege.append(template('optionTemplate', provinces[i]));
+        }
+
+        // 身份证
+        $('#id-types option').remove();
+        var idTypes = data.idType;
+        var $idTypes = $('#id-types');
+        for (i = 0; i < idTypes.length; ++i) {
+            $idTypes.append(template('optionTemplate', idTypes[i]));
         }
 
         // 民族
@@ -423,4 +337,112 @@ function validate3thStep() {
     }
 
     return true;
+}
+
+function handleNextAndPreviousEvents() {
+    ////////////////////////////////////////////////////////////////////////
+    ///                                下一步                              //
+    ////////////////////////////////////////////////////////////////////////
+    // 第一步的下一步
+    $('#box-1-next').click(function() {
+        $('#box-1').hide();
+        $('#box-2').show();
+        $('.bz2').addClass('active');
+    });
+
+    // 第二步的下一步
+    $('#box-2-next').click(function() {
+        if (!$('#_checkbox_bd').get(0).checked){
+            alert('请先阅读网上申报协议并同意后才可以申报！');
+            return;
+        }
+
+        $('#box-2').hide();
+        $('#box-3').show();
+        $('.bz3').addClass('active');
+    });
+
+    // 第三步的下一步
+    $('#box-3-next').click(function() {
+        // if (validate3thStep()) {
+            // 验证通过，进入第四步
+            $('#box-3').hide();
+            $('#box-4').show();
+            $('.bz4').addClass('active');
+        // }
+    });
+
+    // 第四步的下一步
+    $('#box-4-next').click(function() {
+        $('#box-4').hide();
+        $('#box-5').show();
+        $('.bz5').addClass('active');
+    });
+
+    // 第五步的下一步
+    $('#box-5-next').click(function() {
+        $('#box-5').hide();
+        $('#box-6').show();
+        $('.bz6').addClass('active');
+    });
+
+    // 第六步的下一步
+    $('#box-6-next').click(function() {
+        $('#box-6').hide();
+        $('#box-7').show();
+        $('.bz7').addClass('active');
+    });
+
+    // 第七步的下一步
+    $('#box-7-next').click(function() {
+        $('#box-7').hide();
+        $('#box-8').show();
+        $('.bz8').addClass('active');
+    });
+
+    ////////////////////////////////////////////////////////////////////////
+    ///                                上一步                              //
+    ////////////////////////////////////////////////////////////////////////
+    // 第二步的上一步
+    $('#box-2-previous').click(function(){
+        $('#box-2').hide();
+        $('#box-1').show();
+        $('.bz2').removeClass('active');
+    });
+
+    // 第三步的上一步
+    $('#box-3-previous').click(function(){
+        $('#box-3').hide();
+        $('#box-2').show();
+        $('.bz3').removeClass('active');
+    });
+
+    // 第四步的上一步
+    $('#box-4-previous').click(function(){
+        $('#box-4').hide();
+        $('#box-3').show();
+
+        $('.bz4').removeClass('active');
+    });
+
+    // 第五步的上一步
+    $('#box-5-previous').click(function(){
+        $('#box-5').hide();
+        $('#box-4').show();
+        $('.bz5').removeClass('active');
+    });
+
+    // 第六步的上一步
+    $('#box-6-previous').click(function(){
+        $('#box-6').hide();
+        $('#box-5').show();
+        $('.bz6').removeClass('active');
+    });
+
+    // 第七步的上一步
+    $('#box-7-previous').click(function(){
+        $('#box-7').hide();
+        $('#box-6').show();
+        $('.bz7').removeClass('active');
+    });
 }
