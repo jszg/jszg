@@ -35,8 +35,8 @@ import java.util.Map;
 
 @Controller
 public class SignUpController {
-    private static final int[] TYPES = {5, 7, 25, 22, 21, 2, 3, 9, 24, 6, 4, 10};
-    private static final String[] TYPENAMES = {"nation", "eduLevel", "schoolQuale", "workUnitType", "learnType",
+    private static final int[] DICT_TYPES = {5, 7, 25, 22, 21, 2, 3, 9, 24, 6, 4, 10};
+    private static final String[] DICT_TYPENAMES = {"nation", "eduLevel", "schoolQuale", "workUnitType", "learnType",
             "normalMajor", "political", "pthLevel", "postQuale", "degree", "occupation", "idType"};
 
     // 所有资格种类
@@ -184,10 +184,10 @@ public class SignUpController {
         String key = RedisKey.DICTS;
         Map<String, List<Object>> dicts  = redisUtils.get(Map.class, key, () -> {
             Map<String, List<Object>> map = new HashMap<String, List<Object>>();
-            for (int i = 0; i < TYPES.length; i++) {
-                final int type = TYPES[i];
+            for (int i = 0; i < DICT_TYPES.length; i++) {
+                final int type = DICT_TYPES[i];
                 String subkey = String.format(RedisKey.DICTS_BY_TYPE, type);
-                map.put(TYPENAMES[i], redisUtils.get(List.class, subkey, () -> dictMapper.findByDictType(type)));
+                map.put(DICT_TYPENAMES[i], redisUtils.get(List.class, subkey, () -> dictMapper.findByDictType(type)));
             }
 
             map.put(RedisKey.PROVINCES, redisUtils.get(List.class, RedisKey.PROVINCES, () -> provinceMapper.findAll()));
