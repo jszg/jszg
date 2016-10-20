@@ -32,17 +32,18 @@
 <div class="declare">
     <h2>网上申<br>报流程</h2>
     <ul>
-        <li class="bz bz1 active" style="z-index: 10"><span>申报第一步</span><br/><span>申报人必读</span></li>
-        <li class="bz bz2" style="z-index: 9"><span>申报第二步</span><br/><span>确认服务条款</span></li>
-        <li class="bz bz3" style="z-index: 8"><span>申报第三步</span><br/><span>选择认定机构</span></li>
-        <li class="bz bz4" style="z-index: 7"><span>申报第四步</span><br/><span>选择确认点</span></li>
-        <li class="bz bz5" style="z-index: 6"><span>申报第五步</span><br/><span>阅读注意事项</span></li>
-        <li class="bz bz6" style="z-index: 5"><span>申报第六步</span><br/><span>填写身份信息</span></li>
-        <li class="bz bz7" style="z-index: 4"><span>申报第七步</span><br/><span>填写申请材料</span></li>
-        <li class="bz bz8" style="z-index: 3"><span>申报第八步</span><br>完成</li>
+        <li class="bz bz1 active" style="z-index: 10" data-step="1"><span>申报第一步</span><br/><span>申报人必读</span></li>
+        <li class="bz bz2" style="z-index: 9" data-step="2"><span>申报第二步</span><br/><span>确认服务条款</span></li>
+        <li class="bz bz3" style="z-index: 8" data-step="3"><span>申报第三步</span><br/><span>选择认定机构</span></li>
+        <li class="bz bz4" style="z-index: 7" data-step="4"><span>申报第四步</span><br/><span>选择确认点</span></li>
+        <li class="bz bz5" style="z-index: 6" data-step="5"><span>申报第五步</span><br/><span>阅读注意事项</span></li>
+        <li class="bz bz6" style="z-index: 5" data-step="6"><span>申报第六步</span><br/><span>填写身份信息</span></li>
+        <li class="bz bz7" style="z-index: 4" data-step="7"><span>申报第七步</span><br/><span>填写申请材料</span></li>
+        <li class="bz bz8" style="z-index: 3" data-step="8"><span>申报第八步</span><br>完成</li>
     </ul>
 </div>
 
+<!-- option 的模版 -->
 <script id="optionTemplate" type="text/html">
     <option value="{{id}}">{{name}}</option>
 </script>
@@ -103,7 +104,7 @@
     </div>
 </div>
 
-<!--第三步-->
+<!--第三步 -->
 <div id="box-3">
     <div class="content_bd">
         <h4>请选择资格种类和认定机构<font style="font-size:95%;color:red">（在河北省申请认定中小学和幼儿园教师资格的申请人，认定机构请选择市级（含省直管县）教育局）</font></h4>
@@ -177,7 +178,7 @@
     </div>
 </div>
 
-<!-- 第四步-->
+<!-- 第四步 -->
 <div id="box-4">
     <div class="content_bd">
         <h4>选择确认点:</h4>
@@ -223,7 +224,8 @@
         </a>
     </div>
 </div>
-<!-- 第五步-->
+
+<!-- 第五步 -->
 <div id="box-5">
     <div class="content_bd">
         <h4>注意事项</h4>
@@ -256,7 +258,8 @@
         </a>
     </div>
 </div>
-<!-- 第六步-->
+
+<!-- 第六步 -->
 <div id="box-6">
     <div class="content_bd">
         <h4>填写身份信息</h4>
@@ -298,34 +301,35 @@
     </div>
 </div>
 
-<!--第七步-->
+<!-- 第七步 -->
 <div id="box-7">
     <div class="content_bd">
         <h4>基本信息：<b class="f_red f_size">（如要修改，请返回上一步）</b></h4>
         <div class="ui-body">
             <table width="960" border="0" cellspacing="0" cellpadding="0" class="ui-view">
-                <tr style="border-bottom: 1px dashed #eee;">
-                    <th width="193" align="right">姓名</th>
+                <tr>
+                    <td width="193"class="operation" >姓名:</td>
                     <td width="289"></td>
-                    <th width="194" align="right">证件类型</th>
-                    <td width="238">&nbsp;</td>
+                    <td width="194" class="operation">证件类型:</td>
+                    <td width="238"></td>
                 </tr>
                 <tr>
-                    <th align="right">身份证件号码</th>
-                    <td>&nbsp;</td>
-                    <th align="right">申请资格种类</th>
-                    <td>&nbsp;</td>
+                    <td class="operation">身份证件号码:</td>
+                    <td></td>
+                    <td class="operation">申请资格种类:</td>
+                    <td></td>
                 </tr>
                 <tr>
-                    <th align="right">任教学科</th>
-                    <td>&nbsp;</td>
-                    <th align="right">确认点</th>
-                    <td>&nbsp;</td>
+                    <td class="operation">任教学科:</td>
+                    <td></td>
+                    <td class="operation">确认点:</td>
+                    <td></td>
                 </tr>
                 <tr>
-                    <th align="right">认定机构</th>
-                    <td>&nbsp;</td>
-                    <td colspan="2">&nbsp;</td>
+                    <td class="operation">认定机构:</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
                 </tr>
             </table>
             </div>

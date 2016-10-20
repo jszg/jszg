@@ -1,8 +1,8 @@
 $(document).ready(function() {
     handleNextAndPreviousEvents(); // 处理下一步，上一步的动作
-    toStep(7); // 到第 N 步，测试使用
     initWebUploader(); // 初始化上传照片控件
     requestDicts(); // 请求字典数据，初始化省，政治面貌等
+    toStep(7); // 到第 N 步，测试使用
 
     // 省变化时加载市
     $('#provinces').change(function() {
@@ -89,9 +89,28 @@ $(document).ready(function() {
 });
 
 function toStep(step) {
-    for (var i = 1; i < step; ++i) {
-        $('#box-' + i + '-next').click();
+    if (!window.enableToStep) {
+        window.enableToStep = true;
+
+        $('.declare li').click(function() {
+            var step = $(this).attr('data-step');
+            toStep(step);
+        });
     }
+
+    var i = 0;
+
+    // 删除所有 bz 的 class active，然后 bz-[1-step] 添加 class active
+    $('.bz').removeClass('active');
+    for (i = 1; i <= step; ++i) {
+        $('.bz'+i).addClass('active');
+    }
+
+    // 隐藏所有 box，然后显示 box-step
+    for (i = 1; i <= 8; ++i) {
+        $('#box-'+i).hide();
+    }
+    $('#box-'+step).show();
 }
 
 function requestDicts() {

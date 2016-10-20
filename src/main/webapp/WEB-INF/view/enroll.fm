@@ -32,17 +32,18 @@
 <div class="declare">
     <h2>网上申<br>报流程</h2>
     <ul>
-        <li class="bz bz1 active" style="z-index: 10"><span>申报第一步</span><br/><span>申报人必读</span></li>
-        <li class="bz bz2" style="z-index: 9"><span>申报第二步</span><br/><span>确认服务条款</span></li>
-        <li class="bz bz3" style="z-index: 8"><span>申报第三步</span><br/><span>填写身份信息</span></li>
-        <li class="bz bz4" style="z-index: 7"><span>申报第四步</span><br/><span>选择注册机构</span></li>
-        <li class="bz bz5" style="z-index: 6"><span>申报第五步</span><br/><span>选择确认点</span></li>
-        <li class="bz bz6" style="z-index: 5"><span>申报第六步</span><br/><span>阅读注意事项</span></li>
-        <li class="bz bz7" style="z-index: 4"><span>申报第七步</span><br/><span>填写申请材料</span></li>
-        <li class="bz bz8" style="z-index: 3"><span>申报第八步</span><br>完成</li>
+        <li class="bz bz1 active" style="z-index: 10" data-step="1"><span>申报第一步</span><br/><span>申报人必读</span></li>
+        <li class="bz bz2" style="z-index: 9" data-step="2"><span>申报第二步</span><br/><span>确认服务条款</span></li>
+        <li class="bz bz3" style="z-index: 8" data-step="3"><span>申报第三步</span><br/><span>填写身份信息</span></li>
+        <li class="bz bz4" style="z-index: 7" data-step="4"><span>申报第四步</span><br/><span>选择注册机构</span></li>
+        <li class="bz bz5" style="z-index: 6" data-step="5"><span>申报第五步</span><br/><span>选择确认点</span></li>
+        <li class="bz bz6" style="z-index: 5" data-step="6"><span>申报第六步</span><br/><span>阅读注意事项</span></li>
+        <li class="bz bz7" style="z-index: 4" data-step="7"><span>申报第七步</span><br/><span>填写申请材料</span></li>
+        <li class="bz bz8" style="z-index: 3" data-step="8"><span>申报第八步</span><br>完成</li>
     </ul>
 </div>
 
+<!-- option 的模版 -->
 <script id="optionTemplate" type="text/html">
     <option value="{{id}}">{{name}}</option>
 </script>
@@ -316,85 +317,86 @@
     <div class="content_bd">
         <h4>您证书的基本信息：<b class="f_red f_size">（如要修改，请返回第三步）</b></h4>
         <div class="ui-body">
-               <table width="960" border="0" cellspacing="0" cellpadding="0" class="ui-view">
-                    <tr style="border-bottom: 1px dashed #eee;">
-                        <th width="250" align="right">证书签发日期:</th>
-                        <td width="279">2000-10-08</td>
-                        <th width="205" align="right">姓名:</th>
-                        <td width="251">梁杨</td>
-                    </tr>
-                    <tr>
-                        <th align="right">性别:</th>
-                        <td>男</td>
-                        <th align="right">证件类型:</th>
-                        <td>身份证</td>
-                    </tr>
-                    <tr>
-                        <th align="right">身份证号码:</th>
-                        <td>130125199408064511</td>
-                        <th align="right">出生日期:</th>
-                        <td>1994-08-06</td>
-                    </tr>
-                    <tr>
-                        <th align="right">名族:</th>
-                        <td>汉族</td>
-                        <th align="right">申请资格种类:</th>
-                        <td>初级中学教师资格</td>
-                    </tr>
-                    <tr>
-                      <th align="right">任教学科:</th>
-                      <td>无</td>
-                      <th align="right">教师资格证书号码:</th>
-                      <td>20021309531000655</td>
-                    </tr>
-                    <tr>
-                      <th align="right">认定机构:</th>
-                      <td>大兴区教育局</td>
-                      <td colspan="2">&nbsp;</td>
-                    </tr>
-                </table>
+           <table width="960" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="250" class="operation">证书签发日期:</td>
+                    <td width="280">2000-10-08</td>
+                    <td width="250" class="operation">姓名:</td>
+                    <td width="280">梁杨</td>
+                </tr>
+                <tr>
+                    <td class="operation">性别:</td>
+                    <td>男</td>
+                    <td class="operation">证件类型:</td>
+                    <td>身份证</td>
+                </tr>
+                <tr>
+                    <td class="operation">身份证号码:</td>
+                    <td>130125199408064511</td>
+                    <td class="operation">出生日期:</td>
+                    <td>1994-08-06</td>
+                </tr>
+                <tr>
+                    <td class="operation">名族:</td>
+                    <td>汉族</td>
+                    <td class="operation">申请资格种类:</td>
+                    <td>初级中学教师资格</td>
+                </tr>
+                <tr>
+                  <td class="operation">任教学科:</td>
+                  <td>无</td>
+                  <td class="operation">教师资格证书号码:</td>
+                  <td>20021309531000655</td>
+                </tr>
+                <tr>
+                  <td class="operation">认定机构:</td>
+                  <td>大兴区教育局</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+            </table>
         </div>
     </div>
     <div class="content_bd">
         <h4>您选择的注册机构：<b class="f_red f_size">（如要修改，请返回第四步）</b></h4>
         <div class="ui-body">
-               <table width="960" border="0" cellspacing="0" cellpadding="0" class="ui-view">
-                    <tr style="border-bottom: 1px dashed #eee;">
-                        <th width="250" align="right">现任教学段:</th>
-                        <td width="279">幼儿园</td>
-                        <th width="205" align="right">所在省:</th>
-                        <td width="251">北京市教育局</td>
-                    </tr>
-                    <tr>
-                        <th align="right">注册机构:</th>
-                        <td>大兴区教育局</td>
-                        <th align="right">现任教学科:</th>
-                        <td>幼儿园</td>
-                    </tr>
-                </table>
+           <table width="960" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="250" class="operation">现任教学段:</td>
+                    <td width="280">幼儿园</td>
+                    <td width="250" class="operation">所在省:</td>
+                    <td width="280">北京市教育局</td>
+                </tr>
+                <tr>
+                    <td class="operation">注册机构:</td>
+                    <td>大兴区教育局</td>
+                    <td class="operation">现任教学科:</td>
+                    <td>幼儿园</td>
+                </tr>
+            </table>
         </div>
     </div>
 
     <div class="content_bd">
         <h4>请填写您的登录信息：<b class="f_red f_size"> (本栏信息请从上至下逐行填写)</b></h4>
         <div class="ui-body">
-               <table width="960" border="0" cellspacing="0" cellpadding="0">
-                    <tr>
-                        <td width="174" class="operation">系统登录密码</td>
-                        <td width="234"><input type="text"></td>
-                        <td width="552"><span class="description">密码不少于 8 位，包含数字、字母和特殊字符，特殊字符需从 &ldquo;#、%、*、-、_、!、@、$、&amp;&rdquo; 中选择。请牢记个人登录密码，将用于您登录查看、修改您的报名信息和打印定期注册申请表等</span></td>
-                    </tr>
-                    <tr>
-                        <td class="operation">密码确认</td>
-                        <td><input type="text"></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td class="operation">密码找回邮箱</td>
-                        <td><input type="text"></td>
-                        <td><spen class="description">找回密码用，请填写个人常用 E-mail 地址</spen></td>
-                    </tr>
-                </table>
+           <table width="960" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td width="130" class="operation">系统登录密码</td>
+                    <td width="150"><input type="text"></td>
+                    <td><span class="description">密码不少于 8 位，包含数字、字母和特殊字符，特殊字符需从 &ldquo;#、%、*、-、_、!、@、$、&amp;&rdquo; 中选择。请牢记个人登录密码，将用于您登录查看、修改您的报名信息和打印定期注册申请表等</span></td>
+                </tr>
+                <tr>
+                    <td class="operation">密码确认</td>
+                    <td><input type="text"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="operation">密码找回邮箱</td>
+                    <td><input type="text"></td>
+                    <td><spen class="description">找回密码用，请填写个人常用 E-mail 地址</spen></td>
+                </tr>
+            </table>
         </div>
     </div>
 
@@ -489,7 +491,7 @@
                     <tr>
                         <td class="operation">照片</td>
                         <td><span id="photo"><img></span><div id="filePicker">选择照片</div></td>
-                        <td colspan="4"><span class="description">须按要求由申请人本人上传，且必须与教师资格定期注册申请表上所贴照片底版相同 </span></td>
+                        <td colspan="4"><span class="description">申请人近 3 个月内的彩色证件照，淡蓝色、红色或白色背景，无边框；正面照，免冠，无头饰。现场确认时提交的照片与此电子照片同一底版，建议照片宽度为 114 像素，高度为 156 像素。  须按照要求由申请人本人上传，且必须与教师资格申请表上所贴照片底版相同</span></td>
                     </tr>
                 </table>
           </div>
@@ -505,20 +507,20 @@
 </div>
 
 <!-- 第八步 -->
-    <div id="box-8">
-       <div class="content_bd">
-         <div class="box-8">
-            <p><span>XXX</span>,您好！</p>
-            <h2>您已完成注册！</h2>
-            <P>请妥善保存您的如下登录信息：</P>
-            <P>身份证件号码：<span>411321198711133419</span></P>
-            <P>教师资格证书号码：<span>20021309531000656</span></P>
-            <P>密码找回邮箱：<span>wen68580610@126.com</span></P>
-            <P>为确保注册信息无误，请您及时<a href="#">登录系统。</a>获取报名号。</P>
-            <P>如果您需要查看或修改注册信息、了解现场确认注意事项、打印申报材料，请<a href="#">登录系统。</a></P>
-         </div>
-       </div>
-    </div>
+<div id="box-8">
+   <div class="content_bd">
+     <div class="box-8">
+        <p><span>XXX</span>,您好！</p>
+        <h2>您已完成注册！</h2>
+        <P>请妥善保存您的如下登录信息：</P>
+        <P>身份证件号码：<span>411321198711133419</span></P>
+        <P>教师资格证书号码：<span>20021309531000656</span></P>
+        <P>密码找回邮箱：<span>wen68580610@126.com</span></P>
+        <P>为确保注册信息无误，请您及时<a href="#">登录系统。</a>获取报名号。</P>
+        <P>如果您需要查看或修改注册信息、了解现场确认注意事项、打印申报材料，请<a href="#">登录系统。</a></P>
+     </div>
+   </div>
+</div>
 </div>
 
 <!-- 任教学科对话框 -->
