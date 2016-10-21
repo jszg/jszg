@@ -18,6 +18,42 @@ Urls = {
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                       UiUtils                                                 //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function UiUtils() {}
+
+/**
+ * 取得选中的 option 的数据
+ *
+ * @param  {string} selectId select 的 id
+ * @return {json}            返回 option 的 id, name, option 自己组成的对象
+ */
+UiUtils.getSelectedOption = function(selectId) {
+    var $selectedOption = $('#'+selectId).find('option:selected');
+
+    return {
+        id: parseInt($selectedOption.val()),
+        name: $selectedOption.text(),
+        option: $selectedOption
+    };
+};
+
+/**
+ * 设置 form-data 的 span 的属性
+ * <span class="form-data" name="idNo" data-id="" data-name=""></span>
+ *
+ * @param {string} formDataName 表示 formData 的名字
+ * @param {int} id
+ * @param {string} name
+ */
+UiUtils.setFormData = function(formDataName, id, text) {
+    var $dataSpan = $('span.form-data[name="' + formDataName + '"]');
+    $dataSpan.attr('data-id', id);
+    $dataSpan.attr('data-text', text);
+    $dataSpan.text(text);
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                     格式化字符串，给字符串加上 format 函数                                         //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
@@ -128,8 +164,9 @@ function DictUtils() {
  *
  * @param  {string} selectId  select 的 id
  * @param  {array} options    options 的数据，为 {id: 12, name: 'Foo', status: true}
+ * @param  {json}  control    可选参数, 例如 {removeFirstOption: true, filter: {name: '身份证'}}
  */
-DictUtils.insertOptions = function(selectId, options) {
+DictUtils.insertOptions = function(selectId, options, control) {
     // 例如插入资格种类的 options
     // $('#certTypes option:gt(0)').remove();
     // var certTypes = data.certTypes;
@@ -139,10 +176,22 @@ DictUtils.insertOptions = function(selectId, options) {
     // }
 
     var $select = $('#'+selectId);
-    $select.find('option:gt(0)').remove(); // 留下第一个选项 "请选择"
+
+    if (control && control.removeFirstOption) {
+        $select.find('option').remove(); // 删除所有的 option
+    } else {
+        $select.find('option:gt(0)').remove(); // 留下第一个选项 "请选择"
+    }
 
     for (var i = 0; i < options.length; ++i) {
-        $select.append(template('optionTemplate', options[i]));
+        if (control && control.filter) {
+            // 名字相同的才显示
+            if (control.filter.name == options[i].name) {
+                $select.append(template('optionTemplate', options[i]));
+            }
+        } else {
+            $select.append(template('optionTemplate', options[i]));
+        }
     }
 };
 
@@ -167,10 +216,23 @@ DictUtils.insertOptions = function(selectId, options) {
  * @param {string} idNo 身份证号码
  */
 function IdCard(name, idNo) {
-    this.name          = name;
-    this.birthday      = idNo.substring(6, 15);
-    this.birthdayYear  = this.birthday.substring(0, 4);
-    this.birthdayMonth = this.birthday.substring(4, 6);
-    this.birthdayDay   = this.birthday.substring(6, 8);
-    this.gender        = (parseInt(idNo.substring(16, 17)) % 2 === 0) ? '女' : '男';
+    this.name           = name;
+    this.idNo           = idNo.toUpperCase();
+    this.birthday       = idNo.substring(6, 15);
+    this.birthdayYear   = this.birthday.substring(0, 4);
+    this.birthdayMonth  = this.birthday.substring(4, 6);
+    this.birthdayDay    = this.birthday.substring(6, 8);
+    this.gender         = (parseInt(idNo.substring(16, 17)) % 2 === 0) ? '女' : '男';
+    this.birthdayString = this.birthdayYear + '-' + this.birthdayMonth + '-' + this.birthdayDay;
 }
+
+/**
+ * 验证身份证号码是否有效
+ *
+ * @param  {[type]} idNo [description]
+ * @return {[type]}      [description]
+ */
+IdCard.validate = function(idNo) {
+    var regex = /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X|x)$/;
+    return regex.test(idNo);
+};

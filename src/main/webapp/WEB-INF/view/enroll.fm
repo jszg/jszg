@@ -99,19 +99,17 @@
             <table width="960" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <td width="130" class="operation">证件类型</td>
-                    <td width="150">
-                        <select id="id-types"><option selected="selected" value="7">身份证</option></select>
-                    </td>
+                    <td width="150"><select id="id-types"><option selected="selected" value="-1">请选择</option></select></td>
                     <td></td>
                 </tr>
                 <tr>
                     <td class="operation">身份证件号码</td>
-                    <td><input type="text"></td>
+                    <td><input id="idNo" type="text" value="330726196507040016"></td>
                     <td><span class="description">请输入二代身份证号码（18位）<span></td>
                 </tr>
                 <tr>
                     <td class="operation">教师资格证书号码</td>
-                    <td><input class="ui-field" name="idNo" value=""></td>
+                    <td><input id="certNo" value="20021309531000655"></td>
                     <td></td>
                 </tr>
             </table>
@@ -134,16 +132,16 @@
         <div class="ui-body">
              <table width="960" border="0" cellspacing="0" cellpadding="0">
                 <tr>
-                    <td width="193" class="operation">证件类型</td>
-                    <td width="289"></td>
-                    <td width="194" class="operation">身份证件号码</td>
-                    <td width="238"></td>
+                    <td width="193" class="operation">证件类型:</td>
+                    <td width="289"><span class="form-data" name="idType" data-id="" data-text=""></span></td>
+                    <td width="194" class="operation">身份证件号码:</td>
+                    <td width="238"><span class="form-data" name="idNo" data-id="" data-text=""></span></td>
                 </tr>
                 <tr>
-                    <th align="right">教师资格证书号码</th>
-                    <td>&nbsp;</td>
-                    <th align="right"></th>
-                    <td>&nbsp;</td>
+                    <td class="operation">教师资格证书号码:</td>
+                    <td><span class="form-data" name="certNo" data-id="" data-text=""></td>
+                    <td></td>
+                    <td></td>
                 </tr>
             </table>
         </div>
@@ -154,7 +152,7 @@
            <table width="960" border="0" cellspacing="0" cellpadding="0" class="ui-view">
                 <tr>
                     <td width="100" class="operation">证书签发日期</td>
-                    <td width="150"><input type="text"></td>
+                    <td width="150"><input id="cert-assign-date" type="text"></td>
                     <td width="300"><span class="description">可直接输入，格式为 YYYY-MM-DD，如 1981-06-01<span></td>
                     <td width="80" class="operation">资格种类</td>
                     <td width="150">
@@ -171,11 +169,11 @@
 
                  <tr>
                     <td class="operation">姓名</td>
-                    <td><input type="text"></td>
+                    <td><input id="name" type="text"></td>
                     <td></td>
                     <td class="operation">性别</td>
                     <td>
-                        <select name="idType">
+                        <select id="gender">
                             <option selected="selected" value="-1">请选择</option>
                             <option value="1">男</option>
                             <option value="2">女</option>
@@ -185,7 +183,7 @@
 
                  <tr>
                     <td class="operation">出生日期</td>
-                    <td></td>
+                    <td><span class="form-data" name="birthday" data-id="" data-text=""></span></td>
                     <td></td>
                     <td class="operation">民族</td>
                     <td><select id="nations" name="1"><option selected="selected" value="-1">请选择</option></select></td>
@@ -201,7 +199,7 @@
            <table width="960" border="0" cellspacing="0" cellpadding="0" class="mytable">
                 <tr>
                     <td width="130" class="operation">现任教学段</td>
-                    <td width="150"><select name="idType2"><option selected="selected" value="7">请选择</option></select></td>
+                    <td width="150"><select id="teach-grades"><option selected="selected" value="-1">请选择</option></select></td>
                     <td></td>
                 </tr>
                 <tr>
@@ -322,25 +320,25 @@
            <table width="960" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <td width="250" class="operation">证书签发日期:</td>
-                    <td width="280">2000-10-08</td>
+                    <td width="280"><span class="form-data" name="cert-assign-date" data-id="" data-text=""></td>
                     <td width="250" class="operation">姓名:</td>
-                    <td width="280">梁杨</td>
+                    <td width="280"><span class="form-data" name="name" data-id="" data-text=""></td>
                 </tr>
                 <tr>
                     <td class="operation">性别:</td>
-                    <td>男</td>
+                    <td><span class="form-data" name="gender" data-id="" data-text=""></span></td>
                     <td class="operation">证件类型:</td>
-                    <td>身份证</td>
+                    <td><span class="form-data" name="idType" data-id="" data-text=""></span></td>
                 </tr>
                 <tr>
                     <td class="operation">身份证号码:</td>
-                    <td>130125199408064511</td>
+                    <td><span class="form-data" name="idNo" data-id="" data-text=""></span></td>
                     <td class="operation">出生日期:</td>
-                    <td>1994-08-06</td>
+                    <td><span class="form-data" name="birthday" data-id="" data-text=""></span></td>
                 </tr>
                 <tr>
                     <td class="operation">名族:</td>
-                    <td>汉族</td>
+                    <td><span class="form-data" name="nation" data-id="" data-text=""></span></td>
                     <td class="operation">申请资格种类:</td>
                     <td>初级中学教师资格</td>
                 </tr>
@@ -348,7 +346,7 @@
                   <td class="operation">任教学科:</td>
                   <td>无</td>
                   <td class="operation">教师资格证书号码:</td>
-                  <td>20021309531000655</td>
+                  <td><span class="form-data" name="certNo" data-id="" data-text=""></span></td>
                 </tr>
                 <tr>
                   <td class="operation">认定机构:</td>
