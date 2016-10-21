@@ -256,7 +256,7 @@ function requestDicts() {
         DictUtils.insertOptions('certTypes', data.certTypes);       // 资格种类
         DictUtils.insertOptions('provinces', data.provinces);       // 省
         DictUtils.insertOptions('provinces-for-college', data.provinces);
-        DictUtils.insertOptions('id-types', data.idType);           // 身份证
+        DictUtils.insertOptions('id-types', data.idType, {name: '身份证'}); // 身份证
         DictUtils.insertOptions('nations', data.nation);            // 民族
         DictUtils.insertOptions('politicals', data.political);      // 政治面貌
         DictUtils.insertOptions('edu-levels', data.eduLevel);       // 最高学位

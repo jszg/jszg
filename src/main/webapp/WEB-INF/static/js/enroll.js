@@ -1,7 +1,7 @@
 $(document).ready(function() {
     handleNextAndPreviousEvents(); // 处理下一步，上一步的动作
     initWebUploader(); // 初始化上传照片控件
-    StepUtils.toStep(7); // 到第 N 步，测试使用
+    StepUtils.toStep(4); // 到第 N 步，测试使用
 
     requestDicts();
 
@@ -92,19 +92,21 @@ function handleNextAndPreviousEvents() {
 
     // 第三步的下一步
     $('#box-3-next').click(function() {
-        // if (validate3thStep()) {
+        if (Validator.validate3thStep()) {
             // 验证通过，进入第四步
             $('#box-3').hide();
             $('#box-4').show();
             $('.bz4').addClass('active');
-        // }
+        }
     });
 
     // 第四步的下一步
     $('#box-4-next').click(function() {
-        $('#box-4').hide();
-        $('#box-5').show();
-        $('.bz5').addClass('active');
+        if (Validator.validate4thStep()) {
+            $('#box-4').hide();
+            $('#box-5').show();
+            $('.bz5').addClass('active');
+        }
     });
 
     // 第五步的下一步
@@ -145,8 +147,9 @@ function requestDicts() {
         var data = result.data;
         DictUtils.insertOptions('certTypes', data.certTypes);          // 资格种类
         DictUtils.insertOptions('provinces', data.provinces);          // 省
-        DictUtils.insertOptions('id-types', data.idType);              // 身份证
+        DictUtils.insertOptions('id-types', data.idType, {removeFirstOption: true, filter: {name: '身份证'}}); // 身份证
         DictUtils.insertOptions('nations', data.nation);               // 民族
+        DictUtils.insertOptions('teach-grades', data.teachGrade);      // 现任教学段
         DictUtils.insertOptions('politicals', data.political);         // 政治面貌
         DictUtils.insertOptions('edu-levels', data.eduLevel);          // 最高学位
         DictUtils.insertOptions('degrees', data.degree);               // 最高学历
@@ -174,3 +177,62 @@ function requestCities(provinceId) {
         }});
     }
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                           验证                                                //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function Validator () {}
+
+/**
+ * 验证第三步数据，验证通过后并填充在其他步骤上对应的数据
+ *      1. 身份证有效
+ *      2.
+ *
+ * @return {bool} 验证通过返回 true，否则返回 false
+ */
+Validator.validate3thStep = function() {
+    var idType = UiUtils.getSelectedOption('id-types'); // parseInt($('#id-types option:selected').val());
+    var idNo = $.trim($('#idNo').val());
+    var certNo = $.trim($('#certNo').val());
+
+    if (-1 == idType.id) {
+        alert('请选择 "证件类型"');
+        return false;
+    }
+
+    if (!IdCard.validate(idNo)) {
+        alert('请输入有效的身份证号码');
+        return;
+    }
+
+    UiUtils.setFormData('idType', idType.id, idType.name);
+    UiUtils.setFormData('certNo', -1, certNo);
+
+    // 显示身份证上的信息
+    var idCard = new IdCard('', idNo);
+    UiUtils.setFormData('idNo', -1, idCard.idNo);
+    UiUtils.setFormData('birthday', -1, idCard.birthdayString);
+    UiUtils.setFormData('gender', -1, idCard.gender);
+
+    return true;
+};
+
+Validator.validate4thStep = function() {
+    var nation = UiUtils.getSelectedOption('nations');
+    var certAssignDate = $.trim($('#cert-assign-date').val());
+    var gender = UiUtils.getSelectedOption('gender');
+    var name = $.trim($('#name').val());
+
+    // if (-1 == nation.id) {
+    //     alert('请选择 "民族"');
+    //     return false;
+    // }
+
+    UiUtils.setFormData('nation', nation.id, nation.name);
+    UiUtils.setFormData('cert-assign-date', -1, certAssignDate);
+    UiUtils.setFormData('gender', gender.id, gender.name);
+    UiUtils.setFormData('name', -1, name);
+
+    return true;
+};
