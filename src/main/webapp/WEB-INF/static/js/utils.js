@@ -21,6 +21,9 @@ function Utils() {
 
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                     格式化字符串，给字符串加上 format 函数                                         //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
  * 扩展了 String 类型，给其添加格式化的功能，替换字符串中 {placeholder} 或者 {0}, {1} 等模式部分为参数中传入的字符串
  * 使用方法:
@@ -57,4 +60,61 @@ var formatString = function (str, replacements) {
         if (m == '}}') { return '}'; }
         return replacements[n];
     });
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                              报名注册的导航工具类                                                //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * 报名注册的导航工具类
+ */
+function StepUtils() {
+}
+
+/**
+ * 跳到第 step 步
+ *
+ * @param  {int} step 报名的步骤
+ */
+StepUtils.toStep = function(step) {
+    if (!window.toStepInitialized) {
+        window.toStepInitialized = true;
+
+        $('.declare li').click(function() {
+            var step = $(this).attr('data-step');
+            StepUtils.toStep(step);
+        });
+    }
+
+    var i = 0;
+
+    // 删除所有 bz 的 class active，然后 bz-[1-step] 添加 class active
+    $('.bz').removeClass('active');
+    for (i = 1; i <= step; ++i) {
+        $('.bz'+i).addClass('active');
+    }
+
+    // 隐藏所有 box，然后显示 box-step
+    for (i = 1; i <= 8; ++i) {
+        $('#box-'+i).hide();
+    }
+    $('#box-'+step).show();
+};
+
+/**
+ * 跳到当前步骤的上一步
+ *
+ * @param  {int} step 当前步数
+ */
+StepUtils.toPreviousStep = function(step) {
+    // 例如第五步的上一步
+    // $('#box-5-previous').click(function(){
+    //     $('#box-5').hide();
+    //     $('#box-4').show();
+    //     $('.bz5').removeClass('active');
+    // });
+
+    $('#box-'+step).hide();
+    $('#box-'+(step-1)).show();
+    $('.bz'+step).removeClass('active');
 };

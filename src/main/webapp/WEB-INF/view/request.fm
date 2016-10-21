@@ -96,7 +96,7 @@
     </div>
     <div class="action-bar">
         <a href="javascript:void(0)" class="pre-step">
-            <img src="${static}/img/signup/button-prev.gif" alt="上一步" border="0" id="box-2-previous">
+            <img src="${static}/img/signup/button-prev.gif" alt="上一步" border="0" id="box-2-previous" data-step="2">
         </a>
         <a href="javascript:void(0)" class="next-step">
             <img src="${static}/img/signup/button-next.gif" alt="下一步" border="0" id="box-2-next">
@@ -170,7 +170,7 @@
     </div>
     <div class="action-bar">
         <a href="javascript:void(0)" class="pre-step">
-            <img src="${static}/img/signup/button-prev.gif" alt="上一步" border="0" id="box-3-previous">
+            <img src="${static}/img/signup/button-prev.gif" alt="上一步" border="0" id="box-3-previous" data-step="3">
         </a>
         <a href="javascript:void(0)" class="next-step">
             <img src="${static}/img/signup/button-next.gif" alt="下一步" border="0" id="box-3-next">
@@ -217,7 +217,7 @@
     </div>
     <div class="action-bar">
         <a href="javascript:void(0)" class="pre-step">
-            <img src="${static}/img/signup/button-prev.gif" alt="上一步" border="0" id="box-4-previous">
+            <img src="${static}/img/signup/button-prev.gif" alt="上一步" border="0" id="box-4-previous" data-step="4">
         </a>
         <a href="javascript:void(0)" class="next-step">
             <img src="${static}/img/signup/button-next.gif" alt="下一步" border="0" id="box-4-next">
@@ -251,7 +251,7 @@
     </div>
     <div class="action-bar">
         <a href="javascript:void(0)" class="pre-step">
-            <img src="${static}/img/signup/button-prev.gif" alt="上一步" border="0" id="box-5-previous">
+            <img src="${static}/img/signup/button-prev.gif" alt="上一步" border="0" id="box-5-previous" data-step="5">
         </a>
         <a href="javascript:void(0)" class="next-step">
             <img src="${static}/img/signup/button-next-with-read.gif" alt="下一步" border="0" id="box-5-next">
@@ -293,7 +293,7 @@
     </div>
     <div class="action-bar">
         <a href="javascript:void(0)" class="pre-step">
-            <img src="${static}/img/signup/button-prev.gif" alt="上一步" border="0" id="box-6-previous">
+            <img src="${static}/img/signup/button-prev.gif" alt="上一步" border="0" id="box-6-previous" data-step="6">
         </a>
         <a href="javascript:void(0)" class="next-step">
             <img src="${static}/img/signup/button-next.gif" alt="下一步" border="0" id="box-6-next">
@@ -542,7 +542,7 @@
     </div>
     <div class="action-bar">
         <a href="javascript:void(0)" class="pre-step">
-            <img src="${static}/img/signup/button-prev.gif" alt="上一步" border="0" id="box-7-previous">
+            <img src="${static}/img/signup/button-prev.gif" alt="上一步" border="0" id="box-7-previous" data-step="7">
         </a>
         <a href="javascript:void(0)" class="next-step">
             <img src="${static}/img/signup/button-next.gif" alt="下一步" border="0" id="box-7-next">

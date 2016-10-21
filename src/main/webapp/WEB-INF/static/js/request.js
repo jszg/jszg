@@ -2,7 +2,7 @@ $(document).ready(function() {
     handleNextAndPreviousEvents(); // 处理下一步，上一步的动作
     initWebUploader(); // 初始化上传照片控件
     requestDicts(); // 请求字典数据，初始化省，政治面貌等
-    toStep(7); // 到第 N 步，测试使用
+    StepUtils.toStep(7); // 到第 N 步，测试使用
 
     // 省变化时加载市
     $('#provinces').change(function() {
@@ -87,31 +87,6 @@ $(document).ready(function() {
 
     $('tr:last', $('table')).css('border-bottom', 'none'); // 删除最后一行的 border-bottom
 });
-
-function toStep(step) {
-    if (!window.enableToStep) {
-        window.enableToStep = true;
-
-        $('.declare li').click(function() {
-            var step = $(this).attr('data-step');
-            toStep(step);
-        });
-    }
-
-    var i = 0;
-
-    // 删除所有 bz 的 class active，然后 bz-[1-step] 添加 class active
-    $('.bz').removeClass('active');
-    for (i = 1; i <= step; ++i) {
-        $('.bz'+i).addClass('active');
-    }
-
-    // 隐藏所有 box，然后显示 box-step
-    for (i = 1; i <= 8; ++i) {
-        $('#box-'+i).hide();
-    }
-    $('#box-'+step).show();
-}
 
 function requestDicts() {
     // 请求字典
@@ -414,46 +389,8 @@ function handleNextAndPreviousEvents() {
     ////////////////////////////////////////////////////////////////////////
     ///                                上一步                              //
     ////////////////////////////////////////////////////////////////////////
-    // 第二步的上一步
-    $('#box-2-previous').click(function(){
-        $('#box-2').hide();
-        $('#box-1').show();
-        $('.bz2').removeClass('active');
-    });
-
-    // 第三步的上一步
-    $('#box-3-previous').click(function(){
-        $('#box-3').hide();
-        $('#box-2').show();
-        $('.bz3').removeClass('active');
-    });
-
-    // 第四步的上一步
-    $('#box-4-previous').click(function(){
-        $('#box-4').hide();
-        $('#box-3').show();
-
-        $('.bz4').removeClass('active');
-    });
-
-    // 第五步的上一步
-    $('#box-5-previous').click(function(){
-        $('#box-5').hide();
-        $('#box-4').show();
-        $('.bz5').removeClass('active');
-    });
-
-    // 第六步的上一步
-    $('#box-6-previous').click(function(){
-        $('#box-6').hide();
-        $('#box-5').show();
-        $('.bz6').removeClass('active');
-    });
-
-    // 第七步的上一步
-    $('#box-7-previous').click(function(){
-        $('#box-7').hide();
-        $('#box-6').show();
-        $('.bz7').removeClass('active');
+    $('#box-2-previous, #box-3-previous, #box-4-previous, #box-5-previous, #box-6-previous, #box-7-previous').click(function() {
+        var step = parseInt($(this).attr('data-step'));
+        StepUtils.toPreviousStep(step);
     });
 }
