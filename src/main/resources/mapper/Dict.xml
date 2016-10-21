@@ -10,11 +10,25 @@
         SELECT DIC_ID as id, NAME as name, STATUS as status FROM T_DICT WHERE DT_ID = #{dt_id}
     </select>
 
-    <select id="findTeaGrade" resultType="Dict">
+    <select id="findTeaGrades" resultType="Dict">
         select d.DIC_ID as id, d.NAME as name, d.STATUS as status
         from t_dict d
         where d.dt_id = 23 and
           <![CDATA[rownum <= 5]]>
         order by d.code
+    </select>
+
+    <select id="findEduLevels" resultType="Dict">
+      select d.dic_id as id,d.name as name,d.STATUS as status
+      from t_cert_type_link c
+      left join t_dict d on c.edu_level_id=d.dic_id
+      where c.ct_id= #{ct_id}
+    </select>
+
+    <select id="findAcademicDegrees" resultType="Dict">
+        select d.dic_id as id,d.name as name,d.STATUS as status
+        from t_cert_type_link_extend c left join t_dict d on c.target_id=d.dic_id
+        where c.link_id=(select ctl.ctl_id from t_cert_type_link ctl where ctl.ct_id = #{ct_id} and ctl.edu_level_id = #{eduLevel})
+          and c.target_type=1
     </select>
 </mapper>

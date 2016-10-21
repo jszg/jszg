@@ -22,6 +22,8 @@ public interface RedisKey {
     String DICTS = "dicts"; // dicts
     String DICTS_BY_TYPE = "dicts_%d"; // dicts_{dictTypeId}
     String TEAGRADES = "teaGrades"; // teaGrades
+    String EDULEVELS = "eduLevels_%d"; // eduLevels_{certTypeId}
+    String ACADEMICDEGREE = "academic_degree_%d_%d"; // academic_degree_{certTypeId}_{eduLevel}
 
     String COLLEGES = "colleges"; // colleges
     String COLLEGES_BY_PROVINCE = "colleges_p_%d"; // colleges_p_{provinceId}

@@ -10,7 +10,7 @@ import java.util.List;
  *
  * Created by microacup on 2016/10/19.
  */
-public interface TechnicalJobMappler {
+public interface TechnicalJobMapper {
     List<TechnicalJob> findRoots();
     List<TechnicalJob> findByParent(@Param("parentId") int parentId);
 }

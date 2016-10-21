@@ -100,7 +100,7 @@ gradle -Denv=development clean appStartDebug
     http://{{host}}:{{port}}/rest/signUp/{parentId}/technicaljobs/children
     ```
     
-*  证书上的任教学科
+* 证书上的任教学科
 
     ```
     # 根节点
@@ -116,7 +116,7 @@ gradle -Denv=development clean appStartDebug
     http://{{host}}:{{port}}/rest/signUp/nations
     ```
     
- * 证书上的机构
+* 证书上的机构
  
     ```
     # 根节点
@@ -148,3 +148,15 @@ gradle -Denv=development clean appStartDebug
    # 子节点
    http://{{host}}:{{port}}/rest/signUp/provinces/{provinceId}/{parentId}/subjects/children
    ```
+
+* 最高学历(认定)
+
+    ```
+    http://{{host}}:{{port}}/rest/signUp/certTypes/{certTypeId}/eduLevels
+    ```
+    
+* 最高学位
+
+    ```
+    http://{{host}}:{{port}}/rest/signUp/certTypes/{certTypeId}/eduLevels/{eduLevel}/degrees
+    ```

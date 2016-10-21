@@ -23,6 +23,8 @@ public interface UriView {
     String REST_DICTS_BY_DICTTYPE          = "/rest/signUp/dicts/{dictTypeId}";
     String REST_NATIONS                    = "/rest/signUp/nations";
     String REST_TEAGRADES                  = "/rest/signUp/teaGrades";
+    String REST_EDULEVELS                  = "/rest/signUp/certTypes/{certTypeId}/eduLevels";
+    String REST_ACADEMICDEGREE             = "/rest/signUp/certTypes/{certTypeId}/eduLevels/{eduLevel}/degrees";
 
     String REST_COLLEGES                   = "/rest/signUp/colleges";
     String REST_COLLEGES_BY_PROVINCE       = "/rest/signUp/provinces/{provinceId}/colleges";

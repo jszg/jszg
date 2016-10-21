@@ -20,7 +20,7 @@ import com.xtuer.mapper.MajorMapper;
 import com.xtuer.mapper.OrganizationMapper;
 import com.xtuer.mapper.ProvinceMapper;
 import com.xtuer.mapper.SubjectMapper;
-import com.xtuer.mapper.TechnicalJobMappler;
+import com.xtuer.mapper.TechnicalJobMapper;
 import com.xtuer.util.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,9 +35,9 @@ import java.util.Map;
 
 @Controller
 public class SignUpController {
-    private static final int[] DICT_TYPES = {5, 7, 25, 22, 21, 2, 3, 9, 24, 6, 4, 10};
+    private static final int[] DICT_TYPES = {5, 7, 25, 22, 21, 2, 3, 9, 24, 6, 4, 10, 23};
     private static final String[] DICT_TYPENAMES = {"nation", "eduLevel", "schoolQuale", "workUnitType", "learnType",
-            "normalMajor", "political", "pthLevel", "postQuale", "degree", "occupation", "idType"};
+            "normalMajor", "political", "pthLevel", "postQuale", "degree", "occupation", "idType", "teachGrade"};
 
     // 所有资格种类
     @GetMapping(UriView.REST_CERT_TYPE)
@@ -209,9 +209,28 @@ public class SignUpController {
     @ResponseBody
     public Result<List<Dict>> getTeaGrades() {
         String key = RedisKey.TEAGRADES;
-        List<Dict> list = redisUtils.get(List.class, key, () -> dictMapper.findTeaGrade());
+        List<Dict> list = redisUtils.get(List.class, key, () -> dictMapper.findTeaGrades());
         return Result.ok(list);
     }
+
+    // 最高学历:认定报名中,最高学历eduLevels是和资格种类关联的
+    @GetMapping(UriView.REST_EDULEVELS)
+    @ResponseBody
+    public Result<List<Dict>> getEduLevels(@PathVariable("certTypeId") int certTypeId) {
+        String key = String.format(RedisKey.EDULEVELS, certTypeId);
+        List<Dict> dicts = redisUtils.get(List.class, key, () -> dictMapper.findEduLevels(certTypeId));
+        return Result.ok(dicts);
+    }
+
+    //最高学位
+    @GetMapping(UriView.REST_ACADEMICDEGREE)
+    @ResponseBody
+    public Result<List<Dict>> getAcademicDegrees(@PathVariable("certTypeId") int certTypeId, @PathVariable("eduLevel") int eduLevel) {
+        String key = String.format(RedisKey.ACADEMICDEGREE, certTypeId, eduLevel);
+        List<Dict> dicts = redisUtils.get(List.class, key, () -> dictMapper.findAcademicDegrees(certTypeId, eduLevel));
+        return Result.ok(dicts);
+    }
+
 
     // 所有学校
     @GetMapping(UriView.REST_COLLEGES)
@@ -272,7 +291,7 @@ public class SignUpController {
     @ResponseBody
     public Result<List<TechnicalJob>> getRootTechnicalJobs() {
         String key = RedisKey.TECHNICALJOBS;
-        List<TechnicalJob> jobs = redisUtils.get(List.class, key, () -> technicalJobMappler.findRoots());
+        List<TechnicalJob> jobs = redisUtils.get(List.class, key, () -> technicalJobMapper.findRoots());
         return Result.ok(jobs);
     }
 
@@ -281,7 +300,7 @@ public class SignUpController {
     @ResponseBody
     public Result<List<TechnicalJob>> getChildrenTechnicalJobs(@PathVariable("parentId") int parentId) {
         String key = String.format(RedisKey.TECHNICAL_JOB_CHILDREN, parentId);
-        List<TechnicalJob> jobs = redisUtils.get(List.class, key, () -> technicalJobMappler.findByParent(parentId));
+        List<TechnicalJob> jobs = redisUtils.get(List.class, key, () -> technicalJobMapper.findByParent(parentId));
         return Result.ok(jobs);
     }
 
@@ -313,5 +332,5 @@ public class SignUpController {
     private MajorMapper majorMapper;
 
     @Autowired
-    private TechnicalJobMappler technicalJobMappler;
+    private TechnicalJobMapper technicalJobMapper;
 }

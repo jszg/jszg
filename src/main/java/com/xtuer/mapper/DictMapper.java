@@ -15,5 +15,10 @@ public interface DictMapper {
 
     List<Dict> findByDictType(@Param("dt_id") int dictTypeId);
 
-    List<Dict> findTeaGrade();
+    List<Dict> findTeaGrades();
+
+    List<Dict> findEduLevels(@Param("ct_id") int certTypeId);
+
+    List<Dict> findAcademicDegrees(@Param("ct_id") int certTypeId, @Param("eduLevel") int eduLevel);
+
 }
