@@ -7,11 +7,11 @@
 <!--namespace 非常重要：必须是 Mapper 类的全路径-->
 <mapper namespace="com.xtuer.mapper.DictMapper">
     <select id="findByDictType" resultType="Dict">
-        SELECT DIC_ID as id, NAME as name FROM T_DICT WHERE DT_ID = #{dt_id}
+        SELECT DIC_ID as id, NAME as name, STATUS as status FROM T_DICT WHERE DT_ID = #{dt_id}
     </select>
 
     <select id="findTeaGrade" resultType="Dict">
-        select d.DIC_ID as id, d.NAME as name
+        select d.DIC_ID as id, d.NAME as name, d.STATUS as status
         from t_dict d
         where d.dt_id = 23 and
           <![CDATA[rownum <= 5]]>

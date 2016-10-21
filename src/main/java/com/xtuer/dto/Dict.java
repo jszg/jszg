@@ -8,6 +8,7 @@ package com.xtuer.dto;
 public class Dict {
     private int id;
     private String name;
+    private boolean status;
 
     public int getId() {
         return id;
@@ -23,5 +24,13 @@ public class Dict {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 }
