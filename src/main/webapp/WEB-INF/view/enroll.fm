@@ -16,6 +16,7 @@
     <script src="http://cdn.bootcss.com/zTree.v3/3.5.24/js/jquery.ztree.core.min.js" charset="utf-8"></script>
     <script src="http://cdn.staticfile.org/artTemplate.js/3.0/template.js" charset="utf-8"></script>
     <script src="${static}/lib/jquery.leanModal.min.js" charset="utf-8"></script>
+    <script src="${static}/lib/laydate/laydate.js" charset="utf-8"></script>
     <script src="${static}/js/utils.js" charset="utf-8"></script>
     <script src="${static}/js/jquery.rest.js" charset="utf-8"></script>
     <script src="${static}/js/enroll.js" charset="utf-8"></script>
@@ -46,6 +47,9 @@
 <!-- option 的模版 -->
 <script id="optionTemplate" type="text/html">
     <option value="{{id}}">{{name}}</option>
+</script>
+<script id="provinceOptionTemplate" type="text/html">
+    <option value="{{id}}" data-province-city="{{provinceCity?'true':'false'}}">{{name}}</option>
 </script>
 
 <!-- 第一步 -->
@@ -425,7 +429,7 @@
                         <td><select id="work-unit-types"><option selected="selected" value="-1">请选择</option></select></td>
                         <td></td>
                         <td class="operation">最高学历毕业时间</td>
-                        <td width="180"><input type="text"></td>
+                        <td width="180"><input id="graduation-date" type="text"></td>
                         <td width="123"><span class="description">可直接输入，格式为 YYYY-MM-DD，如 1981-06-01</span></td>
                     </tr>
                     <tr>
@@ -446,10 +450,10 @@
                     </tr>
                     <tr>
                         <td align="right" class="operation">普通话水平</td>
-                        <td><select id="pth-levels" name="1"><option value="-1">请选择</option></select></td>
+                        <td><select id="pth-levels"><option value="-1">请选择</option></select></td>
                         <td></td>
                         <td class="operation">现任教学校聘用<br/>起始日期</td>
-                        <td><input type="text"></td>
+                        <td><input id="current-work-start-time" type="text"></td>
                         <td><span class="description">请填写第一次与现工作单位签订聘任合同的日期，格式为 YYYY-MM-DD，如 1981-06-01</span></td>
                     </tr>
                     <tr>
@@ -462,7 +466,7 @@
                     </tr>
                     <tr>
                         <td align="right" class="operation">开始参加工作时间</td>
-                        <td><input type="text"></td>
+                        <td><input type="text" id="start-work-date"></td>
                         <td><span class="description">请填写首次参加工作的时间，格式为 YYYY-MM-DD，如 1981-06-01 </span></td>
                         <td class="operation">教师职务（职称）</td>
                         <td colspan="2"><button>请选择...</button></td>

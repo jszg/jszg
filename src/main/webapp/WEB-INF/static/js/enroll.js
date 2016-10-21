@@ -1,14 +1,23 @@
 $(document).ready(function() {
     handleNextAndPreviousEvents(); // 处理下一步，上一步的动作
     initWebUploader(); // 初始化上传照片控件
-    StepUtils.toStep(4); // 到第 N 步，测试使用
-
+    initializeDatePicker();
     requestDicts();
+    StepUtils.toStep(7); // 到第 N 步，测试使用
 
     // 省变化时加载相应的市
     $('#provinces').change(function() {
-        var provinceId = parseInt($('#provinces option:selected').val());
-        requestCities(provinceId);
+        var $province = $('#provinces option:selected');
+        var provinceId = parseInt($province.val());
+
+        if ('false' === $province.attr('data-province-city')) {
+            // 普通省则加载它的市
+            requestCities(provinceId);
+        } else {
+            // 直辖市则市为它自己
+            var cities = [{id: provinceId, name: $province.text()}];
+            DictUtils.insertOptions('cities', cities, {remainFirstOption: false});
+        }
     });
 
     $('tr:last', $('table')).css('border-bottom', 'none'); // 删除最后一行的 border-bottom
@@ -145,9 +154,10 @@ function handleNextAndPreviousEvents() {
 function requestDicts() {
     $.rest.get({url: Urls.REST_DICTS, success: function(result) {
         var data = result.data;
+        console.log(data.provinces);
         DictUtils.insertOptions('certTypes', data.certTypes);          // 资格种类
-        DictUtils.insertOptions('provinces', data.provinces);          // 省
-        DictUtils.insertOptions('id-types', data.idType, {removeFirstOption: true, filter: {name: '身份证'}}); // 身份证
+        DictUtils.insertOptions('provinces', data.provinces, {templateId: 'provinceOptionTemplate'});   // 省
+        DictUtils.insertOptions('id-types', data.idType, {remainFirstOption: false, filters: ['身份证']}); // 身份证
         DictUtils.insertOptions('nations', data.nation);               // 民族
         DictUtils.insertOptions('teach-grades', data.teachGrade);      // 现任教学段
         DictUtils.insertOptions('politicals', data.political);         // 政治面貌
@@ -236,3 +246,41 @@ Validator.validate4thStep = function() {
 
     return true;
 };
+
+/**
+ * 初始化时间选择器
+ */
+function initializeDatePicker() {
+    // 证书签发日期
+    var certAssignDatePicker = {
+        elem: '#cert-assign-date',
+        format: 'YYYY-MM-DD',
+        istoday: true
+    };
+
+    // 最高学历毕业时间
+    var graduationDatePicker = {
+        elem: '#graduation-date',
+        format: 'YYYY-MM-DD',
+        istoday: true
+    };
+
+    // 开始参加工作时间
+    var startWorkDatePicker = {
+        elem: '#start-work-date',
+        format: 'YYYY-MM-DD',
+        istoday: true
+    };
+
+    // 现任教学校聘用起始日期
+    var currentWorkStartTime = {
+        elem: '#current-work-start-time',
+        format: 'YYYY-MM-DD',
+        istoday: true
+    };
+
+    laydate(certAssignDatePicker);
+    laydate(startWorkDatePicker);
+    laydate(graduationDatePicker);
+    laydate(currentWorkStartTime);
+}

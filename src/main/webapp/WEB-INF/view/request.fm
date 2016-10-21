@@ -47,6 +47,9 @@
 <script id="optionTemplate" type="text/html">
     <option value="{{id}}">{{name}}</option>
 </script>
+<script id="provinceOptionTemplate" type="text/html">
+    <option value="{{id}}" data-province-city="{{provinceCity?'true':'false'}}">{{name}}</option>
+</script>
 
 <!-- 第一步 -->
 <div id="box-1">

@@ -162,11 +162,13 @@ function DictUtils() {
 /**
  * 向 select 中插入 options
  *
+ * 默认保留第一个选项，模版名为 optionTemplate，名字的过滤为空
+ *
  * @param  {string} selectId  select 的 id
- * @param  {array} options    options 的数据，为 {id: 12, name: 'Foo', status: true}
- * @param  {json}  control    可选参数, 例如 {removeFirstOption: true, filter: {name: '身份证'}}
+ * @param  {array} options    options 的数据，为 {id: 12, name: 'Foo', status: true} 等
+ * @param  {json}  config     可选参数, 查看 defaults
  */
-DictUtils.insertOptions = function(selectId, options, control) {
+DictUtils.insertOptions = function(selectId, options, config) {
     // 例如插入资格种类的 options
     // $('#certTypes option:gt(0)').remove();
     // var certTypes = data.certTypes;
@@ -174,23 +176,29 @@ DictUtils.insertOptions = function(selectId, options, control) {
     // for (i = 0; i < certTypes.length; ++i) {
     //     $certTypes.append(template('optionTemplate', certTypes[i]));
     // }
-
     var $select = $('#'+selectId);
+    var defaults = {
+        filters: [], // name 的 filter
+        templateId: 'optionTemplate',
+        remainFirstOption: true
+    };
+    var fc = $.extend({}, defaults, config); // final config
 
-    if (control && control.removeFirstOption) {
-        $select.find('option').remove(); // 删除所有的 option
-    } else {
-        $select.find('option:gt(0)').remove(); // 留下第一个选项 "请选择"
+    // 如果 remainFirstOption 为 true 则留下第一个选项 "请选择"，否则删除所有的选项
+    $select.find('option').remove();
+
+    if (fc.remainFirstOption) {
+        $select.append('<option selected="selected" value="-1">请选择</option>');
     }
 
     for (var i = 0; i < options.length; ++i) {
-        if (control && control.filter) {
-            // 名字相同的才显示
-            if (control.filter.name == options[i].name) {
-                $select.append(template('optionTemplate', options[i]));
+        // filters 为空，或者不为空时 name 在 filters 中才显示
+        if (fc.filters.length === 0 || fc.filters.includes(options[i].name)) {
+            // 如果有 status 属性，并且 status 为 false，则不显示
+            if (options[i].hasOwnProperty('status') && !options[i].status) {
+                continue;
             }
-        } else {
-            $select.append(template('optionTemplate', options[i]));
+            $select.append(template(fc.templateId, options[i]));
         }
     }
 };
