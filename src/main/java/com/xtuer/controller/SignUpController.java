@@ -67,26 +67,18 @@ public class SignUpController {
         return Result.ok(cities);
     }
 
-    // 市或省下面的所有的认定机构
-    // 1-5 查市下面的所有的认定机构
-    // 6-7 查省下面的所有的认定机构
-    @GetMapping(UriView.REST_ORGS_BY_CITY_AND_CERT_TYPE)
+    // 认定机构: 市或省下面的所有的认定机构
+    @GetMapping(UriView.REST_ORGS_RENDING)
     @ResponseBody
-    public Result<List<Organization>> getOrgByCity(@PathVariable("cityId") Integer cityId, @PathVariable("certTypeId") Integer certTypeId) {
+    public Result<List<Organization>> getOrgByCity(@PathVariable("provinceId") int provinceId,
+                                                   @PathVariable("cityId") int cityId,
+                                                   @PathVariable("certTypeId") int certTypeId) {
         List<Organization> orgs = Collections.emptyList();
-        String key = String.format(RedisKey.ORGS, cityId, certTypeId);
-
-        if (certTypeId >= 1 && certTypeId <= 5) {
-            // 1-5 查市
-            orgs = redisUtils.get(List.class, key, () -> organizationMapper.findByCertTypeAndCity(cityId, certTypeId));
-        } else if (certTypeId >= 6 && certTypeId <= 7) {
-            // 6-7 查省
-            orgs = redisUtils.get(List.class, key, () -> organizationMapper.findByCertTypeAndProvince(cityId, certTypeId));
-        }
-
+        String key = String.format(RedisKey.ORGS_RENDING, provinceId, cityId, certTypeId);
+        orgs = redisUtils.get(new TypeReference<List<Organization>>() {
+                    }, key, () -> organizationMapper.findByProvinceAndCityAndCertTypeId(provinceId, cityId, certTypeId));
         return Result.ok(orgs);
     }
-
 
     // 证书上的机构 和选择的证书签发日期有关(CertTypeOrgTreeController)
     // 父机构
@@ -127,15 +119,18 @@ public class SignUpController {
                 .findByTeachGrade(teachGrade));
         if (certTypes.isEmpty()) return Result.error(organizations);
 
-        String key = String.format(RedisKey.ORGS_REG, teachGrade, cityId);
+        String key = String.format(RedisKey.ORGS_ZHUCE, teachGrade, cityId);
+        TypeReference<List<Organization>> orgReference = new TypeReference<List<Organization>>() {
+        };
+
         if (has7(certTypes)) {
-            organizations = redisUtils.get(List.class, key, () -> organizationMapper.findByOrgId(cityId));
+            organizations = redisUtils.get(orgReference, key, () -> organizationMapper.findByOrgId(cityId));
         } else {
             // 直辖市
             if (provinceCity) {
-                organizations = redisUtils.get(List.class, key, () -> organizationMapper.findByProvinceCity(cityId));
+                organizations = redisUtils.get(orgReference, key, () -> organizationMapper.findByProvinceCity(cityId));
             } else {
-                organizations = redisUtils.get(List.class, key, () -> organizationMapper.findByCity(cityId));
+                organizations = redisUtils.get(orgReference, key, () -> organizationMapper.findByCity(cityId));
             }
         }
 

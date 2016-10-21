@@ -20,6 +20,11 @@ gradle -Denv=development clean appStartDebug
 
 ## Rest API
 
+约定：
+
+ > * [parameter=value] 代表该参数可选
+    
+
 * 所有资格种类：
 
     ```
@@ -41,7 +46,7 @@ gradle -Denv=development clean appStartDebug
 * 认定机构
 
     ```
-    http://{{host}}:{{port}}/rest/signUp/cities/{cityId}/certTypes/{certTypeId}/orgs
+    http://{{host}}:{{port}}/rest/signUp/provinces/{provinceid}/cities/{cityId}/certTypes/{certTypeId}/orgs
     ```
     
 * 任教学科
@@ -136,7 +141,7 @@ gradle -Denv=development clean appStartDebug
 * 注册机构
 
     ```
-    http://{{host}}:{{port}}/rest/signUp/cities/{cityId}/orgs
+    http://{{host}}:{{port}}/rest/signUp/cities/{cityId}/orgs?teachGrade=5&cityId=3055[&provinceCity=true]
     ```
     
 * 现任教学科

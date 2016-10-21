@@ -12,12 +12,6 @@ import java.util.List;
  */
 public interface OrganizationMapper {
 
-    // 认定机构 1-5
-    List<Organization> findByCertTypeAndCity(@Param("city") Integer city, @Param("certTypeId") Integer certTypeId);
-
-    // 认定机构 6-7
-    List<Organization> findByCertTypeAndProvince(@Param("province") Integer province, @Param("certTypeId") Integer certTypeId);
-
     List<Organization> findByOrgType(@Param("orgType") int orgType);
 
     // 查询OrgType==4的Organization
@@ -34,5 +28,8 @@ public interface OrganizationMapper {
     // 注册机构 ct_code!=7 && !is_province_city
     List<Organization> findByCity(@Param("cityId") int cityId);
 
+    // 认定机构
+    List<Organization> findByProvinceAndCityAndCertTypeId(@Param("provinceId") Integer province, @Param("cityId") Integer city, @Param("certTypeId")
+            Integer certTypeId);
 
 }

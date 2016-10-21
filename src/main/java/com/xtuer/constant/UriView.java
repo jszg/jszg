@@ -8,7 +8,8 @@ public interface UriView {
     String REST_PROVINCES                  = "/rest/signUp/provinces";
     String REST_CITIES_BY_PROVINCE         = "/rest/signUp/provinces/{provinceId}/cities";
 
-    String REST_ORGS_BY_CITY_AND_CERT_TYPE = "/rest/signUp/cities/{cityId}/certTypes/{certTypeId}/orgs";
+    String REST_ORGS_RENDING               = "/rest/signUp/provinces/{provinceId}/cities/{cityId}/certTypes/{certTypeId}/orgs";
+
     String REST_ORGS_BY_ORGTYPE            = "/rest/signUp/orgtypes/{orgType}/orgs";
     String REST_ORGS_BY_PARENT             = "/rest/signUp/{parentId}/orgs";
     String REST_ORGS_REG                   = "/rest/signUp/reg/orgs";

@@ -10,12 +10,14 @@ public interface RedisKey {
     String PROVINCES = "provinces"; // provinces
     String CITIES = "cities_%d"; // cities_{provinceId}
 
-    String ORGS = "orgs_%d_%d"; // orgs_{cityId}_{certTypeId}
     String ORGS_BY_ORGTYPE = "orgs_ct_%d"; // orgs_ct_{orgType}
     String ORGS_BY_PARENT = "orgs_p_%d"; // orgs_p_{parentId}
 
+    // 认定机构
+    String ORGS_RENDING = "orgs_q_%d_%d_%d"; //orgs_q_{provinceId}_{cityId}_{certTypeId}
+
     // 注册机构
-    String ORGS_REG = "orgs_r_%d_%d" ; //orgs_r_{teachGrade}_{cityId}
+    String ORGS_ZHUCE = "orgs_r_%d_%d" ; //orgs_r_{teachGrade}_{cityId}
 
     String SUBJECTS_ROOT = "subjects_root_%d_%d"; // subjects_root_{provinceId}_{certTypeId}
     String SUBJECTS_CHILDREN = "subjects_children_%d_%d"; // subjects_children_{provinceId}_{parentId}
