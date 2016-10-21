@@ -8,6 +8,7 @@ package com.xtuer.dto;
 public class Province {
     private int id;
     private String name;
+    private boolean provinceCity;
 
     public int getId() {
         return id;
@@ -23,5 +24,13 @@ public class Province {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean getProvinceCity() {
+        return provinceCity;
+    }
+
+    public void setProvinceCity(boolean provinceCity) {
+        this.provinceCity = provinceCity;
     }
 }
