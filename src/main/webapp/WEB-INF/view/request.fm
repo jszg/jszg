@@ -115,9 +115,7 @@
                 <tr>
                     <td width="100" class="operation"><label>资格种类</label></td>
                     <td width="150">
-                        <select id="certTypes" name="certTypes" class="ui-field">
-                            <option selected="selected" value="-1">请选择</option>
-                        </select>
+                        <select id="certTypes" name="certTypes" class="ui-field"><option selected="selected" value="-1">请选择</option></select>
                     </td>
                     <td></td>
                 </tr>
@@ -125,11 +123,7 @@
                 <!-- 选择省 -->
                 <tr>
                     <td class="operation"><label>选择省</label></td>
-                    <td>
-                        <select id="provinces" name="provinces">
-                            <option selected="selected" value="-1">请选择</option>
-                        </select>
-                    </td>
+                    <td><select id="provinces" name="provinces"><option selected="selected" value="-1">请选择</option></select></td>
                     <td>
                         <span><font>在职教师或其他社会人员选择工作单位（人事档案）所在地或户籍所在地的省份和地、州、市（含省直管县）；应届毕业生只能在毕业前最后一学期申请认定，应届毕业生选择就读学校所在地的省份和地、州、市（含省直管县）。</font></span>
                     </td>
@@ -138,11 +132,7 @@
                 <!-- 选择市 -->
                 <tr>
                     <td class="operation"><label>选择市</label></td>
-                    <td>
-                        <select id="cities" name="cities">
-                            <option selected="selected" value="-1">请选择</option>
-                        </select>
-                    </td>
+                    <td><select id="cities" name="cities"><option selected="selected" value="-1">请选择</option></select></td>
                     <td></td>
                 </tr>
 
@@ -407,7 +397,7 @@
                 </tr>
                 <tr>
                     <td class="operation">最高学位</td>
-                    <td><input type="text"></td>
+                    <td><select id="edu-levels"><option selected="selected" value="-1">请选择</option></select></td>
                     <td><span class="description">请按照申请认定所使用的学位进行填写</span></td>
                     <td class="operation">毕业学校</td>
                     <td>

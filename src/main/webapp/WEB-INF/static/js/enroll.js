@@ -3,6 +3,14 @@ $(document).ready(function() {
     initWebUploader(); // 初始化上传照片控件
     StepUtils.toStep(7); // 到第 N 步，测试使用
 
+    requestDicts();
+
+    // 省变化时加载相应的市
+    $('#provinces').change(function() {
+        var provinceId = parseInt($('#provinces option:selected').val());
+        requestCities(provinceId);
+    });
+
     $('tr:last', $('table')).css('border-bottom', 'none'); // 删除最后一行的 border-bottom
 });
 
@@ -47,13 +55,8 @@ function initWebUploader() {
     };
 
     // 当有文件添加进来的时候
-    // 如果是图片，还可以创建缩略图
     uploader.onFileQueued = function(file) {
-        console.log('fileQueued:' + file.id);
-
-        // 创建缩略图
-        // 如果为非图片文件，可以不用调用此方法。
-        // src 是 base64 格式的图片
+        // 创建缩略图，如果为非图片文件，可以不用调用此方法，src 是 base64 格式的图片
         uploader.makeThumb(file, function(error, src) {
             if (error) {
                 return;
@@ -132,4 +135,42 @@ function handleNextAndPreviousEvents() {
         var step = parseInt($(this).attr('data-step'));
         StepUtils.toPreviousStep(step);
     });
+}
+
+/**
+ * 请求字典数据，然后添加到 DOM 里
+ */
+function requestDicts() {
+    $.rest.get({url: Urls.REST_DICTS, success: function(result) {
+        var data = result.data;
+        DictUtils.insertOptions('certTypes', data.certTypes);          // 资格种类
+        DictUtils.insertOptions('provinces', data.provinces);          // 省
+        DictUtils.insertOptions('id-types', data.idType);              // 身份证
+        DictUtils.insertOptions('nations', data.nation);               // 民族
+        DictUtils.insertOptions('politicals', data.political);         // 政治面貌
+        DictUtils.insertOptions('edu-levels', data.eduLevel);          // 最高学位
+        DictUtils.insertOptions('degrees', data.degree);               // 最高学历
+        DictUtils.insertOptions('pth-levels', data.pthLevel);          // 普通话水平
+        DictUtils.insertOptions('school-quales', data.schoolQuale);    // 现任教学校性质
+        DictUtils.insertOptions('work-unit-types', data.workUnitType); // 任教学校所在地
+        DictUtils.insertOptions('learn-types', data.learnType);        // 学习形式
+        DictUtils.insertOptions('normal-majors', data.normalMajor);    // 最高学历专业类别
+        DictUtils.insertOptions('post-quales', data.postQuale);        // 岗位性质
+    }});
+}
+
+/**
+ * 选择指定 provinceId 省下的市
+ *
+ * @param  {int} provinceId 省的 id
+ */
+function requestCities(provinceId) {
+    $('#cities option:gt(0)').remove();
+
+    // provinceId 为 -1 表示选择了 "请选择"，则不请求新的市数据
+    if (-1 != provinceId) {
+        $.rest.get({url: Urls.REST_CITIES_BY_PROVINCE, urlParams: {provinceId: provinceId}, success: function(result) {
+            DictUtils.insertOptions('cities', result.data);
+        }});
+    }
 }

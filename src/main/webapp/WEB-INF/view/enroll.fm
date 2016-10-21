@@ -100,7 +100,7 @@
                 <tr>
                     <td width="130" class="operation">证件类型</td>
                     <td width="150">
-                        <select name="idType"><option selected="selected" value="7">身份证</option></select>
+                        <select id="id-types"><option selected="selected" value="7">身份证</option></select>
                     </td>
                     <td></td>
                 </tr>
@@ -157,7 +157,9 @@
                     <td width="150"><input type="text"></td>
                     <td width="300"><span class="description">可直接输入，格式为 YYYY-MM-DD，如 1981-06-01<span></td>
                     <td width="80" class="operation">资格种类</td>
-                    <td width="150"><select name="idType"><option selected="selected" value="-1">身份证</option></select></td>
+                    <td width="150">
+                        <select id="certTypes" name="certTypes" class="ui-field"><option selected="selected" value="-1">请选择</option></select>
+                    </td>
                 </tr>
                 <tr>
                     <td class="operation">认定机构</td>
@@ -186,7 +188,7 @@
                     <td></td>
                     <td></td>
                     <td class="operation">民族</td>
-                    <td><select name="idType2"><option selected="selected" value="7">请选择</option></select></td>
+                    <td><select id="nations" name="1"><option selected="selected" value="-1">请选择</option></select></td>
                 </tr>
 
             </table>
@@ -204,11 +206,11 @@
                 </tr>
                 <tr>
                     <td class="operation">所在省</td>
-                    <td><select name="idType"><option selected="selected" value="7">请选择</option></select></td>
+                    <td><select id="provinces" name="provinces"><option selected="selected" value="-1">请选择</option></select></td>
                 </tr>
                 <tr>
                     <td class="operation">所在市</td>
-                    <td><select name="idType3"><option selected="selected" value="7">请选择</option></select></td>
+                    <td><select id="cities" name="cities"><option selected="selected" value="-1">请选择</option></select></td>
                 </tr>
                 <tr>
                     <td class="operation">注册机构</td>
@@ -406,10 +408,10 @@
                 <table width="960" border="0" cellspacing="0" cellpadding="0">
                     <tr>
                         <td width="140" align="right" class="operation">最高学位</td>
-                        <td width="150"><select><option selected="selected" value="7">请选择</option></select></td>
+                        <td width="150"><select id="edu-levels"><option selected="selected" value="-1">请选择</option></select></td>
                         <td width="190"></td>
                         <td width="140" class="operation">最高学历</td>
-                        <td width="150"><select name="select5"><option selected="selected" value="7">请选择</option></select></td>
+                        <td width="150"><select id="degrees" name="1"><option value="-1">请选择</option></select></td>
                         <td width="190"></td>
                     </tr>
                     <tr>
@@ -417,12 +419,12 @@
                         <td><button>选择...</button></td>
                         <td></td>
                         <td class="operation">现任教学校性质</td>
-                        <td><select name="select6"><option selected="selected" value="7">请选择</option></select></td>
+                        <td><select id="school-quales"><option selected="selected" value="-1">请选择</option></select></td>
                         <td></td>
                     </tr>
                     <tr>
                         <td align="right" class="operation">任教学校所在地</td>
-                        <td><select name="select"><option selected="selected" value="7">请选择</option></select></td>
+                        <td><select id="work-unit-types"><option selected="selected" value="-1">请选择</option></select></td>
                         <td></td>
                         <td class="operation">最高学历毕业时间</td>
                         <td width="180"><input type="text"></td>
@@ -430,7 +432,7 @@
                     </tr>
                     <tr>
                         <td align="right" class="operation">最高学历学习形式</td>
-                        <td><select name="select2"><option selected="selected" value="7">请选择</option></select></td>
+                        <td><select id="learn-types" name="1"><option value="-1">请选择</option></select></td>
                         <td></td>
                         <td class="operation">最高学历所学专业</td>
                         <td><button>请选择...</button></td>
@@ -438,15 +440,15 @@
                     </tr>
                     <tr>
                         <td align="right" class="operation">最高学历专业类别</td>
-                        <td><select name="select3"><option selected="selected" value="7">请选择</option></select></td>
+                        <td><select id="normal-majors" name="1"><option>请选择</option></select></td>
                         <td></td>
                         <td class="operation">政治面貌</td>
-                        <td><select name="select7"><option selected="selected" value="7">请选择</option></select></td>
+                        <td><select id="politicals" name="1"><option selected="selected" value="-1">请选择</option></select></td>
                         <td></td>
                     </tr>
                     <tr>
                         <td align="right" class="operation">普通话水平</td>
-                        <td><select name="select4"><option selected="selected" value="7">请选择</option></select></td>
+                        <td><select id="pth-levels" name="1"><option value="-1">请选择</option></select></td>
                         <td></td>
                         <td class="operation">现任教学校聘用<br/>起始日期</td>
                         <td><input type="text"></td>
@@ -457,7 +459,7 @@
                         <td width="186"><input type="text"></td>
                         <td width="114"><span class="description">请填写现工作单位的全称</span></td>
                         <td class="operation">岗位性质</td>
-                        <td><select name="select8"><option selected="selected" value="7">请选择</option></select></td>
+                        <td><select id="post-quales"><option selected="selected" value="-1">请选择</option></select></td>
                         <td></td>
                     </tr>
                     <tr>
