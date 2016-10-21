@@ -1,5 +1,8 @@
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                   URL                                                         //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
- * 使用到的 URL，放在 utils.js 里为了减少 js 文件的请求
+ * 使用到的 URL 都定义到 Urls 里，方便统一管理
  */
 Urls = {
     REST_CERT_TYPE: '/rest/signUp/certTypes',
@@ -13,13 +16,6 @@ Urls = {
     URI_UPLOAD_PERSON_IMAGE: '/upload-person-image',
     REST_COLLEGES_BY_PROVINCE: '/rest/signUp/provinces/{provinceId}/colleges'
 };
-
-/**
- * 工具类
- */
-function Utils() {
-
-}
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                     格式化字符串，给字符串加上 format 函数                                         //
@@ -149,3 +145,32 @@ DictUtils.insertOptions = function(selectId, options) {
         $select.append(template('optionTemplate', options[i]));
     }
 };
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                     身份证解析类                                                //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * 身份证解析类，用于解析身份证号码上不同数字代表的不同含义
+ * 例子: var id = new IdCard('女性的', '110102198611267047');
+ *
+ * 身份证号码位数的含意
+ *      前 1、2 位数字表示：所在省份的代码
+ *      第 3、4 位数字表示：所在城市的代码
+ *      第 5、6 位数字表示：所在区县的代码
+ *      第 7~14 位数字表示：出生年、月、日
+ *      第 15、16 位数字表示：所在地的派出所的代码
+ *      第 17 位数字表示性别：奇数表示男性，偶数表示女性
+ *      第 18 位数字是校检码：也有的说是个人信息码，用来检验身份证的正确性。校检码可以是 0~9 的数字，
+ *          有时也用 x 表示(尾号是10，那么就得用 x 来代替)，一般是随计算机的随机产生
+ *
+ * @param {string} name 名字
+ * @param {string} idNo 身份证号码
+ */
+function IdCard(name, idNo) {
+    this.name          = name;
+    this.birthday      = idNo.substring(6, 15);
+    this.birthdayYear  = this.birthday.substring(0, 4);
+    this.birthdayMonth = this.birthday.substring(4, 6);
+    this.birthdayDay   = this.birthday.substring(6, 8);
+    this.gender        = (parseInt(idNo.substring(16, 17)) % 2 === 0) ? '女' : '男';
+}

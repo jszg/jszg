@@ -4,6 +4,7 @@ $(document).ready(function() {
     StepUtils.toStep(7); // 到第 N 步，测试使用
 
     requestDicts(); // 请求字典数据，初始化省，政治面貌等
+    handleSubjectsDialog(); // 任教学科对话框
 
     // 省变化时加载相应的市
     $('#provinces').change(function() {
@@ -22,30 +23,6 @@ $(document).ready(function() {
     $('#provinces-for-college').change(function() {
         var provinceId = parseInt($('#provinces-for-college option:selected').val());
         requestGraduationColleges(provinceId);
-    });
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //                                                  任教学科对话框                                                 //
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    $('#subjects-dialog-trigger').leanModal({top: 50, overlay : 0.4});
-    $('#select-subjects').click(function(event) {
-        // 判断
-        // 请求任教学科
-        requestSubjects();
-    });
-    // 点击取消按钮隐藏对话匡
-    $('#subjects-dialog-buttons-holder .cancel').click(function(event) {
-        $("#lean_overlay").click();
-    });
-    // 点击确定按钮，设置选中的学科，并隐藏对话框
-    $('#subjects-dialog-buttons-holder .ok').click(function(event) {
-        var subjectNode = window.subjectsTree.getSelectedNodes()[0];
-        if (subjectNode) {
-            $('#subject').attr('data-subject-id', subjectNode.id).text(subjectNode.name);
-            $("#lean_overlay").click();
-        } else {
-            alert('没有选中任教学科');
-        }
     });
 
     $('tr:last', $('table')).css('border-bottom', 'none'); // 删除最后一行的 border-bottom
@@ -340,4 +317,30 @@ function requestGraduationColleges(provinceId) {
             DictUtils.insertOptions('graduation-colleges', result.data);
         }});
     }
+}
+
+/**
+ * 任教学科对话框
+ */
+function handleSubjectsDialog() {
+    $('#subjects-dialog-trigger').leanModal({top: 50, overlay : 0.4});
+    $('#select-subjects').click(function(event) {
+        // 判断
+        // 请求任教学科
+        requestSubjects();
+    });
+    // 点击取消按钮隐藏对话匡
+    $('#subjects-dialog-buttons-holder .cancel').click(function(event) {
+        $("#lean_overlay").click();
+    });
+    // 点击确定按钮，设置选中的学科，并隐藏对话框
+    $('#subjects-dialog-buttons-holder .ok').click(function(event) {
+        var subjectNode = window.subjectsTree.getSelectedNodes()[0];
+        if (subjectNode) {
+            $('#subject').attr('data-subject-id', subjectNode.id).text(subjectNode.name);
+            $("#lean_overlay").click();
+        } else {
+            alert('没有选中任教学科');
+        }
+    });
 }
