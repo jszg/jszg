@@ -1,5 +1,6 @@
 package com.xtuer.controller;
 
+import com.alibaba.fastjson.TypeReference;
 import com.xtuer.bean.Result;
 import com.xtuer.constant.RedisKey;
 import com.xtuer.constant.UriView;
@@ -26,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Collections;
@@ -51,7 +53,7 @@ public class SignUpController {
     @GetMapping(UriView.REST_PROVINCES)
     @ResponseBody
     public Result<List<Province>> getProvinces() {
-        List<Province> provinces = redisUtils.get(List.class, RedisKey.PROVINCES, () -> provinceMapper.findAll());
+        List<Province> provinces = redisUtils.get(new TypeReference<List<Province>>(){}, RedisKey.PROVINCES, () -> provinceMapper.findAll());
         return Result.ok(provinces);
     }
 
@@ -112,12 +114,32 @@ public class SignUpController {
     }
 
     // 注册机构
-    @GetMapping(UriView.REST_ORGS_BY_CITY)
+    @GetMapping(UriView.REST_ORGS_REG)
     @ResponseBody
-    public Result<List<Organization>> getOrgByCity(@PathVariable("cityId") int cityId) {
-        String key = String.format(RedisKey.ORGS_BY_CITY, cityId);
-        List<Organization> list = redisUtils.get(List.class, key, () -> organizationMapper.findByParentIdAndOrgTypeNot1(cityId));
-        return Result.ok(list);
+    public Result<List<Organization>> getRegOrgs(@RequestParam("teachGrade") int teachGrade,
+                @RequestParam("cityId") int cityId,
+                @RequestParam(value = "provinceCity", required = false, defaultValue = "false") boolean provinceCity) {
+        List<Organization> organizations = Collections.emptyList();
+
+        // teachGrade查询code是否==7
+        TypeReference<List<CertType>> certTypeReference = new TypeReference<List<CertType>>() {};
+        List<CertType> certTypes = redisUtils.get(certTypeReference, String.format(RedisKey.CERTTYPE_BY_TEACHGRADE, teachGrade), () -> certTypeMapper
+                .findByTeachGrade(teachGrade));
+        if (certTypes.isEmpty()) return Result.error(organizations);
+
+        String key = String.format(RedisKey.ORGS_REG, teachGrade, cityId);
+        if (has7(certTypes)) {
+            organizations = redisUtils.get(List.class, key, () -> organizationMapper.findByOrgId(cityId));
+        } else {
+            // 直辖市
+            if (provinceCity) {
+                organizations = redisUtils.get(List.class, key, () -> organizationMapper.findByProvinceCity(cityId));
+            } else {
+                organizations = redisUtils.get(List.class, key, () -> organizationMapper.findByCity(cityId));
+            }
+        }
+
+        return Result.ok(organizations);
     }
 
     // 省下面的第一级任教学科
@@ -303,6 +325,19 @@ public class SignUpController {
         List<TechnicalJob> jobs = redisUtils.get(List.class, key, () -> technicalJobMapper.findByParent(parentId));
         return Result.ok(jobs);
     }
+
+    // 现任教学段 ct_code 是否为7
+    private boolean has7(List<CertType> certTypes) {
+        boolean has7 = false;
+        for (CertType c : certTypes) {
+            if (c.getCode() == 7) {
+                has7 = true;
+                break;
+            }
+        }
+        return has7;
+    }
+
 
     @Autowired
     private RedisUtils redisUtils;

@@ -25,7 +25,14 @@ public interface OrganizationMapper {
 
     List<Organization> findByParentId(@Param("parentId") int parentId);
 
-    // 注册机构ProTeaGradeOrgListController  问号取city
-    List<Organization> findByParentIdAndOrgTypeNot1(@Param("cityId") int cityId);
+    // 注册机构 ct_code==7
+    List<Organization> findByOrgId(@Param("orgId") int orgId);
+
+    // 注册机构 ct_code!=7 && is_province_city
+    List<Organization> findByProvinceCity(@Param("provinceCityId") int provinceCityId);
+
+    // 注册机构 ct_code!=7 && !is_province_city
+    List<Organization> findByCity(@Param("cityId") int cityId);
+
 
 }

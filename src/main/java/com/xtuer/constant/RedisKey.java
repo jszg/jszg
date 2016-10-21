@@ -5,13 +5,17 @@ package com.xtuer.constant;
  */
 public interface RedisKey {
     String CERT_TYPES = "certTypes"; // certTypes
+    String CERTTYPE_BY_TEACHGRADE = "certType_tg_%d"; // certType_tg_{teachGrade}
+
     String PROVINCES = "provinces"; // provinces
     String CITIES = "cities_%d"; // cities_{provinceId}
 
     String ORGS = "orgs_%d_%d"; // orgs_{cityId}_{certTypeId}
     String ORGS_BY_ORGTYPE = "orgs_ct_%d"; // orgs_ct_{orgType}
     String ORGS_BY_PARENT = "orgs_p_%d"; // orgs_p_{parentId}
-    String ORGS_BY_CITY = "orgs_c_%d"; // orgs_c_ {cityId}
+
+    // 注册机构
+    String ORGS_REG = "orgs_r_%d_%d" ; //orgs_r_{teachGrade}_{cityId}
 
     String SUBJECTS_ROOT = "subjects_root_%d_%d"; // subjects_root_{provinceId}_{certTypeId}
     String SUBJECTS_CHILDREN = "subjects_children_%d_%d"; // subjects_children_{provinceId}_{parentId}
@@ -35,4 +39,7 @@ public interface RedisKey {
 
     String TECHNICALJOBS = "technical_jobs"; // technical_jobs
     String TECHNICAL_JOB_CHILDREN = "technical_jobs_children_%d"; // technical_jobs_children_{parentId}
+
+
+
 }

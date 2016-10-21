@@ -9,4 +9,10 @@
     <select id="findAll" resultType="CertType">
         select CT_ID as id, CT_NAME as name from T_CERT_TYPE
     </select>
+
+    <select id="findByTeachGrade" resultType="CertType">
+        select CT_ID as id, CT_NAME as name, CT_CODE as code
+        from T_CERT_TYPE
+        where TEACH_GRADE = #{teachGrade}
+    </select>
 </mapper>

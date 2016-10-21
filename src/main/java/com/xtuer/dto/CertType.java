@@ -8,6 +8,7 @@ package com.xtuer.dto;
 public class CertType {
     private Long id;
     private String name;
+    private int code;
 
     public Long getId() {
         return id;
@@ -24,5 +25,13 @@ public class CertType {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getCode() {
+        return code;
+    }
+
+    public void setCode(int code) {
+        this.code = code;
     }
 }
