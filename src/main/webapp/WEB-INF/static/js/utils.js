@@ -118,3 +118,34 @@ StepUtils.toPreviousStep = function(step) {
     $('#box-'+(step-1)).show();
     $('.bz'+step).removeClass('active');
 };
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                      字典工具类                                                //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+function DictUtils() {
+}
+
+/**
+ * 向 select 中插入 options
+ *
+ * @param  {string} selectId  select 的 id
+ * @param  {array} options    options 的数据，为 {id: 12, name: 'Foo', status: true}
+ */
+DictUtils.insertOptions = function(selectId, options) {
+    // 例如插入资格种类的 options
+    // $('#certTypes option:gt(0)').remove();
+    // var certTypes = data.certTypes;
+    // var $certTypes = $('#certTypes');
+    // for (i = 0; i < certTypes.length; ++i) {
+    //     $certTypes.append(template('optionTemplate', certTypes[i]));
+    // }
+
+    var $select = $('#'+selectId);
+    $select.find('option:gt(0)').remove(); // 留下第一个选项 "请选择"
+
+    for (var i = 0; i < options.length; ++i) {
+        $select.append(template('optionTemplate', options[i]));
+    }
+};
