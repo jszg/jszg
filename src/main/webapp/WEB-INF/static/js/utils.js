@@ -193,7 +193,7 @@ DictUtils.insertOptions = function(selectId, options, config) {
 
     for (var i = 0; i < options.length; ++i) {
         // filters 为空，或者不为空时 name 在 filters 中才显示
-        if (fc.filters.length === 0 || fc.filters.containsString(options[i].name)) {
+        if (0 === fc.filters.length || -1 != $.inArray(options[i].name, fc.filters)) {
             // 如果有 status 属性，并且 status 为 false，则不显示
             if (options[i].hasOwnProperty('status') && !options[i].status) {
                 continue;
@@ -243,21 +243,4 @@ function IdCard(name, idNo) {
 IdCard.validate = function(idNo) {
     var regex = /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X|x)$/;
     return regex.test(idNo);
-};
-
-
-/**
- * 测试数组是否包含传入的字符串 str
- *
- * @param  {str} str 字符串
- * @return {bool}    如果数组包含字符串 str 返回 true，否则返回 false
- */
-Array.prototype.containsString = function(str) {
-    for (var i = 0; i < this.length; ++i) {
-        if (this[i] == str) {
-            return true;
-        }
-    }
-
-    return false;
 };
