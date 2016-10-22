@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <configuration scan="true" scanPeriod="30 seconds">
-    <property name="log.base" value="/Users/Biao/Temp/logs"/>
+    <property name="log.base" value="@logDir@"/>
 
     <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>

@@ -154,7 +154,6 @@ function handleNextAndPreviousEvents() {
 function requestDicts() {
     $.rest.get({url: Urls.REST_DICTS, success: function(result) {
         var data = result.data;
-        console.log(data.provinces);
         DictUtils.insertOptions('certTypes', data.certTypes);          // 资格种类
         DictUtils.insertOptions('provinces', data.provinces, {templateId: 'provinceOptionTemplate'});   // 省
         DictUtils.insertOptions('id-types', data.idType, {remainFirstOption: false, filters: ['身份证']}); // 身份证

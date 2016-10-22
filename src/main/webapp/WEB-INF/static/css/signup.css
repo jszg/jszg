@@ -211,4 +211,6 @@ table{border-collapse:collapse;}
 .webuploader-pick {
     width: 100%;
     padding: 0 !important;
+    height: 30px;
+    line-height: 30px;
 }
