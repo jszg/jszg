@@ -5,16 +5,24 @@
  * 使用到的 URL 都定义到 Urls 里，方便统一管理
  */
 Urls = {
-    REST_DICTS: '/new-cert/rest/signUp/dicts',
+    REST_DICTS:     '/new-cert/rest/signUp/dicts',
     REST_CERT_TYPE: '/new-cert/rest/signUp/certTypes',
     REST_PROVINCES: '/new-cert/rest/signUp/provinces',
-    REST_CITIES_BY_PROVINCE: '/new-cert/rest/signUp/provinces/{provinceId}/cities',
+    REST_CITIES_BY_PROVINCE:         '/new-cert/rest/signUp/provinces/{provinceId}/cities',
     REST_ORGS_BY_CITY_AND_CERT_TYPE: '/new-cert/rest/signUp/cities/{cityId}/certTypes/{certTypeId}/orgs',
-    REST_COLLEGES_BY_PROVINCE: '/new-cert/rest/signUp/provinces/{provinceId}/colleges',
-    REST_SUBJECTS_ROOT: '/new-cert/rest/signUp/provinces/{provinceId}/certTypes/{certTypeId}/subjects/root',
-    REST_SUBJECTS_CHILDREN: '/new-cert/rest/signUp/provinces/{provinceId}/{parentId}/subjects/children',
+    REST_COLLEGES_BY_PROVINCE:       '/new-cert/rest/signUp/provinces/{provinceId}/colleges',
+
+    REST_SUBJECTS_ROOT:         '/new-cert/rest/signUp/provinces/{provinceId}/certTypes/{certTypeId}/subjects/root',
+    REST_SUBJECTS_CHILDREN:     '/new-cert/rest/signUp/provinces/{provinceId}/{parentId}/subjects/children',
     REST_SUBJECTS_BY_CERT_TYPE: '/new-cert/rest/signUp/certTypes/{certTypeId}/subjects', // 注册的任教学科
-    REST_SUBJECTS_BY_PARENT: '/new-cert/rest/signUp/{parentId}/subjects', // 注册的任教学科
+    REST_SUBJECTS_BY_PARENT:    '/new-cert/rest/signUp/{parentId}/subjects', // 注册的任教学科
+
+    REST_RENDING_MAJOR_PARENT: '/new-cert/rest/signUp/majors/root', // 认定的跟节点
+    REST_ZHUCE_MAJOR_PARENT:   '/new-cert/rest/signUp/certTypes/{certTypeId}/{eduLevelId}/majors/root', // 注册的跟节点
+    REST_MAJOR_CHILDREN:       '/new-cert/rest/signUp/{parentId}/majors/children', // 认定或注册的子节点
+
+    REST_TECHNICAL_JOB_ROOT:     '/new-cert/rest/signUp/technicaljobs/root',
+    REST_TECHNICAL_JOB_CHILDREN: '/new-cert/rest/signUp/{parentId}/technicaljobs/children',
 
     URI_UPLOAD_PERSON_IMAGE: '/new-cert/upload-person-image',
     WEB_UPLOADER_SWF: 'https://cdn.staticfile.org/webuploader/0.1.5/Uploader.swf'
@@ -99,6 +107,50 @@ UiUtils.requestDataAndShowInTree = function($tree, urlMethod) {
 
     $.fn.zTree.destroy();
     window.subjectsTree = $.fn.zTree.init($tree, settings);
+};
+
+/**
+ * 向 select 中插入 options
+ *
+ * 默认保留第一个选项，模版名为 optionTemplate，名字的过滤为空
+ *
+ * @param  {string} selectId   select 的 id
+ * @param  {array} optionsData ptions 的数据，为 {id: 12, name: 'Foo', status: true} 等
+ * @param  {json}  config     可选参数, 查看 defaults
+ */
+UiUtils.insertOptions = function(selectId, optionsData, config) {
+    // 例如插入资格种类的 options
+    // $('#certTypes option:gt(0)').remove();
+    // var certTypes = data.certTypes;
+    // var $certTypes = $('#certTypes');
+    // for (i = 0; i < certTypes.length; ++i) {
+    //     $certTypes.append(template('optionTemplate', certTypes[i]));
+    // }
+    var $select = $('#'+selectId);
+    var defaults = {
+        filters: [], // name 的 filter
+        templateId: 'optionTemplate',
+        remainFirstOption: true
+    };
+    var settings = $.extend({}, defaults, config);
+
+    // 如果 remainFirstOption 为 true 则留下第一个选项 "请选择"，否则删除所有的选项
+    $select.find('option').remove();
+
+    if (settings.remainFirstOption) {
+        $select.append('<option selected="selected" value="-1">请选择</option>');
+    }
+
+    for (var i = 0; i < optionsData.length; ++i) {
+        // filters 为空，或者不为空时 name 在 filters 中才显示
+        if (0 === settings.filters.length || -1 != $.inArray(optionsData[i].name, settings.filters)) {
+            // 如果有 status 属性，并且 status 为 false，则不显示
+            if (optionsData[i].hasOwnProperty('status') && !optionsData[i].status) {
+                continue;
+            }
+            $select.append(template(settings.templateId, optionsData[i]));
+        }
+    }
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -197,58 +249,6 @@ StepUtils.toPreviousStep = function(step) {
     $('#box-'+step).hide();
     $('#box-'+(step-1)).show();
     $('.bz'+step).removeClass('active');
-};
-
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                      字典工具类                                                //
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-function DictUtils() {
-}
-
-/**
- * 向 select 中插入 options
- *
- * 默认保留第一个选项，模版名为 optionTemplate，名字的过滤为空
- *
- * @param  {string} selectId  select 的 id
- * @param  {array} options    options 的数据，为 {id: 12, name: 'Foo', status: true} 等
- * @param  {json}  config     可选参数, 查看 defaults
- */
-DictUtils.insertOptions = function(selectId, options, config) {
-    // 例如插入资格种类的 options
-    // $('#certTypes option:gt(0)').remove();
-    // var certTypes = data.certTypes;
-    // var $certTypes = $('#certTypes');
-    // for (i = 0; i < certTypes.length; ++i) {
-    //     $certTypes.append(template('optionTemplate', certTypes[i]));
-    // }
-    var $select = $('#'+selectId);
-    var defaults = {
-        filters: [], // name 的 filter
-        templateId: 'optionTemplate',
-        remainFirstOption: true
-    };
-    var fc = $.extend({}, defaults, config); // final config
-
-    // 如果 remainFirstOption 为 true 则留下第一个选项 "请选择"，否则删除所有的选项
-    $select.find('option').remove();
-
-    if (fc.remainFirstOption) {
-        $select.append('<option selected="selected" value="-1">请选择</option>');
-    }
-
-    for (var i = 0; i < options.length; ++i) {
-        // filters 为空，或者不为空时 name 在 filters 中才显示
-        if (0 === fc.filters.length || -1 != $.inArray(options[i].name, fc.filters)) {
-            // 如果有 status 属性，并且 status 为 false，则不显示
-            if (options[i].hasOwnProperty('status') && !options[i].status) {
-                continue;
-            }
-            $select.append(template(fc.templateId, options[i]));
-        }
-    }
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////

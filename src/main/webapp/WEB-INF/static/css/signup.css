@@ -13,7 +13,12 @@ table, td {
 
 button {
     width: 80px;
-    text-align: center !important;;
+    text-align: center !important;
+    white-space: nowrap;
+}
+
+.text-center {
+    text-align: center;
 }
 
 .operation {
@@ -140,7 +145,7 @@ button {
 }
 
 .ui-body {
-    border: 1px solid #a6c9e2;
+    border: 1px solid #DDD;
     border-radius: 4px;
 }
 
@@ -164,16 +169,17 @@ table{border-collapse:collapse;}
     border: solid 1px gray;
     border-radius: 6px;
     box-shadow: 0px 0px 8px #666;
-    padding: 5px 10px;
-    width: 550px;
+    padding: 10px 10px;
+    width: 600px;
     height: 550px;
 }
 
 /*主要内容部分*/
 .pop-dialog .content {
-    overflow: scroll;
+    overflow-x: hidden;
     overflow-y: scroll;
     height: 520px;
+    border: 1px solid #EEE;
 }
 
 /*按钮部分*/
@@ -181,7 +187,6 @@ table{border-collapse:collapse;}
     height: 30px;
     line-height: 30px;
     text-align: center;
-    border-top: 1px solid #EEE;
 }
 
 .pop-dialog .buttons-holder .ok-button {
@@ -202,31 +207,34 @@ table{border-collapse:collapse;}
 
 #graduation-colleges-dialog input,
 #graduation-colleges-dialog select {
-    width: 150px;
+    /*width: 140px;*/
 }
 
 #graduation-colleges-dialog .content .toolbar {
     border-bottom: 1px solid #EEE;
+    padding: 5px;
 }
 
 #graduation-colleges-dialog .content button {
-    width: 50px;
+    width: 55px;
 }
 
 #graduation-colleges li {
-    border: 1px solid #FFFFFF;
-    padding-left: 10px;
+    border-top: 1px solid transparent;
     border-bottom: 1px solid #FAFAFA;
+    padding-left: 10px;
 }
 
 #graduation-colleges li:hover {
     background: #EEE;
+    border-bottom: 1px solid #FAFAFA;
     cursor: default;
 }
 
 #graduation-colleges li.active {
-    border: 1px solid gray;
-    background: lightgray;
+    border-top: 1px solid #BBB;
+    border-bottom: 1px solid #BBB;
+    background: #CCC;
 }
 
 /*ztree 节点*/
@@ -253,4 +261,14 @@ table{border-collapse:collapse;}
     padding: 0 !important;
     height: 30px;
     line-height: 30px;
+}
+
+.form-data {
+    color: darkred;
+}
+
+input:read-only {
+    /*border: 1px solid lightgray;*/
+    /*padding: 2px 0 !important;*/
+    cursor: text;
 }

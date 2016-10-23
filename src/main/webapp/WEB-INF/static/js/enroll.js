@@ -7,10 +7,17 @@ $(document).ready(function() {
 
     handleRegisterSubjectsDialog(); // 第四步的任教学科对话框
     handleGraduationCollegesDialog(); // 第七步的最高学历毕业学校
+    handleMajorsDialog(); // 第七步的最高学历所学专业
+    handleTechnicalJobsDialog(); // 第七步的教师职务（职称）
 
     requestDicts();
 
-    StepUtils.toStep(7); // 到第 N 步，测试使用
+    StepUtils.toStep(5); // 到第 N 步，测试使用
+
+    // 点击取消按钮关闭弹出对话框
+    $('.pop-dialog .cancel-button').click(function(event) {
+        $("#lean_overlay").click();
+    });
 
     $('tr:last', $('table')).css('border-bottom', 'none'); // 删除最后一行的 border-bottom
 });
@@ -146,21 +153,21 @@ function handleNextAndPreviousEvents() {
 function requestDicts() {
     $.rest.get({url: Urls.REST_DICTS, success: function(result) {
         var data = result.data;
-        DictUtils.insertOptions('certTypes', data.certTypes);          // 资格种类
-        DictUtils.insertOptions('provinces', data.provinces, {templateId: 'provinceOptionTemplate'});   // 省
-        DictUtils.insertOptions('provinces-for-college', data.provinces, {templateId: 'provinceOptionTemplate'}); // 省
-        DictUtils.insertOptions('id-types', data.idType, {remainFirstOption: false, filters: ['身份证']}); // 身份证
-        DictUtils.insertOptions('nations', data.nation);               // 民族
-        DictUtils.insertOptions('teach-grades', data.teachGrade);      // 现任教学段
-        DictUtils.insertOptions('politicals', data.political);         // 政治面貌
-        DictUtils.insertOptions('edu-levels', data.eduLevel);          // 最高学位
-        DictUtils.insertOptions('degrees', data.degree);               // 最高学历
-        DictUtils.insertOptions('pth-levels', data.pthLevel);          // 普通话水平
-        DictUtils.insertOptions('school-quales', data.schoolQuale);    // 现任教学校性质
-        DictUtils.insertOptions('work-unit-types', data.workUnitType); // 任教学校所在地
-        DictUtils.insertOptions('learn-types', data.learnType);        // 学习形式
-        DictUtils.insertOptions('normal-majors', data.normalMajor);    // 最高学历专业类别
-        DictUtils.insertOptions('post-quales', data.postQuale);        // 岗位性质
+        UiUtils.insertOptions('certTypes', data.certTypes);          // 资格种类
+        UiUtils.insertOptions('provinces', data.provinces, {templateId: 'provinceOptionTemplate'});   // 省
+        UiUtils.insertOptions('provinces-for-college', data.provinces, {templateId: 'provinceOptionTemplate'}); // 省
+        UiUtils.insertOptions('id-types', data.idType, {remainFirstOption: false, filters: ['身份证']}); // 身份证
+        UiUtils.insertOptions('nations', data.nation);               // 民族
+        UiUtils.insertOptions('teach-grades', data.teachGrade);      // 现任教学段
+        UiUtils.insertOptions('politicals', data.political);         // 政治面貌
+        UiUtils.insertOptions('edu-levels', data.eduLevel);          // 最高学位
+        UiUtils.insertOptions('degrees', data.degree);               // 最高学历
+        UiUtils.insertOptions('pth-levels', data.pthLevel);          // 普通话水平
+        UiUtils.insertOptions('school-quales', data.schoolQuale);    // 现任教学校性质
+        UiUtils.insertOptions('work-unit-types', data.workUnitType); // 任教学校所在地
+        UiUtils.insertOptions('learn-types', data.learnType);        // 学习形式
+        UiUtils.insertOptions('normal-majors', data.normalMajor);    // 最高学历专业类别
+        UiUtils.insertOptions('post-quales', data.postQuale);        // 岗位性质
     }});
 }
 
@@ -178,11 +185,12 @@ function handleChangeProvincesEvent() {
 
         if (isProvinceCity) {
             // 直辖市的市为它自己
-            DictUtils.insertOptions('cities', [{id: provinceId, name: $province.text()}], {remainFirstOption: false});
+            var cities = [{id: provinceId, name: $province.text(), provinceCity: true}];
+            UiUtils.insertOptions('cities', cities, {templateId: 'provinceOptionTemplate', remainFirstOption: false});
         } else if (-1 != provinceId) {
             // provinceId 为 -1 表示选择了 "请选择"，则不加载省的城市
             $.rest.get({url: Urls.REST_CITIES_BY_PROVINCE, urlParams: {provinceId: provinceId}, success: function(result) {
-                DictUtils.insertOptions('cities', result.data);
+                UiUtils.insertOptions('cities', result.data);
             }});
         }
     });
@@ -218,6 +226,13 @@ function handleChangeProvincesForCollegeEvent() {
     });
 
     function searchCollege() {
+        var provinceId = UiUtils.getSelectedOption('provinces-for-college').id;
+
+        if (-1 == provinceId) {
+            alert('请选择省，然后再进行搜索');
+            return;
+        }
+
         var text = $.trim($('.toolbar .search-input', $dlg).val());
         var $colleges = $('#graduation-colleges li');
 
@@ -335,7 +350,7 @@ function initializeDatePicker() {
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//                                                 第四步的任教学科对话框                                           //
+//                                                        第四步的对话框                                           //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
  * 处理选择任教学科的相关事件
@@ -373,11 +388,6 @@ function handleRegisterSubjectsDialog() {
         });
     });
 
-    // 点击取消按钮隐藏对话匡
-    $('#register-subjects-dialog .cancel-button').click(function(event) {
-        $("#lean_overlay").click();
-    });
-
     // 点击确定按钮，设置选中的学科，并隐藏对话框
     $('#register-subjects-dialog .ok-button').click(function(event) {
         var subjectNode = window.subjectsTree.getSelectedNodes()[0];
@@ -390,6 +400,12 @@ function handleRegisterSubjectsDialog() {
     });
 }
 
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                        第七步的对话框                                           //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * 最高学历毕业学校
+ */
 function handleGraduationCollegesDialog() {
     // 初始化 LeanModal 对话框
     $('#graduation-colleges-dialog-trigger').leanModal({top: 50, overlay : 0.4});
@@ -398,19 +414,97 @@ function handleGraduationCollegesDialog() {
         $('#graduation-colleges-dialog-trigger').click();
     });
 
-    // 点击取消按钮隐藏对话匡
-    $('#graduation-colleges-dialog .cancel-button').click(function(event) {
-        $("#lean_overlay").click();
-    });
-
     // 点击确定按钮，设置选中的学科，并隐藏对话框
     $('#graduation-colleges-dialog .ok-button').click(function(event) {
+        var $college = $('#graduation-colleges li.active');
+
+        if ($college.length > 0) {
+            var id = $college.attr('data-id');
+            var name = $college.attr('data-name');
+            UiUtils.setFormData('graduationCollege', id, name);
+            $("#lean_overlay").click();
+        } else {
+            alert('没有选中毕业学校');
+        }
+    });
+}
+
+/**
+ * 最高学历所学专业
+ */
+function handleMajorsDialog() {
+    // 初始化 LeanModal 对话框
+    $('#majors-dialog-trigger').leanModal({top: 50, overlay : 0.4});
+
+    // 点击确定按钮，设置选中的学科，并隐藏对话框
+    $('#majors-dialog .ok-button').click(function(event) {
         var subjectNode = window.subjectsTree.getSelectedNodes()[0];
         if (subjectNode) {
-            UiUtils.setFormData('registerSubject', subjectNode.id, subjectNode.name);
+            UiUtils.setFormData('major', subjectNode.id, subjectNode.name);
             $("#lean_overlay").click();
         } else {
             alert('没有选中任教学科');
         }
+    });
+
+    $('#select-major-button').click(function(event) {
+        var certTypeId = UiUtils.getSelectedOption('certTypes').id;
+        var eduLevelId = UiUtils.getSelectedOption('edu-levels').id;
+
+        // certTypeId = 2;
+        // eduLevelId = 132;
+
+        if (-1 === certTypeId) {
+            alert('请先选择 "资格种类"，然后才能选择 "最高学历所学专业"');
+            return;
+        }
+
+        if (-1 == eduLevelId) {
+            alert('请先选择 "最高学历"，然后才能选择 "最高学历所学专业"');
+            return;
+        }
+
+        $('#majors-dialog-trigger').click(); // 显示对话框
+
+        // 加载最高学历所学专业
+        UiUtils.requestDataAndShowInTree($('#majors-dialog .ztree'), function(treeId, treeNode) {
+            if(!treeNode) {
+                return Urls.REST_ZHUCE_MAJOR_PARENT.format({certTypeId: certTypeId, eduLevelId: eduLevelId});
+            } else {
+                return Urls.REST_SUBJECTS_BY_PARENT.format({parentId: treeNode.id});
+            }
+        });
+    });
+}
+
+/**
+ * 教师职务（职称）
+ */
+function handleTechnicalJobsDialog() {
+    // 初始化 LeanModal 对话框
+    $('#technical-jobs-dialog-trigger').leanModal({top: 50, overlay : 0.4});
+
+    // 点击确定按钮，设置选中的学科，并隐藏对话框
+    $('#technical-jobs-dialog .ok-button').click(function(event) {
+        var subjectNode = window.subjectsTree.getSelectedNodes()[0];
+        if (subjectNode) {
+            UiUtils.setFormData('technicalJob', subjectNode.id, subjectNode.name);
+            $("#lean_overlay").click();
+        } else {
+            alert('没有选中教师职务（职称）');
+        }
+    });
+
+    $('#select-technical-job-button').click(function(event) {
+        $('#technical-jobs-dialog-trigger').click(); // 显示对话框
+
+        // 加载最高学历所学专业
+        UiUtils.requestDataAndShowInTree($('#technical-jobs-dialog .ztree'), function(treeId, treeNode) {
+            if(!treeNode) {
+                return Urls.REST_TECHNICAL_JOB_ROOT;
+            } else {
+                return Urls.REST_TECHNICAL_JOB_CHILDREN.format({parentId: treeNode.id});
+            }
+        });
     });
 }
