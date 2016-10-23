@@ -23,7 +23,7 @@ gradle -Denv=development clean appStartDebug
 约定：
 
  > * [parameter=value] 代表该参数可选
-    
+
 
 * 所有资格种类：
 
@@ -48,108 +48,107 @@ gradle -Denv=development clean appStartDebug
     ```
     http://{{host}}:{{port}}/rest/signUp/provinces/{provinceid}/cities/{cityId}/certTypes/{certTypeId}/orgs
     ```
-    
+
 * 任教学科
 
     ```
     # 根节点
     http://{{host}}:{{port}}/rest/signUp/provinces/{provinceId}/certTypes/{certTypeId}/subjects/root
-    
+
     # 子节点
     http://{{host}}:{{port}}/rest/signUp/provinces/{provinceId}/{parentId}/subjects/children
     ```
-    
+
 * 字典
 
     ```
     # 所有
     http://{{host}}:{{port}}/rest/signUp/dicts
-    
-    # 按类型    
+
+    # 按类型
     http://{{host}}:{{port}}/rest/signUp/dicts/{dictTypeId}
     ```
-    
+
 * 毕业学校
 
     ```
     # 所有
     http://{{host}}:{{port}}/rest/signUp/colleges
-    
+
     # 按省份找
     http://{{host}}:{{port}}/rest/signUp/provinces/{provinceId}/colleges
     ```
-    
+
 * 所学专业
 
     ```
     # 如果是认定的
     # 根节点
     http://{{host}}:{{port}}/rest/signUp/majors/root
-    # 子节点 
-    http://{{host}}:{{port}}/rest/signUp/{parentId}/majors/children
-        
+
     # 如果是注册的
     # 根节点
     http://{{host}}:{{port}}/rest/signUp/certTypes/{certTypeId}/{eduLevelId}/majors/root
-    # 子节点 
-    http://{{host}}:{{port}}/rest/signUp/provinces/{provinceId}/{parentId}/majors/children
+
+    # 认定的或注册的子节点
+    http://{{host}}:{{port}}/rest/signUp/{parentId}/majors/children
     ```
-    
-* 专业技术职务    
+
+* 专业技术职务
 
     ```
     # 根节点
     http://{{host}}:{{port}}/rest/signUp/technicaljobs/root
-    
+
     # 子节点
     http://{{host}}:{{port}}/rest/signUp/{parentId}/technicaljobs/children
     ```
-    
+
 * 证书上的任教学科
 
     ```
     # 根节点
     http://{{host}}:{{port}}/rest/signUp/certTypes/{certTypeId}/subjects
-    
+
     # 子节点
     http://{{host}}:{{port}}/rest/signUp/{parentId}/subjects
     ```
-    
+
 * 民族
 
     ```
     http://{{host}}:{{port}}/rest/signUp/nations
     ```
-    
+
 * 证书上的机构
- 
+
     ```
     # 根节点
     http://{{host}}:{{port}}/rest/signUp/orgtypes/{orgType}/orgs
-    
+
     # 子节点
     http://{{host}}:{{port}}/rest/signUp/{parentId}/orgs
     ```
-    
-    
-* 现任教学段 
+
+
+* 现任教学段
 
     ```
     http://{{host}}:{{port}}/rest/signUp/teaGrades
     ```
-    
+
 * 注册机构
 
     ```
     http://{{host}}:{{port}}/rest/signUp/cities/{cityId}/orgs?teachGrade=5&cityId=3055[&provinceCity=true]
     ```
-    
+
 * 现任教学科
 
    ```
    # 父节点
    http://{{host}}:{{port}}/rest/signUp/provinces/{provinceId}/subjectTypes/{subjectType}/subjects
-   
+
    # 子节点
    http://{{host}}:{{port}}/rest/signUp/provinces/{provinceId}/{parentId}/subjects/children
    ```
@@ -159,7 +158,7 @@ gradle -Denv=development clean appStartDebug
     ```
     http://{{host}}:{{port}}/rest/signUp/certTypes/{certTypeId}/eduLevels
     ```
-    
+
 * 最高学位
 
     ```

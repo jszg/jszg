@@ -5,14 +5,17 @@
  * 使用到的 URL 都定义到 Urls 里，方便统一管理
  */
 Urls = {
+    REST_DICTS: '/new-cert/rest/signUp/dicts',
     REST_CERT_TYPE: '/new-cert/rest/signUp/certTypes',
     REST_PROVINCES: '/new-cert/rest/signUp/provinces',
     REST_CITIES_BY_PROVINCE: '/new-cert/rest/signUp/provinces/{provinceId}/cities',
-    REST_SUBJECTS_ROOT: '/new-cert/rest/signUp/provinces/{provinceId}/certTypes/{certTypeId}/subjects/root',
     REST_ORGS_BY_CITY_AND_CERT_TYPE: '/new-cert/rest/signUp/cities/{cityId}/certTypes/{certTypeId}/orgs',
-    REST_SUBJECTS_CHILDREN: '/new-cert/rest/signUp/provinces/{provinceId}/{parentId}/subjects/children',
-    REST_DICTS: '/new-cert/rest/signUp/dicts',
     REST_COLLEGES_BY_PROVINCE: '/new-cert/rest/signUp/provinces/{provinceId}/colleges',
+    REST_SUBJECTS_ROOT: '/new-cert/rest/signUp/provinces/{provinceId}/certTypes/{certTypeId}/subjects/root',
+    REST_SUBJECTS_CHILDREN: '/new-cert/rest/signUp/provinces/{provinceId}/{parentId}/subjects/children',
+    REST_SUBJECTS_BY_CERT_TYPE: '/new-cert/rest/signUp/certTypes/{certTypeId}/subjects', // 注册的任教学科
+    REST_SUBJECTS_BY_PARENT: '/new-cert/rest/signUp/{parentId}/subjects', // 注册的任教学科
+
     URI_UPLOAD_PERSON_IMAGE: '/new-cert/upload-person-image',
     WEB_UPLOADER_SWF: 'https://cdn.staticfile.org/webuploader/0.1.5/Uploader.swf'
 };
@@ -51,6 +54,51 @@ UiUtils.setFormData = function(formDataName, id, text) {
     $dataSpan.attr('data-id', id);
     $dataSpan.attr('data-text', text);
     $dataSpan.text(text);
+};
+
+/**
+ * 删除 select 中的所有 options，只留下 '请选择' 一个 option
+ *
+ * @param  {string} selectId select 的 id
+ */
+UiUtils.onlyPleaseSelectOption = function(selectId) {
+    $('#'+selectId+' option').remove();
+    $('#'+selectId).append('<option selected="selected" value="-1">请选择</option>');
+};
+
+/**
+ * 使用 Ajax 加载数据，并显示到树中
+ *
+ * @param  {[type]} $tree       树
+ * @param  {function} urlMethod 确定加载数据 URL 的函数，其参数为 treeId, treeNode，返回值为 URL
+ */
+UiUtils.requestDataAndShowInTree = function($tree, urlMethod) {
+    var settings = {
+        async: {
+            enable: true,
+            url: urlMethod,
+            type: 'GET',
+            dataFilter: filter
+        },
+        view: {
+            showIcon: false
+        }
+    };
+
+    function filter(treeId, parentNode, result) {
+        if (!result) return null;
+
+        var childNodes = result.data;
+
+        for (var i = 0, l = childNodes.length; i < l; i++) {
+            childNodes[i].isParent = true;
+        }
+
+        return childNodes;
+    }
+
+    $.fn.zTree.destroy();
+    window.subjectsTree = $.fn.zTree.init($tree, settings);
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////

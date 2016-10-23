@@ -153,19 +153,11 @@ button {
 tr{border-bottom: 1px dashed #eee;}
 table{border-collapse:collapse;}
 
-#lean_overlay {
-    position: fixed;
-    z-index: 100;
-    top: 0px;
-    left: 0px;
-    height:100%;
-    width:100%;
-    background: #000;
-    /*opacity: 0.4;*/
-    display: none;
-}
-
-#subjects-dialog {
+/*******************************************************************************************/
+/*                                            弹出窗口                                      */
+/*******************************************************************************************/
+/*弹出窗口*/
+.pop-dialog {
     z-index:1000;
     display: none;
     background: white;
@@ -173,24 +165,71 @@ table{border-collapse:collapse;}
     border-radius: 6px;
     box-shadow: 0px 0px 8px #666;
     padding: 5px 10px;
-    width: 500px;
+    width: 550px;
     height: 550px;
-    /*overflow: scroll;*/
 }
 
-#subjects-dialog-ztree {
+/*主要内容部分*/
+.pop-dialog .content {
     overflow: scroll;
     overflow-y: scroll;
-    height: 500px;
+    height: 520px;
 }
 
-#subjects-dialog-buttons-holder {
-    height: 50px;
-    height: 50px;
+/*按钮部分*/
+.pop-dialog .buttons-holder {
+    height: 30px;
+    line-height: 30px;
     text-align: center;
-    line-height: 50px;
+    border-top: 1px solid #EEE;
 }
 
+.pop-dialog .buttons-holder .ok-button {
+    margin-left: 20px;
+}
+
+#lean_overlay {
+    position: fixed;
+    z-index: 100;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    background: #000;
+    /*opacity: 0.4;*/
+    display: none;
+}
+
+#graduation-colleges-dialog input,
+#graduation-colleges-dialog select {
+    width: 150px;
+}
+
+#graduation-colleges-dialog .content .toolbar {
+    border-bottom: 1px solid #EEE;
+}
+
+#graduation-colleges-dialog .content button {
+    width: 50px;
+}
+
+#graduation-colleges li {
+    border: 1px solid #FFFFFF;
+    padding-left: 10px;
+    border-bottom: 1px solid #FAFAFA;
+}
+
+#graduation-colleges li:hover {
+    background: #EEE;
+    cursor: default;
+}
+
+#graduation-colleges li.active {
+    border: 1px solid gray;
+    background: lightgray;
+}
+
+/*ztree 节点*/
 .ztree .node_name {
     font-size: 14px;
 }
@@ -203,6 +242,7 @@ table{border-collapse:collapse;}
     border: solid 1px #DDD;
 }
 
+/*Web uploader 上传按钮*/
 #filePicker {
     margin-top: 2px;
     width: 116px;

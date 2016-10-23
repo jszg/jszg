@@ -165,10 +165,13 @@
                 </tr>
                 <tr>
                     <td class="operation">认定机构</td>
-                    <td><button>选择...</button></td>
+                    <td><button id="register-org-button">选择...</button></td>
                     <td></td>
                     <td class="operation">任教学科</td>
-                    <td><button>选择...</button></td>
+                    <td>
+                        <button id="select-register-subject-button">选择...</button>
+                        <span class="form-data" name="registerSubject" data-id="" data-text=""><span>
+                    </td>
                 </tr>
 
                  <tr>
@@ -216,11 +219,11 @@
                 </tr>
                 <tr>
                     <td class="operation">注册机构</td>
-                    <td><button>请选择...</button></td>
+                    <td><button id="enroll-org-button">请选择...</button></td>
                 </tr>
                 <tr>
                     <td class="operation">现任教学科</td>
-                    <td><button>请选择...</button></td>
+                    <td><button id="teach-subject-button">请选择...</button></td>
                 </tr>
             </table>
         </div>
@@ -410,15 +413,15 @@
                 <table width="960" border="0" cellspacing="0" cellpadding="0">
                     <tr>
                         <td width="140" align="right" class="operation">最高学位</td>
-                        <td width="150"><select id="edu-levels"><option selected="selected" value="-1">请选择</option></select></td>
+                        <td width="150"><select id="degrees"><option selected="selected" value="-1">请选择</option></select></td>
                         <td width="190"></td>
                         <td width="140" class="operation">最高学历</td>
-                        <td width="150"><select id="degrees" name="1"><option value="-1">请选择</option></select></td>
+                        <td width="150"><select id="edu-levels" name="1"><option value="-1">请选择</option></select></td>
                         <td width="190"></td>
                     </tr>
                     <tr>
                         <td align="right" class="operation">最高学历毕业学校</td>
-                        <td><button>选择...</button></td>
+                        <td><button id="select-graduation-college-button">选择...</button></td>
                         <td></td>
                         <td class="operation">现任教学校性质</td>
                         <td><select id="school-quales"><option selected="selected" value="-1">请选择</option></select></td>
@@ -437,7 +440,7 @@
                         <td><select id="learn-types" name="1"><option value="-1">请选择</option></select></td>
                         <td></td>
                         <td class="operation">最高学历所学专业</td>
-                        <td><button>请选择...</button></td>
+                        <td><button id="select-major-button">请选择...</button></td>
                         <td></td>
                     </tr>
                     <tr>
@@ -527,20 +530,47 @@
 </div>
 </div>
 
-<!-- 任教学科对话框 -->
-<a id="subjects-dialog-trigger" href="#subjects-dialog" style="display: none">显示任教学科对话框</a>
-<div id="subjects-dialog">
-    <div id="subjects-dialog-ztree">
-        <ul id="subjects" class="ztree"></ul>
-    </div>
-
-    <div id="subjects-dialog-buttons-holder">
-        <button class="cancel" type="button">取消</button>
-        <button class="ok" type="button">确定</button>
-    </div>
-</div>
 <!-- LeanModal 对话框的 Mask -->
 <div id="lean_overlay"></div>
+
+<!-- 第四步的任教学科对话框 -->
+<a id="register-subjects-dialog-trigger" href="#register-subjects-dialog" style="display: none">显示任教学科对话框</a>
+<div id="register-subjects-dialog" class="pop-dialog">
+    <div class="content">
+        <ul class="ztree"></ul>
+    </div>
+
+    <div class="buttons-holder">
+        <button class="cancel-button">取消</button>
+        <button class="ok-button">确定</button>
+    </div>
+</div>
+
+<!-- 第七步的最高学历毕业院校 -->
+<a id="graduation-colleges-dialog-trigger" href="#graduation-colleges-dialog" style="display: none">显示任教学科对话框</a>
+<div id="graduation-colleges-dialog" class="pop-dialog">
+    <div class="content">
+        <div class="toolbar" style="height: 30px">
+            所在省: <select id="provinces-for-college"><option value="-1">请选择-省</option></select>
+            学校名称: <input class="search-input">
+            <button class="search-button">搜索</button>
+            <button class="add-button">添加</button>
+        </div>
+
+        <div id="graduation-colleges-holder" style="height: 490px; overflow: scroll;"></div>
+        <script id="graduationCollegesId" type="text/html">
+            <ul id="graduation-colleges">
+                {{each colleges as college}}
+                <li data-id="{{college.id}}" data-name="{{college.name}}">{{college.name}}</li>
+                {{/each}}
+            <ul>
+        </script>
+    </div>
+    <div class="buttons-holder">
+        <button class="cancel-button">取消</button>
+        <button class="ok-button">确定</button>
+    </div>
+</div>
 
 </body>
 

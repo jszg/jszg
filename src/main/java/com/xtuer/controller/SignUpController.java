@@ -273,41 +273,31 @@ public class SignUpController {
         return Result.ok(colleges);
     }
 
-    // 注册的根节点
-    @GetMapping(UriView.REST_ZHUCE_MAJOR_PARENT)
+    // 认定的根节点
+    @GetMapping(UriView.REST_RENDING_MAJOR_PARENT)
     @ResponseBody
-    public Result<List<Major>> getZhuceRootMajors() {
+    public Result<List<Major>> getRendingRootMajors() {
         String key = RedisKey.MAJORS_ZHUCE_ROOT;
         List<Major> majors = redisUtils.get(new TypeReference<List<Major>>(){}, key, () -> majorMapper.findRoot());
         return Result.ok(majors);
     }
 
-    // 注册的子节点
-    @GetMapping(UriView.REST_ZHUCE_MAJOR_CHILDREN)
+    // 注册的根节点
+    @GetMapping(UriView.REST_ZHUCE_MAJOR_PARENT)
+    @ResponseBody
+    public Result<List<Major>> getZhuceRootMajors(@PathVariable("certTypeId") int certTypeId, @PathVariable("eduLevelId") int eduLevelId) {
+        String key = String.format(RedisKey.MAJORS_RENDING_ROOT, certTypeId, eduLevelId);
+        List<Major> majors = redisUtils.get(new TypeReference<List<Major>>(){}, key, () -> majorMapper.findByCertTypeIdAndEduLevelId(certTypeId,
+                eduLevelId));
+        return Result.ok(majors);
+    }
+
+    // 注册或认定的子节点
+    @GetMapping(UriView.REST_MAJOR_CHILDREN)
     @ResponseBody
     public Result<List<Major>> getZhuceChildrenMajors(@PathVariable("parentId") int parentId) {
         String key = String.format(RedisKey.MAJORS_ZHUCE_CHILREN, parentId);
         List<Major> majors = redisUtils.get(new TypeReference<List<Major>>(){}, key, () -> majorMapper.findByParentId(parentId));
-        return Result.ok(majors);
-    }
-
-    // 认定的根节点
-    @GetMapping(UriView.REST_RENDING_MAJOR_PARENT)
-    @ResponseBody
-    public Result<List<Major>> getRendingRootMajors(@PathVariable("certTypeId") int certTypeId, @PathVariable("eduLevelId") int eduLevelId) {
-        String key = String.format(RedisKey.MAJORS_RENDING_ROOT, certTypeId, eduLevelId);
-        List<Major> majors = redisUtils.get(new TypeReference<List<Major>>(){}, key, () -> majorMapper.findByCertTypeIdAndEduLevelId(certTypeId,
-                                                eduLevelId));
-        return Result.ok(majors);
-    }
-
-    // 认定的子节点
-    @GetMapping(UriView.REST_RENDING_MAJOR_CHILDREN)
-    @ResponseBody
-    public Result<List<Major>> getRendingChildrenMajors(@PathVariable("provinceId") int provinceId, @PathVariable("parentId") int parentId) {
-        String key = String.format(RedisKey.MAJORS_RENDING_CHILDREN, provinceId, parentId);
-        List<Major> majors = redisUtils.get(new TypeReference<List<Major>>(){}, key, () -> majorMapper.findByParentIdAndProvince(parentId,
-                                                provinceId));
         return Result.ok(majors);
     }
 
