@@ -74,8 +74,8 @@ public class SignUpController {
                                                    @PathVariable("certTypeId") int certTypeId) {
         List<Organization> orgs = Collections.emptyList();
         String key = String.format(RedisKey.ORGS_RENDING, provinceId, cityId, certTypeId);
-        orgs = redisUtils.get(new TypeReference<List<Organization>>() {
-                    }, key, () -> organizationMapper.findByProvinceAndCityAndCertTypeId(provinceId, cityId, certTypeId));
+        orgs = redisUtils.get(new TypeReference<List<Organization>>() {}, key,
+                () -> organizationMapper.findByProvinceAndCityAndCertTypeId(provinceId, cityId, certTypeId));
         return Result.ok(orgs);
     }
 
@@ -87,9 +87,8 @@ public class SignUpController {
         String key = String.format(RedisKey.ORGS_BY_ORGTYPE, orgType);
 
         List<Organization> organizations = Collections.emptyList();
+        TypeReference<List<Organization>> typeReference = new TypeReference<List<Organization>>() {};
 
-        TypeReference<List<Organization>> typeReference = new TypeReference<List<Organization>>() {
-        };
         if (orgType == 4) {
             organizations = redisUtils.get(typeReference, key, () -> organizationMapper.findByOrgTypeEq4());
         } else {
@@ -117,13 +116,12 @@ public class SignUpController {
 
         // teachGrade查询code是否==7
         TypeReference<List<CertType>> certTypeReference = new TypeReference<List<CertType>>() {};
-        List<CertType> certTypes = redisUtils.get(certTypeReference, String.format(RedisKey.CERTTYPE_BY_TEACHGRADE, teachGrade), () -> certTypeMapper
-                .findByTeachGrade(teachGrade));
+        List<CertType> certTypes = redisUtils.get(certTypeReference, String.format(RedisKey.CERTTYPE_BY_TEACHGRADE, teachGrade),
+                () -> certTypeMapper.findByTeachGrade(teachGrade));
         if (certTypes.isEmpty()) return Result.error(organizations);
 
         String key = String.format(RedisKey.ORGS_ZHUCE, teachGrade, cityId);
-        TypeReference<List<Organization>> orgReference = new TypeReference<List<Organization>>() {
-        };
+        TypeReference<List<Organization>> orgReference = new TypeReference<List<Organization>>() {};
 
         if (has7(certTypes)) {
             organizations = redisUtils.get(orgReference, key, () -> organizationMapper.findByOrgId(cityId));
@@ -154,8 +152,8 @@ public class SignUpController {
     @ResponseBody
     public Result<List<Subject>> getChildrenSubjects(@PathVariable("provinceId") int provinceId, @PathVariable("parentId") int parentId) {
         String key = String.format(RedisKey.SUBJECTS_CHILDREN, provinceId, parentId);
-        List<Subject> subjects = redisUtils.get(new TypeReference<List<Subject>>(){}, key, () -> subjectMapper.findByParentAndProvince(parentId,
-                                                    provinceId));
+        List<Subject> subjects = redisUtils.get(new TypeReference<List<Subject>>(){}, key,
+                () -> subjectMapper.findByParentAndProvince(parentId, provinceId));
 
         return Result.ok(subjects);
     }
@@ -184,8 +182,8 @@ public class SignUpController {
     @ResponseBody
     public Result<List<Subject>> getTeaSubjects(@PathVariable("provinceId") int provinceId, @PathVariable("subjectType") int subjectType) {
         String key = String.format(RedisKey.SUBJECTS_TEASUBJECT, subjectType, provinceId);
-        List<Subject> list = redisUtils.get(new TypeReference<List<Subject>>(){}, key, () -> subjectMapper.findBySubjectTypeAndProvince(subjectType,
-                                                provinceId));
+        List<Subject> list = redisUtils.get(new TypeReference<List<Subject>>(){}, key,
+                () -> subjectMapper.findBySubjectTypeAndProvince(subjectType, provinceId));
         return Result.ok(list);
     }
 
@@ -287,8 +285,8 @@ public class SignUpController {
     @ResponseBody
     public Result<List<Major>> getZhuceRootMajors(@PathVariable("certTypeId") int certTypeId, @PathVariable("eduLevelId") int eduLevelId) {
         String key = String.format(RedisKey.MAJORS_RENDING_ROOT, certTypeId, eduLevelId);
-        List<Major> majors = redisUtils.get(new TypeReference<List<Major>>(){}, key, () -> majorMapper.findByCertTypeIdAndEduLevelId(certTypeId,
-                eduLevelId));
+        List<Major> majors = redisUtils.get(new TypeReference<List<Major>>(){}, key,
+                () -> majorMapper.findByCertTypeIdAndEduLevelId(certTypeId, eduLevelId));
         return Result.ok(majors);
     }
 
