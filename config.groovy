@@ -1,6 +1,6 @@
 environments {
     development { // 本地开发环境，使用 MySQL
-        staticBase = ''
+        staticBase = '/new-cert'
         uploadPersonImageDir = 'build'
         logDir = '/Users/Biao/Temp/logs'
 
@@ -37,7 +37,7 @@ environments {
     }
 
     wxl { // 文显龙的开发环境，使用 Oracle
-        staticBase = ''
+        staticBase = '/new-cert'
         uploadPersonImageDir = 'build'
         logDir = '/Users/Biao/Temp/logs'
 
@@ -56,7 +56,7 @@ environments {
     }
 
     jszgtest { // 北师大的测试环境，使用 Oracle
-        staticBase = ''
+        staticBase = '/new-cert'
         uploadPersonImageDir = '/var/www/new_cert/photo/photo_cert'
         logDir = '/usr/local/tomcat8.5.6/logs'
 

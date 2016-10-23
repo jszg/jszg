@@ -1,24 +1,11 @@
 $(document).ready(function() {
-    handleNextAndPreviousEvents(); // 处理下一步，上一步的动作
-    initWebUploader(); // 初始化上传照片控件
-    initializeDatePicker();
+    initWebUploader(); // 初始化照片上传控件
+    initializeDatePicker(); // 初始化时间选择器
+    handleNextAndPreviousEvents(); // 处理下一步，上一步的事件
+    handleChangeCitiesEvent(); // 处理省切换时切换城市的事件
     requestDicts();
-    StepUtils.toStep(7); // 到第 N 步，测试使用
 
-    // 省变化时加载相应的市
-    $('#provinces').change(function() {
-        var $province = $('#provinces option:selected');
-        var provinceId = parseInt($province.val());
-
-        if ('false' === $province.attr('data-province-city')) {
-            // 普通省则加载它的市
-            requestCities(provinceId);
-        } else {
-            // 直辖市则市为它自己
-            var cities = [{id: provinceId, name: $province.text()}];
-            DictUtils.insertOptions('cities', cities, {remainFirstOption: false});
-        }
-    });
+    StepUtils.toStep(4); // 到第 N 步，测试使用
 
     $('tr:last', $('table')).css('border-bottom', 'none'); // 删除最后一行的 border-bottom
 });
@@ -26,7 +13,7 @@ $(document).ready(function() {
 function initWebUploader() {
     var uploader = WebUploader.create({
         auto: true,               // 自动上传
-        swf: 'http://cdn.staticfile.org/webuploader/0.1.5/Uploader.swf', // swf 文件路径
+        swf: Urls.WEB_UPLOADER_SWF, // swf 文件路径
         server: Urls.URI_UPLOAD_PERSON_IMAGE, // 文件接收服务端
         pick: '#filePicker',      // 选择文件的按钮，内部根据当前运行时创建，可能是 input 元素，也可能是 flash.
         resize: false,            // 不压缩 image, 默认如果是 jpeg，文件上传前会压缩一把再上传！
@@ -177,7 +164,8 @@ function requestDicts() {
  * @param  {int} provinceId 省的 id
  */
 function requestCities(provinceId) {
-    $('#cities option:gt(0)').remove();
+    $('#cities option').remove();
+    $('#cities').append('<option selected="selected" value="-1">请选择</option>');
 
     // provinceId 为 -1 表示选择了 "请选择"，则不请求新的市数据
     if (-1 != provinceId) {
@@ -185,6 +173,27 @@ function requestCities(provinceId) {
             DictUtils.insertOptions('cities', result.data);
         }});
     }
+}
+
+/**
+ * 处理省切换时切换城市的事件
+ * 1. 如果是直辖市，则它的城市为自己且没有 '请选择' 选项
+ * 2. 如果不是直辖市，则加载省下的城市，且有 '请选择' 选项
+ */
+function handleChangeCitiesEvent() {
+    $('#provinces').change(function() {
+        var $province = $('#provinces option:selected');
+        var provinceId = parseInt($province.val());
+        var isProvinceCity = ('true' === $province.attr('data-province-city')); // 是否直辖市
+
+        if (isProvinceCity) {
+            // 直辖市则市为它自己
+            var cities = [{id: provinceId, name: $province.text()}];
+            DictUtils.insertOptions('cities', cities, {remainFirstOption: false});
+        } else {
+            requestCities(provinceId); // 普通省则加载它的市
+        }
+    });
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////

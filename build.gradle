@@ -20,7 +20,7 @@ buildscript {
 
 gretty {
     httpPort    = 8080
-    contextPath = ''
+    contextPath = 'new-cert'
     servletContainer = 'tomcat7'
 
     inplaceMode  = 'hard'

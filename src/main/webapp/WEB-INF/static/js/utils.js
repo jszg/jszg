@@ -5,16 +5,16 @@
  * 使用到的 URL 都定义到 Urls 里，方便统一管理
  */
 Urls = {
-    REST_CERT_TYPE: '/rest/signUp/certTypes',
-    REST_PROVINCES: '/rest/signUp/provinces',
-    REST_CITIES_BY_PROVINCE: '/rest/signUp/provinces/{provinceId}/cities',
-    REST_SUBJECTS_ROOT: '/rest/signUp/provinces/{provinceId}/certTypes/{certTypeId}/subjects/root',
-    REST_ORGS_BY_CITY_AND_CERT_TYPE: '/rest/signUp/cities/{cityId}/certTypes/{certTypeId}/orgs',
-    REST_SUBJECTS_CHILDREN: '/rest/signUp/provinces/{provinceId}/{parentId}/subjects/children',
-    WEB_UPLOADER_SWF: 'https://cdn.staticfile.org/webuploader/0.1.5/Uploader.swf',
-    REST_DICTS: '/rest/signUp/dicts',
-    URI_UPLOAD_PERSON_IMAGE: '/upload-person-image',
-    REST_COLLEGES_BY_PROVINCE: '/rest/signUp/provinces/{provinceId}/colleges'
+    REST_CERT_TYPE: '/new-cert/rest/signUp/certTypes',
+    REST_PROVINCES: '/new-cert/rest/signUp/provinces',
+    REST_CITIES_BY_PROVINCE: '/new-cert/rest/signUp/provinces/{provinceId}/cities',
+    REST_SUBJECTS_ROOT: '/new-cert/rest/signUp/provinces/{provinceId}/certTypes/{certTypeId}/subjects/root',
+    REST_ORGS_BY_CITY_AND_CERT_TYPE: '/new-cert/rest/signUp/cities/{cityId}/certTypes/{certTypeId}/orgs',
+    REST_SUBJECTS_CHILDREN: '/new-cert/rest/signUp/provinces/{provinceId}/{parentId}/subjects/children',
+    REST_DICTS: '/new-cert/rest/signUp/dicts',
+    REST_COLLEGES_BY_PROVINCE: '/new-cert/rest/signUp/provinces/{provinceId}/colleges',
+    URI_UPLOAD_PERSON_IMAGE: '/new-cert/upload-person-image',
+    WEB_UPLOADER_SWF: 'https://cdn.staticfile.org/webuploader/0.1.5/Uploader.swf'
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
