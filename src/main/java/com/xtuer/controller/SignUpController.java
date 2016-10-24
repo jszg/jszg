@@ -67,16 +67,14 @@ public class SignUpController {
     // 父机构
     @GetMapping(UriView.REST_ORGS_BY_ORGTYPE)
     @ResponseBody
-    public Result<List<Organization>> getOrgByOrgType(@PathVariable("orgType") int orgType) {
+    public Result<List<?>> getOrgByOrgType(@PathVariable("orgType") int orgType) {
         String key = String.format(RedisKey.ORGS_BY_ORGTYPE, orgType);
 
-        List<Organization> organizations = Collections.emptyList();
-        TypeReference<List<Organization>> typeReference = new TypeReference<List<Organization>>() {};
-
+        List<?> organizations = null;
         if (orgType == 4) {
-            organizations = redisUtils.get(typeReference, key, () -> organizationMapper.findByOrgTypeEq4());
+            organizations = redisUtils.get(new TypeReference<List<Province>>(){}, key, () -> organizationMapper.findByOrgTypeEq4());
         } else {
-            organizations = redisUtils.get(typeReference, key, () -> organizationMapper.findByOrgType(orgType));
+            organizations = redisUtils.get(new TypeReference<List<Organization>>() {}, key, () -> organizationMapper.findByOrgType(orgType));
         }
         return Result.ok(organizations);
     }

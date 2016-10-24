@@ -1,6 +1,7 @@
 package com.xtuer.mapper;
 
 import com.xtuer.dto.Organization;
+import com.xtuer.dto.Province;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public interface OrganizationMapper {
     List<Organization> findByOrgType(@Param("orgType") int orgType);
 
     // 查询OrgType==4的Organization
-    List<Organization> findByOrgTypeEq4();
+    List<Province> findByOrgTypeEq4();
 
     List<Organization> findByParentId(@Param("parentId") int parentId);
 
