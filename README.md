@@ -43,7 +43,7 @@ gradle -Denv=development clean appStartDebug
     http://{{host}}:{{port}}/rest/signUp/provinces/{provinceid}/cities
     ```
 
-* 认定机构
+* 认定的认定机构
 
     ```
     http://{{host}}:{{port}}/rest/signUp/provinces/{provinceid}/cities/{cityId}/certTypes/{certTypeId}/orgs
