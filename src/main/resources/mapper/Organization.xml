@@ -43,7 +43,9 @@
     </select>
 
     <select id="findByParentId" resultType="Organization">
-        select ORG_ID as id, ORG_NAME as name from T_ORG where PARENT_ID = #{parentId}
+        select ORG_ID as id, ORG_NAME as name
+        from t_org o
+        where o.parent_id = #{parentId} and o.org_type != 1 and o.status = 1 order by o.area_code desc
     </select>
 
     <select id="findByOrgId" resultType="Organization">
