@@ -43,7 +43,7 @@
   <select id="findBySubjectTypeAndProvince" resultType="Subject">
     select s.SUBJECT_ID as id, s.NAME as name
     from t_subject s
-    where s.subject_type=#{subjectType}
+    where s.subject_type=#{teachGrade}
       and (s.exam_type=2 or s.exam_type=0)
       and (s.limit_type=0 or s.limit_type=3)
       and (s.province=#{province} or s.province is null)

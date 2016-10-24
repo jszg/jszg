@@ -180,10 +180,10 @@ public class SignUpController {
     // 现任教学科 父节点, 子节点@see getChildrenSubjects
     @GetMapping(UriView.REST_SUBJECTS_TEASUBJECT)
     @ResponseBody
-    public Result<List<Subject>> getTeaSubjects(@PathVariable("provinceId") int provinceId, @PathVariable("subjectType") int subjectType) {
-        String key = String.format(RedisKey.SUBJECTS_TEASUBJECT, subjectType, provinceId);
+    public Result<List<Subject>> getTeaSubjects(@PathVariable("provinceId") int provinceId, @PathVariable("teachGrade") int teachGrade) {
+        String key = String.format(RedisKey.SUBJECTS_TEASUBJECT, teachGrade, provinceId);
         List<Subject> list = redisUtils.get(new TypeReference<List<Subject>>(){}, key,
-                () -> subjectMapper.findBySubjectTypeAndProvince(subjectType, provinceId));
+                () -> subjectMapper.findBySubjectTypeAndProvince(teachGrade, provinceId));
         return Result.ok(list);
     }
 

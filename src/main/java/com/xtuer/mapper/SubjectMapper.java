@@ -17,6 +17,6 @@ public interface SubjectMapper {
     List<Subject> findByParent(@Param("parent")int parent);
 
     // 现任教学科父节点
-    List<Subject> findBySubjectTypeAndProvince(@Param("subjectType") int subjectType, @Param("province") int province);
+    List<Subject> findBySubjectTypeAndProvince(@Param("teachGrade") int teachGrade, @Param("province") int province);
     // 现任教学科子节点 @see findByParentAndProvince
 }
