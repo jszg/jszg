@@ -8,12 +8,12 @@ package com.xtuer.dto;
 public class Enrollment {
     private String certNo; //证书号码
     private String idNo; //证件号码
-    private long idType; //证件类型
-    private int inHistory;//是否在历史库中
-    private long enrollNum; //注册类型
-    private long province;// 省
-    private long city; //市
-    private long org; //机构
+    private int idType; //证件类型
+    private boolean inHistory;//是否在历史库中
+    private int enrollNum; //注册类型
+    private int province;// 省
+    private int city; //市
+    private int org; //机构
 
     public String getCertNo() {
         return certNo;
@@ -31,51 +31,51 @@ public class Enrollment {
         this.idNo = idNo;
     }
 
-    public long getIdType() {
+    public int getIdType() {
         return idType;
     }
 
-    public void setIdType(long idType) {
+    public void setIdType(int idType) {
         this.idType = idType;
     }
 
-    public int getInHistory() {
+    public boolean isInHistory() {
         return inHistory;
     }
 
-    public void setInHistory(int inHistory) {
+    public void setInHistory(boolean inHistory) {
         this.inHistory = inHistory;
     }
 
-    public long getEnrollNum() {
+    public int getEnrollNum() {
         return enrollNum;
     }
 
-    public void setEnrollNum(long enrollNum) {
+    public void setEnrollNum(int enrollNum) {
         this.enrollNum = enrollNum;
     }
 
-    public long getProvince() {
+    public int getProvince() {
         return province;
     }
 
-    public void setProvince(long province) {
+    public void setProvince(int province) {
         this.province = province;
     }
 
-    public long getCity() {
+    public int getCity() {
         return city;
     }
 
-    public void setCity(long city) {
+    public void setCity(int city) {
         this.city = city;
     }
 
-    public long getOrg() {
+    public int getOrg() {
         return org;
     }
 
-    public void setOrg(long org) {
+    public void setOrg(int org) {
         this.org = org;
     }
 }

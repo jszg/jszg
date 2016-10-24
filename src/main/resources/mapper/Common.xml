@@ -22,7 +22,7 @@
     select  ID_NO as idNo, ID_TYPE as idType, CERT_NO as certNo, IN_HISTORY as inHistory, ENROLL_NUM as enrollNum,
     PROVINCE as province, CITY_ID as city, ORG_ID as org
     from t_enrollment
-    where cert_no = #{idno} and id_no = #{certno}
+    where ID_NO = #{idno} and CERT_NO = #{certno}
   </select>
 
   <select id="findHistoryValid" resultType="HistoryValid">
@@ -30,7 +30,7 @@
     SEX as sexName, BIRTHDAY as birthday, NATION as nationName, CT_ID as certTypeName, SUBJECT as subject,
     ORG_NAME as orgName, DELETE_STATUS as  deleteStatus
     from t_history_valid
-    where cert_no = #{idno} and id_no = #{certno}
+    where id_no = #{idno} and CERT_NO = #{certno}
   </select>
 
   <select id="findRegistration" resultType="Registration">
@@ -38,7 +38,7 @@
     SEX as sexName, BIRTHDAY as birthday, NATION as nationName, CT_ID as certTypeName, SUBJECT as subjectName,
     ORG_NAME as orgName
     from t_registration
-    where cert_no = #{idno} and id_no = #{certno}
+    where id_no = #{idno} and CERT_NO = #{certno}
   </select>
 
 </mapper>
