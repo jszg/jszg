@@ -164,3 +164,9 @@ gradle -Denv=development clean appStartDebug
     ```
     http://{{host}}:{{port}}/rest/signUp/certTypes/{certTypeId}/eduLevels/{eduLevel}/degrees
     ```
+
+* 确认点
+
+    ```
+    http://{{host}}:{{port}}/rest/signUp/localsets?orgId={orgId}
+    ```

@@ -4,24 +4,8 @@ import com.alibaba.fastjson.TypeReference;
 import com.xtuer.bean.Result;
 import com.xtuer.constant.RedisKey;
 import com.xtuer.constant.UriView;
-import com.xtuer.dto.CertType;
-import com.xtuer.dto.City;
-import com.xtuer.dto.College;
-import com.xtuer.dto.Dict;
-import com.xtuer.dto.Major;
-import com.xtuer.dto.Organization;
-import com.xtuer.dto.Province;
-import com.xtuer.dto.Subject;
-import com.xtuer.dto.TechnicalJob;
-import com.xtuer.mapper.CertTypeMapper;
-import com.xtuer.mapper.CityMapper;
-import com.xtuer.mapper.CollegeMapper;
-import com.xtuer.mapper.DictMapper;
-import com.xtuer.mapper.MajorMapper;
-import com.xtuer.mapper.OrganizationMapper;
-import com.xtuer.mapper.ProvinceMapper;
-import com.xtuer.mapper.SubjectMapper;
-import com.xtuer.mapper.TechnicalJobMapper;
+import com.xtuer.dto.*;
+import com.xtuer.mapper.*;
 import com.xtuer.util.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -218,6 +202,16 @@ public class SignUpController {
         return Result.ok(dicts);
     }
 
+    // 确认点
+    @GetMapping(UriView.REST_LOCALSETS)
+    @ResponseBody
+    public Result<List<LocalSet>> getLocalsets(@RequestParam("orgId") int orgId) {
+        String key = String.format(RedisKey.LOCALSETS, orgId);
+        List<LocalSet> list = redisUtils.get(new TypeReference<List<LocalSet>>() {}, key,
+                () -> localSetMapper.findByOrgId(orgId));
+        return Result.ok(list);
+    }
+
     // 民族
     @GetMapping(UriView.REST_NATIONS)
     @ResponseBody
@@ -359,4 +353,7 @@ public class SignUpController {
 
     @Autowired
     private TechnicalJobMapper technicalJobMapper;
+
+    @Autowired
+    private LocalSetMapper localSetMapper;
 }

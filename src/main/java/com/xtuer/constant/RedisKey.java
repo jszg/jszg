@@ -23,13 +23,15 @@ public interface RedisKey {
     String SUBJECTS_CHILDREN = "subjects_children_%d_%d"; // subjects_children_{provinceId}_{parentId}
     String SUBJECTS_BY_CERTTYPE = "subjects_ct_%d"; // subjects_ct_{certTypeId}
     String SUBJECTS_BY_PARENT = "subjects_p_%d"; // subjects_p_{parentId}
-    String SUBJECTS_TEASUBJECT = "subjects_t_%d_%d"; // subjects_t_{subjectType}_{provinceId}
+    String SUBJECTS_TEASUBJECT = "subjects_t_%d_%d"; // subjects_t_{teachGrade}_{provinceId}
 
     String DICTS = "dicts"; // dicts
     String DICTS_BY_TYPE = "dicts_%d"; // dicts_{dictTypeId}
     String TEAGRADES = "teaGrades"; // teaGrades
     String EDULEVELS = "eduLevels_%d"; // eduLevels_{certTypeId}
     String ACADEMICDEGREE = "academic_degree_%d_%d"; // academic_degree_{certTypeId}_{eduLevel}
+
+    String LOCALSETS = "localsets_%d"; // localsets_{orgId}
 
     String COLLEGES = "colleges"; // colleges
     String COLLEGES_BY_PROVINCE = "colleges_p_%d"; // colleges_p_{provinceId}

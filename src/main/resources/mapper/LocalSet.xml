@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace 非常重要：必须是 Mapper 类的全路径-->
+<mapper namespace="com.xtuer.mapper.LocalSetMapper">
+  <select id="findByOrgId" resultType="LocalSet">
+    select o.ORG_ID as id, o.area_name as name,ls.begin_date as beginDate,ls.end_date as endDate,o.confirm_range as confirmRange
+    ,obt.valid_begin_date as validBeginDate,obt.valid_end_date as validEndDate
+    from t_locale_set ls
+    left join t_org o on o.org_id = ls.org_id
+    left join t_org_batch_time obt on obt.obt_id = ls.obt_id
+    where ls.obt_id = (select obt.obt_id from t_org_batch_time obt where obt.ob_id = (select max(t.ob_id) from t_org_batch t where t.org_id=#{orgId}))
+    and ls.assigned = 1 and o.status = 1
+  </select>
+</mapper>
