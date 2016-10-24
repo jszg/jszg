@@ -150,7 +150,7 @@ gradle -Denv=development clean appStartDebug
 * 注册机构
 
     ```
-    http://{{host}}:{{port}}/rest/signUp/cities/{cityId}/orgs?teachGrade={teachGrade}&cityId={cityId}[&provinceCity=true]
+    http://{{host}}:{{port}}/rest/signUp/reg/orgs?teachGrade={teachGrade}&cityId={cityId}[&provinceCity=true]
     ```
 
 * 最高学历(认定)
