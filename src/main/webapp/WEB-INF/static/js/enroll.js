@@ -226,6 +226,7 @@ function handleChangeProvincesForCollegeEvent() {
     });
 
     function searchCollege() {
+        $('#graduation-colleges li').removeClass('active'); // 删除被选中状态
         var provinceId = UiUtils.getSelectedOption('provinces-for-college').id;
 
         if (-1 == provinceId) {

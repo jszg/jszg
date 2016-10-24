@@ -59,6 +59,26 @@ gradle -Denv=development clean appStartDebug
     http://{{host}}:{{port}}/rest/signUp/provinces/{provinceId}/{parentId}/subjects/children
     ```
 
+* 证书上的任教学科
+
+    ```
+    # 根节点
+    http://{{host}}:{{port}}/rest/signUp/certTypes/{certTypeId}/subjects
+
+    # 子节点
+    http://{{host}}:{{port}}/rest/signUp/{parentId}/subjects
+    ```
+
+* 现任教学科
+
+   ```
+   # 父节点
+   http://{{host}}:{{port}}/rest/signUp/provinces/{provinceId}/subjectTypes/{subjectType}/subjects
+
+   # 子节点
+   http://{{host}}:{{port}}/rest/signUp/provinces/{provinceId}/{parentId}/subjects/children
+   ```
+
 * 字典
 
     ```
@@ -104,16 +124,6 @@ gradle -Denv=development clean appStartDebug
     http://{{host}}:{{port}}/rest/signUp/{parentId}/technicaljobs/children
     ```
 
-* 证书上的任教学科
-
-    ```
-    # 根节点
-    http://{{host}}:{{port}}/rest/signUp/certTypes/{certTypeId}/subjects
-
-    # 子节点
-    http://{{host}}:{{port}}/rest/signUp/{parentId}/subjects
-    ```
-
 * 民族
 
     ```
@@ -142,16 +152,6 @@ gradle -Denv=development clean appStartDebug
     ```
     http://{{host}}:{{port}}/rest/signUp/cities/{cityId}/orgs?teachGrade=5&cityId=3055[&provinceCity=true]
     ```
-
-* 现任教学科
-
-   ```
-   # 父节点
-   http://{{host}}:{{port}}/rest/signUp/provinces/{provinceId}/subjectTypes/{subjectType}/subjects
-
-   # 子节点
-   http://{{host}}:{{port}}/rest/signUp/provinces/{provinceId}/{parentId}/subjects/children
-   ```
 
 * 最高学历(认定)
 
