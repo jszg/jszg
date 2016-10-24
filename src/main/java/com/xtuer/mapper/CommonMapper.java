@@ -1,0 +1,23 @@
+package com.xtuer.mapper;
+
+import com.xtuer.dto.Enrollhistory;
+import com.xtuer.dto.Enrollment;
+import com.xtuer.dto.HistoryValid;
+import com.xtuer.dto.Limitation;
+import com.xtuer.dto.Registration;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+/**
+ * 共用Mappper
+ *
+ * Created by microacup on 2016/10/24.
+ */
+public interface CommonMapper {
+    List<Limitation> findLimitation(@Param("idno") String idno, @Param("certno") String certno);
+    List<Enrollhistory> findEnrollhistory(@Param("idno") String idno, @Param("certno") String certno);
+    List<HistoryValid> findHistoryValid(@Param("idno") String idno, @Param("certno") String certno);
+    List<Registration> findRegistration(@Param("idno") String idno, @Param("certno") String certno);
+    List<Enrollment> findEnrollment(@Param("idno") String idno, @Param("certno") String certno);
+}

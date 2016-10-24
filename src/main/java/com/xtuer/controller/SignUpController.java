@@ -14,10 +14,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 public class SignUpController {
@@ -207,7 +210,15 @@ public class SignUpController {
         String key = String.format(RedisKey.LOCALSETS, orgId);
         List<LocalSet> list = redisUtils.get(new TypeReference<List<LocalSet>>() {}, key,
                 () -> localSetMapper.findByOrgId(orgId));
-        return Result.ok(list);
+
+        // 过滤时间
+        Date now = new Date();
+        List<LocalSet> localsets = new ArrayList<>(list.size());
+        localsets.addAll(list.stream()
+                .filter(l -> now.before(l.getEndDate()) && now.after(l.getValidBeginDate()) && now.before(l.getValidEndDate()))
+                .collect(Collectors.toList()));
+
+        return Result.ok(localsets);
     }
 
     // 民族
@@ -220,9 +231,9 @@ public class SignUpController {
     // 现任教学段
     @GetMapping(UriView.REST_TEAGRADES)
     @ResponseBody
-    public Result<List<Dict>> getTeaGrades() {
+    public Result<List<TeachGrade>> getTeaGrades() {
         String key = RedisKey.TEAGRADES;
-        List<Dict> list = redisUtils.get(new TypeReference<List<Dict>>(){}, key, () -> dictMapper.findTeaGrades());
+        List<TeachGrade> list = redisUtils.get(new TypeReference<List<TeachGrade>>(){}, key, () -> dictMapper.findTeaGrades());
         return Result.ok(list);
     }
 
@@ -322,13 +333,66 @@ public class SignUpController {
     }
 
     // 限制库。不缓存，直接查DB
-    @GetMapping(UriView.REST_LIMITATIONS)
+    @GetMapping(UriView.REST_LIMITATION)
     @ResponseBody
-    public Result<List<Limitation>> findLimitations(@RequestParam(value = "idno", defaultValue = "", required = false) String idno,
-                                                    @RequestParam(value = "certno", defaultValue = "", required = false) String certno) {
-        List<Limitation> limitations = limitationMapper.findByIdnoAndCertno(idno, certno);
-        return Result.ok(limitations);
+    public Result<Limitation> findLimitations(@RequestParam(value = "idno", defaultValue = "", required = false) String idno,
+                                              @RequestParam(value = "certno", defaultValue = "", required = false) String certno) {
+        List<Limitation> limitations = commonMapper.findLimitation(idno, certno);
+        if (limitations.isEmpty()) {
+            return Result.ok(null);
+        }
+
+        return Result.ok(limitations.get(0));
     }
+
+    // 注册历史表。不缓存，直接查DB
+    @GetMapping(UriView.REST_ENROLLHISTORY)
+    @ResponseBody
+    public Result<Enrollhistory> findEnrollhistory(@RequestParam(value = "idno", defaultValue = "", required = false) String idno,
+                                                   @RequestParam(value = "certno", defaultValue = "", required = false) String certno) {
+        List<Enrollhistory> list = commonMapper.findEnrollhistory(idno, certno);
+        if (list.isEmpty()) {
+            return Result.ok(null);
+        }
+        return Result.ok(list.get(0));
+    }
+
+    // 认定历史库。不缓存，直接查DB
+    @GetMapping(UriView.REST_HISTORYVALID)
+    @ResponseBody
+    public Result<HistoryValid> findHistoryValid(@RequestParam(value = "idno", defaultValue = "", required = false) String idno,
+                                                 @RequestParam(value = "certno", defaultValue = "", required = false) String certno) {
+        List<HistoryValid> list = commonMapper.findHistoryValid(idno, certno);
+        if (list.isEmpty()) {
+            return Result.ok(null);
+        }
+        return Result.ok(list.get(0));
+    }
+
+    // 认定正式表。不缓存，直接查DB
+    @GetMapping(UriView.REST_REGISTRATION)
+    @ResponseBody
+    public Result<Registration> findRegistration(@RequestParam(value = "idno", defaultValue = "", required = false) String idno,
+                                                 @RequestParam(value = "certno", defaultValue = "", required = false) String certno) {
+        List<Registration> list = commonMapper.findRegistration(idno, certno);
+        if (list.isEmpty()) {
+            return Result.ok(null);
+        }
+        return Result.ok(list.get(0));
+    }
+
+    // 注册正式表。不缓存，直接查DB
+    @GetMapping(UriView.REST_ENROLLMENT)
+    @ResponseBody
+    public Result<Enrollment> findEnrollment(@RequestParam(value = "idno", defaultValue = "", required = false) String idno,
+                                                 @RequestParam(value = "certno", defaultValue = "", required = false) String certno) {
+        List<Enrollment> list = commonMapper.findEnrollment(idno, certno);
+        if (list.isEmpty()) {
+            return Result.ok(null);
+        }
+        return Result.ok(list.get(0));
+    }
+
 
     @Autowired
     private RedisUtils redisUtils;
@@ -364,5 +428,5 @@ public class SignUpController {
     private LocalSetMapper localSetMapper;
 
     @Autowired
-    private LimitationMapper limitationMapper;
+    private CommonMapper commonMapper;
 }

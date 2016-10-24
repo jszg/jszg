@@ -10,12 +10,10 @@
         SELECT DIC_ID as id, NAME as name, STATUS as status FROM T_DICT WHERE DT_ID = #{dt_id}
     </select>
 
-    <select id="findTeaGrades" resultType="Dict">
-        select d.DIC_ID as id, d.NAME as name, d.STATUS as status
-        from t_dict d
-        where d.dt_id = 23 and
-          <![CDATA[rownum <= 5]]>
-        order by d.code
+    <select id="findTeaGrades" resultType="TeachGrade">
+      select distinct dict.dic_id as id,dict.name as name,ct.admin_level as adminLevel from t_dict dict
+      inner join t_cert_type ct on ct.teach_grade = dict.dic_id
+      where dict.dt_id = 23 and <![CDATA[rownum <= 5]]>  order by dict.code
     </select>
 
     <select id="findEduLevels" resultType="Dict">

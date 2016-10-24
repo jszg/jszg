@@ -1,6 +1,7 @@
 package com.xtuer.mapper;
 
 import com.xtuer.dto.Dict;
+import com.xtuer.dto.TeachGrade;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -15,7 +16,7 @@ public interface DictMapper {
 
     List<Dict> findByDictType(@Param("dt_id") int dictTypeId);
 
-    List<Dict> findTeaGrades();
+    List<TeachGrade> findTeaGrades();
 
     List<Dict> findEduLevels(@Param("ct_id") int certTypeId);
 

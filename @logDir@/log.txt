@@ -1,0 +1,3 @@
+[2016-10-24 16:47:34] [DEBUG] [BaseJdbcLogger.java-debug:132] - ooo Using Connection [625643197, URL=jdbc:oracle:thin:@192.168.10.25:1521:CERT, UserName=CERTIFICATION, Oracle JDBC driver]
+[2016-10-24 16:47:34] [DEBUG] [BaseJdbcLogger.java-debug:132] - ==>  Preparing: select eh.ENR_HIS_ID as id, eh.CERT_NO as certNo, eh.ID_NO as idNo,eh.JUDGMINT_STATUS as judgmentStatus, eh.ENROLL_TIME as enrollTime from t_enroll_history eh where eh.id_no = ? and eh.cert_no=? ordre eh.enr_his_id desc; 
+[2016-10-24 16:47:34] [DEBUG] [BaseJdbcLogger.java-debug:132] - ==> Parameters: 111111111111117(String), 20103403141000008(String)

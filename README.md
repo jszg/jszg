@@ -174,5 +174,30 @@ gradle -Denv=development clean appStartDebug
 * 限制库
 
     ```
-    http://{{host}}:{{port}}/new-cert/rest/signUp/limitations?idno={idno}&certno={certno}
+    http://{{host}}:{{port}}/new-cert/rest/signUp/limitation?idno={idno}&certno={certno}
     ```
+    
+* 注册历史表
+
+    ```
+    http://{{host}}:{{port}}/new-cert/rest/signUp/enrollhistory?idno={idno}&certno={certno}
+    ```
+     
+* 注册正式表
+
+    ```
+    http://{{host}}:{{port}}/new-cert/rest/signUp/enrollment?idno={idno}&certno={certno}
+    ```
+    
+* 认定历史库
+
+    ```
+    http://{{host}}:{{port}}/new-cert/rest/signUp/historyvalid?idno={idno}&certno={certno}
+    ```
+    
+* 认定正式表
+
+    ```
+    http://{{host}}:{{port}}/new-cert/rest/signUp/registration?idno={idno}&certno={certno}
+    ```
+
