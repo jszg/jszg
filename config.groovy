@@ -55,6 +55,25 @@ environments {
         }
     }
 
+    wxl2 { // 文显龙的开发环境，使用 Oracle
+        staticBase = '/new-cert'
+        uploadPersonImageDir = 'build'
+        logDir = '/Users/Biao/Temp/logs'
+
+        jdbc {
+            driverClassName = 'oracle.jdbc.driver.OracleDriver'
+            url = 'jdbc:oracle:thin:@192.168.10.25:1521:ORCL'
+            username = 'wenxl'
+            password = '123456'
+            validationQuery = 'SELECT 1 FROM dual'
+        }
+
+        redis {
+            host = '127.0.0.1'
+            port = 6379
+        }
+    }
+
     jszgtest { // 北师大的测试环境，使用 Oracle
         staticBase = '/new-cert'
         uploadPersonImageDir = '/var/www/new_cert/photo/photo_cert'

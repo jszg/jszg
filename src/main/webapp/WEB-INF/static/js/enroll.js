@@ -5,10 +5,16 @@ $(document).ready(function() {
     handleChangeProvincesEvent(); // 处理切换省时加载城市的事件
     handleChangeProvincesForCollegeEvent(); // 处理切换省时加载最高学历毕业学校的事件
 
-    handleRegisterSubjectsDialog(); // 第四步的任教学科对话框
+    handleRegisterSubjectsDialog(); // 第四步的任教学科
+    handleTeachSubjectsDialog(); // 第四步的现任教学科
+    handleRequestRegisterOrgs(); // 第四步的注册机构
+    handleSearchLocalSets(); // 第五步的搜索确认点
     handleGraduationCollegesDialog(); // 第七步的最高学历毕业学校
     handleMajorsDialog(); // 第七步的最高学历所学专业
     handleTechnicalJobsDialog(); // 第七步的教师职务（职称）
+
+    requestLocalSets(); // TODO: 删除
+
 
     requestDicts();
 
@@ -114,6 +120,8 @@ function handleNextAndPreviousEvents() {
             $('#box-4').hide();
             $('#box-5').show();
             $('.bz5').addClass('active');
+
+            requestLocalSets(); // 请求确认点
         }
     });
 
@@ -122,6 +130,17 @@ function handleNextAndPreviousEvents() {
         $('#box-5').hide();
         $('#box-6').show();
         $('.bz6').addClass('active');
+
+        var name = $.trim($('#name').val());
+        UiUtils.setFormData('name', -1, name);
+
+        // 查找确认点的信息，显示在第六步的注意事项下
+        var localSetId = parseInt($('#local-sets-table input:radio:checked').val());
+        $.rest.get({url: Urls.REST_LOCALSET_INFO, urlParams: {localSetId: localSetId}, success: function(result) {
+            if (result.data.info) {
+                $('#local-set-info').html(result.data.info);
+            }
+        }});
     });
 
     // 第六步的下一步
@@ -145,6 +164,52 @@ function handleNextAndPreviousEvents() {
         var step = parseInt($(this).attr('data-step'));
         StepUtils.toPreviousStep(step);
     });
+}
+
+/**
+ * 请求确认点
+ */
+function requestLocalSets() {
+    $('#local-sets-table tr:gt(0)').remove(); // 先删除所有的确认点
+    var orgId = UiUtils.getSelectedOption('register-orgs').id; // orgId 为注册机构的 id
+    orgId = 21;
+
+    if (-1 == orgId) {
+        return;
+    }
+
+    $.rest.get({url: Urls.REST_LOCALSETS, urlParams: {orgId: orgId}, success: function(result) {
+        $('#local-sets-table').append(template('localSetsTemplate', {localSets: result.data}));
+    }});
+}
+
+/**
+ * 第五步的搜索
+ */
+function handleSearchLocalSets() {
+    $('#local-sets-div .search-button').click(searchLocalSets);
+    $('#local-sets-div .search-input').keyup(function(event) {
+        if (event.keyCode==13) {
+            searchLocalSets();
+        }
+    });
+
+    function searchLocalSets() {
+        $('#local-sets-table input:radio').removeAttr("checked"); // 取消选中
+        var text = $.trim($('#local-sets-div .search-input').val()); // 输入的 text
+
+        // [1] 如果输入内容为空白，显示所有的确认点
+        // [2] 如果确认点的名字包含输入的 text 则显示，否则隐藏
+        $('#local-sets-table tr:gt(0)').each(function(index, el) {
+            var name = $('td[name="name"]', this).text();
+
+            if (-1 != name.indexOf(text)) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    }
 }
 
 /**
@@ -186,7 +251,7 @@ function handleChangeProvincesEvent() {
         if (isProvinceCity) {
             // 直辖市的市为它自己
             var cities = [{id: provinceId, name: $province.text(), provinceCity: true}];
-            UiUtils.insertOptions('cities', cities, {templateId: 'provinceOptionTemplate', remainFirstOption: false});
+            UiUtils.insertOptions('cities', cities, {templateId: 'provinceOptionTemplate'});
         } else if (-1 != provinceId) {
             // provinceId 为 -1 表示选择了 "请选择"，则不加载省的城市
             $.rest.get({url: Urls.REST_CITIES_BY_PROVINCE, urlParams: {provinceId: provinceId}, success: function(result) {
@@ -239,18 +304,37 @@ function handleChangeProvincesForCollegeEvent() {
 
         // [1] 如果输入内容为空白，显示所有的学校
         // [2] 如果学校的名字包含输入的 text 则显示，否则隐藏
-        if (text) {
-            $colleges.each(function() {
-                if (-1 == $(this).text().indexOf(text)) {
-                    $(this).hide();
-                } else {
-                    $(this).show();
-                }
-            });
-        } else {
-            $colleges.show();
-        }
+        $colleges.each(function() {
+            var schoolName = $(this).text();
+            if (-1 != schoolName.indexOf(text)) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
     }
+}
+
+/**
+ * 当现任教学段和市变化时加载注册机构
+ * 使用 teachGradeId(现任教学段) 和 cityId(市) 加载注册机构
+ */
+function handleRequestRegisterOrgs() {
+    $('#teach-grades, #cities').change(function(event) {
+        var teachGradeId = UiUtils.getSelectedOption('teach-grades').id;
+        var cityId = UiUtils.getSelectedOption('cities').id;
+        var provinceCity = UiUtils.getSelectedOption('cities').option.attr('data-province-city') === 'true';
+
+        if (-1 === teachGradeId || -1 === cityId) {
+            return;
+        }
+
+        $.rest.get({url: Urls.REST_ORGS_REG, urlParams: {teachGradeId: teachGradeId, cityId: cityId, provinceCity: provinceCity},
+            success: function(result) {
+                console.log(result.data);
+                UiUtils.insertOptions('register-orgs', result.data);
+        }});
+    });
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -397,6 +481,51 @@ function handleRegisterSubjectsDialog() {
             $("#lean_overlay").click();
         } else {
             alert('没有选中任教学科');
+        }
+    });
+}
+
+/**
+ * 第四步的现任教学科
+ */
+function handleTeachSubjectsDialog() {
+    // 初始化 LeanModal 对话框
+    $('#teach-subjects-dialog-trigger').leanModal({top: 50, overlay : 0.4});
+
+    $('#select-teach-subject-button').click(function(event) {
+        var provinceId = UiUtils.getSelectedOption('provinces').id;
+        var teachGradeId = UiUtils.getSelectedOption('teach-grades').id;
+
+        if (-1 === teachGradeId) {
+            alert('请先选择 "现任教学段"，然后才能选择 "现任教学科"');
+            return;
+        }
+
+        if (-1 === provinceId) {
+            alert('请先选择 "省"，然后才能选择 "现任教学科"');
+            return;
+        }
+
+        $('#teach-subjects-dialog-trigger').click(); // 显示对话框
+
+        // 加载现任教学科
+        UiUtils.requestDataAndShowInTree($('#teach-subjects-dialog .ztree'), function(treeId, treeNode) {
+            if(!treeNode) {
+                return Urls.REST_SUBJECTS_TEASUBJECT.format({provinceId: provinceId, teachGradeId: teachGradeId});
+            } else {
+                return Urls.REST_SUBJECTS_CHILDREN.format({provinceId: provinceId, parentId: treeNode.id});
+            }
+        });
+    });
+
+    // 点击确定按钮，设置选中的学科，并隐藏对话框
+    $('#teach-subjects-dialog .ok-button').click(function(event) {
+        var subjectNode = window.subjectsTree.getSelectedNodes()[0];
+        if (subjectNode) {
+            UiUtils.setFormData('teachSubject', subjectNode.id, subjectNode.name);
+            $("#lean_overlay").click();
+        } else {
+            alert('没有选中现任教学科');
         }
     });
 }

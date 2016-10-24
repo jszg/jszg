@@ -11,15 +11,19 @@ Urls = {
     REST_CITIES_BY_PROVINCE:         '/new-cert/rest/signUp/provinces/{provinceId}/cities',
     REST_ORGS_BY_CITY_AND_CERT_TYPE: '/new-cert/rest/signUp/cities/{cityId}/certTypes/{certTypeId}/orgs',
     REST_COLLEGES_BY_PROVINCE:       '/new-cert/rest/signUp/provinces/{provinceId}/colleges',
+    REST_ORGS_REG:  '/new-cert/rest/signUp/reg/orgs?teachGrade={teachGradeId}&cityId={cityId}&provinceCity={provinceCity}', // 注册机构
+    REST_LOCALSETS: '/new-cert/rest/signUp/localsets?orgId={orgId}',
+    REST_LOCALSET_INFO: '/new-cert/rest/signUp/localsets/{localSetId}',
 
-    REST_SUBJECTS_ROOT:         '/new-cert/rest/signUp/provinces/{provinceId}/certTypes/{certTypeId}/subjects/root',
-    REST_SUBJECTS_CHILDREN:     '/new-cert/rest/signUp/provinces/{provinceId}/{parentId}/subjects/children',
-    REST_SUBJECTS_BY_CERT_TYPE: '/new-cert/rest/signUp/certTypes/{certTypeId}/subjects', // 注册的任教学科
-    REST_SUBJECTS_BY_PARENT:    '/new-cert/rest/signUp/{parentId}/subjects', // 注册的任教学科
+    REST_SUBJECTS_ROOT:          '/new-cert/rest/signUp/provinces/{provinceId}/certTypes/{certTypeId}/subjects/root',
+    REST_SUBJECTS_CHILDREN:      '/new-cert/rest/signUp/provinces/{provinceId}/{parentId}/subjects/children',
+    REST_SUBJECTS_BY_CERT_TYPE:  '/new-cert/rest/signUp/certTypes/{certTypeId}/subjects', // 注册的任教学科
+    REST_SUBJECTS_BY_PARENT:     '/new-cert/rest/signUp/{parentId}/subjects', // 注册的任教学科
+    REST_SUBJECTS_TEASUBJECT:    '/new-cert/rest/signUp/provinces/{provinceId}/teachGrades/{teachGradeId}/subjects', // 注册的现任教学科
 
-    REST_RENDING_MAJOR_PARENT: '/new-cert/rest/signUp/majors/root', // 认定的跟节点
-    REST_ZHUCE_MAJOR_PARENT:   '/new-cert/rest/signUp/certTypes/{certTypeId}/{eduLevelId}/majors/root', // 注册的跟节点
-    REST_MAJOR_CHILDREN:       '/new-cert/rest/signUp/{parentId}/majors/children', // 认定或注册的子节点
+    REST_RENDING_MAJOR_PARENT:   '/new-cert/rest/signUp/majors/root', // 认定的跟节点
+    REST_ZHUCE_MAJOR_PARENT:     '/new-cert/rest/signUp/certTypes/{certTypeId}/{eduLevelId}/majors/root', // 注册的跟节点
+    REST_MAJOR_CHILDREN:         '/new-cert/rest/signUp/{parentId}/majors/children', // 认定或注册的子节点
 
     REST_TECHNICAL_JOB_ROOT:     '/new-cert/rest/signUp/technicaljobs/root',
     REST_TECHNICAL_JOB_CHILDREN: '/new-cert/rest/signUp/{parentId}/technicaljobs/children',

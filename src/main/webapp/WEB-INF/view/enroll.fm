@@ -28,6 +28,9 @@
 </head>
 
 <body>
+<!-- 服务器时间 -->
+<span id="server-time" style="display: none">${.now?string('yyyy-MM-dd HH:mm:ss')}</span>
+
 <div class="request">
 <h1>欢迎使用教师资格认定管理-网上申报系统</h1>
 <div class="declare">
@@ -178,13 +181,7 @@
                     <td><input id="name" type="text"></td>
                     <td></td>
                     <td class="operation">性别</td>
-                    <td>
-                        <select id="gender">
-                            <option selected="selected" value="-1">请选择</option>
-                            <option value="1">男</option>
-                            <option value="2">女</option>
-                        </select>
-                    </td>
+                    <td><span class="form-data" name="gender" data-id="" data-text=""></span></td>
                 </tr>
                  <tr>
                     <td class="operation">出生日期</td>
@@ -208,19 +205,22 @@
                 </tr>
                 <tr>
                     <td class="operation">所在省</td>
-                    <td><select id="provinces" name="provinces"><option selected="selected" value="-1">请选择</option></select></td>
+                    <td><select id="provinces"><option selected="selected" value="-1">请选择</option></select></td>
                 </tr>
                 <tr>
                     <td class="operation">所在市</td>
-                    <td><select id="cities" name="cities"><option selected="selected" value="-1">请选择</option></select></td>
+                    <td><select id="cities"><option selected="selected" value="-1">请选择</option></select></td>
                 </tr>
                 <tr>
                     <td class="operation">注册机构</td>
-                    <td><button id="select-enroll-org-button">请选择...</button></td>
+                    <td><select id="register-orgs"><option selected="selected" value="-1">请选择</option></select></td>
                 </tr>
                 <tr>
                     <td class="operation">现任教学科</td>
-                    <td><button id="select-teach-subject-button">请选择...</button></td>
+                    <td colspan="2">
+                        <button id="select-teach-subject-button">请选择...</button>
+                        <span class="form-data" name="teachSubject" data-id="" data-text=""><span>
+                    </td>
                 </tr>
             </table>
         </div>
@@ -239,11 +239,11 @@
 <div id="box-5">
     <div class="content_bd">
         <h4>选择确认点:</h4>
-        <div class="ui-body">
+        <div id="local-sets-div" class="ui-body">
             <div style="padding: 3px 10px;">
-                确认点: <input type="text">&nbsp;&nbsp;<button>搜索</button>
+                确认点: <input type="text" class="search-input">&nbsp;&nbsp;<button class="search-button">搜索</button>
             </div>
-            <table width="960" border="0" cellspacing="0" cellpadding="0" class="ui-view">
+            <table id="local-sets-table" width="960" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <th width="40"></th>
                     <th width="150">确认点</th>
@@ -251,13 +251,17 @@
                     <th width="150">确认结束时间</th>
                     <th width="470">确认范围</th>
                 </tr>
-                <tr>
-                    <td><input type="radio" name="ui_radio" value="136395" class="ui-check ui-radio"></td>
-                    <td name="localeName">辛集市教育局</td>
-                    <td name="beginDate" class="text-center">2016-11-08 08:38</td>
-                    <td name="endDate" class="text-center">2016-11-10 17:00</td>
-                    <td name="confirmRange">辛集市范围内申请高中、中职、初中、小学及幼儿园教师资格人员</td>
-                </tr>
+                <script id="localSetsTemplate" type="text/html">
+                    {{each localSets as localSet}}
+                    <tr>
+                        <td><input type="radio" name="local-set-radio" value="{{localSet.id}}"></td>
+                        <td name="name">{{localSet.name}}</td>
+                        <td name="beginDate" class="text-center">{{localSet.beginDate}}</td>
+                        <td name="endDate" class="text-center">{{localSet.endDate}}</td>
+                        <td name="confirmRange" class="text-center">{{localSet.confirmRange}}</td>
+                    </tr>
+                    {{/each}}
+                </script>
             </table>
         </div>
     </div>
@@ -275,25 +279,29 @@
 <div id="box-6">
     <div class="content_bd">
         <h4>注意事项</h4>
-        <p></p>
-        <p>按文件要求带齐相关证件，按时进行体检。</p>
-        <p class="MsoNormal">
-            <span>申请人现场确认时须提交的材料</span>
-        </p>
-        <ul>
-            <li> 1、《教师资格认定申请表》（网上申报成功后自行 PDF 格式 A4 纸双面打印两份）；</li>
-            <li> 2、身份证件原件及复印件；</li>
-            <li> 3、毕业证书原件及复印件；</li>
-            <li> 4、教育部出具的《学历认证报告》的原件及复印件或学信网上自行打印的《教育部学历证书电子注册备案表》；</li>
-            <li> 5、《申请教师资格人员体检表》需双面打印，当次有效；</li>
-            <li> 6、《普通话水平测试等级证书》原件及复印件；</li>
-            <li> 7、《申请人思想品德鉴定表》 网上申报时自行打印，按要求填写并加盖 工作单位或者所在乡镇（街道）公章 ；</li>
-            <li> 8、近期 3 个月淡蓝色，白色或红色背景，免冠无头饰正面小二寸证件照片 1 张，（与网上注册及申请表格照片同版）。背面注明身份证号及姓名 ,教师资格证书上使用；</li>
-            <li> 9、参加考试人员需提交 教师资格考试合格证明原件和复印件一份； 2015 年下半年以后考试合格的考生，只需自行通过中小学教师资格考试网站下载、打印 PDF 格式 “网页版 ”的考试合格证明；</li>
-            <li>10、申请认定中等职业学校实习指导教师资格者，须提交相当助理工程师及以上专业技术职务或者中级以上工人技术等级证书原件和复印件一份；</li>
-            <li>11、户籍在本省的需要携带户口簿 (本人页 )原件及复印件，非本省户籍但在本省工作的需提供人事代理机构出具的证明原件及复印件；</li>
-        </ul>
-        <p>所有复印件统一用 A4 纸按身份证、学历证明、普通话证书、考试合格证明书、户口簿（本人页）或人事代理机构出具的证明等顺序排列装订。</p>
+        <div id="local-set-info">
+            <!-- 确认点信息模版，开发时显示为了方便查看效果 -->
+            <div style="display:none">
+                <p>按文件要求带齐相关证件，按时进行体检。</p>
+                <p class="MsoNormal">
+                    <span>申请人现场确认时须提交的材料</span>
+                </p>
+                <ul>
+                    <li> 1、《教师资格认定申请表》（网上申报成功后自行 PDF 格式 A4 纸双面打印两份）；</li>
+                    <li> 2、身份证件原件及复印件；</li>
+                    <li> 3、毕业证书原件及复印件；</li>
+                    <li> 4、教育部出具的《学历认证报告》的原件及复印件或学信网上自行打印的《教育部学历证书电子注册备案表》；</li>
+                    <li> 5、《申请教师资格人员体检表》需双面打印，当次有效；</li>
+                    <li> 6、《普通话水平测试等级证书》原件及复印件；</li>
+                    <li> 7、《申请人思想品德鉴定表》 网上申报时自行打印，按要求填写并加盖 工作单位或者所在乡镇（街道）公章 ；</li>
+                    <li> 8、近期 3 个月淡蓝色，白色或红色背景，免冠无头饰正面小二寸证件照片 1 张，（与网上注册及申请表格照片同版）。背面注明身份证号及姓名 ,教师资格证书上使用；</li>
+                    <li> 9、参加考试人员需提交 教师资格考试合格证明原件和复印件一份； 2015 年下半年以后考试合格的考生，只需自行通过中小学教师资格考试网站下载、打印 PDF 格式 “网页版 ”的考试合格证明；</li>
+                    <li>10、申请认定中等职业学校实习指导教师资格者，须提交相当助理工程师及以上专业技术职务或者中级以上工人技术等级证书原件和复印件一份；</li>
+                    <li>11、户籍在本省的需要携带户口簿 (本人页 )原件及复印件，非本省户籍但在本省工作的需提供人事代理机构出具的证明原件及复印件；</li>
+                </ul>
+                <p>所有复印件统一用 A4 纸按身份证、学历证明、普通话证书、考试合格证明书、户口簿（本人页）或人事代理机构出具的证明等顺序排列装订。</p>
+            </div>
+        </div>
     </div>
     <div class="action-bar">
         <a href="javascript:void(0)" class="pre-step">
@@ -333,17 +341,17 @@
                     <td class="operation">名族:</td>
                     <td><span class="form-data" name="nation" data-id="" data-text=""></span></td>
                     <td class="operation">申请资格种类:</td>
-                    <td>初级中学教师资格</td>
+                    <td><span class="form-data" name="certType" data-id="" data-text=""></span></td>
                 </tr>
                 <tr>
                   <td class="operation">任教学科:</td>
-                  <td>无</td>
+                  <td><span class="form-data" name="registerSubject" data-id="" data-text=""><span></td>
                   <td class="operation">教师资格证书号码:</td>
                   <td><span class="form-data" name="certNo" data-id="" data-text=""></span></td>
                 </tr>
                 <tr>
                   <td class="operation">认定机构:</td>
-                  <td>大兴区教育局</td>
+                  <td><span class="form-data" name="registerOrg" data-id="" data-text=""></span></td>
                   <td></td>
                   <td></td>
                 </tr>
@@ -530,6 +538,19 @@
 <!-- 第四步的任教学科对话框 -->
 <a id="register-subjects-dialog-trigger" href="#register-subjects-dialog" style="display: none">显示任教学科对话框</a>
 <div id="register-subjects-dialog" class="pop-dialog">
+    <div class="content">
+        <ul class="ztree"></ul>
+    </div>
+
+    <div class="buttons-holder">
+        <button class="cancel-button">取消</button>
+        <button class="ok-button">确定</button>
+    </div>
+</div>
+
+<!-- 第四步的现任教学科 -->
+<a id="teach-subjects-dialog-trigger" href="#teach-subjects-dialog" style="display: none">显示任教学科对话框</a>
+<div id="teach-subjects-dialog" class="pop-dialog">
     <div class="content">
         <ul class="ztree"></ul>
     </div>
