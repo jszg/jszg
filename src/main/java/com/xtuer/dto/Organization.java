@@ -1,5 +1,7 @@
 package com.xtuer.dto;
 
+import java.util.Date;
+
 /**
  * 认定机构 dto.Organization: 市或省下面的所有 org
  * org_certTypeId_c_cityId: [{id, name}, {}]
@@ -9,6 +11,10 @@ package com.xtuer.dto;
 public class Organization {
     private int id;
     private String name;
+    private String areaName;
+    private String oldName;
+    private Date changeDate;
+    private Date annulDate;
 
     public int getId() {
         return id;
@@ -24,5 +30,37 @@ public class Organization {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getAreaName() {
+        return areaName;
+    }
+
+    public void setAreaName(String areaName) {
+        this.areaName = areaName;
+    }
+
+    public String getOldName() {
+        return oldName;
+    }
+
+    public void setOldName(String oldName) {
+        this.oldName = oldName;
+    }
+
+    public Date getChangeDate() {
+        return changeDate;
+    }
+
+    public void setChangeDate(Date changeDate) {
+        this.changeDate = changeDate;
+    }
+
+    public Date getAnnulDate() {
+        return annulDate;
+    }
+
+    public void setAnnulDate(Date annulDate) {
+        this.annulDate = annulDate;
     }
 }

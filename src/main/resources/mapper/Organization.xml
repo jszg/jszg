@@ -37,15 +37,23 @@
     </select>
 
     <select id="findByOrgTypeEq4" resultType="Province">
-      select o.ORG_ID as id, o.ORG_NAME as name, o.province_city as provinceCity
+      /*select o.ORG_ID as id, o.ORG_NAME as name, o.province_city as provinceCity
       from T_ORG o
-      where o.ORG_TYPE= 4  and o.STATUS = 1  order by o.AREA_CODE
+      where o.ORG_TYPE= 4  and o.STATUS = 1  order by o.AREA_CODE*/
+      select distinct o.org_id as id, o.org_name as name,o.province_city as provinceCity, o.area_name as areaName, onl.old_name as
+      oldName,onl.change_date as changeDate
+      from t_org o
+      left join t_org_name_log onl on o.org_id = onl.org_id
+      where o.org_type = 4 and o.status = 1
     </select>
 
     <select id="findByParentId" resultType="Organization">
-        select ORG_ID as id, ORG_NAME as name
+        select distinct o.org_id as id, o.org_name as name,o.area_name as areaName, onl.old_name as oldName,onl.change_date as
+        changeDate,oal.annul_date as annulDate
         from t_org o
-        where o.parent_id = #{parentId} and o.org_type != 1 and o.status = 1 order by o.area_code desc
+        left join t_org_name_log onl on o.org_id = onl.org_id
+        left join t_org_annul_log oal on oal.org_id = o.org_id
+        where o.parent_id = #{parentId} and o.org_type != 1
     </select>
 
     <select id="findByOrgId" resultType="Organization">
