@@ -1,6 +1,7 @@
 package com.xtuer.mapper;
 
 import com.xtuer.dto.LocalSet;
+import com.xtuer.dto.LocalSetInfo;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -12,4 +13,5 @@ import java.util.List;
  */
 public interface LocalSetMapper {
     List<LocalSet> findByOrgId(@Param("orgId") int orgId);
+    LocalSetInfo findById(@Param("id") int id);
 }

@@ -221,6 +221,14 @@ public class SignUpController {
         return Result.ok(localsets);
     }
 
+    // 确认点信息
+    @GetMapping(UriView.REST_LOCALSET_INFO)
+    @ResponseBody
+    public Result<LocalSetInfo> getLocalSetInfo(@PathVariable("id") int id) {
+        LocalSetInfo info = localSetMapper.findById(id);
+        return Result.ok(info);
+    }
+
     // 民族
     @GetMapping(UriView.REST_NATIONS)
     @ResponseBody

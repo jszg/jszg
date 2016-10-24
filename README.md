@@ -171,6 +171,12 @@ gradle -Denv=development clean appStartDebug
     http://{{host}}:{{port}}/rest/signUp/localsets?orgId={orgId}
     ```
     
+* 确认点信息
+
+    ```
+    http://{{host}}:{{port}}/rest/signUp/localsets/{id}
+    ```
+    
 * 限制库
 
     ```

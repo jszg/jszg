@@ -15,4 +15,10 @@
     where ls.obt_id = (select obt.obt_id from t_org_batch_time obt where obt.ob_id = (select max(t.ob_id) from t_org_batch t where t.org_id=#{orgId}))
     and ls.assigned = 1 and o.status = 1
   </select>
+
+  <select id="findById" resultType="LocalSetInfo">
+    SELECT INFO as info
+    FROM T_LOCALE_SET
+    WHERE LS_ID = #{id}
+  </select>
 </mapper>
