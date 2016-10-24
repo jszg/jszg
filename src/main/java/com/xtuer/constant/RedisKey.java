@@ -44,6 +44,4 @@ public interface RedisKey {
     String TECHNICALJOBS = "technical_jobs"; // technical_jobs
     String TECHNICAL_JOB_CHILDREN = "technical_jobs_children_%d"; // technical_jobs_children_{parentId}
 
-
-
 }

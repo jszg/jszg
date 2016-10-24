@@ -37,5 +37,7 @@ public interface UriView {
     String REST_TECHNICAL_JOB_ROOT         = "/rest/signUp/technicaljobs/root";
     String REST_TECHNICAL_JOB_CHILDREN     = "/rest/signUp/{parentId}/technicaljobs/children";
 
+    String REST_LIMITATIONS                = "/rest/signUp/limitations";
+
     String URI_UPLOAD_PERSON_IMAGE         = "/upload-person-image";
 }

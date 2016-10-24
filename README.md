@@ -170,3 +170,9 @@ gradle -Denv=development clean appStartDebug
     ```
     http://{{host}}:{{port}}/rest/signUp/localsets?orgId={orgId}
     ```
+    
+* 限制库
+
+    ```
+    http://{{host}}:{{port}}/new-cert/rest/signUp/limitations?idno={idno}&certno={certno}
+    ```

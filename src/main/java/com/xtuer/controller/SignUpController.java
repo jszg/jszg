@@ -323,6 +323,14 @@ public class SignUpController {
         return has7;
     }
 
+    // 限制库。不缓存，直接查DB
+    @GetMapping(UriView.REST_LIMITATIONS)
+    @ResponseBody
+    public Result<List<Limitation>> findLimitations(@RequestParam(value = "idno", defaultValue = "", required = false) String idno,
+                                                    @RequestParam(value = "certno", defaultValue = "", required = false) String certno) {
+        List<Limitation> limitations = limitationMapper.findByIdnoAndCertno(idno, certno);
+        return Result.ok(limitations);
+    }
 
     @Autowired
     private RedisUtils redisUtils;
@@ -356,4 +364,7 @@ public class SignUpController {
 
     @Autowired
     private LocalSetMapper localSetMapper;
+
+    @Autowired
+    private LimitationMapper limitationMapper;
 }
