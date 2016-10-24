@@ -13,7 +13,7 @@
     <select id="findTeaGrades" resultType="TeachGrade">
       select distinct dict.dic_id as id,dict.name as name,ct.admin_level as adminLevel from t_dict dict
       inner join t_cert_type ct on ct.teach_grade = dict.dic_id
-      where dict.dt_id = 23 and <![CDATA[rownum <= 5]]>  order by dict.code
+      where dict.dt_id = 23 and <![CDATA[rownum <= 5]]>  order by dict.dic_id,dict.name,ct.admin_level
     </select>
 
     <select id="findEduLevels" resultType="Dict">
