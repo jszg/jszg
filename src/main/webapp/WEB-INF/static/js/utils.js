@@ -359,3 +359,65 @@ CertNo.validate = function(certNo) {
 
     return true;
 };
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                       格式校验类                                                //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function Validator() {}
+
+/**
+ * 验证邮件地址是否有效
+ *
+ * @param  {string} email 邮件地址
+ * @return {bool}         邮件地址有效返回 true，否则返回 false
+ */
+Validator.validateEmail = function(email) {
+    var result = {success: false, message: ''};
+
+    if (!(/^.+@.+\..+$/.test(email))) {
+        result.message = '邮箱地址不正确';
+        return result;
+    }
+
+    result.success = true;
+    return result;
+};
+
+/**
+ * 验证密码是否有效
+ * 密码的验证规则
+ *     1. 不少于 8 位
+ *     2. 必须包含数字
+ *     3. 必须包含字母
+ *     4. 必须包含特殊字符，特殊字符需从 “#、%、*、-、_、!、@、$、&” 中选
+ *
+ * @param  {string} password 密码
+ * @return {json}            密码有效返回对象的 success 属性为 true，否则为 false
+ */
+Validator.validatePassword = function(password) {
+    var result = {success: false, message: ''};
+
+    if (password.length < 8) {
+        result.message = '密码不少于 8 位';
+        return result;
+    }
+
+    if (!(/^.*[0-9]+.*$/.test(password))) {
+        result.message = '密码必须包含数字';
+        return result;
+    }
+
+    if (!(/^.*[a-zA-Z]+.*$/.test(password))) {
+        result.message = '密码必须包含字母';
+        return result;
+    }
+
+    if (!(/^.*[#%_!@&\-\*\$]+.*$/.test(password))) {
+        result.message = '密码必须包含特殊字符';
+        return result;
+    }
+
+    result.success = true;
+
+    return result;
+};

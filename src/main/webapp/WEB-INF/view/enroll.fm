@@ -384,12 +384,12 @@
            <table width="960" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <td width="130" class="operation">系统登录密码</td>
-                    <td width="150"><input id="password1" type="text"></td>
-                    <td><span class="description">密码不少于 8 位，包含数字、字母和特殊字符，特殊字符需从 &ldquo;#、%、*、-、_、!、@、$、&amp;&rdquo; 中选择。请牢记个人登录密码，将用于您登录查看、修改您的报名信息和打印定期注册申请表等</span></td>
+                    <td width="150"><input id="password1" type="password"></td>
+                    <td><span class="description">密码不少于 8 位，必须包含数字、字母和特殊字符，特殊字符需从 &ldquo;#、%、*、-、_、!、@、$、&amp;&rdquo; 中选择。请牢记个人登录密码，将用于您登录查看、修改您的报名信息和打印定期注册申请表等</span></td>
                 </tr>
                 <tr>
                     <td class="operation">密码确认</td>
-                    <td><input id="password2" type="text"></td>
+                    <td><input id="password2" type="password"></td>
                     <td></td>
                 </tr>
                 <tr>
