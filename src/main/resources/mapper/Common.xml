@@ -43,7 +43,7 @@
   </select>
 
   <select id="findOrgBatch" resultType="OrgBatch">
-    select ob.join_in as joinIn,ob.is_open as isOpen as ob.PB_ID as provinceBatch from t_org_batch ob
+    select ob.join_in as joinIn,ob.is_open as isOpen, ob.PB_ID as provinceBatch from t_org_batch ob
     left join t_province_batch pb on pb.pb_id = ob.pb_id
     where ob.org_id = #{orgId} and ob.type = 2 and <![CDATA[ rownum <=1 ]]> order by ob.ob_id desc
   </select>
