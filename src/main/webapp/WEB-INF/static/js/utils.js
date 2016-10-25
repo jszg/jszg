@@ -14,6 +14,8 @@ Urls = {
     REST_ORGS_REG:  '/new-cert/rest/signUp/reg/orgs?teachGrade={teachGradeId}&cityId={cityId}&provinceCity={provinceCity}', // 注册机构
     REST_LOCALSETS: '/new-cert/rest/signUp/localsets?orgId={orgId}',
     REST_LOCALSET_INFO: '/new-cert/rest/signUp/localsets/{localSetId}',
+    REST_ORGS_BY_ORGTYPE: '/new-cert/rest/signUp/orgtypes/{orgType}/orgs', // 注册的认定机构，ortType 为 4
+    REST_ORGS_BY_PARENT:  '/new-cert/rest/signUp/{parentId}/orgs',
 
     REST_SUBJECTS_ROOT:          '/new-cert/rest/signUp/provinces/{provinceId}/certTypes/{certTypeId}/subjects/root',
     REST_SUBJECTS_CHILDREN:      '/new-cert/rest/signUp/provinces/{provinceId}/{parentId}/subjects/children',
@@ -27,6 +29,8 @@ Urls = {
 
     REST_TECHNICAL_JOB_ROOT:     '/new-cert/rest/signUp/technicaljobs/root',
     REST_TECHNICAL_JOB_CHILDREN: '/new-cert/rest/signUp/{parentId}/technicaljobs/children',
+
+    REST_ENROLL_STEP3:           '/new-cert/rest/signUp/enroll/step3?idno={idNo}&certno={certNo}', // 第三步验证
 
     URI_UPLOAD_PERSON_IMAGE: '/new-cert/upload-person-image',
     WEB_UPLOADER_SWF: 'https://cdn.staticfile.org/webuploader/0.1.5/Uploader.swf'

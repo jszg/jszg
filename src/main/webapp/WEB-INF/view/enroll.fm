@@ -168,8 +168,10 @@
                 </tr>
                 <tr>
                     <td class="operation">认定机构</td>
-                    <td><button id="select-recognize-org-button">选择...</button></td>
-                    <td><span class="form-data" name="recognizeOrg" data-id="" data-name=""><span></td>
+                    <td colspan="2">
+                        <button id="select-recognize-org-button">选择...</button>
+                        <span class="form-data" name="recognizeOrg" data-id="" data-name=""><span>
+                    </td>
                     <td class="operation">任教学科</td>
                     <td>
                         <button id="select-register-subject-button">选择...</button>
@@ -537,6 +539,19 @@
 
 <!-- LeanModal 对话框的 Mask -->
 <!-- <div id="lean_overlay"></div> -->
+
+<!-- 第四步的认定机构对话框 -->
+<a id="recognize-orgs-dialog-trigger" href="#recognize-orgs-dialog" style="display: none">显示任教学科对话框</a>
+<div id="recognize-orgs-dialog" class="pop-dialog">
+    <div class="content">
+        <ul class="ztree"></ul>
+    </div>
+
+    <div class="buttons-holder">
+        <button class="cancel-button">取消</button>
+        <button class="ok-button">确定</button>
+    </div>
+</div>
 
 <!-- 第四步的任教学科对话框 -->
 <a id="register-subjects-dialog-trigger" href="#register-subjects-dialog" style="display: none">显示任教学科对话框</a>

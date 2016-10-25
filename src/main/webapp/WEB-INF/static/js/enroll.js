@@ -5,6 +5,7 @@ $(document).ready(function() {
     handleChangeProvincesEvent(); // 处理切换省时加载城市的事件
     handleChangeProvincesForCollegeEvent(); // 处理切换省时加载最高学历毕业学校的事件
 
+    handleRecognizeOrgsDialog(); // 第四步的认定机构
     handleRegisterSubjectsDialog(); // 第四步的任教学科
     handleTeachSubjectsDialog(); // 第四步的现任教学科
     handleRequestRegisterOrgs(); // 第四步的注册机构
@@ -359,9 +360,11 @@ StepValidator.validate3thStep = function() {
         return false;
     }
 
-    // $.rest.get({async: false, success: function() {
-    //
-    // }});
+    $.rest.get({url: Urls.REST_ENROLL_STEP3, urlParams: {idNo: idNo, certNo: certNo}, asyn: false, success: function(result) {
+        console.log(result.data);
+    }});
+
+    return false; // TODO: Delete
 
     UiUtils.setFormData('idType', idType.id, idType.name);
     UiUtils.setFormData('certNo', -1, certNo);
@@ -578,6 +581,48 @@ function initializeDatePicker() {
 //                                                        第四步的对话框                                           //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
+ * 第四步的认定机构
+ * 使用证书签发日期进行过滤
+ */
+function handleRecognizeOrgsDialog() {
+    // 初始化 LeanModal 对话框
+    $('#recognize-orgs-dialog-trigger').leanModal({top: 50, overlay : 0.4});
+
+    // 点击 '认定机构' 按钮
+    // 如果 证书签发日期 为空，则提示输入
+    $('#select-recognize-org-button').click(function(event) {
+        var certAssignDate = $.trim($('#cert-assign-date').val());
+
+        if (!certAssignDate) {
+            alert('请先输入 "证书签发日期"');
+            return;
+        }
+
+        $('#recognize-orgs-dialog-trigger').click(); // 显示对话框
+
+        // 加载任教学科
+        UiUtils.requestDataAndShowInTree($('#recognize-orgs-dialog .ztree'), function(treeId, treeNode) {
+            if(!treeNode) {
+                return Urls.REST_ORGS_BY_ORGTYPE.format({orgType: 4}) + '?date=' + certAssignDate;
+            } else {
+                return Urls.REST_ORGS_BY_PARENT.format({parentId: treeNode.id}) + '?date=' + certAssignDate;
+            }
+        });
+    });
+
+    // 点击确定按钮，设置选中的学科，并隐藏对话框
+    $('#recognize-orgs-dialog .ok-button').click(function(event) {
+        var orgNode = window.subjectsTree.getSelectedNodes()[0];
+        if (orgNode) {
+            UiUtils.setFormData('recognizeOrg', orgNode.id, orgNode.name);
+            $("#lean_overlay").click();
+        } else {
+            alert('没有选中认定机构');
+        }
+    });
+}
+
+/**
  * 处理选择任教学科的相关事件
  *
  * 1. 点击 '任教学科' 按钮
@@ -754,6 +799,7 @@ function handleMajorsDialog() {
 
 /**
  * 教师职务（职称）
+ * 注意: 如果是顶级节点，且 code 为 '00'，则提示不可使用
  */
 function handleTechnicalJobsDialog() {
     // 初始化 LeanModal 对话框
@@ -763,7 +809,11 @@ function handleTechnicalJobsDialog() {
     $('#technical-jobs-dialog .ok-button').click(function(event) {
         var technicalJobNode = window.subjectsTree.getSelectedNodes()[0];
         if (technicalJobNode) {
-            console.log(technicalJobNode);
+            if (0 === technicalJobNode.level && '00' === technicalJobNode.code) {
+                alert('所选教师职务不可使用');
+                return;
+            }
+
             UiUtils.setFormData('technicalJob', technicalJobNode.id, technicalJobNode.name);
             $("#lean_overlay").click();
         } else {
