@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -97,25 +98,50 @@ public class SignUpController {
     // 父机构
     @GetMapping(UriView.REST_ORGS_BY_ORGTYPE)
     @ResponseBody
-    public Result<List<?>> getOrgByOrgType(@PathVariable("orgType") int orgType) {
+    public Result<List<Organization>> getOrgByOrgType(@PathVariable("orgType") int orgType, @RequestParam("date") String d) {
         String key = String.format(RedisKey.ORGS_BY_ORGTYPE, orgType);
 
-        List<?> organizations = null;
+        Date date = parseDate(d, "yyyy-MM-dd");
+        List<Organization> organizations = null;
         if (orgType == 4) {
-            organizations = redisUtils.get(new TypeReference<List<Province>>(){}, key, () -> organizationMapper.findByOrgTypeEq4());
+            organizations = redisUtils.get(new TypeReference<List<Organization>>(){}, key, () -> organizationMapper.findByOrgTypeEq4());
         } else {
             organizations = redisUtils.get(new TypeReference<List<Organization>>() {}, key, () -> organizationMapper.findByOrgType(orgType));
         }
+
+        organizations.stream()
+                .filter(o -> o.getChangeDate() != null && o.getOldName() != null && o.getChangeDate().after(date))
+                .forEach(o -> {
+                    o.setName(o.getOldName());
+                });
+
         return Result.ok(organizations);
     }
 
     // 子机构
     @GetMapping(UriView.REST_ORGS_BY_PARENT)
     @ResponseBody
-    public Result<List<Organization>> getOrgByParentId(@PathVariable("parentId") int parentId) {
+    public Result<List<Organization>> getOrgByParentId(@PathVariable("parentId") int parentId, @RequestParam("date") String d) {
         String key = String.format(RedisKey.ORGS_BY_PARENT, parentId);
+        Date date = parseDate(d, "yyyy-MM-dd");
+
         List<Organization> list = redisUtils.get(new TypeReference<List<Organization>>(){}, key, () -> organizationMapper.findByParentId(parentId));
-        return Result.ok(list);
+        List<Organization> results = new ArrayList<>();
+        for (Organization o : list) {
+            if (o.getChangeDate() == null) {
+                results.add(o);
+                continue;
+            }
+            if (o.getAnnulDate() != null &&  o.getAnnulDate().before(date)) {
+                continue;
+            }
+            if (o.getChangeDate().after(date)) {
+                o.setName(o.getOldName());
+                results.add(o);
+            }
+        }
+
+        return Result.ok(results);
     }
 
     // 注册机构
@@ -637,6 +663,16 @@ public class SignUpController {
         return Result.ok(form);
     }
 
+    private Date parseDate(String source, String format) {
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        try {
+            return sdf.parse(source);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 
     private String formatDate(Date date, String format) {
         SimpleDateFormat sdf = new SimpleDateFormat(format);

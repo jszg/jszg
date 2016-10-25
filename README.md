@@ -134,10 +134,10 @@ gradle -Denv=development clean appStartDebug
 
     ```
     # 根节点
-    http://{{host}}:{{port}}/rest/signUp/orgtypes/{orgType}/orgs
+    http://{{host}}:{{port}}/rest/signUp/orgtypes/{orgType}/orgs?date=[2016-08-09]
 
     # 子节点
-    http://{{host}}:{{port}}/rest/signUp/{parentId}/orgs
+    http://{{host}}:{{port}}/rest/signUp/{parentId}/orgs?date=[2016-08-09]
     ```
 
 
