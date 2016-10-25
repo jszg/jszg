@@ -764,13 +764,13 @@ function handleMajorsDialog() {
     });
 
     $('#select-major-button').click(function(event) {
-        var certTypeId = UiUtils.getSelectedOption('#certTypes').id;
+        // var certTypeId = UiUtils.getSelectedOption('#certTypes').id;
         var eduLevelId = UiUtils.getSelectedOption('#edu-levels').id;
 
-        if (-1 === certTypeId) {
-            alert('请先选择 "资格种类"，然后才能选择 "最高学历所学专业"');
-            return;
-        }
+        // if (-1 === certTypeId) {
+        //     alert('请先选择 "资格种类"，然后才能选择 "最高学历所学专业"');
+        //     return;
+        // }
 
         if (-1 == eduLevelId) {
             alert('请先选择 "最高学历"，然后才能选择 "最高学历所学专业"');
@@ -789,9 +789,9 @@ function handleMajorsDialog() {
         // 加载最高学历所学专业
         UiUtils.requestDataAndShowInTree($('#majors-dialog .ztree'), function(treeId, treeNode) {
             if(!treeNode) {
-                return Urls.REST_ZHUCE_MAJOR_PARENT.format({certTypeId: certTypeId, eduLevelId: eduLevelId});
+                return Urls.REST_ZHUCE_MAJOR_PARENT;
             } else {
-                return Urls.REST_SUBJECTS_BY_PARENT.format({parentId: treeNode.id});
+                return Urls.REST_MAJOR_CHILDREN.format({parentId: treeNode.id});
             }
         });
     });

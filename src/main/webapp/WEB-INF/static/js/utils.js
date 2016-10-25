@@ -23,9 +23,8 @@ Urls = {
     REST_SUBJECTS_BY_PARENT:     '/new-cert/rest/signUp/{parentId}/subjects', // 注册的任教学科
     REST_SUBJECTS_TEASUBJECT:    '/new-cert/rest/signUp/provinces/{provinceId}/teachGrades/{teachGradeId}/subjects', // 注册的现任教学科
 
-    REST_RENDING_MAJOR_PARENT:   '/new-cert/rest/signUp/majors/root', // 认定的跟节点
-    REST_ZHUCE_MAJOR_PARENT:     '/new-cert/rest/signUp/certTypes/{certTypeId}/{eduLevelId}/majors/root', // 注册的跟节点
-    REST_MAJOR_CHILDREN:         '/new-cert/rest/signUp/{parentId}/majors/children', // 认定或注册的子节点
+    REST_ZHUCE_MAJOR_PARENT:     '/new-cert/rest/signUp/majors/root', // 注册的最高学历所学专业根节点
+    REST_MAJOR_CHILDREN:         '/new-cert/rest/signUp/{parentId}/majors/children', // 认定或注册的最高学历所学专业子节点
 
     REST_TECHNICAL_JOB_ROOT:     '/new-cert/rest/signUp/technicaljobs/root',
     REST_TECHNICAL_JOB_CHILDREN: '/new-cert/rest/signUp/{parentId}/technicaljobs/children',
