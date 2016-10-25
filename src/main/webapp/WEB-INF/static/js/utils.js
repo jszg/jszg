@@ -40,11 +40,11 @@ function UiUtils() {}
 /**
  * 取得选中的 option 的数据
  *
- * @param  {string} selectId select 的 id
- * @return {json}            返回 option 的 id, name, option 自己组成的对象
+ * @param  {string} selectSector select 的选择器
+ * @return {json}                返回 option 的 id, name, option 自己组成的对象
  */
-UiUtils.getSelectedOption = function(selectId) {
-    var $selectedOption = $('#'+selectId).find('option:selected');
+UiUtils.getSelectedOption = function(selectSector) {
+    var $selectedOption = $(selectSector).find('option:selected');
 
     return {
         id: parseInt($selectedOption.val()),
@@ -58,14 +58,32 @@ UiUtils.getSelectedOption = function(selectId) {
  * <span class="form-data" name="idNo" data-id="" data-name=""></span>
  *
  * @param {string} formDataName 表示 formData 的名字
- * @param {int} id
+ * @param {int}    id
  * @param {string} name
  */
-UiUtils.setFormData = function(formDataName, id, text) {
+UiUtils.setFormData = function(formDataName, id, name) {
     var $dataSpan = $('span.form-data[name="' + formDataName + '"]');
     $dataSpan.attr('data-id', id);
-    $dataSpan.attr('data-text', text);
-    $dataSpan.text(text);
+    $dataSpan.attr('data-name', name);
+    $dataSpan.text(name);
+};
+
+/**
+ * 选择 containerSelector 下面 span.form-data 属性 name 为 formDataName 的 span 中的属性 data-id 和 data-text
+ *
+ * @param  {string} containerSelector form-data 所在的容器的选择器
+ * @param  {string} formDataName      保存 form-data 的属性名
+ * @return {json}                     格式为 {id: 1, name: 'foo'}，只有 id 和 name 2 个属性
+ */
+UiUtils.getFormData = function(containerSelector, formDataName) {
+    var $dataSpan = $('span.form-data[name="' + formDataName + '"]', $(containerSelector));
+    var id = parseInt($dataSpan.attr('data-id'));
+    id = (!id) ? -1 : id; // 如果 id 不存在，则为 -1
+
+    return {
+        id: id,
+        name: $dataSpan.attr('data-name')
+    };
 };
 
 /**
@@ -295,4 +313,48 @@ function IdCard(name, idNo) {
 IdCard.validate = function(idNo) {
     var regex = /^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X|x)$/;
     return regex.test(idNo);
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                                                  教师资格证书号码                                                //
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function CertNo() {}
+
+/**
+ * 验证教师资格证书号码是否有效
+ *
+ *      1. 必须是数字
+ *      2. 必须是 15 位或者 17 为的
+ *      3. 如果是 15 位的年份不能小于 1996
+ *      4. 如果是 17 位的年份不能小雨 1996 且不能大于当前年
+ *
+ * @param  {string} certNo 教师资格证书号码
+ * @return {bool}          教师资格证书号码有效返回 true，否则返回 false
+ */
+CertNo.validate = function(certNo) {
+    var certNoFormat=/^(\d{15}|\d{17})$/;
+    if(!certNoFormat.test(certNo)){
+    	alert('教师资格证书号码不规范，请检查您的证书号码，或者去发证机关规范教师资格证书后再报名');
+    	return false;
+    }
+
+    var certNoYear;
+    if(certNo.length == 15){
+    	certNoYear = '19' + certNo.substring(0, 2);
+    	if(certNoYear < '1996'){
+    		alert("教师资格证书号码不规范，请检查您的证书号码，或者去发证机关规范教师资格证书后再报名");
+    		return false;
+    	}
+    }
+
+    if(certNo.length == 17){
+    	certNoYear = certNo.substring(0, 4);
+    	var nowYear = new Date().getFullYear();
+    	if(certNoYear < '1996' || certNoYear > nowYear){
+    		alert("教师资格证书号码不规范，请检查您的证书号码，或者去发证机关规范教师资格证书后再报名");
+    		return false;
+    	}
+    }
+
+    return true;
 };

@@ -351,7 +351,7 @@
                 </tr>
                 <tr>
                   <td class="operation">认定机构:</td>
-                  <td><span class="form-data" name="registerOrg" data-id="" data-text=""></span></td>
+                  <td><span class="form-data" name="org" data-id="" data-text=""></span></td>
                   <td></td>
                   <td></td>
                 </tr>
@@ -364,15 +364,15 @@
            <table width="960" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <td width="250" class="operation">现任教学段:</td>
-                    <td width="280">幼儿园</td>
+                    <td width="280"><span class="form-data" name="teachGrade" data-id="" data-text=""></span></td>
                     <td width="250" class="operation">所在省:</td>
-                    <td width="280">北京市教育局</td>
+                    <td width="280"><span class="form-data" name="province" data-id="" data-text=""></span></td>
                 </tr>
                 <tr>
                     <td class="operation">注册机构:</td>
-                    <td>大兴区教育局</td>
+                    <td><span class="form-data" name="registerOrg" data-id="" data-text=""></span></td>
                     <td class="operation">现任教学科:</td>
-                    <td>幼儿园</td>
+                    <td><span class="form-data" name="teachSubject" data-id="" data-text=""></span></td>
                 </tr>
             </table>
         </div>

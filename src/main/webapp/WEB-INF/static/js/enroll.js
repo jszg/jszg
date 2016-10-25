@@ -13,12 +13,9 @@ $(document).ready(function() {
     handleMajorsDialog(); // 第七步的最高学历所学专业
     handleTechnicalJobsDialog(); // 第七步的教师职务（职称）
 
-    requestLocalSets(); // TODO: 删除
-
-
     requestDicts();
 
-    StepUtils.toStep(5); // 到第 N 步，测试使用
+    StepUtils.toStep(4); // 到第 N 步，测试使用
 
     // 点击取消按钮关闭弹出对话框
     $('.pop-dialog .cancel-button').click(function(event) {
@@ -94,7 +91,7 @@ function handleNextAndPreviousEvents() {
 
     // 第二步的下一步
     $('#box-2-next').click(function() {
-        if (!$('#agree-checkbox').get(0).checked){
+        if (!$('#agree-checkbox').get(0).checked) {
             alert('请先阅读网上申报协议并同意后才可以申报！');
             return;
         }
@@ -120,8 +117,6 @@ function handleNextAndPreviousEvents() {
             $('#box-4').hide();
             $('#box-5').show();
             $('.bz5').addClass('active');
-
-            requestLocalSets(); // 请求确认点
         }
     });
 
@@ -167,18 +162,18 @@ function handleNextAndPreviousEvents() {
 }
 
 /**
- * 请求确认点
+ * 使用同步的方式加载确认点
+ *
+ * @param  {int} orgId 注册机构的 id
  */
-function requestLocalSets() {
+function requestLocalSets(orgId) {
     $('#local-sets-table tr:gt(0)').remove(); // 先删除所有的确认点
-    var orgId = UiUtils.getSelectedOption('register-orgs').id; // orgId 为注册机构的 id
-    orgId = 21;
 
     if (-1 == orgId) {
         return;
     }
 
-    $.rest.get({url: Urls.REST_LOCALSETS, urlParams: {orgId: orgId}, success: function(result) {
+    $.rest.get({url: Urls.REST_LOCALSETS, urlParams: {orgId: orgId}, async: false, success: function(result) {
         $('#local-sets-table').append(template('localSetsTemplate', {localSets: result.data}));
     }});
 }
@@ -195,7 +190,7 @@ function handleSearchLocalSets() {
     });
 
     function searchLocalSets() {
-        $('#local-sets-table input:radio').removeAttr("checked"); // 取消选中
+        $('#local-sets-table input:radio').removeAttr('checked'); // 取消选中
         var text = $.trim($('#local-sets-div .search-input').val()); // 输入的 text
 
         // [1] 如果输入内容为空白，显示所有的确认点
@@ -292,7 +287,7 @@ function handleChangeProvincesForCollegeEvent() {
 
     function searchCollege() {
         $('#graduation-colleges li').removeClass('active'); // 删除被选中状态
-        var provinceId = UiUtils.getSelectedOption('provinces-for-college').id;
+        var provinceId = UiUtils.getSelectedOption('#provinces-for-college').id;
 
         if (-1 == provinceId) {
             alert('请选择省，然后再进行搜索');
@@ -321,9 +316,9 @@ function handleChangeProvincesForCollegeEvent() {
  */
 function handleRequestRegisterOrgs() {
     $('#teach-grades, #cities').change(function(event) {
-        var teachGradeId = UiUtils.getSelectedOption('teach-grades').id;
-        var cityId = UiUtils.getSelectedOption('cities').id;
-        var provinceCity = UiUtils.getSelectedOption('cities').option.attr('data-province-city') === 'true';
+        var teachGradeId = UiUtils.getSelectedOption('#teach-grades').id;
+        var cityId = UiUtils.getSelectedOption('#cities').id;
+        var provinceCity = UiUtils.getSelectedOption('#cities').option.attr('data-province-city') === 'true';
 
         if (-1 === teachGradeId || -1 === cityId) {
             return;
@@ -346,14 +341,15 @@ function Validator () {}
 /**
  * 验证第三步数据，验证通过后并填充在其他步骤上对应的数据
  *      1. 身份证有效
- *      2.
+ *      2. 证书号码格式有效
+ *      3.
  *
  * @return {bool} 验证通过返回 true，否则返回 false
  */
 Validator.validate3thStep = function() {
-    var idType = UiUtils.getSelectedOption('id-types'); // parseInt($('#id-types option:selected').val());
-    var idNo = $.trim($('#idNo').val());
-    var certNo = $.trim($('#certNo').val());
+    var idType = UiUtils.getSelectedOption('#id-types'); // 证件类型
+    var idNo = $.trim($('#idNo').val()); // 身份证件号码
+    var certNo = $.trim($('#certNo').val()); // 教师资格证书号码
 
     if (-1 == idType.id) {
         alert('请选择 "证件类型"');
@@ -362,8 +358,16 @@ Validator.validate3thStep = function() {
 
     if (!IdCard.validate(idNo)) {
         alert('请输入有效的身份证号码');
-        return;
+        return false;
     }
+
+    if (!CertNo.validate(certNo)) {
+        return false;
+    }
+
+    // $.rest.get({async: false, success: function() {
+    //
+    // }});
 
     UiUtils.setFormData('idType', idType.id, idType.name);
     UiUtils.setFormData('certNo', -1, certNo);
@@ -378,20 +382,83 @@ Validator.validate3thStep = function() {
 };
 
 Validator.validate4thStep = function() {
-    var nation = UiUtils.getSelectedOption('nations');
-    var certAssignDate = $.trim($('#cert-assign-date').val());
-    var gender = UiUtils.getSelectedOption('gender');
-    var name = $.trim($('#name').val());
+    var certAssignDate  = $.trim($('#cert-assign-date').val());    // 证书签发日期
+    var certType        = UiUtils.getSelectedOption('#certTypes'); // 资格种类
+                                                               // 认定机构
+    var registerSubject = UiUtils.getFormData('#box-4', 'registerSubject'); // 任教学科
+    var name            = $.trim($('#name').val());                      // 姓名
+    var nation          = UiUtils.getSelectedOption('#nations');         // 民族
+    var teachGrade      = UiUtils.getSelectedOption('#teach-grades');    // 现任教学段
+    var province        = UiUtils.getSelectedOption('#provinces');       // 所在省
+    var city            = UiUtils.getSelectedOption('#cities');          // 所在市
+    var registerOrg     = UiUtils.getSelectedOption('#register-orgs');   // 注册机构
+    var teachSubject    = UiUtils.getFormData('#box-4', 'teachSubject'); // 现任教学科
 
-    // if (-1 == nation.id) {
-    //     alert('请选择 "民族"');
-    //     return false;
-    // }
+    if (!certAssignDate) {
+        alert('请选择 "证书签发日期"');
+        return false;
+    }
 
-    UiUtils.setFormData('nation', nation.id, nation.name);
+    if (certAssignDate < '1996-00-00' || certAssignDate >= '2012-00-00') {
+        alert('请重新检查证书号码或修改证书签发日期');
+        return false;
+    }
+
+    if (-1 == certType.id) {
+        alert('请选择 "资格种类"');
+        return false;
+    }
+
+    if (-1 == registerSubject.id) {
+        alert('请选择 "任教学科"');
+        return false;
+    }
+
+    if (!name) {
+        alert('请输入 "姓名"');
+        return false;
+    }
+
+    if (-1 == nation.id) {
+        alert('请选择 "民族"');
+        return false;
+    }
+
+    if (-1 == teachGrade.id) {
+        alert('请选择 "现任教学段"');
+        return false;
+    }
+
+    if (-1 == province.id) {
+        alert('请选择 "省"');
+        return false;
+    }
+
+    if (-1 == city.id) {
+        alert('请选择 "市"');
+        return false;
+    }
+
+    if (-1 == registerOrg.id) {
+        alert('请选择 "注册机构"');
+        return false;
+    }
+
+    if (-1 == teachSubject.id) {
+        alert('请选择 "现任教学科"');
+        return false;
+    }
+
     UiUtils.setFormData('cert-assign-date', -1, certAssignDate);
-    UiUtils.setFormData('gender', gender.id, gender.name);
     UiUtils.setFormData('name', -1, name);
+    UiUtils.setFormData('nation', nation.id, nation.name);
+    UiUtils.setFormData('certType', certType.id, certType.name);
+    UiUtils.setFormData('registerSubject', registerSubject.id, registerSubject.name);
+    UiUtils.setFormData('teachGrade', teachGrade.id, teachGrade.name);
+    UiUtils.setFormData('province', province.id, province.name);
+    UiUtils.setFormData('registerOrg', registerOrg.id, registerOrg.name);
+    UiUtils.setFormData('teachSubject', teachSubject.id, teachSubject.name);
+    requestLocalSets(registerOrg.id); // 请求确认点
 
     return true;
 };
@@ -454,7 +521,7 @@ function handleRegisterSubjectsDialog() {
     // 如果 certTypeId 不为 -1，则请求任教学科
     // 如果 certTypeId 为 -1，则提示选择资格种类
     $('#select-register-subject-button').click(function(event) {
-        var certTypeId = UiUtils.getSelectedOption('certTypes').id;
+        var certTypeId = UiUtils.getSelectedOption('#certTypes').id;
 
         if (-1 === certTypeId) {
             alert('请先选择 "资格种类"，然后才能选择 "任教学科"');
@@ -493,8 +560,8 @@ function handleTeachSubjectsDialog() {
     $('#teach-subjects-dialog-trigger').leanModal({top: 50, overlay : 0.4});
 
     $('#select-teach-subject-button').click(function(event) {
-        var provinceId = UiUtils.getSelectedOption('provinces').id;
-        var teachGradeId = UiUtils.getSelectedOption('teach-grades').id;
+        var provinceId = UiUtils.getSelectedOption('#provinces').id;
+        var teachGradeId = UiUtils.getSelectedOption('#teach-grades').id;
 
         if (-1 === teachGradeId) {
             alert('请先选择 "现任教学段"，然后才能选择 "现任教学科"');
@@ -578,8 +645,8 @@ function handleMajorsDialog() {
     });
 
     $('#select-major-button').click(function(event) {
-        var certTypeId = UiUtils.getSelectedOption('certTypes').id;
-        var eduLevelId = UiUtils.getSelectedOption('edu-levels').id;
+        var certTypeId = UiUtils.getSelectedOption('#certTypes').id;
+        var eduLevelId = UiUtils.getSelectedOption('#edu-levels').id;
 
         // certTypeId = 2;
         // eduLevelId = 132;
