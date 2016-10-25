@@ -40,11 +40,11 @@ function UiUtils() {}
 /**
  * 取得选中的 option 的数据
  *
- * @param  {string} selectSector select 的选择器
- * @return {json}                返回 option 的 id, name, option 自己组成的对象
+ * @param  {string} selectSelector select 的选择器
+ * @return {json}                  返回 option 的 id, name, option 自己组成的对象
  */
-UiUtils.getSelectedOption = function(selectSector) {
-    var $selectedOption = $(selectSector).find('option:selected');
+UiUtils.getSelectedOption = function(selectSelector) {
+    var $selectedOption = $(selectSelector).find('option:selected');
 
     return {
         id: parseInt($selectedOption.val()),
@@ -151,8 +151,9 @@ UiUtils.insertOptions = function(selectId, optionsData, config) {
     var $select = $('#'+selectId);
     var defaults = {
         filters: [], // name 的 filter
-        templateId: 'optionTemplate',
-        remainFirstOption: true
+        templateId: 'optionTemplate', // 默认模版的 id
+        remainFirstOption: true, // 留下第一个选项
+        onlyEnabledItems: true // 是否显示 status 为 false 的项
     };
     var settings = $.extend({}, defaults, config);
 
@@ -167,7 +168,7 @@ UiUtils.insertOptions = function(selectId, optionsData, config) {
         // filters 为空，或者不为空时 name 在 filters 中才显示
         if (0 === settings.filters.length || -1 != $.inArray(optionsData[i].name, settings.filters)) {
             // 如果有 status 属性，并且 status 为 false，则不显示
-            if (optionsData[i].hasOwnProperty('status') && !optionsData[i].status) {
+            if (settings.onlyEnabledItems && optionsData[i].hasOwnProperty('status') && !optionsData[i].status) {
                 continue;
             }
             $select.append(template(settings.templateId, optionsData[i]));

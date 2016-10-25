@@ -140,13 +140,13 @@
              <table width="960" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <td width="193" class="operation">证件类型:</td>
-                    <td width="289"><span class="form-data" name="idType" data-id="" data-text=""></span></td>
+                    <td width="289"><span class="form-data" name="idType" data-id="" data-name=""></span></td>
                     <td width="194" class="operation">身份证件号码:</td>
-                    <td width="238"><span class="form-data" name="idNo" data-id="" data-text=""></span></td>
+                    <td width="238"><span class="form-data" name="idNo" data-id="" data-name=""></span></td>
                 </tr>
                 <tr>
                     <td class="operation">教师资格证书号码:</td>
-                    <td><span class="form-data" name="certNo" data-id="" data-text=""></td>
+                    <td><span class="form-data" name="certNo" data-id="" data-name=""></td>
                     <td></td>
                     <td></td>
                 </tr>
@@ -168,12 +168,12 @@
                 </tr>
                 <tr>
                     <td class="operation">认定机构</td>
-                    <td><button id="register-org-button">选择...</button></td>
-                    <td></td>
+                    <td><button id="select-recognize-org-button">选择...</button></td>
+                    <td><span class="form-data" name="recognizeOrg" data-id="" data-name=""><span></td>
                     <td class="operation">任教学科</td>
                     <td>
                         <button id="select-register-subject-button">选择...</button>
-                        <span class="form-data" name="registerSubject" data-id="" data-text=""><span>
+                        <span class="form-data" name="registerSubject" data-id="" data-name=""><span>
                     </td>
                 </tr>
                  <tr>
@@ -181,11 +181,11 @@
                     <td><input id="name" type="text"></td>
                     <td></td>
                     <td class="operation">性别</td>
-                    <td><span class="form-data" name="gender" data-id="" data-text=""></span></td>
+                    <td><span class="form-data" name="gender" data-id="" data-name=""></span></td>
                 </tr>
                  <tr>
                     <td class="operation">出生日期</td>
-                    <td><span class="form-data" name="birthday" data-id="" data-text=""></span></td>
+                    <td><span class="form-data" name="birthday" data-id="" data-name=""></span></td>
                     <td></td>
                     <td class="operation">民族</td>
                     <td><select id="nations"><option selected="selected" value="-1">请选择</option></select></td>
@@ -219,7 +219,7 @@
                     <td class="operation">现任教学科</td>
                     <td colspan="2">
                         <button id="select-teach-subject-button">请选择...</button>
-                        <span class="form-data" name="teachSubject" data-id="" data-text=""><span>
+                        <span class="form-data" name="teachSubject" data-id="" data-name=""><span>
                     </td>
                 </tr>
             </table>
@@ -254,7 +254,7 @@
                 <script id="localSetsTemplate" type="text/html">
                     {{each localSets as localSet}}
                     <tr>
-                        <td><input type="radio" name="local-set-radio" value="{{localSet.id}}"></td>
+                        <td><input type="radio" name="local-set-radio" value="{{localSet.id}}" data-name="{{localSet.name}}"></td>
                         <td name="name">{{localSet.name}}</td>
                         <td name="beginDate" class="text-center">{{localSet.beginDate}}</td>
                         <td name="endDate" class="text-center">{{localSet.endDate}}</td>
@@ -321,37 +321,37 @@
            <table width="960" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <td width="250" class="operation">证书签发日期:</td>
-                    <td width="280"><span class="form-data" name="cert-assign-date" data-id="" data-text=""></td>
+                    <td width="280"><span class="form-data" name="certAssignDate" data-id="" data-name=""></td>
                     <td width="250" class="operation">姓名:</td>
-                    <td width="280"><span class="form-data" name="name" data-id="" data-text=""></td>
+                    <td width="280"><span class="form-data" name="name" data-id="" data-name=""></td>
                 </tr>
                 <tr>
                     <td class="operation">性别:</td>
-                    <td><span class="form-data" name="gender" data-id="" data-text=""></span></td>
+                    <td><span class="form-data" name="gender" data-id="" data-name=""></span></td>
                     <td class="operation">证件类型:</td>
-                    <td><span class="form-data" name="idType" data-id="" data-text=""></span></td>
+                    <td><span class="form-data" name="idType" data-id="" data-name=""></span></td>
                 </tr>
                 <tr>
                     <td class="operation">身份证号码:</td>
-                    <td><span class="form-data" name="idNo" data-id="" data-text=""></span></td>
+                    <td><span class="form-data" name="idNo" data-id="" data-name=""></span></td>
                     <td class="operation">出生日期:</td>
-                    <td><span class="form-data" name="birthday" data-id="" data-text=""></span></td>
+                    <td><span class="form-data" name="birthday" data-id="" data-name=""></span></td>
                 </tr>
                 <tr>
-                    <td class="operation">名族:</td>
-                    <td><span class="form-data" name="nation" data-id="" data-text=""></span></td>
+                    <td class="operation">民族:</td>
+                    <td><span class="form-data" name="nation" data-id="" data-name=""></span></td>
                     <td class="operation">申请资格种类:</td>
-                    <td><span class="form-data" name="certType" data-id="" data-text=""></span></td>
+                    <td><span class="form-data" name="certType" data-id="" data-name=""></span></td>
                 </tr>
                 <tr>
                   <td class="operation">任教学科:</td>
-                  <td><span class="form-data" name="registerSubject" data-id="" data-text=""><span></td>
+                  <td><span class="form-data" name="registerSubject" data-id="" data-name=""><span></td>
                   <td class="operation">教师资格证书号码:</td>
-                  <td><span class="form-data" name="certNo" data-id="" data-text=""></span></td>
+                  <td><span class="form-data" name="certNo" data-id="" data-name=""></span></td>
                 </tr>
                 <tr>
                   <td class="operation">认定机构:</td>
-                  <td><span class="form-data" name="org" data-id="" data-text=""></span></td>
+                  <td><span class="form-data" name="recognizeOrg" data-id="" data-name=""><span></td>
                   <td></td>
                   <td></td>
                 </tr>
@@ -364,15 +364,15 @@
            <table width="960" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <td width="250" class="operation">现任教学段:</td>
-                    <td width="280"><span class="form-data" name="teachGrade" data-id="" data-text=""></span></td>
+                    <td width="280"><span class="form-data" name="teachGrade" data-id="" data-name=""></span></td>
                     <td width="250" class="operation">所在省:</td>
-                    <td width="280"><span class="form-data" name="province" data-id="" data-text=""></span></td>
+                    <td width="280"><span class="form-data" name="province" data-id="" data-name=""></span></td>
                 </tr>
                 <tr>
                     <td class="operation">注册机构:</td>
-                    <td><span class="form-data" name="registerOrg" data-id="" data-text=""></span></td>
+                    <td><span class="form-data" name="registerOrg" data-id="" data-name=""></span></td>
                     <td class="operation">现任教学科:</td>
-                    <td><span class="form-data" name="teachSubject" data-id="" data-text=""></span></td>
+                    <td><span class="form-data" name="teachSubject" data-id="" data-name=""></span></td>
                 </tr>
             </table>
         </div>
@@ -384,17 +384,17 @@
            <table width="960" border="0" cellspacing="0" cellpadding="0">
                 <tr>
                     <td width="130" class="operation">系统登录密码</td>
-                    <td width="150"><input type="text"></td>
+                    <td width="150"><input id="password1" type="text"></td>
                     <td><span class="description">密码不少于 8 位，包含数字、字母和特殊字符，特殊字符需从 &ldquo;#、%、*、-、_、!、@、$、&amp;&rdquo; 中选择。请牢记个人登录密码，将用于您登录查看、修改您的报名信息和打印定期注册申请表等</span></td>
                 </tr>
                 <tr>
                     <td class="operation">密码确认</td>
-                    <td><input type="text"></td>
+                    <td><input id="password2" type="text"></td>
                     <td></td>
                 </tr>
                 <tr>
                     <td class="operation">密码找回邮箱</td>
-                    <td><input type="text"></td>
+                    <td><input id="email" type="text"></td>
                     <td><spen class="description">找回密码用，请填写个人常用 E-mail 地址</spen></td>
                 </tr>
             </table>
@@ -426,12 +426,12 @@
                         <td align="right" class="operation">最高学历毕业学校</td>
                         <td colspan="2">
                             <button id="select-graduation-college-button">选择...</button>
-                            <span class="form-data" name="graduationCollege" data-id="" data-text=""></span>
+                            <span class="form-data" name="graduationCollege" data-id="" data-name=""></span>
                         </td>
                         <td class="operation">最高学历所学专业</td>
                         <td colspan="2">
                             <button id="select-major-button">请选择...</button>
-                            <span class="form-data" name="major" data-id="" data-text=""></span>
+                            <span class="form-data" name="major" data-id="" data-name=""></span>
                         </td>
                     </tr>
                     <tr>
@@ -452,10 +452,10 @@
                     </tr>
                     <tr>
                         <td align="right" class="operation">现任教学校</td>
-                        <td><input type="text"></td>
+                        <td><input id="work-unit" type="text"></td>
                         <td><span class="description">请填写现工作单位的全称</span></td>
                         <td class="operation">现任教学校聘用<br/>起始日期</td>
-                        <td><input id="current-work-start-time" type="text" readonly="readonly" class="laydate-icon"></td>
+                        <td><input id="work-date" type="text" readonly="readonly" class="laydate-icon"></td>
                         <td><span class="description">请填写第一次与现工作单位签订聘任合同的日期</span></td>
                     </tr>
                     <tr>
@@ -468,38 +468,41 @@
                     </tr>
                     <tr>
                         <td align="right" class="operation">开始参加工作时间</td>
-                        <td><input type="text" id="start-work-date" readonly="readonly" class="laydate-icon"></td>
+                        <td><input type="text" id="begin-work-year" readonly="readonly" class="laydate-icon"></td>
                         <td><span class="description">请填写首次参加工作的时间</span></td>
                         <td class="operation">教师职务（职称）</td>
                         <td colspan="2">
                             <button id="select-technical-job-button">请选择...</button>
-                            <span class="form-data" name="technicalJob" data-id="" data-text=""></span>
+                            <span class="form-data" name="technicalJob" data-id="" data-name=""></span>
                         </td>
                     </tr>
                     <tr>
                         <td align="right" class="operation">出生地</td>
-                        <td colspan="2"><input type="text"></td>
+                        <td colspan="2"><input id="birth-place" type="text"></td>
                         <td class="operation">户籍所在地</td>
-                        <td colspan="2"><input type="text"><br/><span class="description">请按户口簿上的内容填写（或按照初审注册机构的要求填写）</span></td>
+                        <td colspan="2"><input id="residence" type="text"><br/><span class="description">请按户口簿上的内容填写（或按照初审注册机构的要求填写）</span></td>
                     </tr>
                     <tr>
                         <td align="right" class="operation">通讯地址</td>
-                        <td colspan="2"><input type="text"></td>
+                        <td colspan="2"><input id="address" type="text"></td>
                         <td class="operation">通讯地的邮编</td>
-                        <td><input type="text"></td>
+                        <td><input id="zip-code" type="text"></td>
                         <td><span class="description">请填写 6 位阿拉伯数字</span></td>
                     </tr>
                     <tr>
                         <td align="right" class="operation">联系电话</td>
-                        <td><input type="text"></td>
+                        <td><input id="phone" type="text"></td>
                         <td class="description">请填写阿拉伯数字</td>
                         <td class="operation">手机</td>
-                        <td><input type="text"></td>
+                        <td><input id="cellphone" type="text"></td>
                         <td><span class="description">请填写 11 位阿拉伯数字</span></td>
                     </tr>
                     <tr>
                         <td class="operation">照片</td>
-                        <td><span id="photo"><img></span><div id="filePicker">选择照片</div></td>
+                        <td>
+                            <span id="photo"><img></span><div id="filePicker">选择照片</div>
+                            <span class="form-data" name="photo" data-id="" data-name="">
+                        </td>
                         <td colspan="4"><span class="description">申请人近 3 个月内的彩色证件照，淡蓝色、红色或白色背景，无边框；正面照，免冠，无头饰。现场确认时提交的照片与此电子照片同一底版，建议照片宽度为 114 像素，高度为 156 像素。  须按照要求由申请人本人上传，且必须与教师资格申请表上所贴照片底版相同</span></td>
                     </tr>
                 </table>
