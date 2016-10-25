@@ -104,7 +104,7 @@ function handleNextAndPreviousEvents() {
 
     // 第三步的下一步
     $('#box-3-next').click(function() {
-        if (Validator.validate3thStep()) {
+        if (StepValidator.validate3thStep()) {
             // 验证通过，进入第四步
             $('#box-3').hide();
             $('#box-4').show();
@@ -114,7 +114,7 @@ function handleNextAndPreviousEvents() {
 
     // 第四步的下一步
     $('#box-4-next').click(function() {
-        if (Validator.validate4thStep()) {
+        if (StepValidator.validate4thStep()) {
             $('#box-4').hide();
             $('#box-5').show();
             $('.bz5').addClass('active');
@@ -123,7 +123,7 @@ function handleNextAndPreviousEvents() {
 
     // 第五步的下一步
     $('#box-5-next').click(function() {
-        if (Validator.validate5thStep()) {
+        if (StepValidator.validate5thStep()) {
             $('#box-5').hide();
             $('#box-6').show();
             $('.bz6').addClass('active');
@@ -139,7 +139,7 @@ function handleNextAndPreviousEvents() {
 
     // 第七步的下一步
     $('#box-7-next').click(function() {
-        if (Validator.validate7thStep()) {
+        if (StepValidator.validate7thStep()) {
             $('#box-7').hide();
             $('#box-8').show();
             $('.bz8').addClass('active');
@@ -330,7 +330,7 @@ function handleRequestRegisterOrgs() {
 //                                                           验证                                                //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-function Validator () {}
+function StepValidator () {}
 
 /**
  * 验证第三步数据，验证通过后并填充在其他步骤上对应的数据
@@ -340,7 +340,7 @@ function Validator () {}
  *
  * @return {bool} 验证通过返回 true，否则返回 false
  */
-Validator.validate3thStep = function() {
+StepValidator.validate3thStep = function() {
     var idType = UiUtils.getSelectedOption('#id-types'); // 证件类型
     var idNo = $.trim($('#idNo').val()); // 身份证件号码
     var certNo = $.trim($('#certNo').val()); // 教师资格证书号码
@@ -380,7 +380,7 @@ Validator.validate3thStep = function() {
  *
  * @return {bool} 验证通过返回 true，否则返回 false
  */
-Validator.validate4thStep = function() {
+StepValidator.validate4thStep = function() {
     var certAssignDate  = $.trim($('#cert-assign-date').val());    // 证书签发日期
     var certType        = UiUtils.getSelectedOption('#certTypes'); // 资格种类
                                                                // 认定机构
@@ -425,7 +425,7 @@ Validator.validate4thStep = function() {
  *
  * @return {bool} 验证通过返回 true，否则返回 false
  */
-Validator.validate5thStep = function() {
+StepValidator.validate5thStep = function() {
     var $localSet = $('#local-sets-table input:radio:checked');
 
     if (0 === $localSet.length) {
@@ -449,7 +449,7 @@ Validator.validate5thStep = function() {
  *
  * @return {bool} 验证通过返回 true，否则返回 false
  */
-Validator.validate7thStep = function() {
+StepValidator.validate7thStep = function() {
     var $localSet = $('#local-sets-table input:radio:checked');
     var localSet = {id: $localSet.val(), name: $localSet.attr('data-name')}; // 确认点
 
@@ -475,10 +475,12 @@ Validator.validate7thStep = function() {
     var password2 = $('#password2').val(); // 密码确认
     var email = $.trim($('#email').val()); // 密码找回邮箱
 
-    if (!password1)                   { alert('密码不能为空');              return false; }
-    if (password1 != password2)       { alert('两次输入的密码不一致');       return false; }
-    if (!email)                       { alert('请输入 "密码找回邮箱"');      return false; }
-    if (!(/^.+@.+\..+$/.test(email))) { alert('请输入正确的 "密码找回邮箱"'); return false; }
+    var emailResult = Validator.validateEmail(email);
+    var passwordResult = Validator.validatePassword(password1);
+    if (!passwordResult.success) { alert(passwordResult.message); return false; }
+    if (password1 != password2)  { alert('两次输入的密码不一致');    return false; }
+    if (!email)                  { alert('请输入 "密码找回邮箱"');   return false; }
+    if (!emailResult.success)    { alert(emailResult.message);    return false; }
 
     var degree              = UiUtils.getSelectedOption('#degrees');          // 最高学位
     var eduLevel            = UiUtils.getSelectedOption('#edu-levels');       // 最高学历
@@ -730,9 +732,10 @@ function handleMajorsDialog() {
             return;
         }
 
-        // 如果最高学历为高中毕业及一下，则不弹出选择对话框，设定最高学历所学专业为无，其 id 固定为 4001
+        // 如果最高学历为高中毕业及以下，则不弹出选择对话框，设定最高学历所学专业为无，其 id 固定为 4001
         if (204 === eduLevelId) {
             UiUtils.setFormData('major', 4001, '无');
+            alert('"最高学历" 为 "高中毕业及以下" 时 "最高学历所学专业" 为 "无"，不需要自己选择');
             return;
         }
 
@@ -758,9 +761,10 @@ function handleTechnicalJobsDialog() {
 
     // 点击确定按钮，设置选中的学科，并隐藏对话框
     $('#technical-jobs-dialog .ok-button').click(function(event) {
-        var subjectNode = window.subjectsTree.getSelectedNodes()[0];
-        if (subjectNode) {
-            UiUtils.setFormData('technicalJob', subjectNode.id, subjectNode.name);
+        var technicalJobNode = window.subjectsTree.getSelectedNodes()[0];
+        if (technicalJobNode) {
+            console.log(technicalJobNode);
+            UiUtils.setFormData('technicalJob', technicalJobNode.id, technicalJobNode.name);
             $("#lean_overlay").click();
         } else {
             alert('没有选中教师职务（职称）');
