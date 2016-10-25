@@ -15,7 +15,7 @@ public class Registration {
     private int sexName;              //性别
     private Date birthday;            //出生日期
     private int nationName;        //民族
-    private int certTypeName;      //资格种类
+    private int certType;      //资格种类
     private int subjectName;           //任教学科
     private String orgName;          //认定机构
     private String tmpPhoto;         //照片
@@ -76,12 +76,12 @@ public class Registration {
         this.nationName = nationName;
     }
 
-    public int getCertTypeName() {
-        return certTypeName;
+    public int getCertType() {
+        return certType;
     }
 
-    public void setCertTypeName(int certTypeName) {
-        this.certTypeName = certTypeName;
+    public void setCertType(int certType) {
+        this.certType = certType;
     }
 
     public int getSubjectName() {

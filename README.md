@@ -207,3 +207,10 @@ gradle -Denv=development clean appStartDebug
     http://{{host}}:{{port}}/new-cert/rest/signUp/registration?idno={idno}&certno={certno}
     ```
 
+* 验证接口
+
+    ```
+    http://{{host}}:{{port}}/new-cert/rest/signUp/enroll/step3?idno={idno}&certno={certno}
+    http://{{host}}:{{port}}/new-cert/rest/signUp/enroll/step4?orgId={orgId}
+
+    ```

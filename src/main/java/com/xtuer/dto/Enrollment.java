@@ -14,6 +14,7 @@ public class Enrollment {
     private int province;// 省
     private int city; //市
     private int org; //机构
+    private boolean inRegistration;
 
     public String getCertNo() {
         return certNo;
@@ -77,5 +78,13 @@ public class Enrollment {
 
     public void setOrg(int org) {
         this.org = org;
+    }
+
+    public boolean isInRegistration() {
+        return inRegistration;
+    }
+
+    public void setInRegistration(boolean inRegistration) {
+        this.inRegistration = inRegistration;
     }
 }

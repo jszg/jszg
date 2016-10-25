@@ -13,6 +13,8 @@ public class Enrollhistory {
     private String idNo; //证件号码
     private int judgmentStatus;//终审注册状态
     private Date enrollTime;//注册日期
+    private int enrollNum; //注册类型
+
 
     public int getId() {
         return id;
@@ -52,5 +54,13 @@ public class Enrollhistory {
 
     public void setEnrollTime(Date enrollTime) {
         this.enrollTime = enrollTime;
+    }
+
+    public int getEnrollNum() {
+        return enrollNum;
+    }
+
+    public void setEnrollNum(int enrollNum) {
+        this.enrollNum = enrollNum;
     }
 }

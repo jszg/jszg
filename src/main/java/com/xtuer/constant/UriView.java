@@ -38,11 +38,15 @@ public interface UriView {
     String REST_TECHNICAL_JOB_ROOT         = "/rest/signUp/technicaljobs/root";
     String REST_TECHNICAL_JOB_CHILDREN     = "/rest/signUp/{parentId}/technicaljobs/children";
 
-    String REST_LIMITATION                = "/rest/signUp/limitation";
-    String REST_ENROLLHISTORY             = "/rest/signUp/enrollhistory";
-    String REST_HISTORYVALID              = "/rest/signUp/historyvalid";
-    String REST_REGISTRATION              = "/rest/signUp/registration";
-    String REST_ENROLLMENT                = "/rest/signUp/enrollment";
+    String REST_LIMITATION                 = "/rest/signUp/limitation";
+    String REST_ENROLLHISTORY              = "/rest/signUp/enrollhistory";
+    String REST_HISTORYVALID               = "/rest/signUp/historyvalid";
+    String REST_REGISTRATION               = "/rest/signUp/registration";
+    String REST_ENROLLMENT                 = "/rest/signUp/enrollment";
+
+    // 验证相关的接口
+    String REST_ENROLL_STEP3               = "/rest/signUp/enroll/step3";
+    String REST_ENROLL_STEP4               = "/rest/signUp/enroll/step4";
 
     String URI_UPLOAD_PERSON_IMAGE         = "/upload-person-image";
 }

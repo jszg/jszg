@@ -13,21 +13,22 @@
   </select>
 
   <select id="findEnrollhistory" resultType="Enrollhistory">
-    select ENR_HIS_ID as id, eh.CERT_NO as certNo, eh.ID_NO as idNo,eh.JUDGMINT_STATUS as judgmentStatus, eh.ENROLL_TIME as enrollTime
+    select ENR_HIS_ID as id, eh.CERT_NO as certNo, eh.ID_NO as idNo,eh.JUDGMINT_STATUS as judgmentStatus, eh.ENROLL_TIME as enrollTime, eh.ENROLL_NUM
+     as enrollNum
     from t_enroll_history eh
     where id_no = #{idno} and cert_no=#{certno}
   </select>
 
   <select id="findEnrollment" resultType="Enrollment">
     select  ID_NO as idNo, ID_TYPE as idType, CERT_NO as certNo, IN_HISTORY as inHistory, ENROLL_NUM as enrollNum,
-    PROVINCE as province, CITY_ID as city, ORG_ID as org
+    PROVINCE as province, CITY_ID as city, ORG_ID as org, IN_REGISTRATION as inRegistration
     from t_enrollment
     where ID_NO = #{idno} and CERT_NO = #{certno}
   </select>
 
   <select id="findHistoryValid" resultType="HistoryValid">
     select REG_ID as id, NAME as name, ID_NO as idNo, ID_TYPE as idTypeName, CERT_NO as certNo,
-    SEX as sexName, BIRTHDAY as birthday, NATION as nationName, CT_ID as certTypeName, SUBJECT as subject,
+    SEX as sexName, BIRTHDAY as birthday, NATION as nationName, CT_ID as certType, SUBJECT as subject,
     ORG_NAME as orgName, DELETE_STATUS as  deleteStatus
     from t_history_valid
     where id_no = #{idno} and CERT_NO = #{certno}
@@ -35,10 +36,27 @@
 
   <select id="findRegistration" resultType="Registration">
     select NAME as name, ID_NO as idNo, ID_TYPE as idTypeName, CERT_NO as certNo,
-    SEX as sexName, BIRTHDAY as birthday, NATION as nationName, CT_ID as certTypeName, SUBJECT as subjectName,
+    SEX as sexName, BIRTHDAY as birthday, NATION as nationName, CT_ID as certType, SUBJECT as subjectName,
     ORG_NAME as orgName
     from t_registration
     where id_no = #{idno} and CERT_NO = #{certno}
+  </select>
+
+  <select id="findOrgBatch" resultType="OrgBatch">
+    select ob.join_in as joinIn,ob.is_open as isOpen as ob.PB_ID as provinceBatch from t_org_batch ob
+    left join t_province_batch pb on pb.pb_id = ob.pb_id
+    where ob.org_id = #{orgId} and ob.type = 2 and <![CDATA[ rownum <=1 ]]> order by ob.ob_id desc
+  </select>
+
+  <select id="findOrgBatchTime" resultType="OrgBatchTime">
+    select obt.OB_ID as orgBatch, obt.VALID_BEGIN_DATE as validBeginDate, obt.VALID_END_DATE as validEndDate
+    from t_org_batch_time obt
+    left join t_org_batch ob on ob.ob_id = obt.ob_id
+    where ob.org_id = #{orgId} and ob.type = 2
+    and <![CDATA[ obt.valid_begin_date <=sysdate ]]>
+    and obt.valid_end_date >= sysdate
+    and <![CDATA[ rownum <=1 ]]>
+    order by obt.obt_id desc
   </select>
 
 </mapper>

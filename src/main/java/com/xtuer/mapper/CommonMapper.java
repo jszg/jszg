@@ -4,6 +4,8 @@ import com.xtuer.dto.Enrollhistory;
 import com.xtuer.dto.Enrollment;
 import com.xtuer.dto.HistoryValid;
 import com.xtuer.dto.Limitation;
+import com.xtuer.dto.OrgBatch;
+import com.xtuer.dto.OrgBatchTime;
 import com.xtuer.dto.Registration;
 import org.apache.ibatis.annotations.Param;
 
@@ -20,4 +22,6 @@ public interface CommonMapper {
     List<HistoryValid> findHistoryValid(@Param("idno") String idno, @Param("certno") String certno);
     List<Registration> findRegistration(@Param("idno") String idno, @Param("certno") String certno);
     List<Enrollment> findEnrollment(@Param("idno") String idno, @Param("certno") String certno);
+    List<OrgBatch> findOrgBatch(@Param("orgId") int orgId);
+    List<OrgBatchTime> findOrgBatchTime(@Param("orgId") int orgId);
 }
