@@ -15,6 +15,8 @@ public class Organization {
     private String oldName;
     private Date changeDate;
     private Date annulDate;
+    private int parent;
+    private int orgType;
 
     public int getId() {
         return id;
@@ -62,5 +64,21 @@ public class Organization {
 
     public void setAnnulDate(Date annulDate) {
         this.annulDate = annulDate;
+    }
+
+    public int getParent() {
+        return parent;
+    }
+
+    public void setParent(int parent) {
+        this.parent = parent;
+    }
+
+    public int getOrgType() {
+        return orgType;
+    }
+
+    public void setOrgType(int orgType) {
+        this.orgType = orgType;
     }
 }

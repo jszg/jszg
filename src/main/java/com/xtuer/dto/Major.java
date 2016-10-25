@@ -8,6 +8,7 @@ package com.xtuer.dto;
 public class Major {
     private int id;
     private String name;
+    private String code;
 
     public int getId() {
         return id;
@@ -23,5 +24,13 @@ public class Major {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
     }
 }

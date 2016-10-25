@@ -7,15 +7,19 @@
 <!--namespace 非常重要：必须是 Mapper 类的全路径-->
 <mapper namespace="com.xtuer.mapper.MajorMapper">
   <select id="findRoot" resultType="Major">
-      SELECT MAJOR_ID as id, NAME as name from T_MAJOR M WHERE M.PARENT_ID IS NULL AND M.STATUS=1 ORDER BY M.MAJOR_CODE
+      SELECT MAJOR_ID as id, NAME as name, MAJOR_CODE as code from T_MAJOR M WHERE M.PARENT_ID IS NULL AND M.STATUS=1 ORDER BY M.MAJOR_CODE
+  </select>
+
+  <select id="findByParentIdStatus1" resultType="Major">
+      SELECT MAJOR_ID as id, NAME as name, MAJOR_CODE as code from T_MAJOR M WHERE M.PARENT_ID = #{parentId} AND M.STATUS=1 ORDER BY M.MAJOR_CODE
   </select>
 
   <select id="findByParentId" resultType="Major">
-      SELECT MAJOR_ID as id, NAME as name from T_MAJOR M WHERE M.PARENT_ID = #{parentId} AND M.STATUS=1 ORDER BY M.MAJOR_CODE
+    SELECT MAJOR_ID as id, NAME as name, MAJOR_CODE as code from T_MAJOR M WHERE M.PARENT_ID = #{parentId} ORDER BY M.MAJOR_CODE
   </select>
 
   <select id="findByCertTypeIdAndEduLevelId" resultType="Major">
-      SELECT M.MAJOR_ID as id,M.NAME as name
+      SELECT M.MAJOR_ID as id,M.NAME as name, M.MAJOR_CODE as code
       FROM T_CERT_TYPE_LINK_EXTEND C
       LEFT JOIN T_MAJOR M ON C.TARGET_ID=M.MAJOR_ID
       WHERE C.LINK_ID=(SELECT C.CTL_ID FROM T_CERT_TYPE_LINK C WHERE C.CT_ID = #{certTypeId} AND C.EDU_LEVEL_ID = #{eduLevelId})
@@ -23,7 +27,7 @@
   </select>
 
   <select id="findByParentIdAndProvince" resultType="Major">
-      SELECT M.MAJOR_ID as id, M.NAME as name
+      SELECT M.MAJOR_ID as id, M.NAME as name, M.MAJOR_CODE as code
       FROM T_MAJOR M
       WHERE M.PARENT_ID = #{parentId}
         AND (M.PROVINCE IS NULL OR M.PROVINCE = #{provinceId})

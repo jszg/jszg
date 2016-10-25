@@ -16,6 +16,8 @@ public interface MajorMapper {
     List<Major> findRoot();
 
     // childen:如果是注册
+    List<Major> findByParentIdStatus1(@Param("parentId") int parentId);
+
     List<Major> findByParentId(@Param("parentId") int parentId);
 
     // parent:如果是认定的

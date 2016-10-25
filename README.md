@@ -211,6 +211,6 @@ gradle -Denv=development clean appStartDebug
 
     ```
     http://{{host}}:{{port}}/new-cert/rest/signUp/enroll/step3?idno={idno}&certno={certno}
-    http://{{host}}:{{port}}/new-cert/rest/signUp/enroll/step4?orgId={orgId}
+    [POST] http://{{host}}:{{port}}/new-cert/rest/signUp/enroll/step4
 
     ```

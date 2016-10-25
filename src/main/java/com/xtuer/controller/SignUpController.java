@@ -1,6 +1,7 @@
 package com.xtuer.controller;
 
 import com.alibaba.fastjson.TypeReference;
+import com.xtuer.bean.EnrollStep4Form;
 import com.xtuer.bean.Result;
 import com.xtuer.constant.RedisKey;
 import com.xtuer.constant.UriView;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -45,7 +48,12 @@ public class SignUpController {
     public static final int DELETE_STATUS_NORMAL = 0; // 正常
     public static final int DELETE_STATUS_FORBID = 1; // 被限制
     public static final int DELETE_STATUS_DELETE = 2; // 删除
-
+    public static final int T_GLOBAL = 5;//资格中心
+    public static final int T_PROVINCE = 4;//省级机构
+    public static final int T_CITY = 3;//市级机构
+    public static final int T_COUNTY = 2;//县级机构
+    public static final int T_LOCAL = 1;//确认机构
+    public static final int T_ABROAD = 0;
 
     // 所有资格种类
     @GetMapping(UriView.REST_CERT_TYPE)
@@ -325,7 +333,7 @@ public class SignUpController {
     @ResponseBody
     public Result<List<Major>> getZhuceChildrenMajors(@PathVariable("parentId") int parentId) {
         String key = String.format(RedisKey.MAJORS_ZHUCE_CHILREN, parentId);
-        List<Major> majors = redisUtils.get(new TypeReference<List<Major>>(){}, key, () -> majorMapper.findByParentId(parentId));
+        List<Major> majors = redisUtils.get(new TypeReference<List<Major>>(){}, key, () -> majorMapper.findByParentIdStatus1(parentId));
         return Result.ok(majors);
     }
 
@@ -556,14 +564,77 @@ public class SignUpController {
     }
 
     // 注册验证Step4
-    @GetMapping(UriView.REST_ENROLL_STEP4)
+    @PostMapping(UriView.REST_ENROLL_STEP4)
     @ResponseBody
-    public Result<? extends Object> enrollStep4() {
+    public Result<?> enrollStep4(@RequestBody EnrollStep4Form form) {
+        // TODO 验证空
 
+        // 证书上的验证
+        int registerOrgId = form.registerOrg;
+        String key = String.format(RedisKey.ORGS_ZHUCE, form.teachGrade, form.city);
+        List<Organization> organizations = redisUtils.get(new TypeReference<List<Organization>>() {},
+                key, () -> organizationMapper.findByOrgId(registerOrgId));
 
+        if (organizations.isEmpty()) {
+            return new Result(false, "未找到该机构");
+        }
 
+        Organization org = organizations.get(0);
+        String proCode = form.proCode;
+        if(proCode != null && Integer.parseInt(proCode) != 45){
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(2008,8,1,0,0,0);
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(form.certAssignDate);
+            cal.set(Calendar.HOUR_OF_DAY, 23);
+            cal.set(Calendar.MINUTE, 59);
+            cal.set(Calendar.SECOND, 59);
+            if(form.certAssignDate != null && !cal.getTime().before(calendar.getTime())){
+                return new Result(false, "请仔细检查证书号码或证书签发日期是否有误");
+            }
+        }
 
-        return Result.error(null);
+        List<OrgBatch> orgBatchs = commonMapper.findOrgBatch(org.getId());
+        if (orgBatchs.isEmpty()) {
+            return new Result(false, "该机构目前未开展注册工作，请与该机构联系，了解其注册工作的时间安排");
+        }
+
+        // 注册验证
+        OrgBatch orgBatch = orgBatchs.get(0);
+        if(orgBatch != null &&  orgBatch.getProvinceBatch() != null){
+            return new Result(false, "该机构当前注册工作已经结束");
+        }
+
+        if(orgBatch != null && orgBatch.getJoinIn() != null && !orgBatch.getJoinIn()){
+            return new Result(false, "该机构目前未开展注册工作，请与该机构联系，了解其注册工作的时间安排");
+        }
+
+        if (orgBatch.getOpen() != null && !orgBatch.getOpen()) {
+            return new Result(false,  "该机构注册工作目前未安排网上采集信息的时间，请与该机构联系，了解其注册工作的时间安排");
+        }
+
+        List<OrgBatchTime> orgBatchTimes = commonMapper.findOrgBatchTime(org.getId());
+        if (!orgBatchTimes.isEmpty()) {
+            StringBuffer buffer = new StringBuffer("该机构注册工作网上采集信息的时间段为:");
+            String prependMsg = "";
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy年M月d日");
+            for (OrgBatchTime batchTime : orgBatchTimes) {
+                if (batchTime.getValidBeginDate().after(new Date())) {
+                    prependMsg = "还未到网报时间，";
+                }
+                if (batchTime.getValidEndDate().before(new Date())) {
+                    prependMsg = "网报时间已截止，";
+                }
+                buffer.append(dateFormat.format(batchTime.getValidBeginDate()));
+                buffer.append("到");
+                buffer.append(dateFormat.format(batchTime.getValidEndDate()));
+                buffer.append(" ");
+            }
+            String errMsg = prependMsg + buffer.toString();
+            return new Result(false, errMsg);
+        }
+
+        return Result.ok(form);
     }
 
 

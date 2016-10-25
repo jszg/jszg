@@ -57,7 +57,8 @@
     </select>
 
     <select id="findByOrgId" resultType="Organization">
-      select o.org_id as id ,o.org_name as name from t_org o
+      select o.org_id as id ,o.org_name as name, o.PARENT_ID as parent, o.ORG_TYPE as orgType
+      from t_org o
       where o.org_id = #{orgId}
     </select>
 
