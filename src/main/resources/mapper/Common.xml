@@ -27,19 +27,33 @@
   </select>
 
   <select id="findHistoryValid" resultType="HistoryValid">
-    select REG_ID as id, NAME as name, ID_NO as idNo, ID_TYPE as idTypeName, CERT_NO as certNo,
-    SEX as sexName, BIRTHDAY as birthday, NATION as nationName, CT_ID as certType, SUBJECT as subject,
-    ORG_NAME as orgName, DELETE_STATUS as  deleteStatus
-    from t_history_valid
+        select t.REG_ID as id, t.NAME as name, t.ID_NO as idNo, t.ID_TYPE as idTypeName, t.CERT_NO as certNo,
+           Case when t.SEX =1 then '男'
+           when t.SEX = 2 then '女'
+           else '不知道'
+           end as sexName,
+           t.BIRTHDAY as birthday, d.NAME as nationName, t.NAME as certType,  s.NAME as subjectName,
+           t.ORG_NAME as orgName, DELETE_STATUS as  deleteStatus
+    from t_history_valid t ,t_dict d, T_CERT_TYPE c, T_SUBJECT s
     where id_no = #{idno} and CERT_NO = #{certno}
+          and t.NATION = d.DIC_ID
+          and c.CT_ID = t.CT_ID
+          and t.SUBJECT = s.SUBJECT_ID
   </select>
 
   <select id="findRegistration" resultType="Registration">
-    select NAME as name, ID_NO as idNo, ID_TYPE as idTypeName, CERT_NO as certNo,
-    SEX as sexName, BIRTHDAY as birthday, NATION as nationName, CT_ID as certType, SUBJECT as subjectName,
-    ORG_NAME as orgName
-    from t_registration
+    select t.NAME as name, t.ID_NO as idNo, t.ID_TYPE as idTypeName, t.CERT_NO as certNo,
+      Case when t.SEX =1 then '男'
+      when t.SEX = 2 then '女'
+      else '不知道'
+      end as sexName,
+      t.BIRTHDAY as birthday, d.NAME as nationName, t.NAME as certType,  s.NAME as subjectName,
+      t.ORG_NAME as orgName
+    from t_registration t ,t_dict d, T_CERT_TYPE c, T_SUBJECT s
     where id_no = #{idno} and CERT_NO = #{certno}
+    and t.NATION = d.DIC_ID
+    and c.CT_ID = t.CT_ID
+    and t.SUBJECT = s.SUBJECT_ID
   </select>
 
   <select id="findOrgBatch" resultType="OrgBatch">

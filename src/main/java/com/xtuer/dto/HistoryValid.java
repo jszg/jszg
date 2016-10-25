@@ -11,13 +11,13 @@ public class HistoryValid {
     private int id;
     private String name;              //姓名
     private String idNo;              //证件号码
-    private int idTypeName;        //证件类型
+    private String idTypeName;        //证件类型
     private String certNo;            //教师资格证书号码
-    private int sexName;              //性别
+    private String sexName;              //性别
     private Date birthday;            //出生日期
-    private int nationName;        //民族
-    private int certType;     //资格种类
-    private int subject;           //任教学科
+    private String nationName;        //民族
+    private String certType;     //资格种类
+    private String subjectName;           //任教学科
     private String orgName;          //认定机构
     private String tmpPhoto;         //照片
     private int deleteStatus;    //数据状态
@@ -46,6 +46,14 @@ public class HistoryValid {
         this.idNo = idNo;
     }
 
+    public String getIdTypeName() {
+        return idTypeName;
+    }
+
+    public void setIdTypeName(String idTypeName) {
+        this.idTypeName = idTypeName;
+    }
+
     public String getCertNo() {
         return certNo;
     }
@@ -54,6 +62,13 @@ public class HistoryValid {
         this.certNo = certNo;
     }
 
+    public String getSexName() {
+        return sexName;
+    }
+
+    public void setSexName(String sexName) {
+        this.sexName = sexName;
+    }
 
     public Date getBirthday() {
         return birthday;
@@ -63,6 +78,29 @@ public class HistoryValid {
         this.birthday = birthday;
     }
 
+    public String getNationName() {
+        return nationName;
+    }
+
+    public void setNationName(String nationName) {
+        this.nationName = nationName;
+    }
+
+    public String getCertType() {
+        return certType;
+    }
+
+    public void setCertType(String certType) {
+        this.certType = certType;
+    }
+
+    public String getSubjectName() {
+        return subjectName;
+    }
+
+    public void setSubjectName(String subjectName) {
+        this.subjectName = subjectName;
+    }
 
     public String getOrgName() {
         return orgName;
@@ -80,46 +118,6 @@ public class HistoryValid {
         this.tmpPhoto = tmpPhoto;
     }
 
-    public int getIdTypeName() {
-        return idTypeName;
-    }
-
-    public void setIdTypeName(int idTypeName) {
-        this.idTypeName = idTypeName;
-    }
-
-    public int getSexName() {
-        return sexName;
-    }
-
-    public void setSexName(int sexName) {
-        this.sexName = sexName;
-    }
-
-    public int getNationName() {
-        return nationName;
-    }
-
-    public void setNationName(int nationName) {
-        this.nationName = nationName;
-    }
-
-    public int getCertType() {
-        return certType;
-    }
-
-    public void setCertType(int certType) {
-        this.certType = certType;
-    }
-
-    public int getSubject() {
-        return subject;
-    }
-
-    public void setSubject(int subject) {
-        this.subject = subject;
-    }
-
     public int getDeleteStatus() {
         return deleteStatus;
     }
@@ -128,3 +126,4 @@ public class HistoryValid {
         this.deleteStatus = deleteStatus;
     }
 }
+

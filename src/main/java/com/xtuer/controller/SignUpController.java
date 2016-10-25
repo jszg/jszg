@@ -336,7 +336,7 @@ public class SignUpController {
     }
 
     // 认定的根节点
-    @GetMapping(UriView.REST_RENDING_MAJOR_PARENT)
+    @GetMapping(UriView.REST_ZHUCE_MAJOR_PARENT)
     @ResponseBody
     public Result<List<Major>> getRendingRootMajors() {
         String key = RedisKey.MAJORS_ZHUCE_ROOT;
@@ -345,7 +345,7 @@ public class SignUpController {
     }
 
     // 注册的根节点
-    @GetMapping(UriView.REST_ZHUCE_MAJOR_PARENT)
+    @GetMapping(UriView.REST_RENDING_MAJOR_PARENT)
     @ResponseBody
     public Result<List<Major>> getZhuceRootMajors(@PathVariable("certTypeId") int certTypeId, @PathVariable("eduLevelId") int eduLevelId) {
         String key = String.format(RedisKey.MAJORS_RENDING_ROOT, certTypeId, eduLevelId);
@@ -359,7 +359,7 @@ public class SignUpController {
     @ResponseBody
     public Result<List<Major>> getZhuceChildrenMajors(@PathVariable("parentId") int parentId) {
         String key = String.format(RedisKey.MAJORS_ZHUCE_CHILREN, parentId);
-        List<Major> majors = redisUtils.get(new TypeReference<List<Major>>(){}, key, () -> majorMapper.findByParentIdStatus1(parentId));
+        List<Major> majors = redisUtils.get(new TypeReference<List<Major>>(){}, key, () -> majorMapper.findByParentId(parentId));
         return Result.ok(majors);
     }
 
@@ -532,11 +532,8 @@ public class SignUpController {
             enrollment.setInHistory(false);
             List<Registration> registrations = commonMapper.findRegistration(idno, certno);
             if (!registrations.isEmpty()) {
-                Registration r = registrations.get(0);
+                registration = registrations.get(0);
                 enrollment.setInRegistration(Boolean.TRUE);
-                registration.setIdNo(r.getIdNo());
-                registration.setCertNo(r.getCertNo());
-                registration.setCertType(r.getCertType());
                 enrollment.setInRegistration(true);
             }else{
                 int year = 0;
@@ -568,6 +565,15 @@ public class SignUpController {
             // 此时应该返回historyValid的所有信息在第四步上端显示;
             registration.setCertType(historyValid.getCertType());
             registration.setName(historyValid.getName());
+            registration.setCertNo(certno);
+            registration.setIdNo(idno);
+            registration.setBirthday(historyValid.getBirthday());
+            registration.setNationName(historyValid.getNationName());
+            registration.setOrgName(historyValid.getOrgName());
+            registration.setSexName(historyValid.getSexName());
+            registration.setIdTypeName(historyValid.getIdTypeName());
+            registration.setSubjectName(historyValid.getSubjectName());
+
             enrollment.setInHistory(true);
             if(enrollhistory == null){
                 enrollment.setEnrollNum(1);

@@ -12,11 +12,11 @@ public class Registration {
     private String idNo;              //证件号码
     private String idTypeName;        //证件类型
     private String certNo;            //教师资格证书号码
-    private int sexName;              //性别
+    private String sexName;              //性别
     private Date birthday;            //出生日期
-    private int nationName;        //民族
-    private int certType;      //资格种类
-    private int subjectName;           //任教学科
+    private String nationName;        //民族
+    private String certType;      //资格种类
+    private String subjectName;           //任教学科
     private String orgName;          //认定机构
     private String tmpPhoto;         //照片
 
@@ -52,11 +52,7 @@ public class Registration {
         this.certNo = certNo;
     }
 
-    public int getSexName() {
-        return sexName;
-    }
-
-    public void setSexName(int sexName) {
+    public void setSexName(String sexName) {
         this.sexName = sexName;
     }
 
@@ -68,27 +64,27 @@ public class Registration {
         this.birthday = birthday;
     }
 
-    public int getNationName() {
+    public String getNationName() {
         return nationName;
     }
 
-    public void setNationName(int nationName) {
+    public void setNationName(String nationName) {
         this.nationName = nationName;
     }
 
-    public int getCertType() {
+    public String getCertType() {
         return certType;
     }
 
-    public void setCertType(int certType) {
+    public void setCertType(String certType) {
         this.certType = certType;
     }
 
-    public int getSubjectName() {
+    public String getSubjectName() {
         return subjectName;
     }
 
-    public void setSubjectName(int subjectName) {
+    public void setSubjectName(String subjectName) {
         this.subjectName = subjectName;
     }
 
