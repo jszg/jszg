@@ -25,6 +25,7 @@ public class RestController {
     @GetMapping("/rest")
     @ResponseBody
     public Result handleGet(@RequestParam String name) {
+        System.out.println(name);
         return Result.ok(name).setMessage("GET handled");
     }
 
@@ -32,6 +33,7 @@ public class RestController {
     @PutMapping("/rest")
     @ResponseBody
     public Result handlePut(@RequestBody Map map) {
+        System.out.println(map);
         return Result.ok(map).setMessage("UPDATE handled");
     }
 

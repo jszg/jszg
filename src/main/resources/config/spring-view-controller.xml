@@ -9,4 +9,5 @@
        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
     <mvc:view-controller path="/enroll" view-name="enroll.fm"/>
     <mvc:view-controller path="/request" view-name="request.fm"/>
+    <mvc:view-controller path="/rest-view" view-name="rest-view.html"/>
 </beans>

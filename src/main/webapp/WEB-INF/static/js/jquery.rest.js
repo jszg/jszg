@@ -90,7 +90,7 @@
                 async: settings.async,
                 type: settings.httpMethod,
                 dataType: 'json',
-                contentType: 'application/json'
+                contentType: 'application/json;charset=utf-8'
             })
             .done(function(data, textStatus, jqXHR) {
                 settings.success(data, textStatus, jqXHR);
