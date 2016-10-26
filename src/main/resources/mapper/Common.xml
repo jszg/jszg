@@ -36,7 +36,7 @@
            when t.SEX = 2 then '女'
            else '未知'
            end as sexName,
-           t.BIRTHDAY as birthday, d.NAME as nationName, c.NAME as certType,  s.NAME as subjectName,
+           t.BIRTHDAY as birthday, d.NAME as nationName, c.CT_NAME as certType,  s.NAME as subjectName,
            t.ORG_NAME as orgName, DELETE_STATUS as  deleteStatus
     from t_history_valid t ,t_dict d, T_CERT_TYPE c, T_SUBJECT s
     where id_no = #{idno} and CERT_NO = #{certno}
@@ -55,7 +55,7 @@
       when t.SEX = 2 then '女'
       else '未知'
       end as sexName,
-      t.BIRTHDAY as birthday, d.NAME as nationName, c.NAME as certType,  s.NAME as subjectName,
+      t.BIRTHDAY as birthday, d.NAME as nationName, c.CT_NAME as certType,  s.NAME as subjectName,
       t.ORG_NAME as orgName, t.CERT_ASSIGN as certAssign
     from t_registration t ,t_dict d, T_CERT_TYPE c, T_SUBJECT s
     where id_no = #{idno} and CERT_NO = #{certno}
