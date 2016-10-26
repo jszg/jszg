@@ -688,7 +688,6 @@ public class SignUpController {
         enroll.setIdNo(idno);
         enroll.setCertNo(certno);
 
-        String ip = "127.0.0.1";
         if(enroll.getIdNo()!=null&&enroll.getCertNo()!=null) {
             List<Enrollment> status0 = commonMapper.findEnrollmentStatus0(idno, certno);
             if (!status0.isEmpty()) {
@@ -698,7 +697,6 @@ public class SignUpController {
                 if (reg == null) {
                     return new Result(false, "验证失败 Registration为空");
                 }
-                ip = reg.getIp();
                 status0 = commonMapper.findEnrollmentStatus0(reg.getIdNo(), reg.getCertNo());
                 if (!status0.isEmpty()) {
                     return new Result(false, "定期注册证件号码与证书号码重复提交");
@@ -717,10 +715,9 @@ public class SignUpController {
 
             try {
                 UserPortalLog userPortalLog = new UserPortalLog();
-                userPortalLog.setId(0); // TODO ?
                 userPortalLog.setUserId(idno);
                 userPortalLog.setLogin(new Date());
-                userPortalLog.setIp(ip); // TODO ?
+                userPortalLog.setIp(getIp(request));
                 userPortalLog.setType(UserPortalLog.enrollSubmit);
                 String content = "";
                 if(request.getHeader("User-Agent")!=null){
@@ -750,6 +747,14 @@ public class SignUpController {
         }
 
         return null;
+    }
+
+    private String getIp(HttpServletRequest request) {
+        String ip = request.getHeader("X-Forwarded-For");
+        if (ip != null && ip.length() > 0) {
+            return ip;
+        }
+        return request.getRemoteAddr();
     }
 
     private String formatDate(Date date, String format) {

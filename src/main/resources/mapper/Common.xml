@@ -123,7 +123,7 @@
         t_user_portal_log
         (id, user_id, ip, login, type, browser_info, browser_content)
       values
-        (0, #{userId}, #{ip}, #{login}, #{type}, #{browserInfo}, #{browserContent})
+        (s_user_portal_log_id.Nextval, #{userId}, #{ip}, #{login}, #{type}, #{browserInfo}, #{browserContent})
     </insert>
 
 </mapper>
