@@ -16,7 +16,7 @@ $(document).ready(function() {
 
     requestDicts();
 
-    StepUtils.toStep(7); // 到第 N 步，测试使用
+    StepUtils.toStep(3); // 到第 N 步，测试使用
     requestLocalSets(21);
 
     // 点击取消按钮关闭弹出对话框
@@ -337,7 +337,10 @@ function StepValidator () {}
  * 验证第三步数据，验证通过后并填充在其他步骤上对应的数据
  *      1. 身份证有效
  *      2. 证书号码格式有效
- *      3.
+ *      3. 查询证书历史数据
+ *          3.1 如果同时有历史记录和注册记录，提示证书数据有误，返回 false
+ *          3.2 如果只有历史记录或者注册记录，显示他们，返回 true
+ *      4. 证书没有历史数据，则显示输入的信息，返回 true
  *
  * @return {bool} 验证通过返回 true，否则返回 false
  */
@@ -360,11 +363,76 @@ StepValidator.validate3thStep = function() {
         return false;
     }
 
-    $.rest.get({url: Urls.REST_ENROLL_STEP3, urlParams: {idNo: idNo, certNo: certNo}, asyn: false, success: function(result) {
-        console.log(result.data);
+    var enrollNumber = -1; // 教师资格注册的次数，如果为 -1 表示以前没有注册过
+    var historyData; // 证书的历史数据
+    var certificationValid = true; // 证书数据有误
+
+    // 查询历史记录，如果有
+    $.rest.get({url: Urls.REST_ENROLL_STEP3, urlParams: {idNo: idNo, certNo: certNo}, async: false, success: function(result) {
+        if (!result.success) { return; }
+        var enrollment = result.data.enrollment;
+        enrollNumber = enrollment.enrollNum;
+
+        // [0] 如果同时在在历史记录和注册记录里，提示证书有问题
+        if (enrollment.inHistory && enrollment.inRegistration) {
+            certificationValid = false;
+        }
+
+        // [1] 在历史记录里
+        if (enrollment.inHistory) {
+            historyData = result.data.historyValid;
+        }
+
+        // [2] 在注册记录里
+        if (enrollment.inRegistration) {
+            historyData = result.data.registration;
+        }
     }});
 
-    return false; // TODO: Delete
+    // 证书数据有误，提示
+    if (!certificationValid) {
+        alert('证书数据存在异常，请联系网站工作人员');
+        return false;
+    }
+
+    // 如果有证书的历史数据，显示他们，然后返回
+    if (historyData) {
+        UiUtils.setFormData('enrollNumber',    -1, enrollNumber);
+        UiUtils.setFormData('idType',          -1, historyData.idTypeName);
+        UiUtils.setFormData('idNo',            -1, historyData.idNo);
+        UiUtils.setFormData('certNo',          -1, historyData.certNo);
+        UiUtils.setFormData('certAssignDate',  -1, historyData.certAssign.substring(0, 10));
+        UiUtils.setFormData('certType',        -1, historyData.certType);
+        UiUtils.setFormData('recognizeOrg',    -1, historyData.orgName);
+        UiUtils.setFormData('registerSubject', -1, historyData.subjectName);
+        UiUtils.setFormData('name',            -1, historyData.name);
+        UiUtils.setFormData('gender',          -1, historyData.sexName);
+        UiUtils.setFormData('birthday',        -1, historyData.birthday.substring(0, 10));
+        UiUtils.setFormData('nation',          -1, historyData.nationName);
+
+        // 显示注册的信息，隐藏需要填写的信息
+        $('#box-4 .unregistered').hide();
+        $('#box-4 .registered').show();
+        return true;
+    } else {
+        // 有可能重复验证，清空以前的数据
+        UiUtils.setFormData('enrollNumber',    -1, -1);
+        UiUtils.setFormData('idType',          -1, '');
+        UiUtils.setFormData('idNo',            -1, '');
+        UiUtils.setFormData('certNo',          -1, '');
+        UiUtils.setFormData('certAssignDate',  -1, '');
+        UiUtils.setFormData('certType',        -1, '');
+        UiUtils.setFormData('recognizeOrg',    -1, '');
+        UiUtils.setFormData('registerSubject', -1, '');
+        UiUtils.setFormData('name',            -1, '');
+        UiUtils.setFormData('gender',          -1, '');
+        UiUtils.setFormData('birthday',        -1, '');
+        UiUtils.setFormData('nation',          -1, '');
+
+        // 显示需要填写的信息，隐藏注册的信息
+        $('#box-4 .registered').hide();
+        $('#box-4 .unregistered').show();
+    }
 
     UiUtils.setFormData('idType', idType.id, idType.name);
     UiUtils.setFormData('certNo', -1, certNo);
@@ -384,35 +452,46 @@ StepValidator.validate3thStep = function() {
  * @return {bool} 验证通过返回 true，否则返回 false
  */
 StepValidator.validate4thStep = function() {
-    var certAssignDate  = $.trim($('#cert-assign-date').val());    // 证书签发日期
-    var certType        = UiUtils.getSelectedOption('#certTypes'); // 资格种类
-                                                               // 认定机构
-    var registerSubject = UiUtils.getFormData('#box-4', 'registerSubject'); // 任教学科
-    var name            = $.trim($('#name').val());                      // 姓名
-    var nation          = UiUtils.getSelectedOption('#nations');         // 民族
-    var teachGrade      = UiUtils.getSelectedOption('#teach-grades');    // 现任教学段
-    var province        = UiUtils.getSelectedOption('#provinces');       // 所在省
-    var city            = UiUtils.getSelectedOption('#cities');          // 所在市
-    var registerOrg     = UiUtils.getSelectedOption('#register-orgs');   // 注册机构
-    var teachSubject    = UiUtils.getFormData('#box-4', 'teachSubject'); // 现任教学科
+    var enrollNumber = parseInt(UiUtils.getFormData('#box-4', 'enrollNumber').name); // 已经注册的次数
 
-    if (!certAssignDate)          { alert('请选择 "证书签发日期"'); return false; }
-    if (certAssignDate < '1996-00-00' || certAssignDate >= '2012-00-00') { alert('请重新检查证书号码或修改证书签发日期'); return false; }
-    if (-1 == certType.id)        { alert('请选择 "资格种类"');    return false; }
-    if (-1 == registerSubject.id) { alert('请选择 "任教学科"');    return false; }
-    if (!name)                    { alert('请输入 "姓名"');       return false; }
-    if (-1 == nation.id)          { alert('请选择 "民族"');       return false; }
+    // 没有注册过
+    if (-1 === enrollNumber) {
+        var certAssignDate  = $.trim($('#cert-assign-date').val());             // 证书签发日期
+        var certType        = UiUtils.getSelectedOption('#certTypes');          // 资格种类
+        var recognizeOrg    = UiUtils.getFormData('#box-4', 'recognizeOrg');    // 认定机构
+        var registerSubject = UiUtils.getFormData('#box-4', 'registerSubject'); // 任教学科
+        var name            = $.trim($('#name').val());                         // 姓名
+        var nation          = UiUtils.getSelectedOption('#nations');            // 民族
+
+        if (!certAssignDate)          { alert('请选择 "证书签发日期"'); return false; }
+        if (certAssignDate < '1996-00-00' || certAssignDate >= '2012-00-00') { alert('请重新检查证书号码或修改证书签发日期'); return false; }
+        if (-1 == certType.id)        { alert('请选择 "资格种类"');    return false; }
+        if (-1 == recognizeOrg.id)    { alert('请选择 "认定机构"');    return false; }
+        if (-1 == registerSubject.id) { alert('请选择 "任教学科"');    return false; }
+        if (!name)                    { alert('请输入 "姓名"');       return false; }
+        if (-1 == nation.id)          { alert('请选择 "民族"');       return false; }
+
+        UiUtils.setFormData('certAssignDate', -1, certAssignDate);
+        UiUtils.setFormData('name', -1, name);
+        UiUtils.setFormData('nation', nation.id, nation.name);
+        UiUtils.setFormData('certType', certType.id, certType.name);
+        UiUtils.setFormData('recognizeOrg', recognizeOrg.id, recognizeOrg.name);
+        UiUtils.setFormData('registerSubject', registerSubject.id, registerSubject.name);
+    }
+
+    // 下面的信息不管有没有注册过都需要验证
+    var teachGrade   = UiUtils.getSelectedOption('#teach-grades');    // 现任教学段
+    var province     = UiUtils.getSelectedOption('#provinces');       // 所在省
+    var city         = UiUtils.getSelectedOption('#cities');          // 所在市
+    var registerOrg  = UiUtils.getSelectedOption('#register-orgs');   // 注册机构
+    var teachSubject = UiUtils.getFormData('#box-4', 'teachSubject'); // 现任教学科
+
     if (-1 == teachGrade.id)      { alert('请选择 "现任教学段"');  return false; }
     if (-1 == province.id)        { alert('请选择 "省"');         return false; }
     if (-1 == city.id)            { alert('请选择 "市"');         return false; }
     if (-1 == registerOrg.id)     { alert('请选择 "注册机构"');    return false; }
     if (-1 == teachSubject.id)    { alert('请选择 "现任教学科"');  return false; }
 
-    UiUtils.setFormData('certAssignDate', -1, certAssignDate);
-    UiUtils.setFormData('name', -1, name);
-    UiUtils.setFormData('nation', nation.id, nation.name);
-    UiUtils.setFormData('certType', certType.id, certType.name);
-    UiUtils.setFormData('registerSubject', registerSubject.id, registerSubject.name);
     UiUtils.setFormData('teachGrade', teachGrade.id, teachGrade.name);
     UiUtils.setFormData('province', province.id, province.name);
     UiUtils.setFormData('registerOrg', registerOrg.id, registerOrg.name);
@@ -535,6 +614,7 @@ StepValidator.validate7thStep = function() {
     if (!(/^[1-9][0-9]{5}$/.test(zipCode))) { alert('请输入 6 个数字的 "通讯地的邮编"');      return false; }
     if (!(/^\d{11}$/.test(cellphone)))      { alert('请输入 11 个数字的 "手机号码"');         return false; }
 
+    // 通过验证
 
     return true;
 };
@@ -764,13 +844,7 @@ function handleMajorsDialog() {
     });
 
     $('#select-major-button').click(function(event) {
-        // var certTypeId = UiUtils.getSelectedOption('#certTypes').id;
         var eduLevelId = UiUtils.getSelectedOption('#edu-levels').id;
-
-        // if (-1 === certTypeId) {
-        //     alert('请先选择 "资格种类"，然后才能选择 "最高学历所学专业"');
-        //     return;
-        // }
 
         if (-1 == eduLevelId) {
             alert('请先选择 "最高学历"，然后才能选择 "最高学历所学专业"');

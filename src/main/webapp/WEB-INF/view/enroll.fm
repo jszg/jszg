@@ -111,12 +111,12 @@
                 </tr>
                 <tr>
                     <td class="operation">身份证件号码</td>
-                    <td><input id="idNo" type="text" value="330726196507040016"></td>
+                    <td><input id="idNo" type="text" value="311012198808269015"></td>
                     <td><span class="description">请输入二代身份证号码（18位）<span></td>
                 </tr>
                 <tr>
                     <td class="operation">教师资格证书号码</td>
-                    <td><input id="certNo" value="20021309531000655"></td>
+                    <td><input id="certNo" value="20113102042000123"></td>
                     <td></td>
                 </tr>
             </table>
@@ -134,8 +134,8 @@
 
 <!-- 第四步 -->
 <div id="box-4">
-    <div class="content_bd" id="alreadyRegistered">
-        <h4>请按教师资格证书上的内容如实填写下列信息项 <b class="f_red f_size">(本栏信息请从左至右逐行填写)</b></h4>
+    <div class="registered content_bd">
+        <h4>您是第 <span class="form-data" name="enrollNumber" data-id="" data-name="-1"></span> 次参加教师资格注册。该证书的基本信息如下，请仔细核对是否与您手持证书的基本信息一致，如果有差异，请与发证机构联系。</h4>
         <div class="ui-body">
            <table width="960" border="0" cellspacing="0" cellpadding="0" class="ui-view">
                <tr>
@@ -172,15 +172,15 @@
                     <td class="operation">出生日期:</td>
                     <td><span class="form-data" name="birthday" data-id="" data-name=""></span></td>
                     <td class="operation">民族:</td>
-                    <td><span class="form-data" name="name" data-id="" data-name=""></span></td>
+                    <td><span class="form-data" name="nation" data-id="" data-name=""></span></td>
                 </tr>
             </table>
         </div>
     </div>
 
 
-    <div class="content_bd">
-        <h4>您是第1次参加教师资格注册，请确认您的证书号码。如果无误，请填写证书的其它信息。否则，请返回上一步。</h4>
+    <div class="unregistered content_bd">
+        <h4>您是第 1 次参加教师资格注册，请确认您的证书号码。如果无误，请填写证书的其它信息。否则，请返回上一步。</h4>
         <div class="ui-body">
              <table width="960" border="0" cellspacing="0" cellpadding="0">
                 <tr>
@@ -198,7 +198,7 @@
             </table>
         </div>
     </div>
-    <div class="content_bd">
+    <div class="unregistered content_bd">
         <h4>请按教师资格证书上的内容如实填写下列信息项 <b class="f_red f_size">(本栏信息请从左至右逐行填写)</b></h4>
         <div class="ui-body">
            <table width="960" border="0" cellspacing="0" cellpadding="0" class="ui-view">
