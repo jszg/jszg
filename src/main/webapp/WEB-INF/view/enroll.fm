@@ -134,6 +134,51 @@
 
 <!-- 第四步 -->
 <div id="box-4">
+    <div class="content_bd" id="alreadyRegistered">
+        <h4>请按教师资格证书上的内容如实填写下列信息项 <b class="f_red f_size">(本栏信息请从左至右逐行填写)</b></h4>
+        <div class="ui-body">
+           <table width="960" border="0" cellspacing="0" cellpadding="0" class="ui-view">
+               <tr>
+                   <td width="200" class="operation">证件类型:</td>
+                   <td width="280"><span class="form-data" name="idType" data-id="" data-name=""></span></td>
+                   <td width="200" class="operation">身份证件号码:</td>
+                   <td width="280"><span class="form-data" name="idNo" data-id="" data-name=""></span></td>
+               </tr>
+               <tr>
+                   <td class="operation">教师资格证书号码:</td>
+                   <td><span class="form-data" name="certNo" data-id="" data-name=""></td>
+                   <td></td>
+                   <td></td>
+               </tr>
+                <tr>
+                    <td class="operation">证书签发日期:</td>
+                    <td><span class="form-data" name="certAssignDate" data-id="" data-name=""><span></td>
+                    <td class="operation">资格种类:</td>
+                    <td><span class="form-data" name="certType" data-id="" data-name=""><span></td>
+                </tr>
+                <tr>
+                    <td class="operation">认定机构:</td>
+                    <td><span class="form-data" name="recognizeOrg" data-id="" data-name=""><span></td>
+                    <td class="operation">任教学科:</td>
+                    <td><span class="form-data" name="registerSubject" data-id="" data-name=""><span></td>
+                </tr>
+                 <tr>
+                    <td class="operation">姓名:</td>
+                    <td><span class="form-data" name="name" data-id="" data-name=""></span></td>
+                    <td class="operation">性别:</td>
+                    <td><span class="form-data" name="gender" data-id="" data-name=""></span></td>
+                </tr>
+                 <tr>
+                    <td class="operation">出生日期:</td>
+                    <td><span class="form-data" name="birthday" data-id="" data-name=""></span></td>
+                    <td class="operation">民族:</td>
+                    <td><span class="form-data" name="name" data-id="" data-name=""></span></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+
     <div class="content_bd">
         <h4>您是第1次参加教师资格注册，请确认您的证书号码。如果无误，请填写证书的其它信息。否则，请返回上一步。</h4>
         <div class="ui-body">

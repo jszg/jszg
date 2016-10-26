@@ -589,7 +589,7 @@ function handleRecognizeOrgsDialog() {
     $('#recognize-orgs-dialog-trigger').leanModal({top: 50, overlay : 0.4});
 
     // 点击 '认定机构' 按钮
-    // 如果 证书签发日期 为空，则提示输入
+    // 如果 '证书签发日期' 为空，则提示输入
     $('#select-recognize-org-button').click(function(event) {
         var certAssignDate = $.trim($('#cert-assign-date').val());
 
