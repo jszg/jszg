@@ -503,6 +503,7 @@ StepValidator.validate4thStep = function() {
 
     // 验证注册机构，如果无效，则返回 false，不让继续第五步
     var valid = true;
+    $('#register-org-error').text('');
     $.rest.get({url: Urls.REST_ENROLL_ORG_VALIDATION, urlParams: {orgId: registerOrg.id}, async: false, success: function(result) {
         if (!result.success) {
             $('#register-org-error').text(result.message);

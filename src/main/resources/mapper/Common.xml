@@ -71,22 +71,40 @@
     from t_registration t where t.reg_id =#{regId}
   </select>
 
-  <select id="findOrgBatch" resultType="OrgBatch">
-    select ob.join_in as joinIn,ob.is_open as isOpen, ob.PB_ID as provinceBatch
-    from t_org_batch ob
-    left join t_province_batch pb on pb.pb_id = ob.pb_id
-    where ob.org_id = #{orgId} and ob.type = 2 and <![CDATA[ rownum <=1 ]]> order by ob.ob_id desc
-  </select>
+    <!-- 查询注册机构注册计划 -->
+    <select id="findOrgBatch" resultType="OrgBatch">
+        SELECT * FROM(
+            SELECT
+                ob.join_in AS joinIn,
+                ob.is_open AS isOpen,
+                ob.PB_ID   AS provinceBatch,
+                pb.status  AS status
+            FROM
+                t_org_batch ob
+                LEFT JOIN t_province_batch pb ON pb.pb_id = ob.pb_id
+            WHERE ob.org_id = #{orgId} AND ob.type = 2
+            ORDER BY ob.ob_id DESC
+        ) WHERE <![CDATA[ ROWNUM <=1 ]]>
+    </select>
 
-  <select id="findOrgBatchTime" resultType="OrgBatchTime">
-    select obt.OB_ID as orgBatch, obt.VALID_BEGIN_DATE as validBeginDate, obt.VALID_END_DATE as validEndDate
-    from t_org_batch_time obt
-    left join t_org_batch ob on ob.ob_id = obt.ob_id
-    where ob.org_id = #{orgId} and ob.type = 2
-    and <![CDATA[ obt.valid_begin_date <=sysdate ]]>
-    and obt.valid_end_date >= sysdate
-    and <![CDATA[ rownum <=1 ]]>
-    order by obt.obt_id desc
-  </select>
+    <!-- 查询网报时间段 -->
+    <select id="findOrgBatchTime" resultType="OrgBatchTime">
+        SELECT * FROM (
+            SELECT
+                obt.OB_ID            AS orgBatch,
+                obt.VALID_BEGIN_DATE AS validBeginDate,
+                obt.VALID_END_DATE   AS validEndDate
+            FROM
+                t_org_batch_time obt
+                LEFT JOIN t_org_batch ob ON ob.ob_id = obt.ob_id
+            WHERE
+                ob.org_id = #{orgId}
+                AND ob.type = 2
+                AND obt.valid_begin_date <![CDATA[ <= ]]> sysdate
+                AND obt.valid_end_date >= sysdate
+                ORDER BY
+                obt.obt_id DESC
+        ) WHERE <![CDATA[ ROWNUM <=1 ]]>
+    </select>
 
 </mapper>
