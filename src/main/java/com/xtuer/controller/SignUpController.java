@@ -257,28 +257,27 @@ public class SignUpController {
     }
 
     // 确认点
-    @GetMapping(UriView.REST_LOCALSETS)
+    @GetMapping(UriView.REST_LOCAL_SETS)
     @ResponseBody
-    public Result<List<LocalSet>> getLocalsets(@RequestParam("orgId") int orgId) {
-        String key = String.format(RedisKey.LOCALSETS, orgId);
-        List<LocalSet> list = redisUtils.get(new TypeReference<List<LocalSet>>() {}, key,
-                () -> localSetMapper.findByOrgId(orgId));
+    public Result<List<LocalSet>> getLocalSets(@PathVariable int orgId) {
+        String key = String.format(RedisKey.LOCAL_SETS, orgId);
+        List<LocalSet> list = redisUtils.get(new TypeReference<List<LocalSet>>() {}, key, () -> localSetMapper.findByOrgId(orgId));
 
         // 过滤时间
         Date now = new Date();
-        List<LocalSet> localsets = new ArrayList<>(list.size());
-        localsets.addAll(list.stream()
+        List<LocalSet> localSets = new ArrayList<>(list.size());
+        localSets.addAll(list.stream()
                 .filter(l -> now.before(l.getEndDate()) && now.after(l.getValidBeginDate()) && now.before(l.getValidEndDate()))
                 .collect(Collectors.toList()));
 
-        return Result.ok(localsets);
+        return Result.ok(localSets);
     }
 
     // 确认点信息
-    @GetMapping(UriView.REST_LOCALSET_INFO)
+    @GetMapping(UriView.REST_LOCAL_SETS_INFO)
     @ResponseBody
-    public Result<LocalSetInfo> getLocalSetInfo(@PathVariable("id") int id) {
-        LocalSetInfo info = localSetMapper.findById(id);
+    public Result<LocalSetInfo> getLocalSetInfo(@PathVariable int localSetId) {
+        LocalSetInfo info = localSetMapper.findById(localSetId);
         return Result.ok(info);
     }
 

@@ -31,7 +31,7 @@ public interface RedisKey {
     String EDULEVELS = "eduLevels_%d"; // eduLevels_{certTypeId}
     String ACADEMICDEGREE = "academic_degree_%d_%d"; // academic_degree_{certTypeId}_{eduLevel}
 
-    String LOCALSETS = "localsets_%d"; // localsets_{orgId}
+    String LOCAL_SETS = "localsets_%d"; // localsets_{orgId}
 
     String COLLEGES = "colleges"; // colleges
     String COLLEGES_BY_PROVINCE = "colleges_p_%d"; // colleges_p_{provinceId}

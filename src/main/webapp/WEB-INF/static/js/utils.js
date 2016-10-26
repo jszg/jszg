@@ -11,9 +11,9 @@ Urls = {
     REST_CITIES_BY_PROVINCE:         '/new-cert/rest/signUp/provinces/{provinceId}/cities',
     REST_ORGS_BY_CITY_AND_CERT_TYPE: '/new-cert/rest/signUp/cities/{cityId}/certTypes/{certTypeId}/orgs',
     REST_COLLEGES_BY_PROVINCE:       '/new-cert/rest/signUp/provinces/{provinceId}/colleges',
-    REST_ORGS_REG:  '/new-cert/rest/signUp/reg/orgs?teachGrade={teachGradeId}&cityId={cityId}&provinceCity={provinceCity}', // 注册机构
-    REST_LOCALSETS: '/new-cert/rest/signUp/localsets?orgId={orgId}',
-    REST_LOCALSET_INFO: '/new-cert/rest/signUp/localsets/{localSetId}',
+    REST_ORGS_REG:        '/new-cert/rest/signUp/reg/orgs?teachGrade={teachGradeId}&cityId={cityId}&provinceCity={provinceCity}', // 注册机构
+    REST_LOCALSETS:       '/new-cert/rest/signUp/orgs/{orgId}/localSets',
+    REST_LOCALSET_INFO:   '/new-cert/rest/signUp/localSets/{localSetId}',
     REST_ORGS_BY_ORGTYPE: '/new-cert/rest/signUp/orgtypes/{orgType}/orgs', // 注册的认定机构，ortType 为 4
     REST_ORGS_BY_PARENT:  '/new-cert/rest/signUp/{parentId}/orgs',
 

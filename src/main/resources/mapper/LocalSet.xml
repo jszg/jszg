@@ -6,29 +6,25 @@
 
 <!--namespace 非常重要：必须是 Mapper 类的全路径-->
 <mapper namespace="com.xtuer.mapper.LocalSetMapper">
-  <select id="findByOrgId" resultType="LocalSet">
-    select o.ORG_ID             as id,
-       o.area_name          as name,
-       ls.begin_date        as beginDate,
-       ls.end_date          as endDate,
-       o.confirm_range      as confirmRange,
-       obt.valid_begin_date as validBeginDate,
-       obt.valid_end_date   as validEndDate
-      from t_locale_set ls
-      left join t_org o on o.org_id = ls.org_id
-      left join t_org_batch_time obt on obt.obt_id = ls.obt_id
-     where ls.obt_id in(
-           (select obt.obt_id
-              from t_org_batch_time obt
-             where obt.ob_id =
-                   (select max(t.ob_id) from t_org_batch t where t.org_id = 4790)))
-       and ls.assigned = 1
-       and o.status = 1
-  </select>
+    <select id="findByOrgId" resultType="LocalSet">
+        SELECT o.ORG_ID          AS id,
+            o.area_name          AS name,
+            ls.begin_date        AS beginDate,
+            ls.end_date          AS endDate,
+            o.confirm_range      AS confirmRange,
+            obt.valid_begin_date AS validBeginDate,
+            obt.valid_end_date   AS validEndDate
+        FROM t_locale_set ls
+        LEFT JOIN t_org o ON o.org_id = ls.org_id
+        LEFT JOIN t_org_batch_time obt ON obt.obt_id = ls.obt_id
+        WHERE ls.obt_id IN(
+           SELECT obt.obt_id FROM t_org_batch_time obt WHERE obt.ob_id = (SELECT MAX(t.ob_id) FROM t_org_batch t WHERE t.org_id = #{orgId})
+        )
+        AND ls.assigned = 1
+        AND o.status = 1
+    </select>
 
-  <select id="findById" resultType="LocalSetInfo">
-    SELECT INFO as info
-    FROM T_LOCALE_SET
-    WHERE LS_ID = #{id}
-  </select>
+    <select id="findById" resultType="LocalSetInfo">
+        SELECT info AS info FROM t_locale_set WHERE ls_id = #{id}
+    </select>
 </mapper>
