@@ -20,6 +20,7 @@ public class Registration {
     private String subjectName;           //任教学科
     private String orgName;          //认定机构
     private String tmpPhoto;         //照片
+    private Date certAssign;
 
     public int getId() {
         return id;
@@ -115,5 +116,13 @@ public class Registration {
 
     public void setTmpPhoto(String tmpPhoto) {
         this.tmpPhoto = tmpPhoto;
+    }
+
+    public Date getCertAssign() {
+        return certAssign;
+    }
+
+    public void setCertAssign(Date certAssign) {
+        this.certAssign = certAssign;
     }
 }
