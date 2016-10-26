@@ -446,7 +446,7 @@ public class SignUpController {
     @GetMapping(UriView.REST_ENROLLMENT)
     @ResponseBody
     public Result<Enrollment> findEnrollment(@RequestParam(value = "idno", defaultValue = "", required = false) String idno,
-                                                 @RequestParam(value = "certno", defaultValue = "", required = false) String certno) {
+                                             @RequestParam(value = "certno", defaultValue = "", required = false) String certno) {
         List<Enrollment> list = commonMapper.findEnrollment(idno, certno);
         if (list.isEmpty()) {
             return Result.ok(null);
@@ -458,7 +458,7 @@ public class SignUpController {
     @GetMapping(UriView.REST_ENROLL_STEP3)
     @ResponseBody
     public Result<?> enrollStep3(@RequestParam(value = "idno", defaultValue = "", required = false) String idno,
-                                                @RequestParam(value = "certno", defaultValue = "", required = false) String certno) {
+                                 @RequestParam(value = "certno", defaultValue = "", required = false) String certno) {
         List<Limitation> limits = commonMapper.findLimitation(idno, certno);
         int limitationType = -1;
         if (!limits.isEmpty() && limits.get(0).getStatus() == S_REVIEWED) {
@@ -668,6 +668,50 @@ public class SignUpController {
         }
 
         return Result.ok(form);
+    }
+
+    // 注册第七部验证
+    @GetMapping(UriView.REST_ENROLL_STEP7)
+    @ResponseBody
+    public Result<?> enrollStep7(@RequestParam(value = "idno", defaultValue = "", required = false) String idno,
+                                 @RequestParam(value = "certno", defaultValue = "", required = false) String certno) {
+        //1.根据证件号和证书号查询enroll
+        /*List<Enrollment> enrollments = commonMapper.findEnrollment(idno, certno);
+        if (enrollments.isEmpty()) {
+            return new Result(false, "验证失败 Enrollment为空");
+        }*/
+        /*Enrollment enroll = enrollments.get(0);*/
+        Enrollment enroll = new Enrollment();
+        enroll.setIdNo(idno);
+        enroll.setCertNo(certno);
+
+        if(enroll.getIdNo()!=null&&enroll.getCertNo()!=null) {
+            List<Enrollment> status0 = commonMapper.findEnrollmentStatus0(idno, certno);
+            if (!status0.isEmpty()) {
+                return new Result(false, "定期注册证件号码与证书号码重复提交");
+            } else if (enroll.isInRegistration()) {
+                Registration reg = commonMapper.findRegistrationById(enroll.getRegId());
+                if (reg == null) {
+                    return new Result(false, "验证失败 Registration为空");
+                }
+                status0 = commonMapper.findEnrollmentStatus0(reg.getIdNo(), reg.getCertNo());
+                if (!status0.isEmpty()) {
+                    return new Result(false, "定期注册证件号码与证书号码重复提交");
+                }
+            } else if (enroll.isInHistory()) {
+                HistoryValid historyValid = commonMapper.findHistoryValidById(enroll.getRegId());
+                if (historyValid == null) {
+                    return new Result(false, "验证失败 HistoryValid为空");
+                }
+
+                status0 = commonMapper.findEnrollmentStatus0(historyValid.getIdNo(), historyValid.getCertNo());
+                if (!status0.isEmpty()) {
+                    return new Result(false, "定期注册证件号码与证书号码重复提交");
+                }
+            }
+        }
+
+        return Result.ok(null);
     }
 
     private Date parseDate(String source, String format) {

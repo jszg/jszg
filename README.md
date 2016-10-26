@@ -210,7 +210,7 @@ gradle -Denv=development clean appStartDebug
 * 验证接口
 
     ```
-    http://{{host}}:{{port}}/new-cert/rest/signUp/enroll/step3?idno={idno}&certno={certno}
+    [GET]  http://{{host}}:{{port}}/new-cert/rest/signUp/enroll/step3?idno={idno}&certno={certno}
     [POST] http://{{host}}:{{port}}/new-cert/rest/signUp/enroll/step4
-
+    [GET]  http://{{host}}:{{port}}/new-cert/rest/signUp/enroll/step7?idno={idno}&certno={certno}
     ```

@@ -15,6 +15,7 @@ public class Enrollment {
     private int city; //市
     private int org; //机构
     private boolean inRegistration;
+    private int regId;
 
     public String getCertNo() {
         return certNo;
@@ -86,5 +87,13 @@ public class Enrollment {
 
     public void setInRegistration(boolean inRegistration) {
         this.inRegistration = inRegistration;
+    }
+
+    public int getRegId() {
+        return regId;
+    }
+
+    public void setRegId(int regId) {
+        this.regId = regId;
     }
 }

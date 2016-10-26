@@ -21,9 +21,13 @@
 
   <select id="findEnrollment" resultType="Enrollment">
     select  ID_NO as idNo, ID_TYPE as idType, CERT_NO as certNo, IN_HISTORY as inHistory, ENROLL_NUM as enrollNum,
-    PROVINCE as province, CITY_ID as city, ORG_ID as org, IN_REGISTRATION as inRegistration
+    PROVINCE as province, CITY_ID as city, ORG_ID as org, IN_REGISTRATION as inRegistration, REG_ID as regId
     from t_enrollment
     where ID_NO = #{idno} and CERT_NO = #{certno}
+  </select>
+
+  <select id="findEnrollmentStatus0" resultType="Enrollment">
+    select ID_NO as idNo, REG_ID as regId from t_enrollment e where e.id_No=#{idno} and e.CERT_NO = #{certno} and e.delete_status=0
   </select>
 
   <select id="findHistoryValid" resultType="HistoryValid">
@@ -41,6 +45,10 @@
           and t.SUBJECT = s.SUBJECT_ID
   </select>
 
+  <select id="findHistoryValidById" resultType="HistoryValid">
+    select t.REG_ID as id ,t.ID_NO as idNo, t.CERT_NO as certNo from t_history_valid hv where hv.reg_id = #{regId}
+  </select>
+
   <select id="findRegistration" resultType="Registration">
     select t.REG_ID as id, t.NAME as name, t.ID_NO as idNo, t.ID_TYPE as idTypeName, t.CERT_NO as certNo,
       Case when t.SEX =1 then '男'
@@ -54,6 +62,11 @@
     and t.NATION = d.DIC_ID
     and c.CT_ID = t.CT_ID
     and t.SUBJECT = s.SUBJECT_ID
+  </select>
+
+  <select id="findRegistrationById" resultType="Registration">
+    select t.REG_ID as id, t.ID_NO as idNo, t.CERT_NO as certNo
+    from t_registration t where t.reg_id =#{regId}
   </select>
 
   <select id="findOrgBatch" resultType="OrgBatch">

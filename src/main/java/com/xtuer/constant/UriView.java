@@ -47,6 +47,7 @@ public interface UriView {
     // 验证相关的接口
     String REST_ENROLL_STEP3               = "/rest/signUp/enroll/step3";
     String REST_ENROLL_STEP4               = "/rest/signUp/enroll/step4";
+    String REST_ENROLL_STEP7               = "/rest/signUp/enroll/step7";
 
     String URI_UPLOAD_PERSON_IMAGE         = "/upload-person-image";
 }
