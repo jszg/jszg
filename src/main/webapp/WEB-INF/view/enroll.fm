@@ -134,6 +134,9 @@
 
 <!-- 第四步 -->
 <div id="box-4">
+    <!-- 如果 _proCode == 45 则为广西的，证书签发日期必须小于 2012-01-01 之前 -->
+    <!-- 如果 _proCode != 45 则为非广西的，证书签发日期必须小于 2008-08-01 之前 -->
+    <span class="form-data" name="provinceCode" data-id="" data-name="-1" style="display: none"></span>
     <div class="registered content_bd">
         <h4>您是第 <span class="form-data" name="enrollNumber" data-id="" data-name="-1"></span> 次参加教师资格注册。该证书的基本信息如下，请仔细核对是否与您手持证书的基本信息一致，如果有差异，请与发证机构联系。</h4>
         <div class="ui-body">
@@ -177,7 +180,6 @@
             </table>
         </div>
     </div>
-
 
     <div class="unregistered content_bd">
         <h4>您是第 1 次参加教师资格注册，请确认您的证书号码。如果无误，请填写证书的其它信息。否则，请返回上一步。</h4>
@@ -261,6 +263,7 @@
                 <tr>
                     <td class="operation">注册机构</td>
                     <td><select id="register-orgs"><option selected="selected" value="-1">请选择</option></select></td>
+                    <td><span class="error" id="register-org-error"></span></td>
                 </tr>
                 <tr>
                     <td class="operation">现任教学科</td>

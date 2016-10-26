@@ -49,5 +49,8 @@ public interface UriView {
     String REST_ENROLL_STEP4               = "/rest/signUp/enroll/step4";
     String REST_ENROLL_STEP7               = "/rest/signUp/enroll/step7";
 
+    // 验证注册的注册机构
+    String REST_ENROLL_ORG_VALIDATION      = "/rest/signUp/enroll/orgs/{orgId}/validation";
+
     String URI_UPLOAD_PERSON_IMAGE         = "/upload-person-image";
 }

@@ -154,6 +154,12 @@ button {
     text-align: center;
 }
 
+.error {
+    color: #de0000;
+    font-size: 12px;
+    font-weight: bold;
+}
+
 .f_size{color: #de0000;font-size: 12px;}
 tr{border-bottom: 1px dashed #eee;}
 table{border-collapse:collapse;}

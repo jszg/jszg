@@ -387,6 +387,11 @@ StepValidator.validate3thStep = function() {
         if (enrollment.inRegistration) {
             historyData = result.data.registration;
         }
+
+        // proCode 为省的标记，如果为 45 则为广西
+        if (result.data._proCode) {
+            UiUtils.setFormData('provinceCode', -1, result.data._proCode);
+        }
     }});
 
     // 证书数据有误，提示
@@ -454,8 +459,9 @@ StepValidator.validate3thStep = function() {
 StepValidator.validate4thStep = function() {
     var enrollNumber = parseInt(UiUtils.getFormData('#box-4', 'enrollNumber').name); // 已经注册的次数
 
-    // 没有注册过
+    // 没有注册过则需要验证用户输入，如果注册过了则不需要
     if (-1 === enrollNumber) {
+        var provinceCode    = UiUtils.getFormData('#box-4', 'provinceCode');    // 认定机构
         var certAssignDate  = $.trim($('#cert-assign-date').val());             // 证书签发日期
         var certType        = UiUtils.getSelectedOption('#certTypes');          // 资格种类
         var recognizeOrg    = UiUtils.getFormData('#box-4', 'recognizeOrg');    // 认定机构
@@ -463,8 +469,11 @@ StepValidator.validate4thStep = function() {
         var name            = $.trim($('#name').val());                         // 姓名
         var nation          = UiUtils.getSelectedOption('#nations');            // 民族
 
+        // 如果 provinceCode == 45 则为广西的，证书签发日期必须小于 2012-01-01 之前
+        // 如果 provinceCode != 45 则为非广西的，证书签发日期必须小于 2008-08-01 之前
         if (!certAssignDate)          { alert('请选择 "证书签发日期"'); return false; }
-        if (certAssignDate < '1996-00-00' || certAssignDate >= '2012-00-00') { alert('请重新检查证书号码或修改证书签发日期'); return false; }
+        if (certAssignDate < '1996-01-01' || certAssignDate >= '2012-01-01') { alert('请重新检查证书号码或修改证书签发日期'); return false; }
+        if (45 != provinceCode && certAssignDate > '2008-08-01') { alert('请仔细检查证书号码或证书签发日期是否有误'); return false; }
         if (-1 == certType.id)        { alert('请选择 "资格种类"');    return false; }
         if (-1 == recognizeOrg.id)    { alert('请选择 "认定机构"');    return false; }
         if (-1 == registerSubject.id) { alert('请选择 "任教学科"');    return false; }
@@ -491,6 +500,19 @@ StepValidator.validate4thStep = function() {
     if (-1 == city.id)            { alert('请选择 "市"');         return false; }
     if (-1 == registerOrg.id)     { alert('请选择 "注册机构"');    return false; }
     if (-1 == teachSubject.id)    { alert('请选择 "现任教学科"');  return false; }
+
+    // 验证注册机构，如果无效，则返回 false，不让继续第五步
+    var valid = true;
+    $.rest.get({url: Urls.REST_ENROLL_ORG_VALIDATION, urlParams: {orgId: registerOrg.id}, async: false, success: function(result) {
+        if (!result.success) {
+            $('#register-org-error').text(result.message);
+            valid = false;
+        }
+    }});
+
+    if (!valid) {
+        return false;
+    }
 
     UiUtils.setFormData('teachGrade', teachGrade.id, teachGrade.name);
     UiUtils.setFormData('province', province.id, province.name);

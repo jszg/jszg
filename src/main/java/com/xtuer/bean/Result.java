@@ -47,6 +47,10 @@ public class Result<T> {
         return this;
     }
 
+    public static Result<String> ok() {
+        return new Result<String>(true, "成功");
+    }
+
     public static <T> Result<T> ok(T data) {
         return new Result<T>(true, "成功", data);
     }
