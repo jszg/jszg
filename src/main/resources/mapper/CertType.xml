@@ -7,12 +7,12 @@
 <!--namespace 非常重要：必须是 Mapper 类的全路径-->
 <mapper namespace="com.xtuer.mapper.CertTypeMapper">
     <select id="findAll" resultType="CertType">
-        select CT_ID as id, CT_NAME as name from T_CERT_TYPE
+        select CT_ID as id, CT_NAME as name from T_CERT_TYPE ORDER BY ct_code
     </select>
 
     <select id="findByTeachGrade" resultType="CertType">
         select CT_ID as id, CT_NAME as name, CT_CODE as code
         from T_CERT_TYPE
-        where TEACH_GRADE = #{teachGrade}
+        where TEACH_GRADE = #{teachGrade} ORDER BY ct_code
     </select>
 </mapper>

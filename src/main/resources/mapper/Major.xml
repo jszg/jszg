@@ -23,7 +23,7 @@
       FROM T_CERT_TYPE_LINK_EXTEND C
       LEFT JOIN T_MAJOR M ON C.TARGET_ID=M.MAJOR_ID
       WHERE C.LINK_ID=(SELECT C.CTL_ID FROM T_CERT_TYPE_LINK C WHERE C.CT_ID = #{certTypeId} AND C.EDU_LEVEL_ID = #{eduLevelId})
-          AND C.TARGET_TYPE=0
+          AND C.TARGET_TYPE=0 ORDER BY M.major_code
   </select>
 
   <select id="findByParentIdAndProvince" resultType="Major">

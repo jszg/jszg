@@ -596,8 +596,8 @@
     </div>
 
     <div class="buttons-holder">
-        <button class="cancel-button">取消</button>
         <button class="ok-button">确定</button>
+        <button class="cancel-button">取消</button>
     </div>
 </div>
 
@@ -609,8 +609,8 @@
     </div>
 
     <div class="buttons-holder">
-        <button class="cancel-button">取消</button>
         <button class="ok-button">确定</button>
+        <button class="cancel-button">取消</button>
     </div>
 </div>
 
@@ -622,8 +622,8 @@
     </div>
 
     <div class="buttons-holder">
-        <button class="cancel-button">取消</button>
         <button class="ok-button">确定</button>
+        <button class="cancel-button">取消</button>
     </div>
 </div>
 
@@ -658,8 +658,8 @@
         </script>
     </div>
     <div class="buttons-holder">
-        <button class="cancel-button">取消</button>
         <button class="ok-button">确定</button>
+        <button class="cancel-button">取消</button>
     </div>
 </div>
 
@@ -671,8 +671,8 @@
     </div>
 
     <div class="buttons-holder">
-        <button class="cancel-button">取消</button>
         <button class="ok-button">确定</button>
+        <button class="cancel-button">取消</button>
     </div>
 </div>
 
@@ -684,8 +684,8 @@
     </div>
 
     <div class="buttons-holder">
-        <button class="cancel-button">取消</button>
         <button class="ok-button">确定</button>
+        <button class="cancel-button">取消</button>
     </div>
 </div>
 

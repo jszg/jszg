@@ -7,26 +7,26 @@
 <!--namespace 非常重要：必须是 Mapper 类的全路径-->
 <mapper namespace="com.xtuer.mapper.DictMapper">
     <select id="findByDictType" resultType="Dict">
-        SELECT DIC_ID as id, NAME as name, STATUS as status FROM T_DICT WHERE DT_ID = #{dt_id}
+        SELECT DIC_ID as id, NAME as name, STATUS as status FROM T_DICT WHERE DT_ID = #{dt_id} ORDER BY code
     </select>
 
     <select id="findTeaGrades" resultType="TeachGrade">
       select distinct dict.dic_id as id,dict.name as name,ct.admin_level as adminLevel from t_dict dict
       inner join t_cert_type ct on ct.teach_grade = dict.dic_id
-      where dict.dt_id = 23 and <![CDATA[rownum <= 5]]>  order by dict.dic_id,dict.name,ct.admin_level
+      where dict.dt_id = 23 and <![CDATA[rownum <= 5]]>  order by dict.dic_id,dict.name,ct.admin_level ORDER BY code
     </select>
 
     <select id="findEduLevels" resultType="Dict">
       select d.dic_id as id,d.name as name,d.STATUS as status
       from t_cert_type_link c
       left join t_dict d on c.edu_level_id=d.dic_id
-      where c.ct_id= #{ct_id}
+      where c.ct_id= #{ct_id} ORDER BY code
     </select>
 
     <select id="findAcademicDegrees" resultType="Dict">
         select d.dic_id as id,d.name as name,d.STATUS as status
         from t_cert_type_link_extend c left join t_dict d on c.target_id=d.dic_id
         where c.link_id=(select ctl.ctl_id from t_cert_type_link ctl where ctl.ct_id = #{ct_id} and ctl.edu_level_id = #{eduLevel})
-          and c.target_type=1
+          and c.target_type=1 ORDER BY code
     </select>
 </mapper>

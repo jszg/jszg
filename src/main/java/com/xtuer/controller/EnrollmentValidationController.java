@@ -54,6 +54,12 @@ public class EnrollmentValidationController {
         if (orgBatchTimes.isEmpty()) {
             orgBatchTimes = commonMapper.findOrgBatchTimeByOrgBatchId(orgBatch.getOrgBatchId());
 
+            // 没有则返回错误
+            if (orgBatchTimes.isEmpty()) {
+                return new Result(false, "该机构目前未开展注册工作，请与该机构联系，了解其注册工作的时间安排");
+            }
+
+            // 如果有网报时间，则判断时间是否合法
             StringBuffer buffer = new StringBuffer("该机构注册工作网上采集信息的时间段为: ");
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy 年 MM 月 dd 日");
             boolean success = true;

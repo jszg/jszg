@@ -77,7 +77,7 @@
            SELECT
                ob.join_in AS joinIn,
                ob.is_open AS isOpen,
-               ob.PB_ID   AS provinceBatch,
+               ob.pb_id   AS provinceBatch,
                pb.status  AS status,
                ob.ob_id   AS orgBatchId
            FROM

@@ -7,10 +7,10 @@
 <!--namespace 非常重要：必须是 Mapper 类的全路径-->
 <mapper namespace="com.xtuer.mapper.CollegeMapper">
   <select id="findAll" resultType="College">
-        select COLLEGE_ID as id, NAME as name FROM T_COLLEGE
+        select COLLEGE_ID as id, NAME as name FROM T_COLLEGE ORDER By college_code
   </select>
 
   <select id="findByProvinceId" resultType="College">
-    select COLLEGE_ID as id, NAME as name FROM T_COLLEGE WHERE PROVINCE = #{provinceId}
+    select COLLEGE_ID as id, NAME as name FROM T_COLLEGE WHERE PROVINCE = #{provinceId} ORDER BY college_code
   </select>
 </mapper>

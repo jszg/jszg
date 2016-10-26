@@ -472,7 +472,7 @@ StepValidator.validate4thStep = function() {
 
     // 没有注册过则需要验证用户输入，如果注册过了则不需要
     if (-1 === enrollNumber) {
-        var provinceCode    = UiUtils.getFormData('#box-4', 'provinceCode');    // 认定机构
+        var provinceCode    = parseInt(UiUtils.getFormData('#box-4', 'provinceCode').name);    // 认定机构
         var certAssignDate  = $.trim($('#cert-assign-date').val());             // 证书签发日期
         var certType        = UiUtils.getSelectedOption('#certTypes');          // 资格种类
         var recognizeOrg    = UiUtils.getFormData('#box-4', 'recognizeOrg');    // 认定机构
