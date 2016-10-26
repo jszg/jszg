@@ -123,6 +123,9 @@ public class EnrollmentForm {
     @NotNull(message="确认点不能为空")
     private Long localeId; // 确认点
 
+    @NotNull(message="确认点安排不能为空")
+    private Integer localSetId; // 确认点安排
+
     @NotNull(message="现任教学科不能为空")
     private Integer teachSubject;// 现任教学科
 
@@ -513,5 +516,13 @@ public class EnrollmentForm {
 
     public void setDeleteStatus(Integer deleteStatus) {
         this.deleteStatus = deleteStatus;
+    }
+
+    public Integer getLocalSetId() {
+        return localSetId;
+    }
+
+    public void setLocalSetId(Integer localSetId) {
+        this.localSetId = localSetId;
     }
 }

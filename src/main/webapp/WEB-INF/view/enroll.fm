@@ -304,7 +304,7 @@
                 <script id="localSetsTemplate" type="text/html">
                     {{each localSets as localSet}}
                     <tr>
-                        <td><input type="radio" name="local-set-radio" value="{{localSet.id}}" data-name="{{localSet.name}}"></td>
+                        <td><input type="radio" name="local-set-radio" value="{{localSet.id}}" data-name="{{localSet.name}}" data-locale-id="{{localSet.orgId}}"></td>
                         <td name="name">{{localSet.name}}</td>
                         <td name="beginDate" class="text-center">{{localSet.beginDate}}</td>
                         <td name="endDate" class="text-center">{{localSet.endDate}}</td>

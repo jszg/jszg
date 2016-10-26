@@ -9,6 +9,7 @@ import java.util.Date;
  */
 public class LocalSet {
     private int id;
+    private int orgId;
     private String name;
     private Date beginDate;
     private Date endDate;
@@ -71,5 +72,13 @@ public class LocalSet {
 
     public void setValidEndDate(Date validEndDate) {
         this.validEndDate = validEndDate;
+    }
+
+    public int getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(int orgId) {
+        this.orgId = orgId;
     }
 }

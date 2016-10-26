@@ -33,8 +33,9 @@
                 console.log(e);
             }});
 
-            $.rest.create({url: '/new-cert/validate', data: {id: 2}, success: function(result) {
-                console.log(result);
+            $.rest.create({url: '/new-cert/validate', data: {email: 'biao.mac@gmail.com', residence: 'china'}, success: function(result) {
+                console.log(result.data);
+                alert(result.data);
             }});
 
             console.log('end');

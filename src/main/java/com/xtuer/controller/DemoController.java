@@ -1,6 +1,7 @@
 package com.xtuer.controller;
 
 import com.xtuer.bean.Demo;
+import com.xtuer.bean.EnrollmentForm;
 import com.xtuer.bean.Result;
 import com.xtuer.constant.UriView;
 import com.xtuer.mapper.CertTypeMapper;
@@ -91,14 +92,17 @@ public class DemoController {
 
     @PostMapping("/validate")
     @ResponseBody
-    public Result<?> validate(@RequestBody @Valid Demo demo, BindingResult result) {
+    public Result<?> validate(@RequestBody @Valid EnrollmentForm form, BindingResult result) {
+        StringBuffer sb = new StringBuffer();
+
         for (FieldError error : result.getFieldErrors()) {
-            System.out.println(error.getField() + " : " + error.getDefaultMessage());
+            sb.append(error.getField() + " : " + error.getDefaultMessage() + "\n");
         }
 
         if (result.hasErrors()) {
-            return Result.error(result.getFieldErrors().toString());
+            return Result.error(sb.toString());
         }
-        return Result.ok(demo);
+
+        return Result.ok(form);
     }
 }

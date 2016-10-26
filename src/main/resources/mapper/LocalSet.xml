@@ -8,6 +8,7 @@
 <mapper namespace="com.xtuer.mapper.LocalSetMapper">
     <select id="findByOrgId" resultType="LocalSet">
         SELECT ls.ls_id          AS id,
+            o.org_id             AS orgId,
             o.area_name          AS name,
             ls.begin_date        AS beginDate,
             ls.end_date          AS endDate,
