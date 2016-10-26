@@ -33,6 +33,10 @@
                 console.log(e);
             }});
 
+            $.rest.create({url: '/new-cert/validate', data: {id: 2}, success: function(result) {
+                console.log(result);
+            }});
+
             console.log('end');
         });
     </script>

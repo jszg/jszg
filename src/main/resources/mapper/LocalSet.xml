@@ -7,7 +7,7 @@
 <!--namespace 非常重要：必须是 Mapper 类的全路径-->
 <mapper namespace="com.xtuer.mapper.LocalSetMapper">
     <select id="findByOrgId" resultType="LocalSet">
-        SELECT o.ORG_ID          AS id,
+        SELECT ls.ls_id          AS id,
             o.area_name          AS name,
             ls.begin_date        AS beginDate,
             ls.end_date          AS endDate,

@@ -37,27 +37,6 @@ public class SignUpController {
             "normalMajor", "political", "pthLevel", "postQuale", "degree", "occupation", "idType", "teachGrade"};
 
 
-    public static final int S_UNREVIEWED = 0;//待审核
-    public static final int S_REVIEWED = 1;//已审核
-    public static final int S_REVIEWED_FAIL = 2;//未通过
-    public static final int T_LOSE = 1;// 丧失,时限：终生
-    public static final int T_CANCEL2 = 2;// 撤销（品行不良、侮辱学生）,时限：5年
-    public static final int T_CANCEL1 = 3;// 撤销（弄虚作假、骗取教师资格）,时限：5年
-    public static final int T_CHEAT = 4;// 考试作弊：3年
-    public static final int UN_DO_DURATION = 5;// 撤销处罚年限
-    public static final int STATUS_UN_DO = 30; // 撤销注册
-    public static final int STATUS_QUALIFIED = 19;// ***注册合格
-    public static final int ENROLL_DURATION = 58;// 注册间隔是58个月
-    public static final int DELETE_STATUS_NORMAL = 0; // 正常
-    public static final int DELETE_STATUS_FORBID = 1; // 被限制
-    public static final int DELETE_STATUS_DELETE = 2; // 删除
-    public static final int T_GLOBAL = 5;//资格中心
-    public static final int T_PROVINCE = 4;//省级机构
-    public static final int T_CITY = 3;//市级机构
-    public static final int T_COUNTY = 2;//县级机构
-    public static final int T_LOCAL = 1;//确认机构
-    public static final int T_ABROAD = 0;
-
     // 所有资格种类
     @GetMapping(UriView.REST_CERT_TYPE)
     @ResponseBody
@@ -410,9 +389,9 @@ public class SignUpController {
     // 注册历史表。不缓存，直接查DB
     @GetMapping(UriView.REST_ENROLLHISTORY)
     @ResponseBody
-    public Result<Enrollhistory> findEnrollhistory(@RequestParam(value = "idno", defaultValue = "", required = false) String idno,
+    public Result<EnrollHistory> findEnrollhistory(@RequestParam(value = "idno", defaultValue = "", required = false) String idno,
                                                    @RequestParam(value = "certno", defaultValue = "", required = false) String certno) {
-        List<Enrollhistory> list = commonMapper.findEnrollhistory(idno, certno);
+        List<EnrollHistory> list = commonMapper.findEnrollHistory(idno, certno);
         if (list.isEmpty()) {
             return Result.ok(null);
         }
@@ -455,148 +434,7 @@ public class SignUpController {
         return Result.ok(list.get(0));
     }
 
-    // 注册验证Step3
-    @GetMapping(UriView.REST_ENROLL_STEP3)
-    @ResponseBody
-    public Result<?> enrollStep3(@RequestParam(value = "idno", defaultValue = "", required = false) String idno,
-                                 @RequestParam(value = "certno", defaultValue = "", required = false) String certno) {
-        List<Limitation> limits = commonMapper.findLimitation(idno, certno);
-        int limitationType = -1;
-        if (!limits.isEmpty() && limits.get(0).getStatus() == S_REVIEWED) {
-            Limitation limitation = limits.get(0);
-            limitationType = limitation.getType();
-            return new Result(false, "该证书受到限制，不允许注册");
-        }
 
-        if (limitationType == T_CANCEL1 || limitationType == T_CANCEL2) {
-            return new Result(false, "该教师资格已被依法撤销");
-        } else if (limitationType == T_LOSE) {
-            return new Result(false, "该教师资格已被依法注销");
-        } else if (limitationType == T_CHEAT) {
-            return new Result(false, "您的教师资格无效");
-        }
-
-        HistoryValid historyValid = null;
-        Enrollhistory enrollhistory = null;
-        String _proCode = null;
-
-        List<Enrollhistory> enrollhistorys = commonMapper.findEnrollhistory(idno, certno);
-        if (!enrollhistorys.isEmpty()) {
-            enrollhistory = enrollhistorys.get(0);
-            if(enrollhistory.getEnrollTime() == null){
-                return new Result(false, "注册历史数据存在异常");
-            }
-
-            Calendar expiredTime = Calendar.getInstance();
-            expiredTime.setTime(enrollhistory.getEnrollTime());
-            if(enrollhistory.getJudgmentStatus()!=null){
-                switch (enrollhistory.getJudgmentStatus()) {
-                    case STATUS_UN_DO:
-                        expiredTime.add(Calendar.YEAR, UN_DO_DURATION);
-                        if (expiredTime.getTime().after(new Date())) {
-                            String errorMsg = "该证书于" + formatDate(enrollhistory.getEnrollTime(), "yyyy年M月d日") + "已被撤销注册，"
-                                    + UN_DO_DURATION + "年内不能再注册。不能继续下一步!";
-                            return new Result(false, errorMsg);
-                        }
-                        break;
-                    // STATUS_QUALIFIED = 19;// ***注册合格
-                    case STATUS_QUALIFIED:
-                        //三-3、“注册合格”且与上次注册日期间隔短于58个月
-                        expiredTime.add(Calendar.MONTH, ENROLL_DURATION);
-                        if (expiredTime.getTime().after(new Date())) {
-                            String errorMsg = "该证书已于" + formatDate(enrollhistory.getEnrollTime(), "yyyy年M月d日") + "注册，"
-                                    + "5年内无需再注册。";
-                            return new Result(false, errorMsg);
-                        }
-                        break;
-                }
-            }
-        }
-
-        List<Enrollment> enrollments = commonMapper.findEnrollment(idno, certno);
-        if (!enrollments.isEmpty()) {
-            return new Result(false, "您已经填写了申报信息，请直接登陆查看或修改申报信息；");
-        }
-
-        List<HistoryValid> historyValids = commonMapper.findHistoryValid(idno, certno);
-        if (!historyValids.isEmpty()) {
-            historyValid = historyValids.get(0);
-        }
-
-        Enrollment enrollment = new Enrollment();
-        Registration registration = new Registration();
-
-        enrollment.setCertNo(certno);
-        enrollment.setIdNo(idno);
-
-        if (historyValid == null ) {
-            enrollment.setInHistory(false);
-            List<Registration> registrations = commonMapper.findRegistration(idno, certno);
-            if (!registrations.isEmpty()) {
-                registration = registrations.get(0);
-                enrollment.setInRegistration(Boolean.TRUE);
-                enrollment.setInRegistration(true);
-            }else{
-                int year = 0;
-                if (certno.length() > 15) {
-                    year = Integer.parseInt(certno.substring(0, 4));
-                }else{
-                    year = 1900 + Integer.parseInt(certno.substring(0, 2));
-                }
-
-                if (year >= 2012 || year < 1996) {
-                    return new Result(false, "无此教师资格,请与发证机关确认");
-                }
-
-                if(year>=2008 && year<2012){
-                    _proCode = certno.substring(4, 6);//这个地方是省份编码,判断是否是广西省,第四步用到
-                }
-                enrollment.setInRegistration(Boolean.FALSE);
-            }
-            enrollment.setEnrollNum(1);
-        }else{
-            if(historyValid.getDeleteStatus() == DELETE_STATUS_FORBID){
-                return new Result(false, "该数据已受限，不能进行定期注册报名!");
-            }
-
-            if(historyValid.getDeleteStatus() == DELETE_STATUS_DELETE){
-                return new Result(false, "该证书不存在，请您仔细核对信息!");
-            }
-
-            // 此时应该返回historyValid的所有信息在第四步上端显示;
-            registration.setId(historyValid.getId());
-            registration.setCertType(historyValid.getCertType());
-            registration.setName(historyValid.getName());
-            registration.setCertNo(certno);
-            registration.setIdNo(idno);
-            registration.setBirthday(historyValid.getBirthday());
-            registration.setNationName(historyValid.getNationName());
-            registration.setOrgName(historyValid.getOrgName());
-            registration.setSexName(historyValid.getSexName());
-            registration.setIdTypeName(historyValid.getIdTypeName());
-            registration.setSubjectName(historyValid.getSubjectName());
-            registration.setCertAssign(historyValid.getCertAssign());
-
-            enrollment.setInHistory(true);
-            if(enrollhistory == null){
-                enrollment.setEnrollNum(1);
-            }else{
-                if (enrollhistory.getJudgmentStatus() == STATUS_QUALIFIED) {
-                    enrollment.setEnrollNum(enrollhistory.getEnrollNum() + 1);
-                } else {
-                    enrollment.setEnrollNum(enrollhistory.getEnrollNum());
-                }
-            }
-        }
-
-        Map<String, Object> map = new  HashMap<>();
-        map.put("enrollhistory", enrollhistory);
-        map.put("enrollment", enrollment);
-        map.put("historyValid", historyValid);
-        map.put("registration", registration);
-        map.put("_proCode", _proCode);
-        return Result.ok(map);
-    }
 
     // 注册验证Step4
     @PostMapping(UriView.REST_ENROLL_STEP4)
@@ -755,11 +593,6 @@ public class SignUpController {
             return ip;
         }
         return request.getRemoteAddr();
-    }
-
-    private String formatDate(Date date, String format) {
-        SimpleDateFormat sdf = new SimpleDateFormat(format);
-        return sdf.format(date);
     }
 
     @Autowired

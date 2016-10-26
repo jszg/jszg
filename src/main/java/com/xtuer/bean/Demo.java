@@ -1,9 +1,11 @@
 package com.xtuer.bean;
 
-import java.io.Serializable;
+import org.hibernate.validator.constraints.NotBlank;
 
 public class Demo {
     private int id;
+
+    @NotBlank(message="信息不能为空")
     private String info;
 
     public Demo() {

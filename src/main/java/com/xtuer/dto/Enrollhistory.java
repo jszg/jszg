@@ -7,7 +7,7 @@ import java.util.Date;
  *
  * Created by microacup on 2016/10/24.
  */
-public class Enrollhistory {
+public class EnrollHistory {
     private int id;
     private String certNo; //证书号码
     private String idNo; //证件号码

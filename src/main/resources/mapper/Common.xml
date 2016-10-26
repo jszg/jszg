@@ -7,12 +7,12 @@
 <!--namespace 非常重要：必须是 Mapper 类的全路径-->
 <mapper namespace="com.xtuer.mapper.CommonMapper">
   <select id="findLimitation" resultType="Limitation">
-    select LIMIT_ID as id, CERT_NO as certNo, ID_NO as idNo,STATUS as status, TYPE as type
-    from t_limitation l
-    where  l.id_no=#{idno} and l.cert_no = #{certno} and l.status = 1 and (l.due_time is null or l.due_Time > sysdate)
+    SELECT LIMIT_ID AS id, CERT_NO AS certNo, ID_NO AS idNo, STATUS AS status, TYPE AS type
+    FROM t_limitation l
+    WHERE  l.id_no=#{idNo} AND l.cert_no = #{certNo} AND l.status = 1
   </select>
 
-  <select id="findEnrollhistory" resultType="Enrollhistory">
+  <select id="findEnrollHistory" resultType="EnrollHistory">
     select ENR_HIS_ID as id, eh.CERT_NO as certNo, eh.ID_NO as idNo,eh.JUDGMINT_STATUS as judgmentStatus, eh.ENROLL_TIME as enrollTime, eh.ENROLL_NUM
      as enrollNum
     from t_enroll_history eh

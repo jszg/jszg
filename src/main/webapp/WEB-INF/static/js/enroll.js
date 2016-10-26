@@ -211,7 +211,7 @@ function requestDicts() {
         UiUtils.insertOptions('certTypes', data.certTypes);          // 资格种类
         UiUtils.insertOptions('provinces', data.provinces, {templateId: 'provinceOptionTemplate'});   // 省
         UiUtils.insertOptions('provinces-for-college', data.provinces, {templateId: 'provinceOptionTemplate'}); // 省
-        UiUtils.insertOptions('id-types', data.idType, {remainFirstOption: false, filters: ['身份证']}); // 身份证
+        UiUtils.insertOptions('id-types', data.idType, {remainFirstOption: false}); // 身份证
         UiUtils.insertOptions('nations', data.nation);               // 民族
         UiUtils.insertOptions('teach-grades', data.teachGrade);      // 现任教学段
         UiUtils.insertOptions('politicals', data.political);         // 政治面貌
@@ -366,10 +366,16 @@ StepValidator.validate3thStep = function() {
     var enrollNumber = -1; // 教师资格注册的次数，如果为 -1 表示以前没有注册过
     var historyData; // 证书的历史数据
     var certificationValid = true; // 证书数据有误
+    var invalid = false;
+    var invalidMessage = '';
 
     // 查询历史记录，如果有
     $.rest.get({url: Urls.REST_ENROLL_STEP3, urlParams: {idNo: idNo, certNo: certNo}, async: false, success: function(result) {
-        if (!result.success) { return; }
+        if (!result.success) {
+            invalid = true;
+            invalidMessage = result.message;
+            return;
+        }
         var enrollment = result.data.enrollment;
         enrollNumber = enrollment.enrollNum;
 
@@ -388,11 +394,16 @@ StepValidator.validate3thStep = function() {
             historyData = result.data.registration;
         }
 
-        // proCode 为省的标记，如果为 45 则为广西
-        if (result.data._proCode) {
-            UiUtils.setFormData('provinceCode', -1, result.data._proCode);
+        // provinceCode 为省的标记，如果为 45 则为广西
+        if (result.data.provinceCode) {
+            UiUtils.setFormData('provinceCode', -1, result.data.provinceCode);
         }
     }});
+
+    if (invalid) {
+        alert(invalidMessage);
+        return false;
+    }
 
     // 证书数据有误，提示
     if (!certificationValid) {

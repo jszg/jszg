@@ -12,11 +12,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 @Controller
 public class DemoController {
@@ -86,5 +87,18 @@ public class DemoController {
     @ResponseBody
     public Result ajaxObject() {
         return new Result(true, "你好");
+    }
+
+    @PostMapping("/validate")
+    @ResponseBody
+    public Result<?> validate(@RequestBody @Valid Demo demo, BindingResult result) {
+        for (FieldError error : result.getFieldErrors()) {
+            System.out.println(error.getField() + " : " + error.getDefaultMessage());
+        }
+
+        if (result.hasErrors()) {
+            return Result.error(result.getFieldErrors().toString());
+        }
+        return Result.ok(demo);
     }
 }

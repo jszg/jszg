@@ -29,7 +29,7 @@ Urls = {
     REST_TECHNICAL_JOB_ROOT:     '/new-cert/rest/signUp/technicaljobs/root',
     REST_TECHNICAL_JOB_CHILDREN: '/new-cert/rest/signUp/{parentId}/technicaljobs/children',
 
-    REST_ENROLL_STEP3:           '/new-cert/rest/signUp/enroll/step3?idno={idNo}&certno={certNo}', // 第三步验证
+    REST_ENROLL_STEP3:           '/new-cert/rest/signUp/enroll/step3?idNo={idNo}&certNo={certNo}', // 第三步验证
     REST_ENROLL_ORG_VALIDATION:  '/new-cert/rest/signUp/enroll/orgs/{orgId}/validation', // 验证注册的注册机构
 
     URI_UPLOAD_PERSON_IMAGE: '/new-cert/upload-person-image',

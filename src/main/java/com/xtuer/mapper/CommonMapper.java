@@ -1,7 +1,7 @@
 package com.xtuer.mapper;
 
 import com.xtuer.bean.UserPortalLog;
-import com.xtuer.dto.Enrollhistory;
+import com.xtuer.dto.EnrollHistory;
 import com.xtuer.dto.Enrollment;
 import com.xtuer.dto.HistoryValid;
 import com.xtuer.dto.Limitation;
@@ -18,8 +18,8 @@ import java.util.List;
  * Created by microacup on 2016/10/24.
  */
 public interface CommonMapper {
-    List<Limitation> findLimitation(@Param("idno") String idno, @Param("certno") String certno);
-    List<Enrollhistory> findEnrollhistory(@Param("idno") String idno, @Param("certno") String certno);
+    List<Limitation> findLimitation(@Param("idNo") String idNo, @Param("certNo") String certNo);
+    List<EnrollHistory> findEnrollHistory(@Param("idno") String idno, @Param("certno") String certno);
     List<HistoryValid> findHistoryValid(@Param("idno") String idno, @Param("certno") String certno);
     HistoryValid findHistoryValidById(@Param("regId") int regId);
     List<Registration> findRegistration(@Param("idno") String idno, @Param("certno") String certno);

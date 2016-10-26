@@ -10,7 +10,7 @@ public class Limitation {
     private String certNo;
     private String idNo;
     private int status;
-    private int type;
+    private Integer type;
 
     public int getId() {
         return id;
@@ -44,11 +44,11 @@ public class Limitation {
         this.status = status;
     }
 
-    public int getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 }
