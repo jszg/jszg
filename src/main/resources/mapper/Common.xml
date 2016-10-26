@@ -57,7 +57,7 @@
       else '未知'
       end as sexName,
       t.BIRTHDAY as birthday, d.NAME as nationName, c.CT_NAME as certType,  s.NAME as subjectName,
-      t.ORG_NAME as orgName, t.CERT_ASSIGN as certAssign
+      t.ORG_NAME as orgName, t.CERT_ASSIGN as certAssign, t.IP as ip
     from t_registration t ,t_dict d,t_dict d2, T_CERT_TYPE c, T_SUBJECT s
     where id_no = #{idno} and CERT_NO = #{certno}
     and t.NATION = d.DIC_ID
@@ -67,7 +67,7 @@
   </select>
 
   <select id="findRegistrationById" resultType="Registration">
-    select t.REG_ID as id, t.ID_NO as idNo, t.CERT_NO as certNo
+    select t.REG_ID as id, t.ID_NO as idNo, t.CERT_NO as certNo, t.IP as ip
     from t_registration t where t.reg_id =#{regId}
   </select>
 
@@ -105,5 +105,15 @@
                 ORDER BY obt.obt_id DESC
         ) WHERE <![CDATA[ ROWNUM <=1 ]]>
     </select>
+
+
+    <insert id="insertUserPortalLog" parameterType="UserPortalLog">
+      insert
+      into
+        t_user_portal_log
+        (id, user_id, ip, login, type, browser_info, browser_content)
+      values
+        (0, #{userId}, #{ip}, #{login}, #{type}, #{browserInfo}, #{browserContent})
+    </insert>
 
 </mapper>

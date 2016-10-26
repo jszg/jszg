@@ -21,6 +21,7 @@ public class Registration {
     private String orgName;          //认定机构
     private String tmpPhoto;         //照片
     private Date certAssign;
+    private String ip;
 
     public int getId() {
         return id;
@@ -124,5 +125,14 @@ public class Registration {
 
     public void setCertAssign(Date certAssign) {
         this.certAssign = certAssign;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public Registration setIp(String ip) {
+        this.ip = ip;
+        return this;
     }
 }

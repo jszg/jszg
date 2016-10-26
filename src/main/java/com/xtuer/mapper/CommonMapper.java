@@ -1,5 +1,6 @@
 package com.xtuer.mapper;
 
+import com.xtuer.bean.UserPortalLog;
 import com.xtuer.dto.Enrollhistory;
 import com.xtuer.dto.Enrollment;
 import com.xtuer.dto.HistoryValid;
@@ -27,4 +28,8 @@ public interface CommonMapper {
     List<Enrollment> findEnrollmentStatus0(@Param("idno") String idno, @Param("certno") String certno);
     List<OrgBatch> findOrgBatch(@Param("orgId") int orgId);
     List<OrgBatchTime> findOrgBatchTime(@Param("orgId") int orgId);
+
+    // 插入UserPortalLog
+    void insertUserPortalLog(UserPortalLog log);
+
 }

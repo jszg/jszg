@@ -3,6 +3,7 @@ package com.xtuer.controller;
 import com.alibaba.fastjson.TypeReference;
 import com.xtuer.bean.EnrollStep4Form;
 import com.xtuer.bean.Result;
+import com.xtuer.bean.UserPortalLog;
 import com.xtuer.constant.RedisKey;
 import com.xtuer.constant.UriView;
 import com.xtuer.dto.*;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -673,7 +675,8 @@ public class SignUpController {
     // 注册第七部验证
     @GetMapping(UriView.REST_ENROLL_STEP7)
     @ResponseBody
-    public Result<?> enrollStep7(@RequestParam(value = "idno", defaultValue = "", required = false) String idno,
+    public Result<?> enrollStep7(HttpServletRequest request,
+                                 @RequestParam(value = "idno", defaultValue = "", required = false) String idno,
                                  @RequestParam(value = "certno", defaultValue = "", required = false) String certno) {
         //1.根据证件号和证书号查询enroll
         /*List<Enrollment> enrollments = commonMapper.findEnrollment(idno, certno);
@@ -685,6 +688,7 @@ public class SignUpController {
         enroll.setIdNo(idno);
         enroll.setCertNo(certno);
 
+        String ip = "127.0.0.1";
         if(enroll.getIdNo()!=null&&enroll.getCertNo()!=null) {
             List<Enrollment> status0 = commonMapper.findEnrollmentStatus0(idno, certno);
             if (!status0.isEmpty()) {
@@ -694,6 +698,7 @@ public class SignUpController {
                 if (reg == null) {
                     return new Result(false, "验证失败 Registration为空");
                 }
+                ip = reg.getIp();
                 status0 = commonMapper.findEnrollmentStatus0(reg.getIdNo(), reg.getCertNo());
                 if (!status0.isEmpty()) {
                     return new Result(false, "定期注册证件号码与证书号码重复提交");
@@ -708,6 +713,28 @@ public class SignUpController {
                 if (!status0.isEmpty()) {
                     return new Result(false, "定期注册证件号码与证书号码重复提交");
                 }
+            }
+
+            try {
+                UserPortalLog userPortalLog = new UserPortalLog();
+                userPortalLog.setId(0); // TODO ?
+                userPortalLog.setUserId(idno);
+                userPortalLog.setLogin(new Date());
+                userPortalLog.setIp(ip); // TODO ?
+                userPortalLog.setType(UserPortalLog.enrollSubmit);
+                String content = "";
+                if(request.getHeader("User-Agent")!=null){
+                    if(request.getHeader("User-Agent").length()>256){
+                        content = request.getHeader("User-Agent").substring(256);
+                    }else{
+                        content = request.getHeader("User-Agent");
+                    }
+                }
+                userPortalLog.setBrowserContent(content);
+                userPortalLog.setBrowserInfo(UserPortalLog.getBrowInfo(request.getHeader("user-Agent")));
+                commonMapper.insertUserPortalLog(userPortalLog);
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
 
