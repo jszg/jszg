@@ -30,7 +30,7 @@
         select t.REG_ID as id, t.NAME as name, t.ID_NO as idNo, t.ID_TYPE as idTypeName, t.CERT_NO as certNo,
            Case when t.SEX =1 then '男'
            when t.SEX = 2 then '女'
-           else '不知道'
+           else '未知'
            end as sexName,
            t.BIRTHDAY as birthday, d.NAME as nationName, t.NAME as certType,  s.NAME as subjectName,
            t.ORG_NAME as orgName, DELETE_STATUS as  deleteStatus
