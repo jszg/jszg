@@ -8,6 +8,7 @@ import java.util.Date;
  * Created by microacup on 2016/10/24.
  */
 public class Registration {
+    private int id;
     private String name;              //姓名
     private String idNo;              //证件号码
     private String idTypeName;        //证件类型
@@ -19,6 +20,14 @@ public class Registration {
     private String subjectName;           //任教学科
     private String orgName;          //认定机构
     private String tmpPhoto;         //照片
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -54,6 +63,10 @@ public class Registration {
 
     public void setSexName(String sexName) {
         this.sexName = sexName;
+    }
+
+    public String getSexName() {
+        return sexName;
     }
 
     public Date getBirthday() {

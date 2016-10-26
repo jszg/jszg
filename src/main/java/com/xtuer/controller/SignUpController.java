@@ -563,6 +563,7 @@ public class SignUpController {
             }
 
             // 此时应该返回historyValid的所有信息在第四步上端显示;
+            registration.setId(historyValid.getId());
             registration.setCertType(historyValid.getCertType());
             registration.setName(historyValid.getName());
             registration.setCertNo(certno);
