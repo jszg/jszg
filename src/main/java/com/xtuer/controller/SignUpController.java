@@ -574,6 +574,7 @@ public class SignUpController {
             registration.setSexName(historyValid.getSexName());
             registration.setIdTypeName(historyValid.getIdTypeName());
             registration.setSubjectName(historyValid.getSubjectName());
+            registration.setCertAssign(historyValid.getCertAssign());
 
             enrollment.setInHistory(true);
             if(enrollhistory == null){

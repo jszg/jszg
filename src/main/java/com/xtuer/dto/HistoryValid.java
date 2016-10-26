@@ -21,6 +21,7 @@ public class HistoryValid {
     private String orgName;          //认定机构
     private String tmpPhoto;         //照片
     private int deleteStatus;    //数据状态
+    private Date certAssign;
 
     public int getId() {
         return id;
@@ -124,6 +125,14 @@ public class HistoryValid {
 
     public void setDeleteStatus(int deleteStatus) {
         this.deleteStatus = deleteStatus;
+    }
+
+    public Date getCertAssign() {
+        return certAssign;
+    }
+
+    public void setCertAssign(Date certAssign) {
+        this.certAssign = certAssign;
     }
 }
 
