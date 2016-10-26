@@ -102,8 +102,7 @@
                 AND ob.type = 2
                 AND obt.valid_begin_date <![CDATA[ <= ]]> sysdate
                 AND obt.valid_end_date >= sysdate
-                ORDER BY
-                obt.obt_id DESC
+                ORDER BY obt.obt_id DESC
         ) WHERE <![CDATA[ ROWNUM <=1 ]]>
     </select>
 
