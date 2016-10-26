@@ -71,40 +71,50 @@
     from t_registration t where t.reg_id =#{regId}
   </select>
 
-    <!-- 查询注册机构注册计划 -->
-    <select id="findOrgBatch" resultType="OrgBatch">
-        SELECT * FROM(
-            SELECT
-                ob.join_in AS joinIn,
-                ob.is_open AS isOpen,
-                ob.PB_ID   AS provinceBatch,
-                pb.status  AS status
-            FROM
-                t_org_batch ob
-                LEFT JOIN t_province_batch pb ON pb.pb_id = ob.pb_id
-            WHERE ob.org_id = #{orgId} AND ob.type = 2
-            ORDER BY ob.ob_id DESC
-        ) WHERE <![CDATA[ ROWNUM <=1 ]]>
-    </select>
+   <!-- 查询注册机构注册计划 -->
+   <select id="findOrgBatch" resultType="OrgBatch">
+       SELECT * FROM(
+           SELECT
+               ob.join_in AS joinIn,
+               ob.is_open AS isOpen,
+               ob.PB_ID   AS provinceBatch,
+               pb.status  AS status,
+               ob.ob_id   AS orgBatchId
+           FROM
+               t_org_batch ob
+               LEFT JOIN t_province_batch pb ON pb.pb_id = ob.pb_id
+           WHERE ob.org_id = #{orgId} AND ob.type = 2
+           ORDER BY ob.ob_id DESC
+       ) WHERE <![CDATA[ ROWNUM <=1 ]]>
+   </select>
 
-    <!-- 查询网报时间段 -->
-    <select id="findOrgBatchTime" resultType="OrgBatchTime">
-        SELECT * FROM (
-            SELECT
-                obt.OB_ID            AS orgBatch,
-                obt.VALID_BEGIN_DATE AS validBeginDate,
-                obt.VALID_END_DATE   AS validEndDate
-            FROM
-                t_org_batch_time obt
-                LEFT JOIN t_org_batch ob ON ob.ob_id = obt.ob_id
-            WHERE
-                ob.org_id = #{orgId}
-                AND ob.type = 2
-                AND obt.valid_begin_date <![CDATA[ <= ]]> sysdate
-                AND obt.valid_end_date >= sysdate
-                ORDER BY obt.obt_id DESC
-        ) WHERE <![CDATA[ ROWNUM <=1 ]]>
-    </select>
+   <!-- 查询网报时间段 -->
+   <select id="findOrgBatchTime" resultType="OrgBatchTime">
+       SELECT * FROM (
+           SELECT
+               obt.OB_ID            AS orgBatch,
+               obt.valid_begin_date AS validBeginDate,
+               obt.valid_end_date   AS validEndDate,
+               ob.cb_id             AS certBatchId
+           FROM
+               t_org_batch_time obt
+               LEFT JOIN t_org_batch ob ON ob.ob_id = obt.ob_id
+           WHERE
+               ob.org_id = #{orgId}
+               AND ob.type = 2
+               AND obt.valid_begin_date <![CDATA[ <= ]]> sysdate
+               AND obt.valid_end_date >= sysdate
+               ORDER BY obt.obt_id DESC
+       ) WHERE <![CDATA[ ROWNUM <=1 ]]>
+   </select>
+
+   <!-- 查询网报时间段，使用 OrgBatchId -->
+   <select id="findOrgBatchTimeByOrgBatchId" resultType="OrgBatchTime">
+       SELECT
+           obt.valid_begin_date AS validBeginDate,
+           obt.valid_end_date   AS validEndDate
+       FROM t_org_batch_time obt WHERE ob_id=#{orgBatchId} ORDER BY obt.valid_begin_date
+   </select>
 
 
     <insert id="insertUserPortalLog" parameterType="UserPortalLog">

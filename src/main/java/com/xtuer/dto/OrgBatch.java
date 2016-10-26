@@ -10,6 +10,7 @@ public class OrgBatch {
     private Boolean isOpen; // 是否开通网报
     private Integer provinceBatch; // 所属省级计划
     private Integer status; // 所属省级计划
+    private Integer orgBatchId; // 机构计划 id
 
     public Boolean getJoinIn() {
         return joinIn;
@@ -41,5 +42,13 @@ public class OrgBatch {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public Integer getOrgBatchId() {
+        return orgBatchId;
+    }
+
+    public void setOrgBatchId(Integer orgBatchId) {
+        this.orgBatchId = orgBatchId;
     }
 }

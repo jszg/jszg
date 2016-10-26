@@ -541,7 +541,7 @@ StepValidator.validate5thStep = function() {
     // 查找确认点的信息，显示在第六步的注意事项下
     var localSetId = parseInt($localSet.val());
     $.rest.get({url: Urls.REST_LOCALSET_INFO, urlParams: {localSetId: localSetId}, async: false, success: function(result) {
-        if (result.data.info) {
+        if (result.data && result.data.info) {
             $('#local-set-info').html(result.data.info);
         }
     }});

@@ -50,9 +50,12 @@ public class EnrollValidationController {
 
         List<OrgBatchTime> orgBatchTimes = commonMapper.findOrgBatchTime(orgId); // 查询网报时间段
 
-        if (!orgBatchTimes.isEmpty()) {
+        if (orgBatchTimes.isEmpty()) {
+            orgBatchTimes = commonMapper.findOrgBatchTimeByOrgBatchId(orgBatch.getOrgBatchId());
+
             StringBuffer buffer = new StringBuffer("该机构注册工作网上采集信息的时间段为: ");
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy 年 MM 月 dd 日");
+            boolean success = true;
 
             for (OrgBatchTime batchTime : orgBatchTimes) {
                 String prependMsg = "";
@@ -67,12 +70,14 @@ public class EnrollValidationController {
                 buffer.append(String.format("%s: %s 到 %s; ", prependMsg,
                         dateFormat.format(batchTime.getValidBeginDate()),
                         dateFormat.format(batchTime.getValidEndDate())));
+
+                success = false;
             }
 
-            return new Result(false, buffer.toString());
+            return new Result(success, buffer.toString());
         }
 
-        return Result.ok();
+        return Result.ok(orgBatchTimes.get(0));
     }
 
     @Autowired

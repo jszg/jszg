@@ -31,5 +31,5 @@ public interface CommonMapper {
 
     // 插入UserPortalLog
     void insertUserPortalLog(UserPortalLog log);
-
+    List<OrgBatchTime> findOrgBatchTimeByOrgBatchId(@Param("orgBatchId") int orgBatchId);
 }
