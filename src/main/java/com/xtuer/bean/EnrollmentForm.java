@@ -4,6 +4,8 @@ import java.util.Date;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 /**
  * 这个是在保存注册信息时可能用到的字段
@@ -25,9 +27,11 @@ public class EnrollmentForm {
 
     private Integer enrollNumber; // 注册次数
 
-    private boolean inHistory; // 是否在认定历史库中
+    @NotNull(message="inHistory 不能为空")
+    private Boolean inHistory; // 是否在认定历史库中
 
-    private boolean inRegistration; // 是否在认定表中
+    @NotNull(message="inRegistration 不能为空")
+    private Boolean inRegistration; // 是否在认定表中
 
     @NotNull(message="最高学位不能为空")
     private Integer degree; // 最高学位
@@ -42,7 +46,7 @@ public class EnrollmentForm {
     private Integer normalMajor; // 最高学历专业类别
 
     @NotNull(message="最高学历毕业学校不能为空")
-    private Integer graduateSchool; // 最高学历毕业学校
+    private Integer graduationCollege; // 最高学历毕业学校
 
     @NotNull(message="最高学历所学专业不能为空")
     private Integer major; // 最高学历所学专业
@@ -87,31 +91,23 @@ public class EnrollmentForm {
     private String address; // 通讯地址
 
     @NotBlank(message="通讯地的邮编不能为空")
+    @Pattern(regexp="^[1-9][0-9]{5}$", message="请填写 6 位阿拉伯数字的邮编")
     private String zipCode; // 通讯地的邮编
 
     @NotBlank(message="联系电话不能为空")
     private String phone; // 联系电话
 
     @NotBlank(message="手机不能为空")
+    @Pattern(regexp="^\\d{11}$", message="请填写 11 位阿拉伯数字的手机号码")
     private String cellphone; // 手机
 
     @NotBlank(message="照片不能为空")
     private String tmpPhoto; // 照片
 
-    private Integer confirmStatus; // 确认状态
-
-    private Integer status; // 初审注册状态
-
-    private Integer reCheckStatus; // 复核注册状态
-
-    private Integer judgmentStatus; // 终审注册状态
-
-    private String ip; // ip
-
     @NotNull(message="省不能为空")
     private Integer provinceId; // 省
 
-    @NotNull(message="市不能为空")
+//    @NotNull(message="市不能为空")
     private Integer city; // 市
 
     @NotNull(message="机构不能为空")
@@ -133,10 +129,22 @@ public class EnrollmentForm {
     private Integer enrollBatch; // 注册批次
 
     @NotBlank(message="邮件地址不能为空")
+    @Pattern(regexp="^.+@.+\\..+$", message="请填写正确的邮件地址")
     private String email; // 电子邮件
 
     @NotBlank(message="密码不能为空")
+    @Size(min=8, message="密码不少于 8 位")
     private String password; // 密码
+
+    private Integer confirmStatus; // 确认状态
+
+    private Integer status; // 初审注册状态
+
+    private Integer reCheckStatus; // 复核注册状态
+
+    private Integer judgmentStatus; // 终审注册状态
+
+    private String ip; // ip
 
     private Date lastModify;// 最后修改时间
     private String lastModifier; // 最后修改人
@@ -230,12 +238,12 @@ public class EnrollmentForm {
         this.normalMajor = normalMajor;
     }
 
-    public Integer getGraduateSchool() {
-        return graduateSchool;
+    public Integer getGraduationCollege() {
+        return graduationCollege;
     }
 
-    public void setGraduateSchool(Integer graduateSchool) {
-        this.graduateSchool = graduateSchool;
+    public void setGraduationCollege(Integer graduationCollege) {
+        this.graduationCollege = graduationCollege;
     }
 
     public Integer getMajor() {

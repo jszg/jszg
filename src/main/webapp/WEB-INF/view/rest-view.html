@@ -10,7 +10,63 @@
 
 <body>
     <script>
+        function step7Submit() {
+            var params = {
+                name: 'Biao',
+                idType: 36,
+                idNo: '330726196507040016',
+                certNo: '20021309531000655',
+                inHistory: false,
+                inRegistration: false,
+                degree: 1,
+                eduLevel: 2,
+                learnType: 1,
+                normalMajor: 2,
+                graduationCollege: 1,
+                major: 1,
+                graduationTime: '2011-02-1',
+                beginWorkYear: '2011-10-11',
+                workUnitType: 1,
+                workUnit: '北师大',
+                workDate: '2012-11-20',
+                schoolQuale: 1,
+                postQuale: 1,
+                pthLevel: 1,
+                techniqueJob: 1,
+                provinceId: 1,
+                orgId: 1,
+                teachGrade: 1,
+                localeId: 1,
+                localSetId: 1,
+                teachSubject: 1,
+                enrollBatch: 1,
+                political: 1,
+
+                birthPlace: '北京',
+                residence: '北京',
+                address: '亦庄',
+                zipCode: '100000',
+                phone: '01078828',
+                cellphone: '18001166440',
+                tmpPhoto: '/x/y/foo.jpg',
+                email: 'biao.mac@gmail.com',
+                password: 'Passw0rd'
+            };
+
+            $.rest.create({url: '/new-cert/validate', data: params, async: false, success: function(result) {
+                if (!result.success) {
+                    console.log(result.message);
+                } else {
+                    console.log(result.data);
+                }
+
+                // alert(result.data);
+            }});
+        }
+
         $(document).ready(function() {
+            step7Submit();
+
             $.rest.get({url: '/new-cert/rest', data: {name: '黄彪'}, async: false, success: function(result) {
                 console.log(result);
             }});
@@ -31,11 +87,6 @@
                 console.log(result);
             }, error: function(e) {
                 console.log(e);
-            }});
-
-            $.rest.create({url: '/new-cert/validate', data: {email: 'biao.mac@gmail.com', residence: 'china'}, success: function(result) {
-                console.log(result.data);
-                alert(result.data);
             }});
 
             console.log('end');

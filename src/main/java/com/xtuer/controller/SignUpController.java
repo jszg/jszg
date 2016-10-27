@@ -9,25 +9,15 @@ import com.xtuer.constant.UriView;
 import com.xtuer.dto.*;
 import com.xtuer.mapper.*;
 import com.xtuer.util.RedisUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -79,10 +69,10 @@ public class SignUpController {
     // 父机构
     @GetMapping(UriView.REST_ORGS_BY_ORGTYPE)
     @ResponseBody
-    public Result<List<Organization>> getOrgByOrgType(@PathVariable("orgType") int orgType, @RequestParam("date") String d) {
+    public Result<List<Organization>> getOrgByOrgType(@PathVariable("orgType") int orgType, @RequestParam("date") String d) throws ParseException {
         String key = String.format(RedisKey.ORGS_BY_ORGTYPE, orgType);
 
-        Date date = parseDate(d, "yyyy-MM-dd");
+        Date date = DateUtils.parseDate(d, "yyyy-MM-dd");
         List<Organization> organizations = null;
         if (orgType == 4) {
             organizations = redisUtils.get(new TypeReference<List<Organization>>(){}, key, () -> organizationMapper.findByOrgTypeEq4());
@@ -102,9 +92,9 @@ public class SignUpController {
     // 子机构
     @GetMapping(UriView.REST_ORGS_BY_PARENT)
     @ResponseBody
-    public Result<List<Organization>> getOrgByParentId(@PathVariable("parentId") int parentId, @RequestParam("date") String d) {
+    public Result<List<Organization>> getOrgByParentId(@PathVariable("parentId") int parentId, @RequestParam("date") String d) throws ParseException {
         String key = String.format(RedisKey.ORGS_BY_PARENT, parentId);
-        Date date = parseDate(d, "yyyy-MM-dd");
+        Date date = DateUtils.parseDate(d, "yyyy-MM-dd");
 
         List<Organization> list = redisUtils.get(new TypeReference<List<Organization>>(){}, key, () -> organizationMapper.findByParentId(parentId));
         List<Organization> results = new ArrayList<>();
@@ -574,17 +564,6 @@ public class SignUpController {
         }
 
         return Result.ok(null);
-    }
-
-    private Date parseDate(String source, String format) {
-        SimpleDateFormat sdf = new SimpleDateFormat(format);
-        try {
-            return sdf.parse(source);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return null;
     }
 
     private String getIp(HttpServletRequest request) {

@@ -32,6 +32,7 @@ Urls = {
     REST_ENROLL_STEP3:           '/new-cert/rest/signUp/enroll/step3?idNo={idNo}&certNo={certNo}', // 第三步验证
     REST_ENROLL_ORG_VALIDATION:  '/new-cert/rest/signUp/enroll/orgs/{orgId}/validation', // 验证注册的注册机构
 
+    URI_ENROLL_SUBMIT:       '/new-cert/rest/signUp/enroll/submit',
     URI_UPLOAD_PERSON_IMAGE: '/new-cert/upload-person-image',
     WEB_UPLOADER_SWF: 'https://cdn.staticfile.org/webuploader/0.1.5/Uploader.swf'
 };

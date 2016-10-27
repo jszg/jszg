@@ -1,18 +1,18 @@
 package com.xtuer.util;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class CommonUtils {
+
     /**
-     * 格式化日期
-     *
-     * @param date
-     * @param format 日期格式
-     * @return 日期格式化的字符串
+     * 验证密码的强度
+     *     密码不少于 8 位，必须包含数字、字母和特殊字符，特殊字符需从 “#、%、*、-、_、!、@、$、&” 中选择
+     * @param password 密码
+     * @return 如果密码的强度够返回 true，否则返回 false
      */
-    public static String formatDate(Date date, String format) {
-        SimpleDateFormat sdf = new SimpleDateFormat(format);
-        return sdf.format(date);
+    public static boolean passwordHasEnoughStrength(String password) {
+        return  password.length() >= 8 &&
+                password.matches("^.*[0-9]+.*$") &&
+                password.matches("^.*[a-zA-Z]+.*$") &&
+                password.matches("^.*[#%_!@&\\-\\*\\$]+.*$");
     }
+
 }

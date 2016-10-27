@@ -110,10 +110,16 @@ public class EnrollmentValidationController {
         }
 
         HistoryValid historyValid = null;
+
+        List<HistoryValid> historyValids = commonMapper.findHistoryValid(idNo, certNo);
+        if (!historyValids.isEmpty()) {
+            historyValid = historyValids.get(0);
+        }
+
         EnrollHistory enrollHistory = null;
         String provinceCode = null;
-
         List<EnrollHistory> enrollHistories = commonMapper.findEnrollHistory(idNo, certNo);
+
         if (!enrollHistories.isEmpty()) {
             enrollHistory = enrollHistories.get(0);
             if(enrollHistory.getEnrollTime() == null){
@@ -140,7 +146,18 @@ public class EnrollmentValidationController {
                             String errorMsg = "该证书已于" + DateFormatUtils.format(enrollHistory.getEnrollTime(), "yyyy年M月d日")
                                     + "注册，5年内无需再注册。";
                             return new Result(false, errorMsg);
+                        } else {
+                            if (null == historyValid) {
+                                return new Result(false, "证书数据存在异常，请联系网站工作人员");
+                            }
                         }
+
+                        break;
+                    case SignUpConstants.STATUS_CERT_LATER:
+                        if (enrollHistory.getCertNo() != null && historyValid == null) {
+                            return new Result(false, "证书数据存在异常，请联系网站工作人员");
+                        }
+
                         break;
                 }
             }
@@ -149,11 +166,6 @@ public class EnrollmentValidationController {
         List<Enrollment> enrollments = commonMapper.findEnrollment(idNo, certNo);
         if (!enrollments.isEmpty()) {
             return new Result(false, "您已经填写了申报信息，请直接登陆查看或修改申报信息；");
-        }
-
-        List<HistoryValid> historyValids = commonMapper.findHistoryValid(idNo, certNo);
-        if (!historyValids.isEmpty()) {
-            historyValid = historyValids.get(0);
         }
 
         Enrollment enrollment = new Enrollment();

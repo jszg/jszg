@@ -6,8 +6,10 @@ import com.xtuer.bean.Result;
 import com.xtuer.constant.UriView;
 import com.xtuer.mapper.CertTypeMapper;
 import com.xtuer.mapper.DemoMapper;
+import com.xtuer.util.CommonUtils;
 import com.xtuer.util.RedisUtils;
 import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.text.ParseException;
+import java.util.Date;
 
 @Controller
 public class DemoController {
@@ -100,7 +104,21 @@ public class DemoController {
         }
 
         if (result.hasErrors()) {
-            return Result.error(sb.toString());
+            return new Result(false, sb.toString());
+        }
+
+        // 验证日期
+        try {
+            Date graduationTime = DateUtils.parseDate(form.getGraduationTime(), "yyyy-MM-dd");
+            Date beginWorkYear = DateUtils.parseDate(form.getBeginWorkYear(), "yyyy-MM-dd");
+            Date workDate = DateUtils.parseDate(form.getWorkDate(), "yyyy-MM-dd");
+        } catch (ParseException e) {
+            return new Result(false, "时间格式错误，正确格式为 yyyy-MM-dd");
+        }
+
+        // 验证密码强度
+        if (!CommonUtils.passwordHasEnoughStrength(form.getPassword())) {
+            return new Result(false, "密码不少于 8 位，必须包含数字、字母和特殊字符，特殊字符需从 “#、%、*、-、_、!、@、$、&” 中选择");
         }
 
         return Result.ok(form);
