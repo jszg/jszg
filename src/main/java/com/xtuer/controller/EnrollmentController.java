@@ -35,7 +35,7 @@ public class EnrollmentController {
             return r;
         }
 
-        // 设置固定信息
+        // [2] 设置固定信息
         form.setConfirmStatus(SignUpConstants.STATUS_UN_CONF);
         form.setStatus(SignUpConstants.STATUS_UN_CERT);
         form.setReCheckStatus(SignUpConstants.STATUS_UN_CERT);
@@ -44,25 +44,27 @@ public class EnrollmentController {
         form.setApplyTime(new Date());
         form.setIp(CommonUtils.getClientIp(request));
 
-        // [2] 查询校验市的信息
+        // [3] 查询校验市的信息
         enrollmentService.verifyCityInfo(form);
 
-        // [3] 在认定历史表中
+        // [4] 在认定历史表中
         if (form.getInHistory()) {
             enrollmentService.saveWhenInHistory(form);
         }
 
-        // [4] 在认定表中
+        // [5] 在认定表中
         if (form.getInRegistration()) {
             enrollmentService.saveWhenInRegistration(form);
         }
 
-        // [5] 既不在认定历史表中，也不在认定表中
+        // [6] 既不在认定历史表中，也不在认定表中
         if (!form.getInHistory() && !form.getInRegistration()) {
             enrollmentService.saveWhenNotInHistoryAndInRegistration(form);
         }
 
-        // [6] 写入日志
+        // [7] 保存图片
+
+        // [8] 写入日志
         enrollmentService.saveUserLog(form, request);
 
         System.out.println(BrowserUtils.getBrowserName(request));
