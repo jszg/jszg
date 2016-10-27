@@ -11,6 +11,7 @@ public class Registration {
     private int id;
     private String name;              //姓名
     private String idNo;              //证件号码
+    private int idType;
     private String idTypeName;        //证件类型
     private String certNo;            //教师资格证书号码
     private String sexName;              //性别
@@ -131,8 +132,15 @@ public class Registration {
         return ip;
     }
 
-    public Registration setIp(String ip) {
+    public void setIp(String ip) {
         this.ip = ip;
-        return this;
+    }
+
+    public int getIdType() {
+        return idType;
+    }
+
+    public void setIdType(int idType) {
+        this.idType = idType;
     }
 }

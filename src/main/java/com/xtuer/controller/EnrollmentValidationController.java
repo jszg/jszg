@@ -90,7 +90,7 @@ public class EnrollmentValidationController {
     // 注册验证 Step3
     @GetMapping(UriView.REST_ENROLL_STEP3)
     @ResponseBody
-    public Result<?> enrollStep3(@RequestParam String idNo, @RequestParam String certNo) {
+    public Result<?> enrollStep3(@RequestParam int idType, @RequestParam String idNo, @RequestParam String certNo) {
         List<Limitation> limits = commonMapper.findLimitation(idNo, certNo);
 
         if (!limits.isEmpty() && limits.get(0).getStatus() == SignUpConstants.S_REVIEWED) {
@@ -186,6 +186,9 @@ public class EnrollmentValidationController {
                 enrollment.setInRegistration(Boolean.FALSE);
             }
             enrollment.setEnrollNum(1);
+            registration.setIdNo(idNo);
+            registration.setCertNo(certNo);
+            registration.setIdType(idType);
         } else {
             if(historyValid.getDeleteStatus() == SignUpConstants.DELETE_STATUS_FORBID){
                 return new Result(false, "该数据已受限，不能进行定期注册报名!");
@@ -201,6 +204,7 @@ public class EnrollmentValidationController {
             registration.setName(historyValid.getName());
             registration.setCertNo(certNo);
             registration.setIdNo(idNo);
+            registration.setIdType(idType);
             registration.setBirthday(historyValid.getBirthday());
             registration.setNationName(historyValid.getNationName());
             registration.setOrgName(historyValid.getOrgName());
