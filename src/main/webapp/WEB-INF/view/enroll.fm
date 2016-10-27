@@ -155,15 +155,15 @@
                </tr>
                 <tr>
                     <td class="operation">证书签发日期:</td>
-                    <td><span class="form-data" name="certAssignDate" data-id="" data-name=""><span></td>
+                    <td><span class="form-data" name="certAssignDate" data-id="" data-name=""></span></td>
                     <td class="operation">资格种类:</td>
-                    <td><span class="form-data" name="certType" data-id="" data-name=""><span></td>
+                    <td><span class="form-data" name="certType" data-id="" data-name=""></span></td>
                 </tr>
                 <tr>
                     <td class="operation">认定机构:</td>
-                    <td><span class="form-data" name="recognizeOrg" data-id="" data-name=""><span></td>
+                    <td><span class="form-data" name="recognizeOrg" data-id="" data-name=""></span></td>
                     <td class="operation">任教学科:</td>
-                    <td><span class="form-data" name="registerSubject" data-id="" data-name=""><span></td>
+                    <td><span class="form-data" name="registerSubject" data-id="" data-name=""></span></td>
                 </tr>
                  <tr>
                     <td class="operation">姓名:</td>
@@ -217,12 +217,12 @@
                     <td class="operation">认定机构</td>
                     <td colspan="2">
                         <button id="select-recognize-org-button">选择...</button>
-                        <span class="form-data" name="recognizeOrg" data-id="" data-name=""><span>
+                        <span class="form-data" name="recognizeOrg" data-id="" data-name=""></span>
                     </td>
                     <td class="operation">任教学科</td>
                     <td>
                         <button id="select-register-subject-button">选择...</button>
-                        <span class="form-data" name="registerSubject" data-id="" data-name=""><span>
+                        <span class="form-data" name="registerSubject" data-id="" data-name=""></span>
                     </td>
                 </tr>
                  <tr>
@@ -269,7 +269,7 @@
                     <td class="operation">现任教学科</td>
                     <td colspan="2">
                         <button id="select-teach-subject-button">请选择...</button>
-                        <span class="form-data" name="teachSubject" data-id="" data-name=""><span>
+                        <span class="form-data" name="teachSubject" data-id="" data-name=""></span>
                     </td>
                 </tr>
             </table>
@@ -313,6 +313,9 @@
                     {{/each}}
                 </script>
             </table>
+        </div>
+        <div id="no-local-sets-info">
+            <span class="form-data" name="registerOrg" data-id="" data-name=""></span> 目前还没有安排确认点，请与该机构联系！
         </div>
     </div>
     <div class="action-bar">
@@ -406,13 +409,13 @@
                 </tr>
                 <tr>
                   <td class="operation">任教学科:</td>
-                  <td><span class="form-data" name="registerSubject" data-id="" data-name=""><span></td>
+                  <td><span class="form-data" name="registerSubject" data-id="" data-name=""></span></td>
                   <td class="operation">教师资格证书号码:</td>
                   <td><span class="form-data" name="certNo" data-id="" data-name=""></span></td>
                 </tr>
                 <tr>
                   <td class="operation">认定机构:</td>
-                  <td><span class="form-data" name="recognizeOrg" data-id="" data-name=""><span></td>
+                  <td><span class="form-data" name="recognizeOrg" data-id="" data-name=""></span></td>
                   <td></td>
                   <td></td>
                 </tr>

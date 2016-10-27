@@ -169,7 +169,14 @@ function requestLocalSets(orgId) {
     }
 
     $.rest.get({url: Urls.REST_LOCALSETS, urlParams: {orgId: orgId}, async: false, success: function(result) {
-        $('#local-sets-table').append(template('localSetsTemplate', {localSets: result.data}));
+        if (result.data.length === 0) {
+            $('#local-sets-div').hide();
+            $('#no-local-sets-info').show();
+        } else {
+            $('#no-local-sets-info').hide();
+            $('#local-sets-div').show();
+            $('#local-sets-table').append(template('localSetsTemplate', {localSets: result.data}));
+        }
     }});
 }
 
