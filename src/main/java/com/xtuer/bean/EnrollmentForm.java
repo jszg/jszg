@@ -17,6 +17,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class EnrollmentForm {
+    private java.math.BigDecimal enrollId;
+
     @NotBlank(message="姓名不能为空")
     private String name;
 
@@ -28,6 +30,7 @@ public class EnrollmentForm {
 
     @NotBlank(message="证书签发日期不能为空")
     private String certAssignDate; // 证书签发日期
+    private Date certAssignDateDate;
 
     @NotNull(message="证件类型不能为空")
     private Integer idTypeId; // 证件类型
@@ -70,6 +73,7 @@ public class EnrollmentForm {
 
     @NotBlank(message="最高学历毕业时间不能为空")
     private String graduationTime; // 最高学历毕业时间
+    private Date graduationTimeDate;
 
     @NotNull(message="政治面貌不能为空")
     private Integer politicalId; // 政治面貌
@@ -85,9 +89,11 @@ public class EnrollmentForm {
 
     @NotBlank(message="现任教学校聘用起始日期不能为空")
     private String workDate; // 现任教学校聘用起始日期
+    private Date workDateDate;
 
     @NotBlank(message="出生日期不能为空")
     private String birthday; // 出生日期
+    private Date birthdayDate;
 
     @NotNull(message="岗位性质不能为空")
     private Integer postQualeId; // 岗位性质
@@ -97,6 +103,9 @@ public class EnrollmentForm {
 
     @NotBlank(message="开始参加工作时间不能为空")
     private String beginWorkYear; // 开始参加工作时间
+    private Date beginWorkYearDate;
+
+    private int beginWorkYearInt; // 开始参加工作时间的年
 
     @NotNull(message="教师职务（职称）不能为空")
     private Integer technicalJobId; // 教师职务（职称）

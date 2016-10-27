@@ -4,5 +4,6 @@ import com.xtuer.bean.EnrollmentForm;
 import org.apache.ibatis.annotations.Param;
 
 public interface EnrollmentMapper {
-    public EnrollmentForm findByRegisterId(@Param("registerId") int registerId);
+    EnrollmentForm findByRegisterId(@Param("registerId") int registerId);
+    int insertEnrollment(EnrollmentForm form);
 }

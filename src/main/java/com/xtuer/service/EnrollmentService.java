@@ -48,6 +48,8 @@ public class EnrollmentService {
         form.setCertAssignDate(temp.getCertAssignDate());
         form.setRecognizeOrgName(temp.getRecognizeOrgName());
 
+        enrollmentMapper.insertEnrollment(form);
+
         System.out.println(JSON.toJSONString(form));
     }
 
@@ -117,11 +119,11 @@ public class EnrollmentService {
             Date birthday = DateUtils.parseDate(form.getBirthday(), DATE_FORMAT);
             Date certAssignDate = DateUtils.parseDate(form.getCertAssignDate(), DATE_FORMAT);
 
-            form.setGraduationTime(DateFormatUtils.format(graduationTime, DATE_FORMAT));
-            form.setBeginWorkYear(DateFormatUtils.format(beginWorkYear, DATE_FORMAT));
-            form.setWorkDate(DateFormatUtils.format(workDate, DATE_FORMAT));
-            form.setBirthday(DateFormatUtils.format(birthday, DATE_FORMAT));
-            form.setCertAssignDate(DateFormatUtils.format(certAssignDate, DATE_FORMAT));
+            form.setGraduationTimeDate(graduationTime);
+            form.setBeginWorkYearDate(beginWorkYear);
+            form.setWorkDateDate(workDate);
+            form.setBirthdayDate(birthday);
+            form.setCertAssignDateDate(certAssignDate);
         } catch (ParseException e) {
             return new Result(false, "时间格式错误，正确格式为 yyyy-MM-dd");
         }

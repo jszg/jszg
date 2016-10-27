@@ -43,6 +43,11 @@ public class EnrollmentController {
         form.setDataFrom(SignUpConstants.DATA_FROM_USER_ADD);
         form.setApplyTime(new Date());
         form.setIp(CommonUtils.getClientIp(request));
+        form.setDeleteStatus(0);
+        form.setIdTypeId(36);
+        form.setEnrollBatch(25);
+
+        form.setBeginWorkYearInt(Integer.parseInt(form.getBeginWorkYear().substring(0, 4)));
 
         // [3] 查询校验市的信息
         enrollmentService.verifyCityInfo(form);
