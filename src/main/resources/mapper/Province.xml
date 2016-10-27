@@ -7,7 +7,7 @@
 <!--namespace 非常重要：必须是 Mapper 类的全路径-->
 <mapper namespace="com.xtuer.mapper.ProvinceMapper">
     <select id="findAll" resultType="Province">
-        select ORG_ID as id, ORG_NAME as name, PROVINCE_CITY as provinceCity
-        from T_ORG WHERE ORG_TYPE = 4 AND STATUS = 1 ORDER BY AREA_CODE
+        SELECT org_id AS id, area_name AS name, province_city AS provinceCity
+        FROM t_org WHERE org_type = 4 AND status = 1 ORDER BY area_code
     </select>
 </mapper>
