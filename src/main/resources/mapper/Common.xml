@@ -118,12 +118,9 @@
 
 
     <insert id="insertUserPortalLog" parameterType="UserPortalLog">
-      insert
-      into
-        t_user_portal_log
-        (id, user_id, ip, login, type, browser_info, browser_content)
-      values
-        (s_user_portal_log_id.Nextval, #{userId}, #{ip}, #{login}, #{type}, #{browserInfo}, #{browserContent})
+        INSERT
+        INTO t_user_portal_log (id, user_id, ip, login, type, browser_info, browser_content)
+        VALUES (s_user_portal_log_id.Nextval, #{userId}, #{ip}, #{login}, #{type}, #{browserName}, #{browserContent})
     </insert>
 
     <select id="findCityInfoByOrgId" resultType="CityInfo">

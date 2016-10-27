@@ -8,6 +8,7 @@ import com.xtuer.constant.RedisKey;
 import com.xtuer.constant.UriView;
 import com.xtuer.dto.*;
 import com.xtuer.mapper.*;
+import com.xtuer.util.BrowserUtils;
 import com.xtuer.util.RedisUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -546,17 +547,9 @@ public class SignUpController {
                 userPortalLog.setUserId(idno);
                 userPortalLog.setLogin(new Date());
                 userPortalLog.setIp(getIp(request));
-                userPortalLog.setType(UserPortalLog.enrollSubmit);
-                String content = "";
-                if(request.getHeader("User-Agent")!=null){
-                    if(request.getHeader("User-Agent").length()>256){
-                        content = request.getHeader("User-Agent").substring(256);
-                    }else{
-                        content = request.getHeader("User-Agent");
-                    }
-                }
-                userPortalLog.setBrowserContent(content);
-                userPortalLog.setBrowserInfo(UserPortalLog.getBrowInfo(request.getHeader("user-Agent")));
+                userPortalLog.setType(UserPortalLog.ENROLL_SUBMIT);
+                userPortalLog.setBrowserContent(BrowserUtils.getBrowserContent(request));
+                userPortalLog.setBrowserName(BrowserUtils.getBrowserName(request));
                 commonMapper.insertUserPortalLog(userPortalLog);
             } catch (Exception e) {
                 e.printStackTrace();

@@ -5,19 +5,17 @@ import com.xtuer.bean.Result;
 import com.xtuer.constant.SignUpConstants;
 import com.xtuer.constant.UriView;
 import com.xtuer.service.EnrollmentService;
+import com.xtuer.util.BrowserUtils;
 import com.xtuer.util.CommonUtils;
-import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.text.ParseException;
 import java.util.Date;
 
 /**
@@ -42,6 +40,8 @@ public class EnrollmentController {
         form.setStatus(SignUpConstants.STATUS_UN_CERT);
         form.setReCheckStatus(SignUpConstants.STATUS_UN_CERT);
         form.setJudgmentStatus(SignUpConstants.STATUS_UN_CERT);
+        form.setDataFrom(SignUpConstants.DATA_FROM_USER_ADD);
+        form.setApplyTime(new Date());
         form.setIp(CommonUtils.getClientIp(request));
 
         // [2] 查询校验市的信息
@@ -63,7 +63,9 @@ public class EnrollmentController {
         }
 
         // [6] 写入日志
-        enrollmentService.saveUserLog(form);
+        enrollmentService.saveUserLog(form, request);
+
+        System.out.println(BrowserUtils.getBrowserName(request));
 
         return Result.ok(form);
     }

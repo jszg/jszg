@@ -3,10 +3,12 @@ package com.xtuer.service;
 import com.alibaba.fastjson.JSON;
 import com.xtuer.bean.EnrollmentForm;
 import com.xtuer.bean.Result;
+import com.xtuer.bean.UserPortalLog;
 import com.xtuer.constant.SignUpConstants;
 import com.xtuer.dto.CityInfo;
 import com.xtuer.mapper.CommonMapper;
 import com.xtuer.mapper.EnrollmentMapper;
+import com.xtuer.util.BrowserUtils;
 import com.xtuer.util.CommonUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
+import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.util.Date;
 
@@ -56,8 +59,16 @@ public class EnrollmentService {
         System.out.println("saveWhenNotInHistoryAndInRegistration");
     }
 
-    public void saveUserLog(EnrollmentForm form) {
+    public void saveUserLog(EnrollmentForm form, HttpServletRequest request) {
+        UserPortalLog userPortalLog = new UserPortalLog();
+        userPortalLog.setUserId(form.getIdNo());
+        userPortalLog.setLogin(new Date());
+        userPortalLog.setIp(form.getIp());
+        userPortalLog.setType(UserPortalLog.ENROLL_SUBMIT);
+        userPortalLog.setBrowserContent(BrowserUtils.getBrowserContent(request));
+        userPortalLog.setBrowserName(BrowserUtils.getBrowserName(request));
 
+        commonMapper.insertUserPortalLog(userPortalLog);
     }
 
     /**
