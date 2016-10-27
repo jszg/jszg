@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--namespace 非常重要：必须是 Mapper 类的全路径-->
+<mapper namespace="com.xtuer.mapper.EnrollmentMapper">
+    <select id="findByRegisterId" resultType="EnrollmentForm">
+        SELECT
+            hv.reg_id      AS registerId,
+            hv.id_no       AS idNo,
+            hv.name        AS name,
+            hv.ct_id       AS certTypeId,
+            hv.subject     AS subjectId,
+            hv.cert_no     AS certNo,
+            hv.nation      AS nationId,
+            hv.sex         AS genderId,
+            hv.birthday    AS birthday,
+            hv.cert_assign AS certAssignDate,
+            hv.org_name    AS recognizeOrgName
+        FROM
+            t_history_valid hv
+        WHERE
+            hv.reg_id = #{registerId}
+    </select>
+</mapper>

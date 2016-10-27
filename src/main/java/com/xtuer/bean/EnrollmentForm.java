@@ -6,12 +6,16 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * 这个是在保存注册信息时可能用到的字段
  *
  * Created by microacup on 2016/10/26.
  */
+@Getter
+@Setter
 public class EnrollmentForm {
     @NotBlank(message="姓名不能为空")
     private String name;
@@ -21,6 +25,9 @@ public class EnrollmentForm {
 
     @NotBlank(message="证书号码不能为空")
     private String certNo; // 证书号码
+
+    @NotBlank(message="证书签发日期不能为空")
+    private String certAssignDate; // 证书签发日期
 
     @NotNull(message="证件类型不能为空")
     private Integer idTypeId; // 证件类型
@@ -33,6 +40,12 @@ public class EnrollmentForm {
 
     @NotNull(message="inRegistration 不能为空")
     private Boolean inRegistration; // 是否在认定表中
+
+    @NotNull(message="民族不能为空")
+    private Integer nationId; // 民族的 id
+
+    @NotNull(message="性别的 id 不能为空")
+    private Integer genderId; // 性别的 id
 
     @NotNull(message="最高学位不能为空")
     private Integer degreeId; // 最高学位
@@ -69,6 +82,9 @@ public class EnrollmentForm {
 
     @NotBlank(message="现任教学校聘用起始日期不能为空")
     private String workDate; // 现任教学校聘用起始日期
+
+    @NotBlank(message="出生日期不能为空")
+    private String birthday; // 出生日期
 
     @NotNull(message="岗位性质不能为空")
     private Integer postQualeId; // 岗位性质
@@ -122,8 +138,26 @@ public class EnrollmentForm {
     @NotNull(message="确认点安排不能为空")
     private Integer localSetId; // 确认点安排
 
+    @NotNull(message="资格种类的 id 不能为空")
+    private Integer certTypeId; // 资格种类的 id
+
+    @NotNull(message="注册批次的 id 不能为空")
+    private Integer certBatchId; // 注册批次
+
     @NotNull(message="现任教学科不能为空")
     private Integer teachSubjectId;// 现任教学科
+
+    @NotNull(message="认定的 id 不能为空")
+    private Integer registerId; // 认定的 id
+
+    @NotNull(message="证书上的任教学科 id 不能为空")
+    private Integer registerSubjectId; // 证书上的任教学科 id
+
+    @NotNull(message="证书上的认定机构 id 不能为空")
+    private Integer recognizeOrgId; // 证书上的认定机构
+
+    @NotBlank(message="证书上的认定机构名称不能为空")
+    private String recognizeOrgName; // 证书上的认定机构名称
 
     private Integer enrollBatch; // 注册批次，后台查询
 
@@ -134,6 +168,8 @@ public class EnrollmentForm {
     @NotBlank(message="密码不能为空")
     @Size(min=8, message="密码不少于 8 位")
     private String password; // 密码
+
+    private Integer subjectId; // 任教学科，后台取
 
     private Integer confirmStatus; // 确认状态
 
@@ -148,388 +184,4 @@ public class EnrollmentForm {
     private Date lastModify;// 最后修改时间
     private String lastModifier; // 最后修改人
     private Integer deleteStatus; // 删除标记
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getIdNo() {
-        return idNo;
-    }
-
-    public void setIdNo(String idNo) {
-        this.idNo = idNo;
-    }
-
-    public String getCertNo() {
-        return certNo;
-    }
-
-    public void setCertNo(String certNo) {
-        this.certNo = certNo;
-    }
-
-    public Integer getIdTypeId() {
-        return idTypeId;
-    }
-
-    public void setIdTypeId(Integer idTypeId) {
-        this.idTypeId = idTypeId;
-    }
-
-    public Integer getEnrollNumber() {
-        return enrollNumber;
-    }
-
-    public void setEnrollNumber(Integer enrollNumber) {
-        this.enrollNumber = enrollNumber;
-    }
-
-    public Boolean getInHistory() {
-        return inHistory;
-    }
-
-    public void setInHistory(Boolean inHistory) {
-        this.inHistory = inHistory;
-    }
-
-    public Boolean getInRegistration() {
-        return inRegistration;
-    }
-
-    public void setInRegistration(Boolean inRegistration) {
-        this.inRegistration = inRegistration;
-    }
-
-    public Integer getDegreeId() {
-        return degreeId;
-    }
-
-    public void setDegreeId(Integer degreeId) {
-        this.degreeId = degreeId;
-    }
-
-    public Integer getEduLevelId() {
-        return eduLevelId;
-    }
-
-    public void setEduLevelId(Integer eduLevelId) {
-        this.eduLevelId = eduLevelId;
-    }
-
-    public Integer getLearnTypeId() {
-        return learnTypeId;
-    }
-
-    public void setLearnTypeId(Integer learnTypeId) {
-        this.learnTypeId = learnTypeId;
-    }
-
-    public Integer getNormalMajorId() {
-        return normalMajorId;
-    }
-
-    public void setNormalMajorId(Integer normalMajorId) {
-        this.normalMajorId = normalMajorId;
-    }
-
-    public Integer getGraduationCollegeId() {
-        return graduationCollegeId;
-    }
-
-    public void setGraduationCollegeId(Integer graduationCollegeId) {
-        this.graduationCollegeId = graduationCollegeId;
-    }
-
-    public Integer getMajorId() {
-        return majorId;
-    }
-
-    public void setMajorId(Integer majorId) {
-        this.majorId = majorId;
-    }
-
-    public String getGraduationTime() {
-        return graduationTime;
-    }
-
-    public void setGraduationTime(String graduationTime) {
-        this.graduationTime = graduationTime;
-    }
-
-    public Integer getPoliticalId() {
-        return politicalId;
-    }
-
-    public void setPoliticalId(Integer politicalId) {
-        this.politicalId = politicalId;
-    }
-
-    public Integer getWorkUnitTypeId() {
-        return workUnitTypeId;
-    }
-
-    public void setWorkUnitTypeId(Integer workUnitTypeId) {
-        this.workUnitTypeId = workUnitTypeId;
-    }
-
-    public Integer getSchoolQualeId() {
-        return schoolQualeId;
-    }
-
-    public void setSchoolQualeId(Integer schoolQualeId) {
-        this.schoolQualeId = schoolQualeId;
-    }
-
-    public String getWorkUnit() {
-        return workUnit;
-    }
-
-    public void setWorkUnit(String workUnit) {
-        this.workUnit = workUnit;
-    }
-
-    public String getWorkDate() {
-        return workDate;
-    }
-
-    public void setWorkDate(String workDate) {
-        this.workDate = workDate;
-    }
-
-    public Integer getPostQualeId() {
-        return postQualeId;
-    }
-
-    public void setPostQualeId(Integer postQualeId) {
-        this.postQualeId = postQualeId;
-    }
-
-    public Integer getPthLevelId() {
-        return pthLevelId;
-    }
-
-    public void setPthLevelId(Integer pthLevelId) {
-        this.pthLevelId = pthLevelId;
-    }
-
-    public String getBeginWorkYear() {
-        return beginWorkYear;
-    }
-
-    public void setBeginWorkYear(String beginWorkYear) {
-        this.beginWorkYear = beginWorkYear;
-    }
-
-    public Integer getTechnicalJobId() {
-        return technicalJobId;
-    }
-
-    public void setTechnicalJobId(Integer technicalJobId) {
-        this.technicalJobId = technicalJobId;
-    }
-
-    public String getBirthPlace() {
-        return birthPlace;
-    }
-
-    public void setBirthPlace(String birthPlace) {
-        this.birthPlace = birthPlace;
-    }
-
-    public String getResidence() {
-        return residence;
-    }
-
-    public void setResidence(String residence) {
-        this.residence = residence;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getZipCode() {
-        return zipCode;
-    }
-
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getCellphone() {
-        return cellphone;
-    }
-
-    public void setCellphone(String cellphone) {
-        this.cellphone = cellphone;
-    }
-
-    public String getTmpPhoto() {
-        return tmpPhoto;
-    }
-
-    public void setTmpPhoto(String tmpPhoto) {
-        this.tmpPhoto = tmpPhoto;
-    }
-
-    public Integer getProvinceId() {
-        return provinceId;
-    }
-
-    public void setProvinceId(Integer provinceId) {
-        this.provinceId = provinceId;
-    }
-
-    public Integer getCityId() {
-        return cityId;
-    }
-
-    public void setCityId(Integer cityId) {
-        this.cityId = cityId;
-    }
-
-    public Integer getOrgId() {
-        return orgId;
-    }
-
-    public void setOrgId(Integer orgId) {
-        this.orgId = orgId;
-    }
-
-    public Integer getTeachGradeId() {
-        return teachGradeId;
-    }
-
-    public void setTeachGradeId(Integer teachGradeId) {
-        this.teachGradeId = teachGradeId;
-    }
-
-    public Long getLocaleId() {
-        return localeId;
-    }
-
-    public void setLocaleId(Long localeId) {
-        this.localeId = localeId;
-    }
-
-    public Integer getLocalSetId() {
-        return localSetId;
-    }
-
-    public void setLocalSetId(Integer localSetId) {
-        this.localSetId = localSetId;
-    }
-
-    public Integer getTeachSubjectId() {
-        return teachSubjectId;
-    }
-
-    public void setTeachSubjectId(Integer teachSubjectId) {
-        this.teachSubjectId = teachSubjectId;
-    }
-
-    public Integer getEnrollBatch() {
-        return enrollBatch;
-    }
-
-    public void setEnrollBatch(Integer enrollBatch) {
-        this.enrollBatch = enrollBatch;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public Integer getConfirmStatus() {
-        return confirmStatus;
-    }
-
-    public void setConfirmStatus(Integer confirmStatus) {
-        this.confirmStatus = confirmStatus;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public Integer getReCheckStatus() {
-        return reCheckStatus;
-    }
-
-    public void setReCheckStatus(Integer reCheckStatus) {
-        this.reCheckStatus = reCheckStatus;
-    }
-
-    public Integer getJudgmentStatus() {
-        return judgmentStatus;
-    }
-
-    public void setJudgmentStatus(Integer judgmentStatus) {
-        this.judgmentStatus = judgmentStatus;
-    }
-
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
-
-    public Date getLastModify() {
-        return lastModify;
-    }
-
-    public void setLastModify(Date lastModify) {
-        this.lastModify = lastModify;
-    }
-
-    public String getLastModifier() {
-        return lastModifier;
-    }
-
-    public void setLastModifier(String lastModifier) {
-        this.lastModifier = lastModifier;
-    }
-
-    public Integer getDeleteStatus() {
-        return deleteStatus;
-    }
-
-    public void setDeleteStatus(Integer deleteStatus) {
-        this.deleteStatus = deleteStatus;
-    }
 }

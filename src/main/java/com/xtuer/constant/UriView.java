@@ -54,5 +54,5 @@ public interface UriView {
 
     String URI_ENROLL_SUBMIT               = "/rest/signUp/enroll/submit";
 
-    String URI_UPLOAD_PERSON_IMAGE         = "/upload-person-image";
+    String URI_UPLOAD_ENROLL_IMAGE         = "/upload-enroll-image";
 }

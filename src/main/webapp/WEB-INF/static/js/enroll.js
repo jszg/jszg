@@ -29,11 +29,11 @@ $(document).ready(function() {
 
 function initWebUploader() {
     var uploader = WebUploader.create({
-        auto: true,               // 自动上传
+        auto: true,                 // 自动上传
         swf: Urls.WEB_UPLOADER_SWF, // swf 文件路径
-        server: Urls.URI_UPLOAD_PERSON_IMAGE, // 文件接收服务端
-        pick: '#filePicker',      // 选择文件的按钮，内部根据当前运行时创建，可能是 input 元素，也可能是 flash.
-        resize: false,            // 不压缩 image, 默认如果是 jpeg，文件上传前会压缩一把再上传！
+        server: Urls.URI_UPLOAD_ENROLL_IMAGE, // 文件接收服务端
+        pick: '#filePicker',       // 选择文件的按钮，内部根据当前运行时创建，可能是 input 元素，也可能是 flash.
+        resize: true,              // 不压缩 image, 默认如果是 jpeg，文件上传前会压缩一把再上传！
         accept: { // 只允许上传图片
             title: 'Images',
             extensions: 'gif,jpg,jpeg,bmp,png',
@@ -43,28 +43,28 @@ function initWebUploader() {
             width: 114,
             height: 156,
             allowMagnify: false,
-            crop: false
+            crop: true
         }
     });
 
     // 上传成功
     // response 为服务器返回来的数据
     uploader.onUploadSuccess = function(file, response) {
-        console.log(response);
+        UiUtils.setFormData('photo', -1, response.data);
     };
 
     // 上传成功，例如抛异常
     // response 为服务器返回来的数据
     uploader.onUploadError = function(file, response) {
-        console.log(response);
+        // console.log(response);
     };
 
     // 上传进度 [0.0, 1.0]
     // fileQueued 时创建进度条，uploadProgress 更新进度条
     // 可以使用 file.id 来确定是哪个文件的上传进度
     uploader.onUploadProgress = function(file, percentage) {
-        console.log(percentage);
-        console.log('uploadProgress:' + file.id);
+        // console.log(percentage);
+        // console.log('uploadProgress:' + file.id);
     };
 
     // 当有文件添加进来的时候
@@ -349,6 +349,7 @@ StepValidator.validate3thStep = function() {
     UiUtils.setFormData('inHistory',       -1, false);
     UiUtils.setFormData('inRegistration',  -1, false);
     UiUtils.setFormData('enrollNumber',    -1, 0);
+    UiUtils.setFormData('registerId',      -1, -1);
     UiUtils.setFormData('idType',          -1, '');
     UiUtils.setFormData('idNo',            -1, '');
     UiUtils.setFormData('certNo',          -1, '');
@@ -436,6 +437,7 @@ StepValidator.validate3thStep = function() {
     // 如果有证书的历史数据，显示他们，然后返回
     if (historyData) {
         UiUtils.setFormData('enrollNumber',    -1, enrollNumber);
+        UiUtils.setFormData('registerId',      -1, historyData.id);
         UiUtils.setFormData('idType',          -1, historyData.idTypeName);
         UiUtils.setFormData('idNo',            -1, historyData.idNo);
         UiUtils.setFormData('certNo',          -1, historyData.certNo);
@@ -585,20 +587,22 @@ StepValidator.validate7thStep = function() {
     var genderId          = UiUtils.getFormData(box7, 'gender').id;           // 性别
     var idTypeId          = UiUtils.getFormData(box7, 'idType').id;           // 证件类型
     var idNo              = UiUtils.getFormData(box7, 'idNo').name;           // 身份证号码
+    var certNo            = UiUtils.getFormData(box7, 'certNo').name;         // 教师资格证书号码
     var birthday          = UiUtils.getFormData(box7, 'birthday').name;       // 出生日期
     var nationId          = UiUtils.getFormData(box7, 'nation').id;           // 民族
     var certTypeId        = UiUtils.getFormData(box7, 'certType').id;         // 申请资格种类
+    var registerId        = UiUtils.getFormData(box7, 'registerId').id;       // 认定 id: regId
     var registerSubjectId = UiUtils.getFormData(box7, 'registerSubject').id;  // 任教学科
-    var certNo            = UiUtils.getFormData(box7, 'certNo').name;         // 教师资格证书号码
+    var registerOrgId     = UiUtils.getFormData(box7, 'registerOrg').id;      // 注册机构
     var recognizeOrgId    = UiUtils.getFormData(box7, 'recognizeOrg').id;     // 认定机构
+    var recognizeOrgName  = UiUtils.getFormData(box7, 'recognizeOrg').name;   // 认定机构
     var teachGradeId      = UiUtils.getFormData(box7, 'teachGrade').id;       // 现任教学段
     var provinceId        = UiUtils.getFormData(box7, 'province').id;         // 所在省
-    var registerOrgId     = UiUtils.getFormData(box7, 'registerOrg').id;      // 注册机构
     var teachSubjectId    = UiUtils.getFormData(box7, 'teachSubject').id;     // 现任教学科
     var enrollNumber      = UiUtils.getFormData(box7, 'enrollNumber').name;   // 注册次数
     var inHistory         = UiUtils.getFormData(box7, 'inHistory').name;      // 证书是否在认定历史库
     var inRegistration    = UiUtils.getFormData(box7, 'inRegistration').name; // 证书是否在认定正式表
-    var certBatchId       = UiUtils.getFormData(box7, 'certBatchId').name;    // 认定批次
+    var certBatchId       = UiUtils.getFormData(box7, 'certBatchId').name;    // 注册批次
     var localeId          = UiUtils.getFormData(box7, 'localeId').name;       // 确认点
     var localSetId        = UiUtils.getFormData(box7, 'localSetId').name;     // 确认点安排
     ////////////////////////// 以上数据都不需要验证，前面步骤已经验证过了 //////////////////////////
@@ -673,8 +677,18 @@ StepValidator.validate7thStep = function() {
         idTypeId: idTypeId,
         idNo: idNo,
         certNo: certNo,
+        certAssignDate: certAssignDate,
         inHistory: inHistory,
         inRegistration: inRegistration,
+        certTypeId: certTypeId,
+        certBatchId: certBatchId,
+        registerId: registerId,
+        registerSubjectId: registerSubjectId,
+        recognizeOrgId: recognizeOrgId,
+        recognizeOrgName: recognizeOrgName,
+        nationId: nationId,
+        genderId: genderId,
+        birthday: birthday,
         degreeId: degreeId,
         eduLevelId: eduLevelId,
         learnTypeId: learnTypeId,

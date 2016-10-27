@@ -38,8 +38,8 @@ public class DemoController {
     @Autowired
     private RedisUtils redisUtils;
 
-    @Resource(name = "propertiesConfig")
-    private PropertiesConfiguration propertiesConfig;
+    @Resource(name = "config")
+    private PropertiesConfiguration config;
 
     @GetMapping("/demos/{id}")
     @ResponseBody
@@ -63,8 +63,10 @@ public class DemoController {
         // 3. 可以使用 {} 的方式传入参数
         logger.debug("With params: time: {}, name: {}", System.nanoTime(), "Bingo");
 
-        System.out.println(propertiesConfig.getString("uploadPersonImageDir" + "........"));
-        System.out.println(propertiesConfig.getString("url"));
+        System.out.println("Hi");
+        System.out.println(config.getString("uploadEnrollPhotoDir"));
+        System.out.println(config.getString("uploadTemp"));
+        System.out.printf(CommonUtils.generateUniqueFileName("abc.jpg"));
 
         return "Test logback";
     }

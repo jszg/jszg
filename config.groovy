@@ -1,7 +1,8 @@
 environments {
     development { // 本地开发环境，使用 MySQL
         staticBase = '/new-cert'
-        uploadPersonImageDir = 'build'
+        uploadTemp = '/var/www/upload/temp'
+        uploadEnrollPhotoDir = '/var/www/upload/storage/app_data/repository/photo/enroll_photo'
         logDir = '/Users/Biao/Temp/logs'
 
         jdbc {
@@ -18,25 +19,7 @@ environments {
         }
     }
 
-    production { // 线上环境
-        staticBase = 'http://static.jszg.edu.cn'
-        uploadPersonImageDir = ''
-
-        jdbc {
-            driverClassName = 'oracle.jdbc.driver.OracleDriver'
-            url = 'jdbc:oracle:thin:@192.168.10.86:1521:CERT'
-            username = 'certification'
-            password = '123456'
-            validationQuery = 'SELECT 1 FROM dual'
-        }
-
-        redis {
-            host = '127.0.0.1'
-            port = 6379
-        }
-    }
-
-    wxl { // 文显龙的开发环境，使用 Oracle
+    wxl1 { // 文显龙的开发环境，使用 Oracle
         staticBase = '/new-cert'
         uploadPersonImageDir = 'build'
         logDir = '/Users/Biao/Temp/logs'
@@ -76,7 +59,8 @@ environments {
 
     jszgtest { // 北师大的测试环境，使用 Oracle
         staticBase = '/new-cert'
-        uploadPersonImageDir = '/var/www/new_cert/photo/photo_cert'
+        uploadTemp = '/var/www/upload/temp'
+        uploadEnrollPhotoDir = '/opt/photo/enroll_photo'
         logDir = '/usr/local/tomcat8.5.6/logs'
 
         jdbc {
@@ -89,7 +73,26 @@ environments {
 
         redis {
             host = '192.168.8.116'
-//            host = '127.0.0.1'
+            port = 6379
+        }
+    }
+
+    jszg { // 北师大的正式环境，使用 Oracle
+        staticBase = '/new-cert'
+        uploadTemp = '/var/www/upload/temp'
+        uploadEnrollPhotoDir = '/var/www/upload/storage/app_data/repository/photo/enroll_photo'
+        logDir = '/usr/local/tomcat8.5.6/logs'
+
+        jdbc {
+            driverClassName = 'oracle.jdbc.driver.OracleDriver'
+            url = 'jdbc:oracle:thin:@192.168.10.86:1521:CERT'
+            username = 'certification'
+            password = '123456'
+            validationQuery = 'SELECT 1 FROM dual'
+        }
+
+        redis {
+            host = '192.168.8.116'
             port = 6379
         }
     }

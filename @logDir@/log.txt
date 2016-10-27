@@ -1,3 +1,6 @@
-[2016-10-24 16:47:34] [DEBUG] [BaseJdbcLogger.java-debug:132] - ooo Using Connection [625643197, URL=jdbc:oracle:thin:@192.168.10.25:1521:CERT, UserName=CERTIFICATION, Oracle JDBC driver]
-[2016-10-24 16:47:34] [DEBUG] [BaseJdbcLogger.java-debug:132] - ==>  Preparing: select eh.ENR_HIS_ID as id, eh.CERT_NO as certNo, eh.ID_NO as idNo,eh.JUDGMINT_STATUS as judgmentStatus, eh.ENROLL_TIME as enrollTime from t_enroll_history eh where eh.id_no = ? and eh.cert_no=? ordre eh.enr_his_id desc; 
-[2016-10-24 16:47:34] [DEBUG] [BaseJdbcLogger.java-debug:132] - ==> Parameters: 111111111111117(String), 20103403141000008(String)
+[2016-10-27 15:40:42] [DEBUG] [BaseJdbcLogger.java-debug:132] - ooo Using Connection [370982072, URL=jdbc:oracle:thin:@172.16.4.2:1521:ORCL, UserName=CERTIFICATION, Oracle JDBC driver]
+[2016-10-27 15:40:42] [DEBUG] [BaseJdbcLogger.java-debug:132] - ==>  Preparing: SELECT hv.reg_id AS registerId, hv.id_no AS idNo, hv.name AS name, hv.ct_id AS certTypeId, hv.subject AS subjectId, hv.cert_no AS certNo, hv.nation AS nationId, hv.sex AS genderId, hv.birthday AS birthday, hv.cert_assign AS certAssignDate, hv.org_name AS recognizeOrgName FROM t_history_valid hv WHERE hv.reg_id = ? 
+[2016-10-27 15:40:42] [DEBUG] [BaseJdbcLogger.java-debug:132] - ==> Parameters: 4028(Integer)
+[2016-10-27 15:40:44] [DEBUG] [BaseJdbcLogger.java-debug:132] - ooo Using Connection [462816308, URL=jdbc:oracle:thin:@172.16.4.2:1521:ORCL, UserName=CERTIFICATION, Oracle JDBC driver]
+[2016-10-27 15:40:44] [DEBUG] [BaseJdbcLogger.java-debug:132] - ==>  Preparing: SELECT hv.reg_id AS registerId, hv.id_no AS idNo, hv.name AS name, hv.ct_id AS certTypeId, hv.subject AS subjectId, hv.cert_no AS certNo, hv.nation AS nationId, hv.sex AS genderId, hv.birthday AS birthday, hv.cert_assign AS certAssignDate, hv.org_name AS recognizeOrgName FROM t_history_valid hv WHERE hv.reg_id = ? 
+[2016-10-27 15:40:44] [DEBUG] [BaseJdbcLogger.java-debug:132] - ==> Parameters: 4028(Integer)

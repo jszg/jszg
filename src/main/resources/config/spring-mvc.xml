@@ -17,6 +17,7 @@
          在包名 com.xtuer.controller 下的标记为 @Controller, @Service, @Component 的类
          都会⾃动的生成一个对象存储到 Spring Container ⾥
     -->
+    <context:component-scan base-package="com.xtuer.service"/>
     <context:component-scan base-package="com.xtuer.controller"/>
 
     <!-- 支持注解映射 -->
@@ -94,7 +95,7 @@
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 
     <!-- 配置文件 -->
-    <bean id="propertiesConfig" class="org.apache.commons.configuration.PropertiesConfiguration">
+    <bean id="config" class="org.apache.commons.configuration.PropertiesConfiguration">
         <constructor-arg value="classpath:config/config.properties"/>
     </bean>
 

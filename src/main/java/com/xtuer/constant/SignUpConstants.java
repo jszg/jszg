@@ -22,4 +22,6 @@ public interface SignUpConstants {
     int T_COUNTY    = 2; // 县级机构
     int T_LOCAL     = 1; // 确认机构
     int T_ABROAD    = 0;
+    int STATUS_UN_CERT = 15;
+    int STATUS_UN_CONF = 6;
 }

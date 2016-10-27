@@ -126,4 +126,16 @@
         (s_user_portal_log_id.Nextval, #{userId}, #{ip}, #{login}, #{type}, #{browserInfo}, #{browserContent})
     </insert>
 
+    <select id="findCityInfoByOrgId" resultType="CityInfo">
+        SELECT
+            o.org_type      AS orgType,
+            o.parent_id     AS parentId,
+            p.org_type      AS parentOrgType,
+        	p.province_city AS provinceCity
+        FROM
+            t_org o
+            LEFT JOIN t_org p ON p.org_id = o.parent_id
+        WHERE
+            o.org_id = #{orgId}
+    </select>
 </mapper>

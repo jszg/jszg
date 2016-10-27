@@ -33,7 +33,7 @@ Urls = {
     REST_ENROLL_ORG_VALIDATION:  '/new-cert/rest/signUp/enroll/orgs/{orgId}/validation', // 验证注册的注册机构
 
     URI_ENROLL_SUBMIT:       '/new-cert/rest/signUp/enroll/submit',
-    URI_UPLOAD_PERSON_IMAGE: '/new-cert/upload-person-image',
+    URI_UPLOAD_ENROLL_IMAGE: '/new-cert/upload-enroll-image',
     WEB_UPLOADER_SWF: 'https://cdn.staticfile.org/webuploader/0.1.5/Uploader.swf'
 };
 

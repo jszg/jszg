@@ -49,10 +49,20 @@
                 "cellphone":"18001166440",
                 "tmpPhoto":"x.jpg",
                 "email":"biao.mac@icloud.com",
-                "password":"Passw0rd#"
+                "password":"Passw0rd#",
+                certTypeId : 1,
+                registerSubjectId : 1,
+                recognizeOrgId : 1,
+                registerId : 4028,
+                genderId : 1,
+                nationId : 1,
+                certBatchId: 1,
+                certAssignDate : '2011-11-11',
+                birthday : '2011-11-11',
+                recognizeOrgName : '证书上的认定机构名称不能为空'
             };
 
-            $.rest.create({url: '/new-cert/validate', data: params, async: false, success: function(result) {
+            $.rest.create({url: '/new-cert/rest/signUp/enroll/submit', data: params, async: false, success: function(result) {
                 if (!result.success) {
                     console.log(result.message);
                 } else {

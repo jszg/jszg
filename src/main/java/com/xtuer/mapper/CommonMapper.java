@@ -1,13 +1,7 @@
 package com.xtuer.mapper;
 
 import com.xtuer.bean.UserPortalLog;
-import com.xtuer.dto.EnrollHistory;
-import com.xtuer.dto.Enrollment;
-import com.xtuer.dto.HistoryValid;
-import com.xtuer.dto.Limitation;
-import com.xtuer.dto.OrgBatch;
-import com.xtuer.dto.OrgBatchTime;
-import com.xtuer.dto.Registration;
+import com.xtuer.dto.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -32,4 +26,6 @@ public interface CommonMapper {
     // 插入UserPortalLog
     void insertUserPortalLog(UserPortalLog log);
     List<OrgBatchTime> findOrgBatchTimeByOrgBatchId(@Param("orgBatchId") int orgBatchId);
+
+    CityInfo findCityInfoByOrgId(@Param("orgId") int orgId);
 }
