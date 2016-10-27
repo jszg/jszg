@@ -60,7 +60,10 @@ public class EnrollmentForm {
     private Integer normalMajorId; // 最高学历专业类别
 
     @NotNull(message="最高学历毕业学校不能为空")
-    private Integer graduationCollegeId; // 最高学历毕业学校
+    private Integer graduationCollegeId; // 最高学历毕业学校的 id
+
+    @NotBlank(message="最高学历毕业学校名字不能为空")
+    private String graduationCollegeName; // 最高学历毕业学校名字
 
     @NotNull(message="最高学历所学专业不能为空")
     private Integer majorId; // 最高学历所学专业

@@ -623,6 +623,7 @@ StepValidator.validate7thStep = function() {
     var learnTypeId         = UiUtils.getSelectedOption('#learn-types').id;      // 最高学历学习形式
     var normalMajorId       = UiUtils.getSelectedOption('#normal-majors').id;    // 最高学历专业类别
     var graduationCollegeId = UiUtils.getFormData(box7, 'graduationCollege').id; // 最高学历毕业学校
+    var graduationCollegeName = UiUtils.getFormData(box7, 'graduationCollege').name; // 最高学历毕业学校
     var majorId             = UiUtils.getFormData(box7, 'major').id;             // 最高学历所学专业
     var graduationTime      = $.trim($('#graduation-date').val());               // 最高学历毕业时间
     var politicalId         = UiUtils.getSelectedOption('#politicals').id;       // 政治面貌
@@ -694,6 +695,7 @@ StepValidator.validate7thStep = function() {
         learnTypeId: learnTypeId,
         normalMajorId: normalMajorId,
         graduationCollegeId: graduationCollegeId,
+        graduationCollegeName: graduationCollegeName,
         majorId: majorId,
         graduationTime: graduationTime,
         beginWorkYear: beginWorkYear,
@@ -723,7 +725,7 @@ StepValidator.validate7thStep = function() {
         password: password1
     };
 
-    $.rest.create({url: '/new-cert/validate', data: params, async: false, success: function(result) {
+    $.rest.create({url: Urls.URI_ENROLL_SUBMIT, data: params, async: false, success: function(result) {
         if (!result.success) {
             alert(result.message);
         } else {
