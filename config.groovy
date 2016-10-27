@@ -89,6 +89,7 @@ environments {
 
         redis {
             host = '192.168.8.116'
+//            host = '127.0.0.1'
             port = 6379
         }
     }

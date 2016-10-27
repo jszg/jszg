@@ -345,6 +345,22 @@ function StepValidator () {}
  * @return {bool} 验证通过返回 true，否则返回 false
  */
 StepValidator.validate3thStep = function() {
+    // 有可能重复验证，清空以前的数据
+    UiUtils.setFormData('inHistory',       -1, false);
+    UiUtils.setFormData('inRegistration',  -1, false);
+    UiUtils.setFormData('enrollNumber',    -1, 0);
+    UiUtils.setFormData('idType',          -1, '');
+    UiUtils.setFormData('idNo',            -1, '');
+    UiUtils.setFormData('certNo',          -1, '');
+    UiUtils.setFormData('certAssignDate',  -1, '');
+    UiUtils.setFormData('certType',        -1, '');
+    UiUtils.setFormData('recognizeOrg',    -1, '');
+    UiUtils.setFormData('registerSubject', -1, '');
+    UiUtils.setFormData('name',            -1, '');
+    UiUtils.setFormData('gender',          -1, '');
+    UiUtils.setFormData('birthday',        -1, '');
+    UiUtils.setFormData('nation',          -1, '');
+
     var idType = UiUtils.getSelectedOption('#id-types'); // 证件类型
     var idNo = $.trim($('#idNo').val()); // 身份证件号码
     var certNo = $.trim($('#certNo').val()); // 教师资格证书号码
@@ -387,11 +403,13 @@ StepValidator.validate3thStep = function() {
         // [1] 在历史记录里
         if (enrollment.inHistory) {
             historyData = result.data.historyValid;
+            UiUtils.setFormData('inHistory', -1, true);
         }
 
         // [2] 在注册记录里
         if (enrollment.inRegistration) {
             historyData = result.data.registration;
+            UiUtils.setFormData('inRegistration', -1, true);
         }
 
         // provinceCode 为省的标记，如果为 45 则为广西
@@ -410,6 +428,10 @@ StepValidator.validate3thStep = function() {
         alert('证书数据存在异常，请联系网站工作人员');
         return false;
     }
+
+    // 显示需要填写的信息，隐藏注册的信息
+    $('#box-4 .registered').hide();
+    $('#box-4 .unregistered').show();
 
     // 如果有证书的历史数据，显示他们，然后返回
     if (historyData) {
@@ -430,24 +452,6 @@ StepValidator.validate3thStep = function() {
         $('#box-4 .unregistered').hide();
         $('#box-4 .registered').show();
         return true;
-    } else {
-        // 有可能重复验证，清空以前的数据
-        UiUtils.setFormData('enrollNumber',    -1, -1);
-        UiUtils.setFormData('idType',          -1, '');
-        UiUtils.setFormData('idNo',            -1, '');
-        UiUtils.setFormData('certNo',          -1, '');
-        UiUtils.setFormData('certAssignDate',  -1, '');
-        UiUtils.setFormData('certType',        -1, '');
-        UiUtils.setFormData('recognizeOrg',    -1, '');
-        UiUtils.setFormData('registerSubject', -1, '');
-        UiUtils.setFormData('name',            -1, '');
-        UiUtils.setFormData('gender',          -1, '');
-        UiUtils.setFormData('birthday',        -1, '');
-        UiUtils.setFormData('nation',          -1, '');
-
-        // 显示需要填写的信息，隐藏注册的信息
-        $('#box-4 .registered').hide();
-        $('#box-4 .unregistered').show();
     }
 
     UiUtils.setFormData('idType', idType.id, idType.name);
@@ -471,7 +475,7 @@ StepValidator.validate4thStep = function() {
     var enrollNumber = parseInt(UiUtils.getFormData('#box-4', 'enrollNumber').name); // 已经注册的次数
 
     // 没有注册过则需要验证用户输入，如果注册过了则不需要
-    if (-1 === enrollNumber) {
+    if (0 === enrollNumber) {
         var provinceCode    = parseInt(UiUtils.getFormData('#box-4', 'provinceCode').name);    // 认定机构
         var certAssignDate  = $.trim($('#cert-assign-date').val());             // 证书签发日期
         var certType        = UiUtils.getSelectedOption('#certTypes');          // 资格种类
@@ -519,6 +523,8 @@ StepValidator.validate4thStep = function() {
         if (!result.success) {
             $('#register-org-error').text(result.message);
             valid = false;
+        } else {
+            UiUtils.setFormData('certBatchId', -1, result.data.certBatchId);
         }
     }});
 
@@ -550,12 +556,16 @@ StepValidator.validate5thStep = function() {
     }
 
     // 查找确认点的信息，显示在第六步的注意事项下
+    var localeId = parseInt($localSet.attr('data-locale-id'));
     var localSetId = parseInt($localSet.val());
     $.rest.get({url: Urls.REST_LOCALSET_INFO, urlParams: {localSetId: localSetId}, async: false, success: function(result) {
         if (result.data && result.data.info) {
             $('#local-set-info').html(result.data.info);
         }
     }});
+
+    UiUtils.setFormData('localeId', -1, localeId);
+    UiUtils.setFormData('localSetId',-1, localSetId);
 
     return true;
 };
@@ -570,21 +580,27 @@ StepValidator.validate7thStep = function() {
     var localSet = {id: $localSet.val(), name: $localSet.attr('data-name')}; // 确认点
 
     var box7 = '#box-7';
-    var certAssignDate  = UiUtils.getFormData(box7, 'certAssignDate').name; // 证书签发日期
-    var name            = UiUtils.getFormData(box7, 'name').name;           // 姓名
-    var gender          = UiUtils.getFormData(box7, 'gender');              // 性别
-    var idType          = UiUtils.getFormData(box7, 'idType');              // 证件类型
-    var idNo            = UiUtils.getFormData(box7, 'idNo');                // 身份证号码
-    var birthday        = UiUtils.getFormData(box7, 'birthday').name;       // 出生日期
-    var nation          = UiUtils.getFormData(box7, 'nation');              // 民族
-    var certType        = UiUtils.getFormData(box7, 'certType');            // 申请资格种类
-    var registerSubject = UiUtils.getFormData(box7, 'registerSubject');     // 任教学科
-    var certNo          = UiUtils.getFormData(box7, 'certNo').name;         // 教师资格证书号码
-    var recognizeOrg    = UiUtils.getFormData(box7, 'recognizeOrg');        // 认定机构
-    var teachGrade      = UiUtils.getFormData(box7, 'teachGrade');          // 现任教学段
-    var province        = UiUtils.getFormData(box7, 'province');            // 所在省
-    var registerOrg     = UiUtils.getFormData(box7, 'registerOrg');         // 注册机构
-    var teachSubject    = UiUtils.getFormData(box7, 'teachSubject');        // 现任教学科
+    var certAssignDate    = UiUtils.getFormData(box7, 'certAssignDate').name; // 证书签发日期
+    var name              = UiUtils.getFormData(box7, 'name').name;           // 姓名
+    var genderId          = UiUtils.getFormData(box7, 'gender').id;           // 性别
+    var idTypeId          = UiUtils.getFormData(box7, 'idType').id;           // 证件类型
+    var idNo              = UiUtils.getFormData(box7, 'idNo').name;           // 身份证号码
+    var birthday          = UiUtils.getFormData(box7, 'birthday').name;       // 出生日期
+    var nationId          = UiUtils.getFormData(box7, 'nation').id;           // 民族
+    var certTypeId        = UiUtils.getFormData(box7, 'certType').id;         // 申请资格种类
+    var registerSubjectId = UiUtils.getFormData(box7, 'registerSubject').id;  // 任教学科
+    var certNo            = UiUtils.getFormData(box7, 'certNo').name;         // 教师资格证书号码
+    var recognizeOrgId    = UiUtils.getFormData(box7, 'recognizeOrg').id;     // 认定机构
+    var teachGradeId      = UiUtils.getFormData(box7, 'teachGrade').id;       // 现任教学段
+    var provinceId        = UiUtils.getFormData(box7, 'province').id;         // 所在省
+    var registerOrgId     = UiUtils.getFormData(box7, 'registerOrg').id;      // 注册机构
+    var teachSubjectId    = UiUtils.getFormData(box7, 'teachSubject').id;     // 现任教学科
+    var enrollNumber      = UiUtils.getFormData(box7, 'enrollNumber').name;   // 注册次数
+    var inHistory         = UiUtils.getFormData(box7, 'inHistory').name;      // 证书是否在认定历史库
+    var inRegistration    = UiUtils.getFormData(box7, 'inRegistration').name; // 证书是否在认定正式表
+    var certBatchId       = UiUtils.getFormData(box7, 'certBatchId').name;    // 认定批次
+    var localeId          = UiUtils.getFormData(box7, 'localeId').name;       // 确认点
+    var localSetId        = UiUtils.getFormData(box7, 'localSetId').name;     // 确认点安排
     ////////////////////////// 以上数据都不需要验证，前面步骤已经验证过了 //////////////////////////
 
     var password1 = $('#password1').val(); // 系统登录密码
@@ -598,57 +614,110 @@ StepValidator.validate7thStep = function() {
     if (!email)                  { alert('请输入 "密码找回邮箱"');   return false; }
     if (!emailResult.success)    { alert(emailResult.message);    return false; }
 
-    var degree              = UiUtils.getSelectedOption('#degrees');          // 最高学位
-    var eduLevel            = UiUtils.getSelectedOption('#edu-levels');       // 最高学历
-    var learnType           = UiUtils.getSelectedOption('#learn-types');      // 最高学历学习形式
-    var normalMajor         = UiUtils.getSelectedOption('#normal-majors');    // 最高学历专业类别
-    var graduationCollege   = UiUtils.getFormData(box7, 'graduationCollege'); // 最高学历毕业学校
-    var major               = UiUtils.getFormData(box7, 'major');             // 最高学历所学专业
-    var graduationTime      = $.trim($('#graduation-date').val());            // 最高学历毕业时间
-    var political           = UiUtils.getSelectedOption('#politicals');       // 政治面貌
-    var workUnitType        = UiUtils.getSelectedOption('#work-unit-types');  // 任教学校所在地
-    var schoolQuale         = UiUtils.getSelectedOption('#school-quales');    // 现任教学校性质
-    var workUnit            = $.trim($('#work-unit').val());                  // 现任教学校
-    var workDate            = $.trim($('#work-date').val());                  // 现任教学校聘用起始日期
-    var postQuale           = UiUtils.getSelectedOption('#post-quales');      // 岗位性质
-    var pthLevel            = UiUtils.getSelectedOption('#pth-levels');       // 普通话水平
-    var beginWorkYear       = $.trim($('#begin-work-year').val());            // 开始参加工作时间
-    var technicalJob        = UiUtils.getFormData(box7, 'technicalJob');      // 教师职务（职称）
-    var birthPlace          = $.trim($('#birth-place').val()); // 出生地
-    var residence           = $.trim($('#residence').val());   // 户籍所在地
-    var address             = $.trim($('#address').val());     // 通讯地址
-    var zipCode             = $.trim($('#zip-code').val());    // 通讯地的邮编
-    var phone               = $.trim($('#phone').val());       // 联系电话
-    var cellphone           = $.trim($('#cellphone').val());   // 手机
+    var degreeId            = UiUtils.getSelectedOption('#degrees').id;          // 最高学位
+    var eduLevelId          = UiUtils.getSelectedOption('#edu-levels').id;       // 最高学历
+    var learnTypeId         = UiUtils.getSelectedOption('#learn-types').id;      // 最高学历学习形式
+    var normalMajorId       = UiUtils.getSelectedOption('#normal-majors').id;    // 最高学历专业类别
+    var graduationCollegeId = UiUtils.getFormData(box7, 'graduationCollege').id; // 最高学历毕业学校
+    var majorId             = UiUtils.getFormData(box7, 'major').id;             // 最高学历所学专业
+    var graduationTime      = $.trim($('#graduation-date').val());               // 最高学历毕业时间
+    var politicalId         = UiUtils.getSelectedOption('#politicals').id;       // 政治面貌
+    var workUnitTypeId      = UiUtils.getSelectedOption('#work-unit-types').id;  // 任教学校所在地
+    var schoolQualeId       = UiUtils.getSelectedOption('#school-quales').id;    // 现任教学校性质
+    var workUnit            = $.trim($('#work-unit').val());                     // 现任教学校
+    var workDate            = $.trim($('#work-date').val());                     // 现任教学校聘用起始日期
+    var postQualeId         = UiUtils.getSelectedOption('#post-quales').id;      // 岗位性质
+    var pthLevelId          = UiUtils.getSelectedOption('#pth-levels').id;       // 普通话水平
+    var beginWorkYear       = $.trim($('#begin-work-year').val());               // 开始参加工作时间
+    var technicalJobId      = UiUtils.getFormData(box7, 'technicalJob').id;      // 教师职务（职称）
+    var birthPlace          = $.trim($('#birth-place').val());         // 出生地
+    var residence           = $.trim($('#residence').val());           // 户籍所在地
+    var address             = $.trim($('#address').val());             // 通讯地址
+    var zipCode             = $.trim($('#zip-code').val());            // 通讯地的邮编
+    var phone               = $.trim($('#phone').val());               // 联系电话
+    var cellphone           = $.trim($('#cellphone').val());           // 手机
+    var photo               = UiUtils.getFormData(box7, 'photo').name; // 照片
 
-    if (-1 === degree.id)            { alert('请选择 "最高学位"');        return false; }
-    if (-1 === eduLevel.id)          { alert('请选择 "最高学历"');        return false; }
-    if (-1 === learnType.id)         { alert('请选择 "最高学历学习形式"'); return false; }
-    if (-1 === normalMajor.id)       { alert('请选择 "最高学历专业类别"'); return false; }
-    if (-1 === graduationCollege.id) { alert('请选择 "最高学历毕业学校"'); return false; }
-    if (-1 === major.id)             { alert('请选择 "最高学历所学专业"'); return false; }
-    if (!graduationTime)             { alert('请输入 "最高学历毕业时间"'); return false; }
-    if (-1 === political.id)         { alert('请选择 "政治面貌"');        return false; }
-    if (-1 === workUnitType.id)      { alert('请选择 "任教学校所在地"');   return false; }
-    if (-1 === schoolQuale.id)       { alert('请选择 "现任教学校性质"');   return false; }
-    if (!workUnit)                   { alert('请输入 "现任教学校"');       return false; }
-    if (!workDate)                   { alert('请输入 "现任教学校聘用起始日期"'); return false; }
-    if (-1 === postQuale.id)         { alert('请选择 "岗位性质"');        return false; }
-    if (-1 === pthLevel.id)          { alert('请选择 "普通话水平"');      return false; }
-    if (!beginWorkYear)              { alert('请输入 "开始参加工作时间"'); return false; }
-    if (-1 === technicalJob.id)      { alert('请选择 "教师职务（职称）"'); return false; }
-    if (!birthPlace)                 { alert('请输入 "出生地"');          return false; }
-    if (!residence)                  { alert('请输入 "户籍所在地"');      return false; }
-    if (!address)                    { alert('请输入 "通讯地址"');        return false; }
-    if (!zipCode)                    { alert('请输入 "通讯地的邮编"');     return false; }
-    if (!phone)                      { alert('请输入 "联系电话"');        return false; }
-    if (!cellphone)                  { alert('请输入 "手机"');           return false; }
+    if (-1 === degreeId)            { alert('请选择 "最高学位"');        return false; }
+    if (-1 === eduLevelId)          { alert('请选择 "最高学历"');        return false; }
+    if (-1 === learnTypeId)         { alert('请选择 "最高学历学习形式"'); return false; }
+    if (-1 === normalMajorId)       { alert('请选择 "最高学历专业类别"'); return false; }
+    if (-1 === graduationCollegeId) { alert('请选择 "最高学历毕业学校"'); return false; }
+    if (-1 === majorId)             { alert('请选择 "最高学历所学专业"'); return false; }
+    if (!graduationTime)            { alert('请输入 "最高学历毕业时间"'); return false; }
+    if (-1 === politicalId)         { alert('请选择 "政治面貌"');        return false; }
+    if (-1 === workUnitTypeId)      { alert('请选择 "任教学校所在地"');   return false; }
+    if (-1 === schoolQualeId)       { alert('请选择 "现任教学校性质"');   return false; }
+    if (!workUnit)                  { alert('请输入 "现任教学校"');       return false; }
+    if (!workDate)                  { alert('请输入 "现任教学校聘用起始日期"'); return false; }
+    if (-1 === postQualeId)         { alert('请选择 "岗位性质"');        return false; }
+    if (-1 === pthLevelId)          { alert('请选择 "普通话水平"');      return false; }
+    if (!beginWorkYear)             { alert('请输入 "开始参加工作时间"'); return false; }
+    if (-1 === technicalJobId)      { alert('请选择 "教师职务（职称）"'); return false; }
+    if (!birthPlace)                { alert('请输入 "出生地"');          return false; }
+    if (!residence)                 { alert('请输入 "户籍所在地"');      return false; }
+    if (!address)                   { alert('请输入 "通讯地址"');        return false; }
+    if (!zipCode)                   { alert('请输入 "通讯地的邮编"');     return false; }
+    if (!phone)                     { alert('请输入 "联系电话"');        return false; }
+    if (!cellphone)                 { alert('请输入 "手机"');           return false; }
+    if (!photo)                     { alert('请上传 "照片"');           return false; }
 
     if (workDate < beginWorkYear)    { alert('现任教学校聘用起始日期不能在开始参加工作时间之前'); return false; }
     if (!(/^[1-9][0-9]{5}$/.test(zipCode))) { alert('请输入 6 个数字的 "通讯地的邮编"');      return false; }
     if (!(/^\d{11}$/.test(cellphone)))      { alert('请输入 11 个数字的 "手机号码"');         return false; }
 
     // 通过验证
+
+    var params = {
+        name: name,
+        idTypeId: idTypeId,
+        idNo: idNo,
+        certNo: certNo,
+        inHistory: inHistory,
+        inRegistration: inRegistration,
+        degreeId: degreeId,
+        eduLevelId: eduLevelId,
+        learnTypeId: learnTypeId,
+        normalMajorId: normalMajorId,
+        graduationCollegeId: graduationCollegeId,
+        majorId: majorId,
+        graduationTime: graduationTime,
+        beginWorkYear: beginWorkYear,
+        workUnitTypeId: workUnitTypeId,
+        workUnit: workUnit,
+        workDate: workDate,
+        schoolQualeId: schoolQualeId,
+        postQualeId: postQualeId,
+        pthLevelId: pthLevelId,
+        technicalJobId: technicalJobId,
+        provinceId: provinceId,
+        orgId: registerOrgId,
+        teachGradeId: teachGradeId,
+        localeId: localeId,
+        localSetId: localSetId,
+        teachSubjectId: teachSubjectId,
+        politicalId: politicalId,
+        enrollNumber: enrollNumber,
+        birthPlace: birthPlace,
+        residence: residence,
+        address: address,
+        zipCode: zipCode,
+        phone: phone,
+        cellphone: cellphone,
+        tmpPhoto: photo,
+        email: email,
+        password: password1
+    };
+
+    $.rest.create({url: '/new-cert/validate', data: params, async: false, success: function(result) {
+        if (!result.success) {
+            alert(result.message);
+        } else {
+            console.log(result);
+        }
+
+        // alert(result.data);
+    }});
 
     return true;
 };

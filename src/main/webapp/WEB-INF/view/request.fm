@@ -48,7 +48,7 @@
     <option value="{{id}}">{{name}}</option>
 </script>
 <script id="provinceOptionTemplate" type="text/html">
-    <option value="{{id}}" data-province-city="{{provinceCity?'true':'false'}}">{{name}}</option>
+    <option value="{{id}}" data-province-cityId="{{provinceCity?'true':'false'}}">{{name}}</option>
 </script>
 
 <!-- 第一步 -->

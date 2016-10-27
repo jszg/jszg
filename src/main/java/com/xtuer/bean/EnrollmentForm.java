@@ -13,18 +13,19 @@ import javax.validation.constraints.Size;
  * Created by microacup on 2016/10/26.
  */
 public class EnrollmentForm {
-    @NotBlank(message="证件号码不能为空")
-    private String idNo; // 证件号码
-
     @NotBlank(message="姓名不能为空")
     private String name;
+
+    @NotBlank(message="证件号码不能为空")
+    private String idNo; // 证件号码
 
     @NotBlank(message="证书号码不能为空")
     private String certNo; // 证书号码
 
     @NotNull(message="证件类型不能为空")
-    private Integer idType; // 证件类型
+    private Integer idTypeId; // 证件类型
 
+    @NotNull(message="注册次数不能为空")
     private Integer enrollNumber; // 注册次数
 
     @NotNull(message="inHistory 不能为空")
@@ -34,34 +35,34 @@ public class EnrollmentForm {
     private Boolean inRegistration; // 是否在认定表中
 
     @NotNull(message="最高学位不能为空")
-    private Integer degree; // 最高学位
+    private Integer degreeId; // 最高学位
 
     @NotNull(message="最高学历不能为空")
-    private Integer eduLevel; // 最高学历
+    private Integer eduLevelId; // 最高学历
 
     @NotNull(message="最高学历学习形式不能为空")
-    private Integer learnType; // 最高学历学习形式
+    private Integer learnTypeId; // 最高学历学习形式
 
     @NotNull(message="最高学历专业类别不能为空")
-    private Integer normalMajor; // 最高学历专业类别
+    private Integer normalMajorId; // 最高学历专业类别
 
     @NotNull(message="最高学历毕业学校不能为空")
-    private Integer graduationCollege; // 最高学历毕业学校
+    private Integer graduationCollegeId; // 最高学历毕业学校
 
     @NotNull(message="最高学历所学专业不能为空")
-    private Integer major; // 最高学历所学专业
+    private Integer majorId; // 最高学历所学专业
 
     @NotBlank(message="最高学历毕业时间不能为空")
     private String graduationTime; // 最高学历毕业时间
 
     @NotNull(message="政治面貌不能为空")
-    private Integer political; // 政治面貌
+    private Integer politicalId; // 政治面貌
 
     @NotNull(message="任教学校所在地不能为空")
-    private Integer workUnitType; // 任教学校所在地
+    private Integer workUnitTypeId; // 任教学校所在地
 
     @NotNull(message="现任教学校性质不能为空")
-    private Integer schoolQuale; // 现任教学校性质
+    private Integer schoolQualeId; // 现任教学校性质
 
     @NotBlank(message="现任教学校不能为空")
     private String workUnit; // 现任教学校
@@ -70,16 +71,16 @@ public class EnrollmentForm {
     private String workDate; // 现任教学校聘用起始日期
 
     @NotNull(message="岗位性质不能为空")
-    private Integer postQuale; // 岗位性质
+    private Integer postQualeId; // 岗位性质
 
     @NotNull(message="普通话水平不能为空")
-    private Integer pthLevel; // 普通话水平
+    private Integer pthLevelId; // 普通话水平
 
     @NotBlank(message="开始参加工作时间不能为空")
     private String beginWorkYear; // 开始参加工作时间
 
     @NotNull(message="教师职务（职称）不能为空")
-    private Integer techniqueJob; // 教师职务（职称）
+    private Integer technicalJobId; // 教师职务（职称）
 
     @NotBlank(message="出生地不能为空")
     private String birthPlace; // 出生地
@@ -107,14 +108,13 @@ public class EnrollmentForm {
     @NotNull(message="省不能为空")
     private Integer provinceId; // 省
 
-//    @NotNull(message="市不能为空")
-    private Integer city; // 市
+    private Integer cityId; // 市, 后台查询的
 
     @NotNull(message="机构不能为空")
     private Integer orgId; // 机构
 
     @NotNull(message="现任教学段不能为空")
-    private Integer teachGrade; // 现任教学段
+    private Integer teachGradeId; // 现任教学段
 
     @NotNull(message="确认点不能为空")
     private Long localeId; // 确认点
@@ -123,10 +123,9 @@ public class EnrollmentForm {
     private Integer localSetId; // 确认点安排
 
     @NotNull(message="现任教学科不能为空")
-    private Integer teachSubject;// 现任教学科
+    private Integer teachSubjectId;// 现任教学科
 
-    @NotNull(message="注册批次不能为空")
-    private Integer enrollBatch; // 注册批次
+    private Integer enrollBatch; // 注册批次，后台查询
 
     @NotBlank(message="邮件地址不能为空")
     @Pattern(regexp="^.+@.+\\..+$", message="请填写正确的邮件地址")
@@ -150,20 +149,20 @@ public class EnrollmentForm {
     private String lastModifier; // 最后修改人
     private Integer deleteStatus; // 删除标记
 
-    public String getIdNo() {
-        return idNo;
-    }
-
-    public void setIdNo(String idNo) {
-        this.idNo = idNo;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getIdNo() {
+        return idNo;
+    }
+
+    public void setIdNo(String idNo) {
+        this.idNo = idNo;
     }
 
     public String getCertNo() {
@@ -174,12 +173,12 @@ public class EnrollmentForm {
         this.certNo = certNo;
     }
 
-    public Integer getIdType() {
-        return idType;
+    public Integer getIdTypeId() {
+        return idTypeId;
     }
 
-    public void setIdType(Integer idType) {
-        this.idType = idType;
+    public void setIdTypeId(Integer idTypeId) {
+        this.idTypeId = idTypeId;
     }
 
     public Integer getEnrollNumber() {
@@ -190,68 +189,68 @@ public class EnrollmentForm {
         this.enrollNumber = enrollNumber;
     }
 
-    public boolean isInHistory() {
+    public Boolean getInHistory() {
         return inHistory;
     }
 
-    public void setInHistory(boolean inHistory) {
+    public void setInHistory(Boolean inHistory) {
         this.inHistory = inHistory;
     }
 
-    public boolean isInRegistration() {
+    public Boolean getInRegistration() {
         return inRegistration;
     }
 
-    public void setInRegistration(boolean inRegistration) {
+    public void setInRegistration(Boolean inRegistration) {
         this.inRegistration = inRegistration;
     }
 
-    public Integer getDegree() {
-        return degree;
+    public Integer getDegreeId() {
+        return degreeId;
     }
 
-    public void setDegree(Integer degree) {
-        this.degree = degree;
+    public void setDegreeId(Integer degreeId) {
+        this.degreeId = degreeId;
     }
 
-    public Integer getEduLevel() {
-        return eduLevel;
+    public Integer getEduLevelId() {
+        return eduLevelId;
     }
 
-    public void setEduLevel(Integer eduLevel) {
-        this.eduLevel = eduLevel;
+    public void setEduLevelId(Integer eduLevelId) {
+        this.eduLevelId = eduLevelId;
     }
 
-    public Integer getLearnType() {
-        return learnType;
+    public Integer getLearnTypeId() {
+        return learnTypeId;
     }
 
-    public void setLearnType(Integer learnType) {
-        this.learnType = learnType;
+    public void setLearnTypeId(Integer learnTypeId) {
+        this.learnTypeId = learnTypeId;
     }
 
-    public Integer getNormalMajor() {
-        return normalMajor;
+    public Integer getNormalMajorId() {
+        return normalMajorId;
     }
 
-    public void setNormalMajor(Integer normalMajor) {
-        this.normalMajor = normalMajor;
+    public void setNormalMajorId(Integer normalMajorId) {
+        this.normalMajorId = normalMajorId;
     }
 
-    public Integer getGraduationCollege() {
-        return graduationCollege;
+    public Integer getGraduationCollegeId() {
+        return graduationCollegeId;
     }
 
-    public void setGraduationCollege(Integer graduationCollege) {
-        this.graduationCollege = graduationCollege;
+    public void setGraduationCollegeId(Integer graduationCollegeId) {
+        this.graduationCollegeId = graduationCollegeId;
     }
 
-    public Integer getMajor() {
-        return major;
+    public Integer getMajorId() {
+        return majorId;
     }
 
-    public void setMajor(Integer major) {
-        this.major = major;
+    public void setMajorId(Integer majorId) {
+        this.majorId = majorId;
     }
 
     public String getGraduationTime() {
@@ -262,28 +261,28 @@ public class EnrollmentForm {
         this.graduationTime = graduationTime;
     }
 
-    public Integer getPolitical() {
-        return political;
+    public Integer getPoliticalId() {
+        return politicalId;
     }
 
-    public void setPolitical(Integer political) {
-        this.political = political;
+    public void setPoliticalId(Integer politicalId) {
+        this.politicalId = politicalId;
     }
 
-    public Integer getWorkUnitType() {
-        return workUnitType;
+    public Integer getWorkUnitTypeId() {
+        return workUnitTypeId;
     }
 
-    public void setWorkUnitType(Integer workUnitType) {
-        this.workUnitType = workUnitType;
+    public void setWorkUnitTypeId(Integer workUnitTypeId) {
+        this.workUnitTypeId = workUnitTypeId;
     }
 
-    public Integer getSchoolQuale() {
-        return schoolQuale;
+    public Integer getSchoolQualeId() {
+        return schoolQualeId;
     }
 
-    public void setSchoolQuale(Integer schoolQuale) {
-        this.schoolQuale = schoolQuale;
+    public void setSchoolQualeId(Integer schoolQualeId) {
+        this.schoolQualeId = schoolQualeId;
     }
 
     public String getWorkUnit() {
@@ -302,20 +301,20 @@ public class EnrollmentForm {
         this.workDate = workDate;
     }
 
-    public Integer getPostQuale() {
-        return postQuale;
+    public Integer getPostQualeId() {
+        return postQualeId;
     }
 
-    public void setPostQuale(Integer postQuale) {
-        this.postQuale = postQuale;
+    public void setPostQualeId(Integer postQualeId) {
+        this.postQualeId = postQualeId;
     }
 
-    public Integer getPthLevel() {
-        return pthLevel;
+    public Integer getPthLevelId() {
+        return pthLevelId;
     }
 
-    public void setPthLevel(Integer pthLevel) {
-        this.pthLevel = pthLevel;
+    public void setPthLevelId(Integer pthLevelId) {
+        this.pthLevelId = pthLevelId;
     }
 
     public String getBeginWorkYear() {
@@ -326,12 +325,12 @@ public class EnrollmentForm {
         this.beginWorkYear = beginWorkYear;
     }
 
-    public Integer getTechniqueJob() {
-        return techniqueJob;
+    public Integer getTechnicalJobId() {
+        return technicalJobId;
     }
 
-    public void setTechniqueJob(Integer techniqueJob) {
-        this.techniqueJob = techniqueJob;
+    public void setTechnicalJobId(Integer technicalJobId) {
+        this.technicalJobId = technicalJobId;
     }
 
     public String getBirthPlace() {
@@ -390,6 +389,86 @@ public class EnrollmentForm {
         this.tmpPhoto = tmpPhoto;
     }
 
+    public Integer getProvinceId() {
+        return provinceId;
+    }
+
+    public void setProvinceId(Integer provinceId) {
+        this.provinceId = provinceId;
+    }
+
+    public Integer getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(Integer cityId) {
+        this.cityId = cityId;
+    }
+
+    public Integer getOrgId() {
+        return orgId;
+    }
+
+    public void setOrgId(Integer orgId) {
+        this.orgId = orgId;
+    }
+
+    public Integer getTeachGradeId() {
+        return teachGradeId;
+    }
+
+    public void setTeachGradeId(Integer teachGradeId) {
+        this.teachGradeId = teachGradeId;
+    }
+
+    public Long getLocaleId() {
+        return localeId;
+    }
+
+    public void setLocaleId(Long localeId) {
+        this.localeId = localeId;
+    }
+
+    public Integer getLocalSetId() {
+        return localSetId;
+    }
+
+    public void setLocalSetId(Integer localSetId) {
+        this.localSetId = localSetId;
+    }
+
+    public Integer getTeachSubjectId() {
+        return teachSubjectId;
+    }
+
+    public void setTeachSubjectId(Integer teachSubjectId) {
+        this.teachSubjectId = teachSubjectId;
+    }
+
+    public Integer getEnrollBatch() {
+        return enrollBatch;
+    }
+
+    public void setEnrollBatch(Integer enrollBatch) {
+        this.enrollBatch = enrollBatch;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public Integer getConfirmStatus() {
         return confirmStatus;
     }
@@ -430,78 +509,6 @@ public class EnrollmentForm {
         this.ip = ip;
     }
 
-    public Integer getProvinceId() {
-        return provinceId;
-    }
-
-    public void setProvinceId(Integer provinceId) {
-        this.provinceId = provinceId;
-    }
-
-    public Integer getCity() {
-        return city;
-    }
-
-    public void setCity(Integer city) {
-        this.city = city;
-    }
-
-    public Integer getOrgId() {
-        return orgId;
-    }
-
-    public void setOrgId(Integer orgId) {
-        this.orgId = orgId;
-    }
-
-    public Integer getTeachGrade() {
-        return teachGrade;
-    }
-
-    public void setTeachGrade(Integer teachGrade) {
-        this.teachGrade = teachGrade;
-    }
-
-    public Long getLocaleId() {
-        return localeId;
-    }
-
-    public void setLocaleId(Long localeId) {
-        this.localeId = localeId;
-    }
-
-    public Integer getTeachSubject() {
-        return teachSubject;
-    }
-
-    public void setTeachSubject(Integer teachSubject) {
-        this.teachSubject = teachSubject;
-    }
-
-    public Integer getEnrollBatch() {
-        return enrollBatch;
-    }
-
-    public void setEnrollBatch(Integer enrollBatch) {
-        this.enrollBatch = enrollBatch;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public Date getLastModify() {
         return lastModify;
     }
@@ -524,13 +531,5 @@ public class EnrollmentForm {
 
     public void setDeleteStatus(Integer deleteStatus) {
         this.deleteStatus = deleteStatus;
-    }
-
-    public Integer getLocalSetId() {
-        return localSetId;
-    }
-
-    public void setLocalSetId(Integer localSetId) {
-        this.localSetId = localSetId;
     }
 }

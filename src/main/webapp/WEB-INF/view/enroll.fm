@@ -365,6 +365,16 @@
 
 <!-- 第七步 -->
 <div id="box-7">
+    <!-- 隐藏数据 -->
+    <div style="display: none">
+        <span class="form-data" name="enrollNumber" data-id="" data-name="-1"></span>
+        <span class="form-data" name="inHistory" data-id="-1" data-name="false"></span>
+        <span class="form-data" name="inRegistration" data-id="-1" data-name="false"></span>
+        <span class="form-data" name="certBatchId" data-id="" data-name="-1"></span>
+        <span class="form-data" name="localeId" data-id="" data-name="-1"></span>
+        <span class="form-data" name="localSetId" data-id="" data-name="-1"></span>
+    </div>
+
     <div class="content_bd">
         <h4>您证书的基本信息：<b class="f_red f_size">（如要修改，请返回第三步）</b></h4>
         <div class="ui-body">

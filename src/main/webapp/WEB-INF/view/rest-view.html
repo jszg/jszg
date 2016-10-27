@@ -12,45 +12,44 @@
     <script>
         function step7Submit() {
             var params = {
-                name: 'Biao',
-                idType: 36,
-                idNo: '330726196507040016',
-                certNo: '20021309531000655',
-                inHistory: false,
-                inRegistration: false,
-                degree: 1,
-                eduLevel: 2,
-                learnType: 1,
-                normalMajor: 2,
-                graduationCollege: 1,
-                major: 1,
-                graduationTime: '2011-02-1',
-                beginWorkYear: '2011-10-11',
-                workUnitType: 1,
-                workUnit: '北师大',
-                workDate: '2012-11-20',
-                schoolQuale: 1,
-                postQuale: 1,
-                pthLevel: 1,
-                techniqueJob: 1,
-                provinceId: 1,
-                orgId: 1,
-                teachGrade: 1,
-                localeId: 1,
-                localSetId: 1,
-                teachSubject: 1,
-                enrollBatch: 1,
-                political: 1,
-
-                birthPlace: '北京',
-                residence: '北京',
-                address: '亦庄',
-                zipCode: '100000',
-                phone: '01078828',
-                cellphone: '18001166440',
-                tmpPhoto: '/x/y/foo.jpg',
-                email: 'biao.mac@gmail.com',
-                password: 'Passw0rd'
+                "name":"刘刚",
+                "idTypeId":-1,
+                "idNo":"311012198808269015",
+                "certNo":"20113102042000123",
+                "inHistory":"true",
+                "inRegistration":"false",
+                "degreeId":21,
+                "eduLevelId":131,
+                "learnTypeId":138,
+                "normalMajorId":7,
+                "graduationCollegeId":10,
+                "majorId":2216,
+                "graduationTime":"2007-10-01",
+                "beginWorkYear":"2016-09-26",
+                "workUnitTypeId":143,
+                "workUnit":"bj",
+                "workDate":"2016-10-27",
+                "schoolQualeId":306,
+                "postQualeId":301,
+                "pthLevelId":191,
+                "technicalJobId":420,
+                "provinceId":9188,
+                "orgId":9190,
+                "teachGradeId":1,
+                "localeId":"16706",
+                "localSetId":"10642",
+                "teachSubjectId":100,
+                "politicalId":180,
+                "enrollNumber":"1",
+                "birthPlace":"bj",
+                "residence":"bj",
+                "address":"bj",
+                "zipCode":"100000",
+                "phone":"123412341234",
+                "cellphone":"18001166440",
+                "tmpPhoto":"x.jpg",
+                "email":"biao.mac@icloud.com",
+                "password":"Passw0rd#"
             };
 
             $.rest.create({url: '/new-cert/validate', data: params, async: false, success: function(result) {
@@ -67,29 +66,29 @@
         $(document).ready(function() {
             step7Submit();
 
-            $.rest.get({url: '/new-cert/rest', data: {name: '黄彪'}, async: false, success: function(result) {
-                console.log(result);
-            }});
-
-            $.rest.create({url: '/new-cert/rest', success: function(result) {
-                console.log(result);
-            }});
-
-            $.rest.update({url: '/new-cert/rest', data: {name: '黄彪', age: 22}, success: function(result) {
-                console.log(result);
-            }});
-
-            $.rest.delete({url: '/new-cert/rest', success: function(result) {
-                console.log(result);
-            }});
-
-            $.rest.get({url: '/new-cert/rest/{id}', urlParams: {id: 121}, data: {name: '黄彪'}, success: function(result) {
-                console.log(result);
-            }, error: function(e) {
-                console.log(e);
-            }});
-
-            console.log('end');
+            // $.rest.get({url: '/new-cert/rest', data: {name: '黄彪'}, async: false, success: function(result) {
+            //     console.log(result);
+            // }});
+            //
+            // $.rest.create({url: '/new-cert/rest', success: function(result) {
+            //     console.log(result);
+            // }});
+            //
+            // $.rest.update({url: '/new-cert/rest', data: {name: '黄彪', age: 22}, success: function(result) {
+            //     console.log(result);
+            // }});
+            //
+            // $.rest.delete({url: '/new-cert/rest', success: function(result) {
+            //     console.log(result);
+            // }});
+            //
+            // $.rest.get({url: '/new-cert/rest/{id}', urlParams: {id: 121}, data: {name: '黄彪'}, success: function(result) {
+            //     console.log(result);
+            // }, error: function(e) {
+            //     console.log(e);
+            // }});
+            //
+            // console.log('end');
         });
     </script>
 </body>
