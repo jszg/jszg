@@ -6,6 +6,7 @@ import com.xtuer.constant.UriView;
 import com.xtuer.dto.*;
 import com.xtuer.mapper.CommonMapper;
 import com.xtuer.util.CommonUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -90,7 +91,7 @@ public class EnrollmentValidationController {
     // 注册验证 Step3
     @GetMapping(UriView.REST_ENROLL_STEP3)
     @ResponseBody
-    public Result<?> enrollStep3(@RequestParam int idType, @RequestParam String idNo, @RequestParam String certNo) {
+    public Result<?> enrollStep3(@RequestParam String idNo, @RequestParam String certNo) {
         List<Limitation> limits = commonMapper.findLimitation(idNo, certNo);
 
         if (!limits.isEmpty() && limits.get(0).getStatus() == SignUpConstants.S_REVIEWED) {
@@ -126,7 +127,7 @@ public class EnrollmentValidationController {
                     case SignUpConstants.STATUS_UN_DO:
                         expiredTime.add(Calendar.YEAR, SignUpConstants.UN_DO_DURATION);
                         if (expiredTime.getTime().after(new Date())) {
-                            String errorMsg = "该证书于" + CommonUtils.formatDate(enrollHistory.getEnrollTime(), "yyyy年M月d日")
+                            String errorMsg = "该证书于" + DateFormatUtils.format(enrollHistory.getEnrollTime(), "yyyy年M月d日")
                                     + "已被撤销注册，" + SignUpConstants.UN_DO_DURATION + "年内不能再注册。不能继续下一步!";
                             return new Result(false, errorMsg);
                         }
@@ -136,7 +137,7 @@ public class EnrollmentValidationController {
                         //三-3、“注册合格”且与上次注册日期间隔短于58个月
                         expiredTime.add(Calendar.MONTH, SignUpConstants.ENROLL_DURATION);
                         if (expiredTime.getTime().after(new Date())) {
-                            String errorMsg = "该证书已于" + CommonUtils.formatDate(enrollHistory.getEnrollTime(), "yyyy年M月d日")
+                            String errorMsg = "该证书已于" + DateFormatUtils.format(enrollHistory.getEnrollTime(), "yyyy年M月d日")
                                     + "注册，5年内无需再注册。";
                             return new Result(false, errorMsg);
                         }
@@ -188,7 +189,6 @@ public class EnrollmentValidationController {
             enrollment.setEnrollNum(1);
             registration.setIdNo(idNo);
             registration.setCertNo(certNo);
-            registration.setIdType(idType);
         } else {
             if(historyValid.getDeleteStatus() == SignUpConstants.DELETE_STATUS_FORBID){
                 return new Result(false, "该数据已受限，不能进行定期注册报名!");
@@ -204,7 +204,6 @@ public class EnrollmentValidationController {
             registration.setName(historyValid.getName());
             registration.setCertNo(certNo);
             registration.setIdNo(idNo);
-            registration.setIdType(idType);
             registration.setBirthday(historyValid.getBirthday());
             registration.setNationName(historyValid.getNationName());
             registration.setOrgName(historyValid.getOrgName());
