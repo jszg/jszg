@@ -24,4 +24,22 @@
         WHERE
             hv.reg_id = #{registerId}
     </select>
+    <insert id="insertEnrollment" parameterType="EnrollmentForm">
+        INSERT
+        INTO t_enrollment
+          (e.address,e.apply_time,e.begin_work_date,e.begin_work_year,e.birth_place,e.birthday,e.cellphone,e.cert_assign,e.cert_no,e.cert_org_name,e.city_id,
+           e.confirm_status,e.ct_id,e.data_from,e.degree,e.delete_status,e.edu_level,e.email,enr_id,e.enroll_batch,e.enroll_num,e.gradua_time,e.graduate_school,
+           e.graduate_school_name,e.id_no,e.id_type,e.in_history,e.in_registration,e.ip,e.judgmint_status,e.learn_type,e.locale_id,e.ls_id,e.major,e.name,e.nation,
+           e.normal_major,e.org_id,e.password,e.phone,e.political,e.post_quale,e.province,e.pth_level,e.re_check_status,e.reg_id,e.residence,e.school_quale,
+           e.sex,e.status,e.subject,e.tea_grade,e.tea_subject,e.technique_job,trigger_time,e.work_date,e.work_unit,e.work_unit_type,e.zip_cole)
+        VALUES
+           ( #{address}, sysdate, #{beginWorkYear}, #{beginWorkYear}, #{birthPlace}, #{birthday}, #{cellphone}, #{certAssignDate}, #{certNo}, #{recognizeOrgName}, #{cityId},
+            #{confirmStatus},#{certTypeId},#{dataFrom},#{degreeId},#{deleteStatus},#{eduLevelId},#{email},S_ENR_ID.Nextval,#{enrollBatch},#{enrollNumber},#{graduationTime},#{graduationCollegeId},
+            #{graduationCollegeName},#{idNo},#{idTypeId},#{inHistory},#{inRegistration},#{ip},#{judgmentStatus},#{learnTypeId},#{localeId},#{localSetId},#{majorId},#{name},#{nationId},
+            #{normalMajorId},#{orgId},#{password},#{phone},#{politicalId},#{postQualeId},#{provinceId},#{pthLevelId},#{reCheckStatus},#{recognizeOrgId},#{residence},#{schoolQualeId}
+            #{genderId},#{status},#{registerSubjectId},#{teachGradeId},#{teachSubjectId},#{technicalJobId},sysdate,#{workDate},#{workUnit},#{workUnitTypeId},#{zipCode}
+        )
+    </insert>
+
+
 </mapper>
