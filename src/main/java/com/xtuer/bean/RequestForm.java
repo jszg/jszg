@@ -33,7 +33,7 @@ public class RequestForm {
     private String name;//姓名
     private Integer nation;//民族
     private Integer normalmajor;//专业类别
-    private Integer occupation;
+    private Integer occupation;//现从事职业
     private Integer orgId;//机构id
     private String orgName;//机构名称
     private String phone;//手机
@@ -41,9 +41,9 @@ public class RequestForm {
     private Integer provinceId;//省
     private Integer pthevelId;//普通话水平
     private String residence;//户籍所在地
-    private Integer sex;
-    private Integer status;
-    private String workUnits;
+    private Integer sex;//性别
+    private Integer status;//认定状态
+    private String workUnits;//工作单位
     private String zipCole;//邮编
 
 }
