@@ -31,7 +31,7 @@
     </select>
 
     <select id="findByTypeAndCode" resultType="Dict">
-        SELECT d.dic_id AS  id
+        SELECT d.dic_id AS  id,
                 d.name   AS  name
         FROM t_dict d
         where d.dt_id = #{dtId} and d.code = #{code}
