@@ -2,6 +2,7 @@ package com.xtuer.util;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.DigestUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.UUID;
@@ -39,6 +40,15 @@ public class CommonUtils {
         extension = StringUtils.isEmpty(extension) ? "" : "." + extension.toLowerCase();
 
         return CommonUtils.generateUuid() + extension;
+    }
+
+    /**
+     * 对 text 进行 MD5 编码
+     * @param text
+     * @return MD5 字符串
+     */
+    public static String md5(String text) {
+        return DigestUtils.md5DigestAsHex(text.getBytes());
     }
 
     /**
