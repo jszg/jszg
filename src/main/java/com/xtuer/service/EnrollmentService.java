@@ -2,12 +2,14 @@ package com.xtuer.service;
 
 import com.alibaba.fastjson.JSON;
 import com.xtuer.bean.EnrollmentForm;
+import com.xtuer.bean.RegistrationForm;
 import com.xtuer.bean.Result;
 import com.xtuer.bean.UserPortalLog;
 import com.xtuer.constant.SignUpConstants;
 import com.xtuer.dto.CityInfo;
 import com.xtuer.mapper.CommonMapper;
 import com.xtuer.mapper.EnrollmentMapper;
+import com.xtuer.mapper.RegistrationMapper;
 import com.xtuer.util.BrowserUtils;
 import com.xtuer.util.CommonUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
@@ -31,8 +33,12 @@ public class EnrollmentService {
     @Autowired
     private EnrollmentMapper enrollmentMapper;
 
+    private RegistrationMapper registrationMapper;
+
     public void saveWhenInHistory(EnrollmentForm form) {
         System.out.println("saveWhenInHistory");
+       // RegistrationForm reg = registrationMapper.deleteByRegisterId(form.getRegisterId());
+
         // 使用表中现有的数据
         EnrollmentForm temp = enrollmentMapper.findByRegisterId(form.getRegisterId());
 
@@ -55,6 +61,8 @@ public class EnrollmentService {
 
     public void saveWhenInRegistration(EnrollmentForm form) {
         System.out.println("saveWhenInRegistration");
+        //从认定申请表来的数据在定期注册时,要向认定表中回写省级注册计划信息
+        //ProvinceBatch pb = provinceBatchService.getLatestProvinceBatch(enrollment.getProvinceId(), PlanHelper.TYPE_ENROLL);
     }
 
     public void saveWhenNotInHistoryAndInRegistration(EnrollmentForm form) {

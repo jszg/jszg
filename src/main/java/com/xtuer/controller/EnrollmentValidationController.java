@@ -123,7 +123,7 @@ public class EnrollmentValidationController {
         if (!enrollHistories.isEmpty()) {
             enrollHistory = enrollHistories.get(0);
             if(enrollHistory.getEnrollTime() == null){
-                return new Result(false, "注册历史数据存在异常");
+                return new Result(false, "注册历史数据存在异常，请联系网站工作人员");
             }
 
             Calendar expiredTime = Calendar.getInstance();
