@@ -40,7 +40,7 @@
             #{pthevelId},#{residence},    #{techniqueJobId},#{workUnits},
             #{zipCode},  #{exam},         #{status},     #{dataFrom},
             #{deleteStatus},  #{orgId},   #{orgName},     #{provinceId},
-            #{occupation},    #{ip},      #{cityId}, #{enrollProBatchId}
+            #{occupation},    #{ip},      #{cityId},      #{enrollProBatchId}
         )
     </insert>
 

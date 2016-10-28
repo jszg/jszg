@@ -88,7 +88,7 @@ public class CommonUtils {
         return ip;
     }
 
-    public static final int getCertYearFromRegistration(String certNo,String certAssign) throws ParseException {
+    public static final int getCertYearFromRegistration(String certNo,String certAssign) {
         int year = 0;
         if (certNo.length() == 15 || certNo.length() == 17) {
             if (certNo.length() > 15) {
@@ -98,7 +98,11 @@ public class CommonUtils {
         } else {
             SimpleDateFormat sdf  =   new  SimpleDateFormat( " yyyy-MM-dd" );
             Calendar cal = Calendar.getInstance();
-            cal.setTime(sdf.parse(certAssign));
+            try {
+                cal.setTime(sdf.parse(certAssign));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             year = cal.get(Calendar.YEAR);
             if (cal.get(Calendar.MONTH) <= Calendar.JUNE) {
                 year--;

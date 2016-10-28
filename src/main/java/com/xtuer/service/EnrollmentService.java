@@ -102,7 +102,7 @@ public class EnrollmentService {
         System.out.println(JSON.toJSONString(form));
     }
 
-    public void saveWhenNotInHistoryAndInRegistration(EnrollmentForm form) throws ParseException {
+    public void saveWhenNotInHistoryAndInRegistration(EnrollmentForm form){
         //首先给registration设置值
         RegistrationForm reg = new RegistrationForm();
         reg.setIdNo(form.getIdNo());
