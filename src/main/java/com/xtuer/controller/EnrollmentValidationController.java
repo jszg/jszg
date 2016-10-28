@@ -46,7 +46,7 @@ public class EnrollmentValidationController {
             return new Result(false, "该机构目前未开展注册工作，请与该机构联系，了解其注册工作的时间安排");
         }
 
-            if (orgBatch.getOpen() != null && !orgBatch.getOpen()) {
+            if (orgBatch.getIsOpen() != null && !orgBatch.getIsOpen()) {
             return new Result(false, "该机构注册工作目前未安排网上采集信息的时间，请与该机构联系，了解其注册工作的时间安排");
         }
 

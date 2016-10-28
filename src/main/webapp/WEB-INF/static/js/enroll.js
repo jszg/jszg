@@ -689,6 +689,7 @@ StepValidator.validate7thStep = function() {
         inHistory: inHistory,
         inRegistration: inRegistration,
         certTypeId: certTypeId,
+        enrollBatchId: certBatchId,
         certBatchId: certBatchId,
         registerId: registerId,
         registerSubjectId: registerSubjectId,

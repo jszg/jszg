@@ -47,7 +47,7 @@ public class EnrollmentController {
         form.setDeleteStatus(0);
         form.setBeginWorkYearInt(Integer.parseInt(form.getBeginWorkYear().substring(0, 4)));
         form.setPassword(CommonUtils.md5(form.getPassword())); // 使用 MD5 编码密码
-        form.setEnrollBatch(25); // TODO
+//        form.setEnrollBatch(25); // TODO
 
         // [3] 使用注册机构查询市的信息
         form.setCityId(enrollmentService.getCityId(form.getOrgId()));

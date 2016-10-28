@@ -171,7 +171,8 @@ public class EnrollmentForm {
     @NotBlank(message="证书上的认定机构名称不能为空")
     private String recognizeOrgName; // 证书上的认定机构名称
 
-    private Integer enrollBatch; // 注册批次，后台查询
+    @NotNull(message="注册批次 id 不能为空")
+    private Integer enrollBatchId; // 注册批次
 
     @NotBlank(message="邮件地址不能为空")
     @Pattern(regexp="^.+@.+\\..+$", message="请填写正确的邮件地址")

@@ -79,10 +79,12 @@
                ob.is_open AS isOpen,
                ob.pb_id   AS provinceBatch,
                pb.status  AS status,
-               ob.ob_id   AS orgBatchId
+               ob.ob_id   AS orgBatchId,
+               cb.cb_id   AS certBatchId
            FROM
                t_org_batch ob
                LEFT JOIN t_province_batch pb ON pb.pb_id = ob.pb_id
+               LEFT JOIN t_cert_batch cb on cb.cb_id = ob.cb_id
            WHERE ob.org_id = #{orgId} AND ob.type = 2
            ORDER BY ob.ob_id DESC
        ) WHERE <![CDATA[ ROWNUM <=1 ]]>
