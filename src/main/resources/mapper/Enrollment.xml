@@ -45,7 +45,7 @@
     </select>
 
     <insert id="insertEnrollment" parameterType="EnrollmentForm">
-        <selectKey resultType="java.math.BigDecimal" order="BEFORE" keyProperty="enrollId">
+        <selectKey resultType="long" order="BEFORE" keyProperty="enrollId">
             SELECT S_ENR_ID.Nextval from DUAL
         </selectKey>
 

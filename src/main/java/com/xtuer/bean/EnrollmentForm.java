@@ -17,7 +17,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class EnrollmentForm {
-    private java.math.BigDecimal enrollId;
+    private long enrollId;
 
     @NotBlank(message="姓名不能为空")
     private String name;

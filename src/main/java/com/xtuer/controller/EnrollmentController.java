@@ -68,6 +68,7 @@ public class EnrollmentController {
         }
 
         // [7] 保存图片
+        enrollmentService.saveEnrollPhoto(form);
 
         // [8] 写入日志
         enrollmentService.saveUserLog(form, request);
