@@ -143,6 +143,7 @@ public class EnrollmentService {
         reg.setProvinceId(organizationMapper.findProvinceByOrgId(form.getRecognizeOrgId()).getProvinceId());
         reg.setOccupation(dictMapper.findByTypeAndCode(4,20).getId());
         reg.setIp(form.getIp());
+        reg.setCityId(this.getCityId(form.getRecognizeOrgId()));
         Map<String , Integer> certBatchMap = commonMapper.findByYear(CommonUtils.getCertYearFromRegistration(form.getCertNo(),form.getCertAssignDate()));
         if(!certBatchMap.isEmpty()) {
             reg.setCertBatchId(certBatchMap.get("id"));
