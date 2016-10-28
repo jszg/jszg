@@ -46,6 +46,7 @@ repositories {
 
 ext.versions = [
     spring:        '4.3.3.RELEASE',
+    springSecurityVersion: '4.0.4.RELEASE',
     servlet:       '3.1.0',
     fastjson:      '1.2.17',
     freemarker:    '2.3.23',
@@ -69,6 +70,8 @@ dependencies {
     compile(
             "org.springframework:spring-webmvc:$versions.spring",  // Spring MVC
             "org.springframework:spring-context-support:$versions.spring",
+            "org.springframework.security:spring-security-web:$versions.springSecurityVersion", // Spring Security
+            "org.springframework.security:spring-security-config:$versions.springSecurityVersion",
             "com.alibaba:fastjson:$versions.fastjson",             // JSON
             "org.freemarker:freemarker:$versions.freemarker",      // Freemarker
             "ch.qos.logback:logback-classic:$versions.logback",    // 日志
