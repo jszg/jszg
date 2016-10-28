@@ -9,6 +9,7 @@ import com.xtuer.util.BrowserUtils;
 import com.xtuer.util.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.DigestUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,10 +45,9 @@ public class EnrollmentController {
         form.setApplyTime(new Date());
         form.setIp(CommonUtils.getClientIp(request));
         form.setDeleteStatus(0);
-        form.setIdTypeId(36);
-        form.setEnrollBatch(25);
-
         form.setBeginWorkYearInt(Integer.parseInt(form.getBeginWorkYear().substring(0, 4)));
+        form.setPassword(DigestUtils.md5DigestAsHex(form.getPassword().getBytes())); // 使用 MD5 编码密码
+        form.setEnrollBatch(25); // TODO
 
         // [3] 查询校验市的信息
         enrollmentService.verifyCityInfo(form);
@@ -72,8 +72,6 @@ public class EnrollmentController {
 
         // [8] 写入日志
         enrollmentService.saveUserLog(form, request);
-
-        System.out.println(BrowserUtils.getBrowserName(request));
 
         return Result.ok(form);
     }

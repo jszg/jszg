@@ -10,4 +10,5 @@
     <mvc:view-controller path="/enroll" view-name="enroll.fm"/>
     <mvc:view-controller path="/request" view-name="request.fm"/>
     <mvc:view-controller path="/rest-view" view-name="rest-view.html"/>
+    <mvc:view-controller path="/server-status" view-name="server-status.html"/>
 </beans>
