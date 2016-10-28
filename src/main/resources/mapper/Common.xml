@@ -147,7 +147,7 @@
 
     <select id="findByYear" resultType="map">
         SELECT
-          cb.cb_id AS id,
+          cb.cb_id AS id
         FROM t_cert_batch cb
         WHERE cb.year = #{year} and cb.type=1 and cb.generate=1
     </select>
