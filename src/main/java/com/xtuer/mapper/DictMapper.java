@@ -22,4 +22,6 @@ public interface DictMapper {
 
     List<Dict> findAcademicDegrees(@Param("ct_id") int certTypeId, @Param("eduLevel") int eduLevel);
 
+    //根据字典类型和编码查询
+    Dict findByTypeAndCode(@Param("dtId") int dtId, @Param("code") int code);
 }

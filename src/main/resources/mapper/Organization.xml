@@ -103,4 +103,10 @@
               and
                 o.STATUS=1
     </select>
+    <select id="findProvinceByOrgId" resultType="Organization">
+        SELECT o.province_id as provinceId
+        FROM t_org o
+        WHERE o.org_id = #{orgId}
+
+    </select>
 </mapper>

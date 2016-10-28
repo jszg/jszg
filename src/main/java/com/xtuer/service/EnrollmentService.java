@@ -2,6 +2,7 @@ package com.xtuer.service;
 
 import com.alibaba.fastjson.JSON;
 import com.xtuer.bean.EnrollmentForm;
+import com.xtuer.bean.RegistrationForm;
 import com.xtuer.bean.Result;
 import com.xtuer.bean.UserPortalLog;
 import com.xtuer.constant.SignUpConstants;
@@ -9,6 +10,7 @@ import com.xtuer.dto.CityInfo;
 import com.xtuer.dto.ProvinceBatch;
 import com.xtuer.mapper.CommonMapper;
 import com.xtuer.mapper.EnrollmentMapper;
+import com.xtuer.mapper.OrganizationMapper;
 import com.xtuer.mapper.RegistrationMapper;
 import com.xtuer.util.BrowserUtils;
 import com.xtuer.util.CommonUtils;
@@ -24,6 +26,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
 import javax.annotation.Resource;
+import javax.servlet.Registration;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
@@ -44,6 +47,9 @@ public class EnrollmentService {
 
     @Resource(name = "config")
     private PropertiesConfiguration config;
+
+    @Autowired
+    private OrganizationMapper organizationMapper;
 
     @Autowired
     private RegistrationMapper registrationMapper;
@@ -96,6 +102,48 @@ public class EnrollmentService {
     }
 
     public void saveWhenNotInHistoryAndInRegistration(EnrollmentForm form) {
+        //首先给registration设置值
+        RegistrationForm reg = new RegistrationForm();
+        reg.setIdNo(form.getIdNo());
+        reg.setCertNo(form.getCertNo());
+        reg.setCertAssign(form.getCertAssignDate());
+        reg.setCertBatchId(form.getCertBatchId());
+        reg.setOrgId(form.getRecognizeOrgId());
+        reg.setSubjectId(form.getSubjectId());
+        reg.setName(form.getName());
+        reg.setSex(form.getGenderId());
+        reg.setNation(form.getNationId());
+        reg.setAddress(form.getAddress());
+        reg.setBirthplace(form.getBirthPlace());
+        reg.setCellphone(form.getCellphone());
+        reg.setDegreeId(form.getDegreeId());
+        reg.setEduLevelId(form.getEduLevelId());
+        reg.setEmail(form.getEmail());
+        reg.setPassword(form.getPassword());
+        reg.setGraduateschool(form.getGraduationCollegeId());
+        reg.setGraduateschoolname(form.getGraduationCollegeName());
+        reg.setGraduatime(form.getGraduationTime());
+        reg.setLearntType(form.getLearnTypeId());
+        reg.setMajorId(form.getMajorId());
+        reg.setNormalmajor(form.getNormalMajorId());
+        reg.setPhone(form.getPhone());
+        reg.setPolitical(form.getPoliticalId());
+        reg.setPthevelId(form.getPthLevelId());
+        reg.setResidence(form.getResidence());
+        reg.setTechniqueJobId(form.getTechnicalJobId());
+        reg.setWorkUnits(form.getWorkUnit());
+        reg.setZipCole(form.getZipCode());
+        reg.setExam(SignUpConstants.EXAM_TYPE_NO_EXAM );
+        reg.setStatus(30);
+        reg.setDataFrom(2);
+        reg.setDeletestatus(0);
+        reg.setOrgId(form.getRecognizeOrgId());
+        reg.setOrgName(form.getRecognizeOrgName());
+        reg.setProvinceId(organizationMapper.findProvinceByOrgId(form.getRecognizeOrgId()).getProvinceId());
+
+        //保存registration
+
+        //给enrollment设置值，并会写regId
 
         System.out.println("saveWhenNotInHistoryAndInRegistration");
     }

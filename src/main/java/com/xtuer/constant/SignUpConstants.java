@@ -26,5 +26,8 @@ public interface SignUpConstants {
     int STATUS_UN_CONF = 6;
     int DATA_FROM_USER_ADD = 0;  // 网上申报
     int DATA_FROM_ADMIN_ADD = 1; // 后台采集
-    int DATA_FROM_IMPORT = 2;    // 后台导入
+
+    int EXAM_TYPE_NO_EXAM = 0;
+    int EXAM_TYPE_EXAM = 1;
+
 }

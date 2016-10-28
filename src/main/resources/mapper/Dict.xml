@@ -29,4 +29,11 @@
         where c.link_id=(select ctl.ctl_id from t_cert_type_link ctl where ctl.ct_id = #{ct_id} and ctl.edu_level_id = #{eduLevel})
           and c.target_type=1 ORDER BY code
     </select>
+
+    <select id="findByTypeAndCode" resultType="Dict">
+        SELECT d.dic_id AS  id
+                d.name   AS  name
+        FROM t_dict d
+        where d.dt_id = #{dtId} and d.code = #{code}
+    </select>
 </mapper>

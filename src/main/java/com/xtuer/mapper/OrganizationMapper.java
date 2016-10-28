@@ -32,4 +32,6 @@ public interface OrganizationMapper {
     List<Organization> findByProvinceAndCityAndCertTypeId(@Param("provinceId") Integer province, @Param("cityId") Integer city, @Param("certTypeId")
             Integer certTypeId);
 
+    Organization findProvinceByOrgId(@Param("orgId") int orgId);
+
 }
