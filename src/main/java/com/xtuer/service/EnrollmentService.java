@@ -7,6 +7,7 @@ import com.xtuer.bean.Result;
 import com.xtuer.bean.UserPortalLog;
 import com.xtuer.constant.SignUpConstants;
 import com.xtuer.dto.CityInfo;
+import com.xtuer.dto.ProvinceBatch;
 import com.xtuer.mapper.CommonMapper;
 import com.xtuer.mapper.EnrollmentMapper;
 import com.xtuer.mapper.RegistrationMapper;
@@ -33,14 +34,14 @@ public class EnrollmentService {
     @Autowired
     private EnrollmentMapper enrollmentMapper;
 
+    @Autowired
     private RegistrationMapper registrationMapper;
 
     public void saveWhenInHistory(EnrollmentForm form) {
         System.out.println("saveWhenInHistory");
-       // RegistrationForm reg = registrationMapper.deleteByRegisterId(form.getRegisterId());
 
-        // 使用表中现有的数据
-        EnrollmentForm temp = enrollmentMapper.findByRegisterId(form.getRegisterId());
+        // 使用表中现有的认定历史表中数据
+        EnrollmentForm temp = enrollmentMapper.findHistoryValidByRegisterId(form.getRegisterId());
 
         form.setRegisterId(temp.getRegisterId());
         form.setIdNo(temp.getIdNo());
@@ -62,10 +63,29 @@ public class EnrollmentService {
     public void saveWhenInRegistration(EnrollmentForm form) {
         System.out.println("saveWhenInRegistration");
         //从认定申请表来的数据在定期注册时,要向认定表中回写省级注册计划信息
-        //ProvinceBatch pb = provinceBatchService.getLatestProvinceBatch(enrollment.getProvinceId(), PlanHelper.TYPE_ENROLL);
+        ProvinceBatch pb = commonMapper.findByProvinceId(form.getProvinceId());
+        registrationMapper.updateEnrollProBatch(pb.getId(),form.getRegisterId());
+
+        // 使用表中现有认定正式表的数据
+        EnrollmentForm temp = enrollmentMapper.findRegistrationByRegisterId(form.getRegisterId());
+        form.setRegisterId(temp.getRegisterId());
+        form.setCertNo(temp.getCertNo());
+        form.setCertTypeId(temp.getCertTypeId());
+        form.setSubjectId(temp.getSubjectId());
+        form.setIdNo(temp.getIdNo());
+        form.setName(temp.getName());
+        form.setNationId(temp.getNationId());
+        form.setGenderId(temp.getGenderId());
+        form.setBirthday(temp.getBirthday());
+        form.setCertAssignDate(temp.getCertAssignDate());
+        form.setRecognizeOrgName(temp.getRecognizeOrgName());
+
+        enrollmentMapper.insertEnrollment(form);
+        System.out.println(JSON.toJSONString(form));
     }
 
     public void saveWhenNotInHistoryAndInRegistration(EnrollmentForm form) {
+
         System.out.println("saveWhenNotInHistoryAndInRegistration");
     }
 
