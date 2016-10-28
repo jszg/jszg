@@ -132,29 +132,36 @@ public class EnrollmentService {
     }
 
     /**
-     * 查询校验市的信息
+     * 获取机构所在市的 id
      *
-     * @param form
+     * @param orgId 机构的 id
+     * @return 市的 id
      */
-    public void verifyCityInfo(EnrollmentForm form) {
-        CityInfo cityInfo = commonMapper.findCityInfoByOrgId(form.getOrgId());
-        if (cityInfo.getOrgType() == SignUpConstants.T_PROVINCE) {
-            form.setCityId(form.getOrgId());
-        } else {
-            if (cityInfo.getOrgType() == SignUpConstants.T_CITY) {
-                form.setCityId(form.getOrgId());
-            } else if (cityInfo.getOrgType() == SignUpConstants.T_COUNTY) {
-                if (cityInfo.getParentId() != 0 && cityInfo.getParentOrgType() == SignUpConstants.T_PROVINCE) {
-                    if (cityInfo.isProvinceCity()) {
-                        form.setCityId(cityInfo.getParentId());
-                    } else {
-                        form.setCityId(form.getOrgId());
-                    }
+    public int getCityId(int orgId) {
+        CityInfo cityInfo = commonMapper.findCityInfoByOrgId(orgId);
+
+        // 如果是省或者市，返回自己
+        if (cityInfo.getOrgType() == SignUpConstants.T_PROVINCE || cityInfo.getOrgType() == SignUpConstants.T_CITY) {
+            return orgId;
+        }
+
+        // 如果是县
+        if (cityInfo.getOrgType() == SignUpConstants.T_COUNTY) {
+            // 如果上级机构是省(省管县)
+            if (cityInfo.getParentId() != 0 && cityInfo.getParentOrgType() == SignUpConstants.T_PROVINCE) {
+                // 如果是直辖市返回父级机构，否则返回自己
+                if (cityInfo.isProvinceCity()) {
+                    return cityInfo.getParentId();
                 } else {
-                    form.setCityId(cityInfo.getParentId());
+                    return orgId;
                 }
+            } else {
+                // 如果不是省级机构(市管县)，返回自己
+                return cityInfo.getParentId();
             }
         }
+
+        return orgId;
     }
 
     public Result<?> validateParams(EnrollmentForm form, BindingResult result) {

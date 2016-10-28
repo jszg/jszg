@@ -49,8 +49,8 @@ public class EnrollmentController {
         form.setPassword(CommonUtils.md5(form.getPassword())); // 使用 MD5 编码密码
         form.setEnrollBatch(25); // TODO
 
-        // [3] 查询校验市的信息
-        enrollmentService.verifyCityInfo(form);
+        // [3] 使用注册机构查询市的信息
+        form.setCityId(enrollmentService.getCityId(form.getOrgId()));
 
         // [4] 在认定历史表中
         if (form.getInHistory()) {
