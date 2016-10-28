@@ -7,10 +7,22 @@
 <!--namespace 非常重要：必须是 Mapper 类的全路径-->
 <mapper namespace="com.xtuer.mapper.TechnicalJobMapper">
   <select id="findRoots" resultType="TechnicalJob">
-        select JOB_ID  as id, NAME as name ,JOB_CODE as code from t_technical_job t where t.parent_id is null order by t.job_code
+        SELECT
+            t.job_id  as id, t.name as name ,t.job_code as code, t.parent_id as parentId
+        FROM
+            t_technical_job t
+        WHERE
+            t.parent_id is null
+        ORDER BY t.job_code
   </select>
 
   <select id="findByParent" resultType="TechnicalJob">
-        select JOB_ID  as id, NAME as name ,JOB_CODE as code  from t_technical_job t where t.parent_id = #{parentId} order by t.job_code
+        SELECT
+            t.job_id  as id, t.name as name ,t.job_code as code,t.parent_id as parentId
+        FROM
+            t_technical_job t
+        where
+            t.parent_id = #{parentId}
+        order by t.job_code
   </select>
 </mapper>

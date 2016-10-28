@@ -14,13 +14,19 @@ import java.util.Date;
 @Getter
 @Setter
 public class RegistrationForm {
+    private Long regId;
+
     private String address;//地址
     private String archiveno;//档案号
     private String birthday;//出生日期
+    private Date birthdayDate;
+
     private String birthPlace;//出生地
     private Integer certBatchId;//批次
     private String cellPhone;//手机
     private String certAssign;//证书签发日期
+    private Date certAssignDate;
+
     private String certNo;//证书号码
     private Integer cityId;//市
     private Integer certType;//资格种类
@@ -34,9 +40,11 @@ public class RegistrationForm {
     private Integer graduateSchool;//毕业学校
     private String graduateShoolName;//毕业学校名称
     private String graduaTime;//毕业时间
+    private Date graduaTimeDate;
+
     private  String idNo;//证件号码
     private Integer idType;//证件类型
-    private Integer learntType;//学习形式
+    private Integer learnType;//学习形式
     private Integer majorId;//所学专业
     private String name;//姓名
     private Integer nation;//民族

@@ -61,9 +61,9 @@ environments {
 
     jszgtest { // 北师大的测试环境，使用 Oracle
         staticBase = '/new-cert'
-        uploadTemp = '/var/www/upload/tmp'
-        uploadEnrollPhotoDir = '/opt/photo/enroll_photo'
-        logDir = '/usr/local/tomcat8.5.6/logs'
+        uploadTemp = 'D:/upload/tmp'
+        uploadEnrollPhotoDir = 'D:/upload/tmp'
+        logDir = 'D:/upload/tmp'
 
         jdbc {
             driverClassName = 'oracle.jdbc.driver.OracleDriver'

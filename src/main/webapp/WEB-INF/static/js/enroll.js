@@ -389,7 +389,7 @@ StepValidator.validate3thStep = function() {
         return false;
     }
 
-    if (!IdCard.validate(idNo)) {
+    if (idType.id == 36 && !IdCard.validate(idNo)) {//证件类型为身份证时校验
         alert('请输入有效的身份证号码');
         return false;
     }
@@ -685,7 +685,7 @@ StepValidator.validate7thStep = function() {
     if (!cellphone)                 { alert('请输入 "手机"');           return false; }
     if (!photo)                     { alert('请上传 "照片"');           return false; }
 
-    if (workDate < beginWorkYear)    { alert('现任教学校聘用起始日期不能在开始参加工作时间之前'); return false; }
+    if (workDate < beginWorkYear)    { alert('"现任教学校聘用起始日期"不能在"开始参加工作时间之前"'); return false; }
     if (!(/^[1-9][0-9]{5}$/.test(zipCode))) { alert('通讯地的邮编: 请输入 6 个数字的 "通讯地的邮编"');      return false; }
     if (!(/^\d{11}$/.test(cellphone)))      { alert('手机号码: 请输入 11 个数字的 "手机号码"');         return false; }
 

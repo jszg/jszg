@@ -108,9 +108,16 @@ public class EnrollmentService {
         reg.setIdNo(form.getIdNo());
         reg.setCertNo(form.getCertNo());
         reg.setCertAssign(form.getCertAssignDate());
+        try {
+            reg.setCertAssignDate(DateUtils.parseDate(form.getCertAssignDate(),DATE_FORMAT));
+            reg.setBirthdayDate(DateUtils.parseDate(form.getBirthday(),DATE_FORMAT));
+            reg.setGraduaTimeDate(DateUtils.parseDate(form.getBirthday(),DATE_FORMAT));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         reg.setCertBatchId(form.getCertBatchId());
         reg.setOrgId(form.getRecognizeOrgId());
-        reg.setSubjectId(form.getSubjectId());
+        reg.setSubjectId(form.getRegisterSubjectId());
         reg.setName(form.getName());
         reg.setSex(form.getGenderId());
         reg.setNation(form.getNationId());
@@ -124,7 +131,7 @@ public class EnrollmentService {
         reg.setGraduateSchool(form.getGraduationCollegeId());
         reg.setGraduateShoolName(form.getGraduationCollegeName());
         reg.setGraduaTime(form.getGraduationTime());
-        reg.setLearntType(form.getLearnTypeId());
+        reg.setLearnType(form.getLearnTypeId());
         reg.setMajorId(form.getMajorId());
         reg.setNormalMajor(form.getNormalMajorId());
         reg.setPhone(form.getPhone());
@@ -144,11 +151,10 @@ public class EnrollmentService {
         reg.setOccupation(dictMapper.findByTypeAndCode(4,20).getId());
         reg.setIp(form.getIp());
         reg.setCityId(this.getCityId(form.getRecognizeOrgId()));
-        Map<String , Integer> certBatchMap = commonMapper.findByYear(CommonUtils.getCertYearFromRegistration(form.getCertNo(),form.getCertAssignDate()));
-        if(!certBatchMap.isEmpty()) {
-            reg.setCertBatchId(certBatchMap.get("id"));
-        }
+        reg.setCertBatchId(form.getCertBatchId());
         reg.setEnrollProBatchId(form.getEnrollBatchId());
+        reg.setCertType(form.getCertTypeId());
+        reg.setIdType(form.getIdTypeId());
         //保存registration
         long regId = registrationMapper.insertRegistration(reg);
         //给enrollment设置值，并会写regId

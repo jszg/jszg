@@ -27,22 +27,22 @@
             major,        normal_major,  phone,      political,
             pth_level,      residence,     technique_job,  work_units,
             zip_cole,     exam,          status,         data_from,
-            delete_status,org_id,        org_name,       province_id
-            occupation,   ip,            city_id,      Enroll_Pro_Batch_Id,
-            reg_id
+            delete_status,org_name,       province_id,    occupation,
+            ip,            city_id,      enroll_pro_batch_id, reg_id,
+            birthday,      ct_id,        id_type
         )
         VALUES (
-            #{idNo},     #{certNo},       #{certAssign}, #{certBatchId},
+            #{idNo},     #{certNo},       #{certAssignDate}, #{certBatchId},
             #{orgId},    #{subjectId},    #{name},       #{sex},
             #{nation},   #{address},      #{birthPlace}, #{cellPhone},
             #{degreeId}, #{eduLevelId},   #{email},      #{password},
-            #{graduateSchool},  #{graduateSchoolName},   #{graduaTime},        #{learnType},
-            #{majorId},  #{ormanMajor},   #{phone},      #{political},
+            #{graduateSchool},  #{graduateShoolName},   #{graduaTimeDate},        #{learnType},
+            #{majorId},  #{normalMajor},   #{phone},      #{political},
             #{pthevelId},#{residence},    #{techniqueJobId},#{workUnits},
             #{zipCode},  #{exam},         #{status},     #{dataFrom},
-            #{deleteStatus},  #{orgId},   #{orgName},     #{provinceId},
-            #{occupation},    #{ip},      #{cityId},      #{enrollProBatchId},
-            #{regId}
+            #{deleteStatus},    #{orgName},     #{provinceId},       #{occupation},
+            #{ip},      #{cityId},      #{enrollProBatchId},      #{regId},
+            #{birthdayDate}, #{certType},#{idType}
         )
     </insert>
 
