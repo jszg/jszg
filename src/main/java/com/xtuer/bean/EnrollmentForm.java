@@ -19,6 +19,8 @@ import lombok.Setter;
 public class EnrollmentForm {
     private long enrollId;
 
+    private Long regId;//对应的认定Id
+
     @NotBlank(message="姓名不能为空")
     private String name;
 

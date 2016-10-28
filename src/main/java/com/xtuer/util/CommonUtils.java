@@ -5,6 +5,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.DigestUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.UUID;
 
 public class CommonUtils {
@@ -82,5 +86,24 @@ public class CommonUtils {
         }
 
         return ip;
+    }
+
+    public static final int getCertYearFromRegistration(String certNo,String certAssign) throws ParseException {
+        int year = 0;
+        if (certNo.length() == 15 || certNo.length() == 17) {
+            if (certNo.length() > 15) {
+                year = Integer.parseInt(certNo.substring(0, 4));
+            }
+            year = 1900 + Integer.parseInt(certNo.substring(0, 2));
+        } else {
+            SimpleDateFormat sdf  =   new  SimpleDateFormat( " yyyy-MM-dd" );
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(sdf.parse(certAssign));
+            year = cal.get(Calendar.YEAR);
+            if (cal.get(Calendar.MONTH) <= Calendar.JUNE) {
+                year--;
+            }
+        }
+        return year;
     }
 }

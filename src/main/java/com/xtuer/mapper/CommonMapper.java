@@ -5,6 +5,7 @@ import com.xtuer.dto.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 共用Mappper
@@ -30,4 +31,5 @@ public interface CommonMapper {
     CityInfo findCityInfoByOrgId(@Param("orgId") int orgId);
     //根据注册的省份查询省级计划
     ProvinceBatch findByProvinceId(@Param("province") int provinceId);
+    Map<String ,Integer> findByYear(@Param("year") int year);
 }

@@ -8,10 +8,7 @@ import com.xtuer.bean.UserPortalLog;
 import com.xtuer.constant.SignUpConstants;
 import com.xtuer.dto.CityInfo;
 import com.xtuer.dto.ProvinceBatch;
-import com.xtuer.mapper.CommonMapper;
-import com.xtuer.mapper.EnrollmentMapper;
-import com.xtuer.mapper.OrganizationMapper;
-import com.xtuer.mapper.RegistrationMapper;
+import com.xtuer.mapper.*;
 import com.xtuer.util.BrowserUtils;
 import com.xtuer.util.CommonUtils;
 import org.apache.commons.configuration.PropertiesConfiguration;
@@ -32,6 +29,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.Map;
 
 @Service
 public class EnrollmentService {
@@ -53,6 +51,9 @@ public class EnrollmentService {
 
     @Autowired
     private RegistrationMapper registrationMapper;
+
+    @Autowired
+    private DictMapper dictMapper;
 
     public void saveWhenInHistory(EnrollmentForm form) {
         System.out.println("saveWhenInHistory");
@@ -101,7 +102,7 @@ public class EnrollmentService {
         System.out.println(JSON.toJSONString(form));
     }
 
-    public void saveWhenNotInHistoryAndInRegistration(EnrollmentForm form) {
+    public void saveWhenNotInHistoryAndInRegistration(EnrollmentForm form) throws ParseException {
         //首先给registration设置值
         RegistrationForm reg = new RegistrationForm();
         reg.setIdNo(form.getIdNo());
@@ -114,37 +115,44 @@ public class EnrollmentService {
         reg.setSex(form.getGenderId());
         reg.setNation(form.getNationId());
         reg.setAddress(form.getAddress());
-        reg.setBirthplace(form.getBirthPlace());
-        reg.setCellphone(form.getCellphone());
+        reg.setBirthPlace(form.getBirthPlace());
+        reg.setCellPhone(form.getCellphone());
         reg.setDegreeId(form.getDegreeId());
         reg.setEduLevelId(form.getEduLevelId());
         reg.setEmail(form.getEmail());
         reg.setPassword(form.getPassword());
-        reg.setGraduateschool(form.getGraduationCollegeId());
-        reg.setGraduateschoolname(form.getGraduationCollegeName());
-        reg.setGraduatime(form.getGraduationTime());
+        reg.setGraduateSchool(form.getGraduationCollegeId());
+        reg.setGraduateShoolName(form.getGraduationCollegeName());
+        reg.setGraduaTime(form.getGraduationTime());
         reg.setLearntType(form.getLearnTypeId());
         reg.setMajorId(form.getMajorId());
-        reg.setNormalmajor(form.getNormalMajorId());
+        reg.setNormalMajor(form.getNormalMajorId());
         reg.setPhone(form.getPhone());
         reg.setPolitical(form.getPoliticalId());
         reg.setPthevelId(form.getPthLevelId());
         reg.setResidence(form.getResidence());
         reg.setTechniqueJobId(form.getTechnicalJobId());
         reg.setWorkUnits(form.getWorkUnit());
-        reg.setZipCole(form.getZipCode());
+        reg.setZipCode(form.getZipCode());
         reg.setExam(SignUpConstants.EXAM_TYPE_NO_EXAM );
         reg.setStatus(30);
         reg.setDataFrom(2);
-        reg.setDeletestatus(0);
+        reg.setDeleteStatus(0);
         reg.setOrgId(form.getRecognizeOrgId());
         reg.setOrgName(form.getRecognizeOrgName());
         reg.setProvinceId(organizationMapper.findProvinceByOrgId(form.getRecognizeOrgId()).getProvinceId());
-
+        reg.setOccupation(dictMapper.findByTypeAndCode(4,20).getId());
+        reg.setIp(form.getIp());
+        Map<String , Integer> certBatchMap = commonMapper.findByYear(CommonUtils.getCertYearFromRegistration(form.getCertNo(),form.getCertAssignDate()));
+        if(!certBatchMap.isEmpty()) {
+            reg.setCertBatchId(certBatchMap.get("id"));
+        }
+        reg.setEnrollProBatchId(form.getEnrollBatchId());
         //保存registration
-
+        long regId = registrationMapper.insertRegistration(reg);
         //给enrollment设置值，并会写regId
-
+        form.setRegId(regId);
+        enrollmentMapper.insertEnrollment(form);
         System.out.println("saveWhenNotInHistoryAndInRegistration");
     }
 
