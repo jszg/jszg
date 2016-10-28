@@ -1,7 +1,7 @@
 environments {
     development { // 本地开发环境，使用 MySQL
         staticBase = '/new-cert'
-        uploadTemp = '/var/www/upload/temp'
+        uploadTemp = '/var/www/upload/tmp'
         uploadEnrollPhotoDir = '/var/www/upload/storage/app_data/repository/photo/enroll_photo'
         logDir = '/Users/Biao/Temp/logs'
 
@@ -21,7 +21,8 @@ environments {
 
     wxl1 { // 文显龙的开发环境，使用 Oracle
         staticBase = '/new-cert'
-        uploadPersonImageDir = 'build'
+        uploadTemp = '/var/www/upload/tmp'
+        uploadEnrollPhotoDir = '/var/www/upload/storage/app_data/repository/photo/enroll_photo'
         logDir = '/Users/Biao/Temp/logs'
 
         jdbc {
@@ -40,7 +41,8 @@ environments {
 
     wxl2 { // 文显龙的开发环境，使用 Oracle
         staticBase = '/new-cert'
-        uploadPersonImageDir = 'build'
+        uploadTemp = '/var/www/upload/tmp'
+        uploadEnrollPhotoDir = '/var/www/upload/storage/app_data/repository/photo/enroll_photo'
         logDir = '/Users/Biao/Temp/logs'
 
         jdbc {
@@ -59,7 +61,7 @@ environments {
 
     jszgtest { // 北师大的测试环境，使用 Oracle
         staticBase = '/new-cert'
-        uploadTemp = '/var/www/upload/temp'
+        uploadTemp = '/var/www/upload/tmp'
         uploadEnrollPhotoDir = '/opt/photo/enroll_photo'
         logDir = '/usr/local/tomcat8.5.6/logs'
 
@@ -79,7 +81,7 @@ environments {
 
     jszg { // 北师大的正式环境，使用 Oracle
         staticBase = '/new-cert'
-        uploadTemp = '/var/www/upload/temp'
+        uploadTemp = '/var/www/upload/tmp'
         uploadEnrollPhotoDir = '/var/www/upload/storage/app_data/repository/photo/enroll_photo'
         logDir = '/usr/local/tomcat8.5.6/logs'
 
