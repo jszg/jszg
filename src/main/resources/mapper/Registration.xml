@@ -28,7 +28,8 @@
             pth_level,      residence,     technique_job,  work_units,
             zip_cole,     exam,          status,         data_from,
             delete_status,org_id,        org_name,       province_id
-            occupation,   ip,            city_id,      Enroll_Pro_Batch_Id
+            occupation,   ip,            city_id,      Enroll_Pro_Batch_Id,
+            reg_id
         )
         VALUES (
             #{idNo},     #{certNo},       #{certAssign}, #{certBatchId},
@@ -40,7 +41,8 @@
             #{pthevelId},#{residence},    #{techniqueJobId},#{workUnits},
             #{zipCode},  #{exam},         #{status},     #{dataFrom},
             #{deleteStatus},  #{orgId},   #{orgName},     #{provinceId},
-            #{occupation},    #{ip},      #{cityId},      #{enrollProBatchId}
+            #{occupation},    #{ip},      #{cityId},      #{enrollProBatchId},
+            #{regId}
         )
     </insert>
 
