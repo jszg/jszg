@@ -6,7 +6,7 @@
 
 <!--namespace 非常重要：必须是 Mapper 类的全路径-->
 <mapper namespace="com.xtuer.mapper.EnrollmentMapper">
-    <select id="findByRegisterId" resultType="EnrollmentForm">
+    <select id="findHistoryValidByRegisterId" resultType="EnrollmentForm">
         SELECT
             hv.reg_id      AS registerId,
             hv.id_no       AS idNo,
@@ -24,6 +24,26 @@
         WHERE
             hv.reg_id = #{registerId}
     </select>
+
+    <select id="findRegistrationByRegisterId" resultType="EnrollmentForm">
+        SELECT
+        r.reg_id      AS registerId,
+        r.id_no       AS idNo,
+        r.name        AS name,
+        r.ct_id       AS certTypeId,
+        r.subject     AS subjectId,
+        r.cert_no     AS certNo,
+        r.nation      AS nationId,
+        r.sex         AS genderId,
+        r.birthday    AS birthday,
+        r.cert_assign AS certAssignDate,
+        r.org_name    AS recognizeOrgName
+        FROM
+        t_registration r
+        WHERE
+        r.reg_id = #{registerId}
+    </select>
+
     <insert id="insertEnrollment" parameterType="EnrollmentForm">
         <selectKey resultType="java.math.BigDecimal" order="BEFORE" keyProperty="enrollId">
             SELECT S_ENR_ID.Nextval from DUAL

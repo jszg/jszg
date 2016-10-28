@@ -28,4 +28,6 @@ public interface CommonMapper {
     List<OrgBatchTime> findOrgBatchTimeByOrgBatchId(@Param("orgBatchId") int orgBatchId);
 
     CityInfo findCityInfoByOrgId(@Param("orgId") int orgId);
+    //根据注册的省份查询省级计划
+    ProvinceBatch findByProvinceId(@Param("province") int provinceId);
 }

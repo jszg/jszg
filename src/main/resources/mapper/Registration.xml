@@ -15,7 +15,7 @@
     </select>
     <insert id="insertRegistration" parameterType="RegistrationForm">
         INSERT
-        INTO t_enrollment
+        INTO t_registration
           (e.address,e.apply_time,e.begin_work_date,e.begin_work_year,e.birth_place,e.birthday,e.cellphone,e.cert_assign,e.cert_no,e.cert_org_name,e.city_id,
            e.confirm_status,e.ct_id,e.data_from,e.degree,e.delete_status,e.edu_level,e.email,enr_id,e.enroll_batch,e.enroll_num,e.gradua_time,e.graduate_school,
            e.graduate_school_name,e.id_no,e.id_type,e.in_history,e.in_registration,e.ip,e.judgmint_status,e.learn_type,e.locale_id,e.ls_id,e.major,e.name,e.nation,
@@ -30,5 +30,10 @@
         )
     </insert>
 
+    <update id="updateByEnrollProBatchId" parameterType="RegistrationForm">
+        UPDATE  t_registration
+        SET  enroll_pro_batch_id = #{}
+        where reg_id = #{regId}
+    </update>
 
 </mapper>
