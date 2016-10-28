@@ -292,6 +292,7 @@
         <div id="local-sets-div" class="ui-body">
             <div style="padding: 3px 10px;">
                 确认点: <input type="text" class="search-input">&nbsp;&nbsp;<button class="search-button">搜索</button>
+                <button class="show-all-button">列出全部</button>
             </div>
             <table id="local-sets-table" width="960" border="0" cellspacing="0" cellpadding="0">
                 <tr>
@@ -576,8 +577,11 @@
         <a href="javascript:void(0)" class="pre-step">
             <img src="${static}/img/signup/button-prev.gif" alt="上一步" border="0" id="box-7-previous" data-step="7">
         </a>
-        <a href="javascript:void(0)" class="next-step">
-            <img src="${static}/img/signup/button-next.gif" alt="下一步" border="0" id="box-7-next">
+        <a href="javascript:void(0)">
+            <img src="${static}/img/signup/button-submit.gif" alt="下一步" border="0" id="box-7-submit">
+        </a>
+        <a href="javascript:void(0)">
+            <img src="${static}/img/signup/button-exit.gif" alt="下一步" border="0" id="box-7-exit">
         </a>
     </div>
 </div>

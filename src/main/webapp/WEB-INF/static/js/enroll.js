@@ -16,7 +16,7 @@ $(document).ready(function() {
 
     requestDicts();
 
-    StepUtils.toStep(3); // 到第 N 步，测试使用
+    StepUtils.toStep(7); // 到第 N 步，测试使用
     requestLocalSets(21);
 
     // 点击取消按钮关闭弹出对话框
@@ -139,11 +139,18 @@ function handleNextAndPreviousEvents() {
     });
 
     // 第七步的下一步
-    $('#box-7-next').click(function() {
+    $('#box-7-submit').click(function() {
         if (StepValidator.validate7thStep()) {
             $('#box-7').hide();
             $('#box-8').show();
             $('.bz8').addClass('active');
+        }
+    });
+
+    // 第七步的退出
+    $('#box-7-exit').click(function() {
+        if(confirm('您确定要 "退出" 吗？退出后所有信息都不会保存。\n点击 "确定" 直接退出，点击 "取消" 返回编辑界面')) {
+            UiUtils.closeWindow();
         }
     });
 
@@ -189,6 +196,10 @@ function handleSearchLocalSets() {
         if (event.keyCode==13) {
             searchLocalSets();
         }
+    });
+    // 列出全部
+    $('#local-sets-div .show-all-button').click(function(event) {
+        $('#local-sets-table tr').show();
     });
 
     function searchLocalSets() {

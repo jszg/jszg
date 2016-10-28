@@ -181,6 +181,20 @@ UiUtils.insertOptions = function(selectId, optionsData, config) {
     }
 };
 
+/**
+ * 关闭当前标签页
+ */
+UiUtils.closeWindow = function() {
+    var userAgent = navigator.userAgent;
+    if (userAgent.indexOf("Firefox") != -1 || userAgent.indexOf("Presto") != -1) {
+        window.location.replace("about:blank");
+    } else {
+        window.opener = null;
+        window.open("", "_self");
+        window.close();
+    }
+};
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                     格式化字符串，给字符串加上 format 函数                                         //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
