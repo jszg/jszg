@@ -2,7 +2,6 @@ package com.xtuer.service;
 
 import com.alibaba.fastjson.JSON;
 import com.xtuer.bean.EnrollmentForm;
-import com.xtuer.bean.RegistrationForm;
 import com.xtuer.bean.Result;
 import com.xtuer.bean.UserPortalLog;
 import com.xtuer.constant.SignUpConstants;
@@ -12,19 +11,28 @@ import com.xtuer.mapper.EnrollmentMapper;
 import com.xtuer.mapper.RegistrationMapper;
 import com.xtuer.util.BrowserUtils;
 import com.xtuer.util.CommonUtils;
-import org.apache.commons.lang.time.DateFormatUtils;
+import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.time.DateUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
 
 @Service
 public class EnrollmentService {
+    private static Logger logger = LoggerFactory.getLogger(EnrollmentService.class);
+
     public static final String DATE_FORMAT = "yyyy-MM-dd";
 
     @Autowired
@@ -32,6 +40,9 @@ public class EnrollmentService {
 
     @Autowired
     private EnrollmentMapper enrollmentMapper;
+
+    @Resource(name = "config")
+    private PropertiesConfiguration config;
 
     private RegistrationMapper registrationMapper;
 
@@ -67,6 +78,25 @@ public class EnrollmentService {
 
     public void saveWhenNotInHistoryAndInRegistration(EnrollmentForm form) {
         System.out.println("saveWhenNotInHistoryAndInRegistration");
+    }
+
+    public void saveEnrollPhoto(EnrollmentForm form) {
+        // 初始文件名为 enrollId 补齐 0 到 10 字符加图片后缀
+        // 保存路径: 0000001234.jpg to 00/0001/2345.jpg
+        String tempDir = config.getString("uploadTemp"); // 图片的临时目录
+        String photoDir = config.getString("uploadEnrollPhotoDir"); // 图片的最终目录
+
+        String tempName = form.getTmpPhoto();
+        String photoName = String.format("%010d", form.getEnrollId()) + "." + FilenameUtils.getExtension(tempName);
+        String tempPhotoPath = tempDir + File.separator + tempName; // 临时图片路径
+        String photoPath = photoDir + File.separator + photoName.substring(0,2) + File.separator +
+                photoName.substring(2,6) + File.separator + photoName.substring(6);
+
+        try {
+            FileUtils.moveFile(new File(tempPhotoPath), new File(photoPath));
+        } catch (IOException e) {
+            logger.warn("移动图片失败: {}", e.getMessage());
+        }
     }
 
     public void saveUserLog(EnrollmentForm form, HttpServletRequest request) {
