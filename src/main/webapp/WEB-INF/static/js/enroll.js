@@ -456,7 +456,7 @@ StepValidator.validate3thStep = function() {
     // 如果有证书的历史数据，显示他们，然后返回
     if (historyData) {
         UiUtils.setFormData('enrollNumber',    -1, enrollNumber);
-        UiUtils.setFormData('registerId',      -1, historyData.id);
+        UiUtils.setFormData('registerId',      historyData.id, historyData.id);
         UiUtils.setFormData('idType',          -1, historyData.idTypeName);
         UiUtils.setFormData('idNo',            -1, historyData.idNo);
         UiUtils.setFormData('certNo',          -1, historyData.certNo);
