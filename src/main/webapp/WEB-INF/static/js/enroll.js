@@ -772,7 +772,7 @@ StepValidator.validate7thStep = function() {
     }});
 
     if (!passed) { return false; } // 表单提交不成功，不进入第八步
-
+    UiUtils.setFormData('successRegName', -1, name);
     UiUtils.setFormData('email', -1, email); // 显示邮箱在第八步上要使用
     return true;
 };

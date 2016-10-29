@@ -4,6 +4,10 @@ import com.xtuer.bean.EnrollmentForm;
 import com.xtuer.bean.Result;
 import com.xtuer.constant.SignUpConstants;
 import com.xtuer.constant.UriView;
+import com.xtuer.dto.Enrollment;
+import com.xtuer.dto.HistoryValid;
+import com.xtuer.dto.Registration;
+import com.xtuer.mapper.CommonMapper;
 import com.xtuer.service.EnrollmentService;
 import com.xtuer.util.BrowserUtils;
 import com.xtuer.util.CommonUtils;
@@ -18,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 注册的 Controller
@@ -27,6 +32,9 @@ public class EnrollmentController {
     @Autowired
     private EnrollmentService enrollmentService;
 
+    @Autowired
+    private CommonMapper commonMapper;
+
     @PostMapping(UriView.URI_ENROLL_SUBMIT)
     @ResponseBody
     public Result<?> submitEnroll(@RequestBody @Valid EnrollmentForm form, BindingResult result, HttpServletRequest request) {
@@ -34,6 +42,30 @@ public class EnrollmentController {
         Result<?> r = enrollmentService.validateParams(form, result);
         if (!r.isSuccess()) {
             return r;
+        }
+
+        List<Enrollment> status0 = commonMapper.findEnrollmentStatus0(form.getIdNo(), form.getCertNo());
+        if (!status0.isEmpty()) {
+            return new Result(false, "定期注册证件号码与证书号码重复提交");
+        } else if (form.getInRegistration()) {
+            Registration reg = commonMapper.findRegistrationById(form.getRegisterId());
+            if (reg == null) {
+                return new Result(false, "验证失败 Registration为空");
+            }
+            status0 = commonMapper.findEnrollmentStatus0(reg.getIdNo(), reg.getCertNo());
+            if (!status0.isEmpty()) {
+                return new Result(false, "定期注册证件号码与证书号码重复提交");
+            }
+        } else if (form.getInHistory()) {
+            HistoryValid historyValid = commonMapper.findHistoryValidById(form.getRegisterId());
+            if (historyValid == null) {
+                return new Result(false, "验证失败 HistoryValid为空");
+            }
+
+            status0 = commonMapper.findEnrollmentStatus0(historyValid.getIdNo(), historyValid.getCertNo());
+            if (!status0.isEmpty()) {
+                return new Result(false, "定期注册证件号码与证书号码重复提交");
+            }
         }
 
         // [2] 设置固定信息

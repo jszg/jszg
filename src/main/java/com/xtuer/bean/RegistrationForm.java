@@ -14,7 +14,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class RegistrationForm {
-    private Long regId;
+    private long regId;
 
     private String address;//地址
     private String archiveno;//档案号
