@@ -18,6 +18,8 @@ public interface DictMapper {
 
     List<TeachGrade> findTeaGrades();
 
+    List<Dict> findTeaGradesByStatus();
+
     List<Dict> findEduLevels(@Param("ct_id") int certTypeId);
 
     List<Dict> findAcademicDegrees(@Param("ct_id") int certTypeId, @Param("eduLevel") int eduLevel);

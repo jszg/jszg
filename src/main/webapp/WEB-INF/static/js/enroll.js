@@ -16,7 +16,7 @@ $(document).ready(function() {
 
     requestDicts();
 
-    StepUtils.toStep(7); // 到第 N 步，测试使用
+    //StepUtils.toStep(7); // 到第 N 步，测试使用
     requestLocalSets(21);
 
     // 点击取消按钮关闭弹出对话框
@@ -702,7 +702,7 @@ StepValidator.validate7thStep = function() {
     if (!cellphone)                 { alert('请输入 "手机"');           return false; }
     if (!photo)                     { alert('请上传 "照片"');           return false; }
 
-    if (workDate < beginWorkYear)    { alert('"现任教学校聘用起始日期"不能在"开始参加工作时间之前"'); return false; }
+    if (workDate < beginWorkYear)    { alert('"现任教学校聘用起始日期"不能在"开始参加工作时间"之前'); return false; }
     if (!(/^[1-9][0-9]{5}$/.test(zipCode))) { alert('通讯地的邮编: 请输入 6 个数字的 "通讯地的邮编"');      return false; }
     if (!(/^\d{11}$/.test(cellphone)))      { alert('手机号码: 请输入 11 个数字的 "手机号码"');         return false; }
 
@@ -994,6 +994,10 @@ function handleMajorsDialog() {
     $('#majors-dialog .ok-button').click(function(event) {
         var subjectNode = window.subjectsTree.getSelectedNodes()[0];
         if (subjectNode) {
+            if (0 === subjectNode.level) {
+                alert('请选择具体的所学专业');
+                return;
+            }
             UiUtils.setFormData('major', subjectNode.id, subjectNode.name);
             $("#lean_overlay").click();
         } else {
@@ -1041,7 +1045,7 @@ function handleTechnicalJobsDialog() {
     $('#technical-jobs-dialog .ok-button').click(function(event) {
         var technicalJobNode = window.subjectsTree.getSelectedNodes()[0];
         if (technicalJobNode) {
-            if (0 === technicalJobNode.level && '00' === technicalJobNode.code) {
+            if (0 === technicalJobNode.level && '00' != technicalJobNode.code) {
                 alert('所选教师职务不可使用');
                 return;
             }
