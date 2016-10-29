@@ -593,9 +593,9 @@
         <p><span>XXX</span>,您好！</p>
         <h2>您已完成注册！</h2>
         <P>请妥善保存您的如下登录信息：</P>
-        <P>身份证件号码：<span>411321198711133419</span></P>
-        <P>教师资格证书号码：<span>20021309531000656</span></P>
-        <P>密码找回邮箱：<span>wen68580610@126.com</span></P>
+        <P>身份证件号码：<span class="form-data" name="idNo" data-id="" data-name=""></span></P>
+        <P>教师资格证书号码：<span class="form-data" name="certNo" data-id="" data-name=""></span></P>
+        <P>密码找回邮箱：<span class="form-data" name="email" data-id="" data-name=""></span></P>
         <P>为确保注册信息无误，请您及时<a href="#">登录系统。</a>获取报名号。</P>
         <P>如果您需要查看或修改注册信息、了解现场确认注意事项、打印申报材料，请<a href="#">登录系统。</a></P>
      </div>

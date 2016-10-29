@@ -744,16 +744,19 @@ StepValidator.validate7thStep = function() {
         password: password1
     };
 
+    var passed = false;
+
     $.rest.create({url: Urls.URI_ENROLL_SUBMIT, data: params, async: false, success: function(result) {
         if (!result.success) {
-            alert(result.message);
+            alert(result.message); // 弹出错误消息
         } else {
-            console.log(result);
+            passed = true;
         }
-
-        // alert(result.data);
     }});
 
+    if (!passed) { return false; } // 表单提交不成功，不进入第八步
+
+    UiUtils.setFormData('email', -1, email); // 显示邮箱在第八步上要使用
     return true;
 };
 
