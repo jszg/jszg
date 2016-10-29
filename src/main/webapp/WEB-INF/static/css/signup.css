@@ -177,14 +177,14 @@ table{border-collapse:collapse;}
     box-shadow: 0px 0px 8px #666;
     padding: 10px 10px;
     width: 600px;
-    height: 550px;
+    height: 450px;
 }
 
 /*主要内容部分*/
 .pop-dialog .content {
     overflow-x: hidden;
     overflow-y: scroll;
-    height: 520px;
+    height: 420px;
     border: 1px solid #EEE;
 }
 
