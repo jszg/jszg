@@ -78,7 +78,7 @@
             #{localSetId},  #{majorId},    #{name},            #{nationId},
             #{normalMajorId}, #{orgId},    #{password},        #{phone},
             #{politicalId}, #{postQualeId},#{provinceId},      #{pthLevelId},
-            #{reCheckStatus}, #{recognizeOrgId}, #{residence}, #{schoolQualeId},
+            #{reCheckStatus}, #{regId}, #{residence}, #{schoolQualeId},
             #{genderId},    #{status},     #{registerSubjectId}, #{teachGradeId},
             #{teachSubjectId}, #{technicalJobId}, sysdate,     #{workDateDate},
             #{workUnit},    #{workUnitTypeId}, #{zipCode}

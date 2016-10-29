@@ -13,4 +13,13 @@
   <select id="findByProvinceId" resultType="College">
     select COLLEGE_ID as id, NAME as name FROM T_COLLEGE WHERE PROVINCE = #{provinceId} ORDER BY college_code
   </select>
+
+  <select id="findBySchollType" resultType="College">
+    SELECT
+        college_id AS id, name AS name
+    FROM
+        t_college
+    WHERE
+        name = #{}
+  </select>
 </mapper>
