@@ -202,7 +202,7 @@ UiUtils.reloadPageWhenNoAction = function() {
     clearTimeout(window.timerId);
 
     window.timerId = setTimeout(function() {
-        alert('超过 30 分钟未操作，请重新填写信息\n点击 “确定” 按钮后，返回报名第一步');
+        alert('超过 30 分钟未操作，请重新填写信息');
         location.reload(); // 刷新当前页
     }, 1000 * 6); // 30 分钟后执行
 };
