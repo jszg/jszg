@@ -43,7 +43,7 @@ function initWebUploader() {
             width: 114,
             height: 156,
             allowMagnify: false,
-            crop: true
+            crop: false // false 为等比缩放
         }
     });
 
