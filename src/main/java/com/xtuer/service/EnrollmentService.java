@@ -6,6 +6,8 @@ import com.xtuer.bean.RegistrationForm;
 import com.xtuer.bean.Result;
 import com.xtuer.bean.UserPortalLog;
 import com.xtuer.constant.SignUpConstants;
+import com.xtuer.dto.CertBatch;
+import com.xtuer.dto.CertType;
 import com.xtuer.dto.CityInfo;
 import com.xtuer.dto.ProvinceBatch;
 import com.xtuer.mapper.*;
@@ -61,17 +63,22 @@ public class EnrollmentService {
         // 使用表中现有的认定历史表中数据
         EnrollmentForm temp = enrollmentMapper.findHistoryValidByRegisterId(form.getRegisterId());
 
-        form.setRegisterId(temp.getRegisterId());
+        form.setRegisterId(form.getRegisterId());
         form.setIdNo(temp.getIdNo());
+        form.setIdTypeId(temp.getIdTypeId());
         form.setName(temp.getName());
         form.setCertTypeId(temp.getCertTypeId());
-        form.setSubjectId(temp.getSubjectId());
+        System.out.println(temp.getCertTypeId());
+        System.out.println(temp.getSubjectId());
+        form.setRegisterSubjectId(temp.getSubjectId());
         form.setCertNo(temp.getCertNo());
         form.setNationId(temp.getNationId());
         form.setGenderId(temp.getGenderId());
         form.setBirthday(temp.getBirthday());
         form.setCertAssignDate(temp.getCertAssignDate());
         form.setRecognizeOrgName(temp.getRecognizeOrgName());
+        form.setSubjectId(temp.getSubjectId());
+        form.setCityId(this.getCityId(form.getOrgId()));
 
         enrollmentMapper.insertEnrollment(form);
 
@@ -88,8 +95,9 @@ public class EnrollmentService {
         EnrollmentForm temp = enrollmentMapper.findRegistrationByRegisterId(form.getRegisterId());
         form.setRegisterId(temp.getRegisterId());
         form.setCertNo(temp.getCertNo());
+        form.setIdTypeId(temp.getIdTypeId());
         form.setCertTypeId(temp.getCertTypeId());
-        form.setSubjectId(temp.getSubjectId());
+        form.setRegisterSubjectId(temp.getSubjectId());
         form.setIdNo(temp.getIdNo());
         form.setName(temp.getName());
         form.setNationId(temp.getNationId());
@@ -97,7 +105,8 @@ public class EnrollmentService {
         form.setBirthday(temp.getBirthday());
         form.setCertAssignDate(temp.getCertAssignDate());
         form.setRecognizeOrgName(temp.getRecognizeOrgName());
-
+        form.setSubjectId(temp.getSubjectId());
+        form.setCityId(this.getCityId(form.getOrgId()));
         enrollmentMapper.insertEnrollment(form);
         System.out.println(JSON.toJSONString(form));
     }
@@ -111,7 +120,7 @@ public class EnrollmentService {
         try {
             reg.setCertAssignDate(DateUtils.parseDate(form.getCertAssignDate(),DATE_FORMAT));
             reg.setBirthdayDate(DateUtils.parseDate(form.getBirthday(),DATE_FORMAT));
-            reg.setGraduaTimeDate(DateUtils.parseDate(form.getBirthday(),DATE_FORMAT));
+            reg.setGraduaTimeDate(DateUtils.parseDate(form.getGraduationTime(),DATE_FORMAT));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -151,14 +160,18 @@ public class EnrollmentService {
         reg.setOccupation(dictMapper.findByTypeAndCode(4,20).getId());
         reg.setIp(form.getIp());
         reg.setCityId(this.getCityId(form.getRecognizeOrgId()));
-        reg.setCertBatchId(form.getCertBatchId());
-        reg.setEnrollProBatchId(form.getEnrollBatchId());
+        int year = CommonUtils.getCertYearFromRegistration(form.getCertNo(),form.getCertAssignDate());
+        System.out.println(year);
+        CertBatch certBatch = commonMapper.findByYear(year);
+        reg.setCertBatchId(certBatch.getId());
+        reg.setEnrollProBatchId(commonMapper.findByProvinceId(organizationMapper.findProvinceByOrgId(form.getRecognizeOrgId()).getProvinceId()).getId());
         reg.setCertType(form.getCertTypeId());
         reg.setIdType(form.getIdTypeId());
         //保存registration
-        long regId = registrationMapper.insertRegistration(reg);
+        registrationMapper.insertRegistration(reg);
         //给enrollment设置值，并会写regId
-        form.setRegId(regId);
+        form.setRegId(reg.getRegId());
+        form.setCityId(this.getCityId(form.getOrgId()));
         enrollmentMapper.insertEnrollment(form);
         System.out.println("saveWhenNotInHistoryAndInRegistration");
     }

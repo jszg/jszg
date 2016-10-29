@@ -18,7 +18,8 @@
             hv.sex         AS genderId,
             hv.birthday    AS birthday,
             hv.cert_assign AS certAssignDate,
-            hv.org_name    AS recognizeOrgName
+            hv.org_name    AS recognizeOrgName,
+            hv.id_type     AS idTypeId
         FROM
             t_history_valid hv
         WHERE
@@ -37,7 +38,8 @@
         r.sex         AS genderId,
         r.birthday    AS birthday,
         r.cert_assign AS certAssignDate,
-        r.org_name    AS recognizeOrgName
+        r.org_name    AS recognizeOrgName,
+        r.id_type     AS idTypeId
         FROM
         t_registration r
         WHERE
@@ -78,7 +80,7 @@
             #{localSetId},  #{majorId},    #{name},            #{nationId},
             #{normalMajorId}, #{orgId},    #{password},        #{phone},
             #{politicalId}, #{postQualeId},#{provinceId},      #{pthLevelId},
-            #{reCheckStatus}, #{regId}, #{residence}, #{schoolQualeId},
+            #{reCheckStatus}, #{registerId}, #{residence}, #{schoolQualeId},
             #{genderId},    #{status},     #{registerSubjectId}, #{teachGradeId},
             #{teachSubjectId}, #{technicalJobId}, sysdate,     #{workDateDate},
             #{workUnit},    #{workUnitTypeId}, #{zipCode}

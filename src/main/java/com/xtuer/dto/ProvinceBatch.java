@@ -13,5 +13,6 @@ import lombok.Setter;
 public class ProvinceBatch {
     private int id;
     private String title;
+    private Integer provinceId;
 
 }

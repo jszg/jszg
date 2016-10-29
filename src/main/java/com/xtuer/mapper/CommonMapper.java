@@ -30,6 +30,6 @@ public interface CommonMapper {
 
     CityInfo findCityInfoByOrgId(@Param("orgId") int orgId);
     //根据注册的省份查询省级计划
-    ProvinceBatch findByProvinceId(@Param("province") int provinceId);
-    Map<String ,Integer> findByYear(@Param("year") int year);
+    ProvinceBatch findByProvinceId(@Param("provinceId") int provinceId);
+    CertBatch findByYear(@Param("year") int year);
 }

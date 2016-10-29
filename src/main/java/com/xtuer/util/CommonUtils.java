@@ -93,8 +93,9 @@ public class CommonUtils {
         if (certNo.length() == 15 || certNo.length() == 17) {
             if (certNo.length() > 15) {
                 year = Integer.parseInt(certNo.substring(0, 4));
+            }else{
+                year = 1900 + Integer.parseInt(certNo.substring(0, 2));
             }
-            year = 1900 + Integer.parseInt(certNo.substring(0, 2));
         } else {
             SimpleDateFormat sdf  =   new  SimpleDateFormat( " yyyy-MM-dd" );
             Calendar cal = Calendar.getInstance();

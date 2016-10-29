@@ -46,10 +46,10 @@
         )
     </insert>
 
-    <update id="updateByEnrollProBatchId" parameterType="RegistrationForm">
+    <update id="updateEnrollProBatch" parameterType="RegistrationForm">
         UPDATE  t_registration
-        SET  enroll_pro_batch_id = #{}
-        where reg_id = #{regId}
+        SET  enroll_pro_batch_id = #{provinceBatchId}
+        where reg_id = #{registerId}
     </update>
 
 </mapper>

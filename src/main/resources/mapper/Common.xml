@@ -141,11 +141,11 @@
     <select id="findByProvinceId" resultType="ProvinceBatch">
             SELECT MAX(pb.pb_id) AS id
             FROM t_province_batch pb
-            WHERE pb.province = ? AND pb.type = 2
+            WHERE pb.province = #{provinceId} AND pb.type = 2
             ORDER BY pb.pb_id DESC
     </select>
 
-    <select id="findByYear" resultType="map">
+    <select id="findByYear" resultType="CertBatch">
         SELECT
           cb.cb_id AS id
         FROM t_cert_batch cb
