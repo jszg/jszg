@@ -51,6 +51,7 @@ function initWebUploader() {
     // response 为服务器返回来的数据
     uploader.onUploadSuccess = function(file, response) {
         UiUtils.setFormData('photo', -1, response.data);
+        uploader.removeFile(file, true); // 启用多次上传
     };
 
     // 上传成功，例如抛异常
