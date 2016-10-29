@@ -87,6 +87,8 @@ function handleNextAndPreviousEvents() {
     ////////////////////////////////////////////////////////////////////////
     // 第一步的下一步
     $('#box-1-next').click(function() {
+        UiUtils.reloadPageWhenNoAction();
+
         $('#box-1').hide();
         $('#box-2').show();
         $('.bz2').addClass('active');
@@ -94,6 +96,8 @@ function handleNextAndPreviousEvents() {
 
     // 第二步的下一步
     $('#box-2-next').click(function() {
+        UiUtils.reloadPageWhenNoAction();
+
         if (!$('#agree-checkbox').get(0).checked) {
             alert('请先阅读网上申报协议并同意后才可以申报！');
             return;
@@ -106,6 +110,8 @@ function handleNextAndPreviousEvents() {
 
     // 第三步的下一步
     $('#box-3-next').click(function() {
+        UiUtils.reloadPageWhenNoAction();
+
         if (StepValidator.validate3thStep()) {
             // 验证通过，进入第四步
             $('#box-3').hide();
@@ -116,6 +122,8 @@ function handleNextAndPreviousEvents() {
 
     // 第四步的下一步
     $('#box-4-next').click(function() {
+        UiUtils.reloadPageWhenNoAction();
+
         if (StepValidator.validate4thStep()) {
             $('#box-4').hide();
             $('#box-5').show();
@@ -125,6 +133,8 @@ function handleNextAndPreviousEvents() {
 
     // 第五步的下一步
     $('#box-5-next').click(function() {
+        UiUtils.reloadPageWhenNoAction();
+
         if (StepValidator.validate5thStep()) {
             $('#box-5').hide();
             $('#box-6').show();
@@ -134,6 +144,8 @@ function handleNextAndPreviousEvents() {
 
     // 第六步的下一步
     $('#box-6-next').click(function() {
+        UiUtils.reloadPageWhenNoAction();
+
         $('#box-6').hide();
         $('#box-7').show();
         $('.bz7').addClass('active');
@@ -141,6 +153,8 @@ function handleNextAndPreviousEvents() {
 
     // 第七步的下一步
     $('#box-7-submit').click(function() {
+        UiUtils.reloadPageWhenNoAction();
+
         if (StepValidator.validate7thStep()) {
             $('#box-7').hide();
             $('#box-8').show();
@@ -159,6 +173,8 @@ function handleNextAndPreviousEvents() {
     ///                                上一步                              //
     ////////////////////////////////////////////////////////////////////////
     $('#box-2-previous, #box-3-previous, #box-4-previous, #box-5-previous, #box-6-previous, #box-7-previous').click(function() {
+        UiUtils.reloadPageWhenNoAction();
+        
         var step = parseInt($(this).attr('data-step'));
         StepUtils.toPreviousStep(step);
     });
