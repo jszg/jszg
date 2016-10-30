@@ -16,7 +16,7 @@ $(document).ready(function() {
 
     requestDicts();
 
-    StepUtils.toStep(7); // 到第 N 步，测试使用
+    // StepUtils.toStep(7); // 到第 N 步，测试使用
     requestLocalSets(21);
 
     // 点击取消按钮关闭弹出对话框
@@ -174,7 +174,7 @@ function handleNextAndPreviousEvents() {
     ////////////////////////////////////////////////////////////////////////
     $('#box-2-previous, #box-3-previous, #box-4-previous, #box-5-previous, #box-6-previous, #box-7-previous').click(function() {
         UiUtils.reloadPageWhenNoAction();
-        
+
         var step = parseInt($(this).attr('data-step'));
         StepUtils.toPreviousStep(step);
     });
@@ -769,6 +769,8 @@ StepValidator.validate7thStep = function() {
         } else {
             passed = true;
         }
+    }, error: function(error) {
+        alert(error);
     }});
 
     if (!passed) { return false; } // 表单提交不成功，不进入第八步
