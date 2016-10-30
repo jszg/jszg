@@ -1048,7 +1048,7 @@ function handleTechnicalJobsDialog() {
         var technicalJobNode = window.subjectsTree.getSelectedNodes()[0];
         if (technicalJobNode) {
             if (0 === technicalJobNode.level && '00' != technicalJobNode.code) {
-                alert('所选教师职务不可使用');
+                alert('请选择具体的教师职务！');
                 return;
             }
 

@@ -15,7 +15,7 @@
     </select>
     <insert id="insertRegistration" parameterType="RegistrationForm">
         <selectKey resultType="long" order="BEFORE" keyProperty="regId">
-            SELECT S_REG_ID.Nextval from DUAL
+            SELECT s_reg_id.nextval AS regId FROM dual
         </selectKey>
 
         INSERT INTO t_registration (
