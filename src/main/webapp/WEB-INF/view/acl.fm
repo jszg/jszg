@@ -1,0 +1,2 @@
+当前访问人数: ${currentCount}<br>
+最大允许访问人数: ${maxCount}

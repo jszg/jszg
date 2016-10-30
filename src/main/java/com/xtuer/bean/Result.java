@@ -59,4 +59,7 @@ public class Result<T> {
         return new Result (false, "错误", data);
     }
 
+    public static Result<String> error() {
+        return new Result (false, "错误");
+    }
 }

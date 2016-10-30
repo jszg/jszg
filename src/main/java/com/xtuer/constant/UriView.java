@@ -55,4 +55,11 @@ public interface UriView {
     String URI_ENROLL_SUBMIT               = "/rest/signUp/enroll/submit";
 
     String URI_UPLOAD_ENROLL_IMAGE         = "/upload-enroll-image";
+
+    // 访问控制
+    String URI_ACL              = "/acl"; // 访问控制的页面
+    String URI_ACL_COUNT        = "/acl/count"; // 查看人数
+    String URI_ACL_COUNT_SET_UP = "/acl/count/{count}"; // 修改人数限制
+    String URI_ACL_CAN_ACCESS   = "/acl/canAccess"; // 是否可访问
+    String URI_ACL_RESET        = "/acl/reset"; // 重置访问人数，即清空访问列表
 }
