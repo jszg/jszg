@@ -162,7 +162,10 @@ public class EnrollmentService {
         reg.setCityId(this.getCityId(form.getRecognizeOrgId()));
         int year = CommonUtils.getCertYearFromRegistration(form.getCertNo(),form.getCertAssignDate());
         CertBatch certBatch = commonMapper.findByYear(year);
-        reg.setCertBatchId(certBatch.getId());
+        if(certBatch != null){
+            reg.setCertBatchId(certBatch.getId());
+        }
+
         reg.setEnrollProBatchId(commonMapper.findByProvinceId(organizationMapper.findProvinceByOrgId(form.getRecognizeOrgId()).getProvinceId()).getId());
         reg.setCertType(form.getCertTypeId());
         reg.setIdType(form.getIdTypeId());

@@ -18,14 +18,11 @@
 
     <select id="findTeaGradesByStatus" resultType="Dict">
         SELECT
-        *
-        FROM(
-            SELECT
-                dic_id as id, name as name, status as status
-            FROM
-                T_DICT
-                WHERE DT_ID = #{dt_id}  ORDER BY code
-        ) where <![CDATA[rownum <= 5]]>
+            dic_id as id, name as name, status as status
+        FROM
+            T_DICT
+        WHERE DT_ID = 23 AND <![CDATA[rownum <= 5]]>
+        ORDER BY code
     </select>
 
     <select id="findTeaGrades" resultType="TeachGrade">

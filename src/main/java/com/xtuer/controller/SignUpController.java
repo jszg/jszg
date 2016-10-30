@@ -218,6 +218,9 @@ public class SignUpController {
             for (int i = 0; i < DICT_TYPES.length; i++) {
                 final int type = DICT_TYPES[i];
                 String subkey = String.format(RedisKey.DICTS_BY_TYPE, type);
+                if(type == 23){
+                    map.put(DICT_TYPENAMES[i], redisUtils.get(dictReference, subkey, () -> dictMapper.findTeaGradesByStatus()));
+                }
                 map.put(DICT_TYPENAMES[i], redisUtils.get(dictReference, subkey, () -> dictMapper.findByDictType(type)));
             }
 
