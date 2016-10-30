@@ -182,7 +182,7 @@
     </div>
 
     <div class="unregistered content_bd">
-        <h4>您是第 1 次参加教师资格注册，请确认您的证书号码。如果无误，请填写证书的其它信息。否则，请返回上一步。</h4>
+        <h4>您是第 0 次参加教师资格注册，请确认您的证书号码。如果无误，请填写证书的其它信息。否则，请返回上一步。</h4>
         <div class="ui-body">
              <table width="960" border="0" cellspacing="0" cellpadding="0">
                 <tr>
