@@ -31,23 +31,39 @@
   </select>
 
   <select id="findHistoryValid" resultType="HistoryValid">
-        select t.REG_ID as id, t.NAME as name, t.ID_NO as idNo, d2.NAME as idTypeName, t.CERT_NO as certNo,
-           Case when t.SEX =1 then '男'
-           when t.SEX = 2 then '女'
-           else '未知'
-           end as sexName,
-           t.BIRTHDAY as birthday, d.NAME as nationName, c.CT_NAME as certType,  s.NAME as subjectName,
-           t.ORG_NAME as orgName, DELETE_STATUS as  deleteStatus,t.CERT_ASSIGN as certAssign
-    from t_history_valid t ,t_dict d,t_dict d2, T_CERT_TYPE c, T_SUBJECT s
-    where id_no = #{idno} and CERT_NO = #{certno}
-          and t.NATION = d.DIC_ID
-          and c.CT_ID = t.CT_ID
-          and t.SUBJECT = s.SUBJECT_ID
-          and t.ID_TYPE = d2.DIC_ID
+        SELECT
+            t.reg_id     AS id,
+            t.name       AS name,
+            t.id_no      AS idNo,
+            d2.name      AS idTypeName,
+            t.cert_no    AS certNo,
+            CASE WHEN t.SEX =1 THEN '男'
+            WHEN t.SEX = 2 then '女'
+            ELSE '未知'
+            END         AS sexName,
+            t.birthday  AS birthday,
+            d.name      AS nationName,
+            c.ct_name   AS certType,
+            s.name      AS subjectName,
+            t.org_name  AS orgName,
+            delete_status AS  deleteStatus,
+            t.cert_assign AS certAssign
+        FROM t_history_valid t ,t_dict d,t_dict d2, t_cert_type c, t_subject s
+        WHERE id_no = #{idno} AND cert_no = #{certno}
+          AND t.nation = d.dic_id
+          AND c.ct_id = t.ct_id
+          AND t.subject = s.subject_id
+          AND t.id_type = d2.dic_id
   </select>
 
   <select id="findHistoryValidById" resultType="HistoryValid">
-    select t.REG_ID as id ,t.ID_NO as idNo, t.CERT_NO as certNo from t_history_valid hv where hv.reg_id = #{regId}
+        SELECT
+            hv.reg_id   AS id ,
+            hv.id_no    AS idNo,
+            hv.cert_no  AS certNo
+        FROM
+            t_history_valid hv
+        WHERE hv.reg_id = #{regId}
   </select>
 
   <select id="findRegistration" resultType="Registration">
