@@ -226,8 +226,8 @@ public class SignUpController {
                 }
             }
 
-            map.put(RedisKey.PROVINCES, redisUtils.get(new TypeReference<List<Province>>(){}, RedisKey.PROVINCES, () -> provinceMapper.findAll()));
-            map.put(RedisKey.CERT_TYPES, redisUtils.get(new TypeReference<List<CertType>>(){}, RedisKey.CERT_TYPES, () -> certTypeMapper.findAll()));
+            map.put(RedisKey.PROVINCES, provinceMapper.findAll());
+            map.put(RedisKey.CERT_TYPES, certTypeMapper.findAll());
             return map;
         });
         return Result.ok(dicts);
