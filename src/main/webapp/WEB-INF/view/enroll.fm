@@ -672,6 +672,24 @@
                 {{/each}}
             <ul>
         </script>
+        <!-- 输入学校的组件 -->
+        <div id="school-input-holder">
+            <table>
+                <tr>
+                    <td>学校类型:</td>
+                    <td colspan="2"><select id="school-types"><option selected="selected" value="-1">请选择</option></select></td>
+                </tr>
+                <tr>
+                    <td>学校名称:</td>
+                    <td colspan="2"><input name="collegeName"></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td><button class="add-school-button">确定</button></td>
+                    <td><button class="cancel-school-button">取消</button></td>
+                </tr>
+            </table>
+        </div>
     </div>
     <div class="buttons-holder">
         <button class="ok-button">确定</button>

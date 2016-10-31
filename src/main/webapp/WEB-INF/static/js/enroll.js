@@ -16,7 +16,7 @@ $(document).ready(function() {
 
     requestDicts();
 
-    // StepUtils.toStep(7); // 到第 N 步，测试使用
+    StepUtils.toStep(7); // 到第 N 步，测试使用
     // requestLocalSets(21);
 
     // 点击取消按钮关闭弹出对话框
@@ -253,6 +253,7 @@ function requestDicts() {
         UiUtils.insertOptions('politicals', data.political);         // 政治面貌
         UiUtils.insertOptions('edu-levels', data.eduLevel, {onlyEnabledItems: false}); // 最高学历
         UiUtils.insertOptions('degrees', data.degree);               // 最高学位
+        UiUtils.insertOptions('school-types', data.schoolType);      // 最高毕业学校的学校类型
         UiUtils.insertOptions('pth-levels', data.pthLevel);          // 普通话水平
         UiUtils.insertOptions('school-quales', data.schoolQuale);    // 现任教学校性质
         UiUtils.insertOptions('work-unit-types', data.workUnitType); // 任教学校所在地
@@ -301,44 +302,6 @@ function handleChangeProvincesForCollegeEvent() {
             }});
         }
     });
-
-    $(document).on('click', '#graduation-colleges li', function() {
-        $(this).siblings().removeClass('active');
-        $(this).addClass('active');
-    });
-
-    // 点击搜索学校按钮或者输入后按下回车，搜索学校
-    var $dlg = $('#graduation-colleges-dialog');
-    $('.toolbar .search-button', $dlg).click(searchCollege);
-    $('.toolbar .search-input', $dlg).keyup(function(event) {
-        if (event.keyCode==13) {
-            searchCollege();
-        }
-    });
-
-    function searchCollege() {
-        $('#graduation-colleges li').removeClass('active'); // 删除被选中状态
-        var provinceId = UiUtils.getSelectedOption('#provinces-for-college').id;
-
-        if (-1 == provinceId) {
-            alert('请选择省，然后再进行搜索');
-            return;
-        }
-
-        var text = $.trim($('.toolbar .search-input', $dlg).val());
-        var $colleges = $('#graduation-colleges li');
-
-        // [1] 如果输入内容为空白，显示所有的学校
-        // [2] 如果学校的名字包含输入的 text 则显示，否则隐藏
-        $colleges.each(function() {
-            var schoolName = $(this).text();
-            if (-1 != schoolName.indexOf(text)) {
-                $(this).show();
-            } else {
-                $(this).hide();
-            }
-        });
-    }
 }
 
 /**
@@ -967,7 +930,9 @@ function handleGraduationCollegesDialog() {
     $('#graduation-colleges-dialog-trigger').leanModal({top: 50, overlay : 0.4});
 
     $('#select-graduation-college-button').click(function(event) {
-        $('#graduation-colleges-dialog-trigger').click();
+        $('#graduation-colleges-holder').show(); // 显示学校选择组件
+        $('#school-input-holder').hide(); // 隐藏输入学校的组件
+        $('#graduation-colleges-dialog-trigger').click(); // 显示对话框
     });
 
     // 点击确定按钮，设置选中的学科，并隐藏对话框
@@ -983,6 +948,76 @@ function handleGraduationCollegesDialog() {
             alert('没有选中毕业学校');
         }
     });
+
+    // 选中学校
+    $(document).on('click', '#graduation-colleges li', function() {
+        $(this).siblings().removeClass('active');
+        $(this).addClass('active');
+    });
+
+    // 点击搜索学校按钮或者输入后按下回车，搜索学校
+    var $dlg = $('#graduation-colleges-dialog');
+    $('.toolbar .search-button', $dlg).click(searchCollege);
+    $('.toolbar .search-input', $dlg).keyup(function(event) {
+        if (event.keyCode==13) {
+            searchCollege();
+        }
+    });
+
+    // 点击 "添加" 按钮，隐藏学校的树，显示添加的组件
+    $('.toolbar .add-button', $dlg).click(function(event) {
+        $('#graduation-colleges-holder').hide(); // 显示学校选择组件
+        $('#school-input-holder').show(); // 隐藏输入学校的组件
+    });
+
+    $('#school-input-holder .cancel-school-button').click(function(event) {
+        $('#school-input-holder').hide(); // 隐藏输入学校的组件
+        $('#graduation-colleges-holder').show(); // 显示学校选择组件
+    });
+
+    $('#school-input-holder .add-school-button').click(function(event) {
+        var collegeType = UiUtils.getSelectedOption('#school-types');
+        var collegeName = $.trim($('#school-input-holder input[name="collegeName"]').val());
+
+        if (-1 === collegeType.id) {
+            alert('没有选择 "学校类型"');
+            return;
+        }
+
+        if (!collegeName) {
+            alert('没有输入 "学校名称""');
+            return;
+        }
+
+        UiUtils.setFormData('graduationCollege', -collegeType.id, collegeName);
+        $("#lean_overlay").click();
+
+    });
+
+    // 收缩当前省的学校
+    function searchCollege() {
+        $('#graduation-colleges li').removeClass('active'); // 删除被选中状态
+        var provinceId = UiUtils.getSelectedOption('#provinces-for-college').id;
+
+        if (-1 == provinceId) {
+            alert('请选择省，然后再进行搜索');
+            return;
+        }
+
+        var text = $.trim($('.toolbar .search-input', $dlg).val());
+        var $colleges = $('#graduation-colleges li');
+
+        // [1] 如果输入内容为空白，显示所有的学校
+        // [2] 如果学校的名字包含输入的 text 则显示，否则隐藏
+        $colleges.each(function() {
+            var schoolName = $(this).text();
+            if (-1 != schoolName.indexOf(text)) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    }
 }
 
 /**
