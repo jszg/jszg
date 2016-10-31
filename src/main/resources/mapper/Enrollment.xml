@@ -60,13 +60,13 @@
             enroll_num,     gradua_time,   graduate_school,    graduate_school_name,
             id_no,          id_type,       in_history,         in_registration,
             ip,             judgmint_status, learn_type,       locale_id,
-            ls_id,         major,          name,               nation,
-            normal_major,  org_id,         password,           phone,
-            political,     post_quale,     province,           pth_level,
+            ls_id,          major,         name,               nation,
+            normal_major,   org_id,        password,           phone,
+            political,      post_quale,    province,           pth_level,
             re_check_status, reg_id,       residence,          school_quale,
-            sex,           status,         subject,            tea_grade,
-            tea_subject,   technique_job,  trigger_time,       work_date,
-            work_unit,     work_unit_type, zip_cole
+            sex,            status,        subject,            tea_grade,
+            tea_subject,    technique_job, trigger_time,       work_date,
+            work_unit,      work_unit_type,zip_cole,           status_memo
         )
         VALUES (
             #{address},     sysdate,       #{beginWorkYearDate}, #{beginWorkYearInt},
@@ -83,7 +83,7 @@
             #{reCheckStatus}, #{registerId}, #{residence}, #{schoolQualeId},
             #{genderId},    #{status},     #{registerSubjectId}, #{teachGradeId},
             #{teachSubjectId}, #{technicalJobId}, sysdate,     #{workDateDate},
-            #{workUnit},    #{workUnitTypeId}, #{zipCode}
+            #{workUnit},    #{workUnitTypeId}, #{zipCode},     #{statusMemo}
         )
     </insert>
 

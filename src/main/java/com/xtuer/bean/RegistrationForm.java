@@ -65,5 +65,6 @@ public class RegistrationForm {
     private String password;//密码
     private Integer techniqueJobId;//教师职务
     private String ip;//ip
+    private String statusMemo;//备注,用于区分新旧系统报名数据
 
 }

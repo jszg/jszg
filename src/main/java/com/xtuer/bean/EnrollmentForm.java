@@ -197,6 +197,10 @@ public class EnrollmentForm {
     private String ip; // ip
 
     private Date applyTime; // 申请时间
+
     private Integer deleteStatus; // 删除标记
+
     private Integer dataFrom; // 数据来源
+
+    private String statusMemo;//备注,用于区分新旧系统报名数据
 }

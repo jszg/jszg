@@ -79,7 +79,7 @@ public class EnrollmentService {
         form.setRecognizeOrgName(temp.getRecognizeOrgName());
         form.setSubjectId(temp.getSubjectId());
         form.setCityId(this.getCityId(form.getOrgId()));
-
+        form.setStatusMemo("new-cert");
         enrollmentMapper.insertEnrollment(form);
 
         System.out.println(JSON.toJSONString(form));
@@ -107,6 +107,7 @@ public class EnrollmentService {
         form.setRecognizeOrgName(temp.getRecognizeOrgName());
         form.setSubjectId(temp.getSubjectId());
         form.setCityId(this.getCityId(form.getOrgId()));
+        form.setStatusMemo("new-cert");
         enrollmentMapper.insertEnrollment(form);
         System.out.println(JSON.toJSONString(form));
     }
@@ -169,11 +170,13 @@ public class EnrollmentService {
         reg.setEnrollProBatchId(commonMapper.findByProvinceId(organizationMapper.findProvinceByOrgId(form.getRecognizeOrgId()).getProvinceId()).getId());
         reg.setCertType(form.getCertTypeId());
         reg.setIdType(form.getIdTypeId());
+        reg.setStatusMemo("new-cert");
         //保存registration
         registrationMapper.insertRegistration(reg);
         //给enrollment设置值，并会写regId
         form.setRegisterId(reg.getRegId());
         form.setCityId(this.getCityId(form.getOrgId()));
+        form.setStatusMemo("new-cert");
         enrollmentMapper.insertEnrollment(form);
         System.out.println("saveWhenNotInHistoryAndInRegistration");
     }

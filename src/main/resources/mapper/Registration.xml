@@ -29,7 +29,7 @@
             zip_cole,     exam,          status,         data_from,
             delete_status,org_name,       province_id,    occupation,
             ip,            city_id,      enroll_pro_batch_id, reg_id,
-            birthday,      ct_id,        id_type
+            birthday,      ct_id,        id_type,             status_memo
         )
         VALUES (
             #{idNo},     #{certNo},       #{certAssignDate}, #{certBatchId},
@@ -42,7 +42,7 @@
             #{zipCode},  #{exam},         #{status},     #{dataFrom},
             #{deleteStatus},    #{orgName},     #{provinceId},       #{occupation},
             #{ip},      #{cityId},      #{enrollProBatchId},      #{regId},
-            #{birthdayDate}, #{certType},#{idType}
+            #{birthdayDate}, #{certType},#{idType},          #{statusMemo}
         )
     </insert>
 
