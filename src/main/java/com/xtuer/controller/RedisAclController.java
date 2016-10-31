@@ -1,19 +1,16 @@
 package com.xtuer.controller;
 
 import com.xtuer.bean.Result;
-import com.xtuer.constant.RedisKey;
 import com.xtuer.constant.UriView;
+import com.xtuer.service.RedisAclService;
 import com.xtuer.util.CommonUtils;
-import org.apache.commons.configuration.PropertiesConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
@@ -22,10 +19,15 @@ import java.util.Map;
  */
 @Controller
 public class RedisAclController {
+    private static Logger logger = LoggerFactory.getLogger(RedisAclController.class);
+
+    @Autowired
+    private RedisAclService aclService;
+
     @GetMapping(UriView.URI_ACL)
     public String aclPage(ModelMap map) {
-        map.put("currentCount", currentCount()); // 当前人数
-        map.put("maxCount", maxCount()); // 最大允许访问人数
+        map.put("currentCount", aclService.currentCount()); // 当前人数
+        map.put("maxCount", aclService.maxCount()); // 最大允许访问人数
 
         return "acl.fm";
     }
@@ -39,19 +41,18 @@ public class RedisAclController {
     @ResponseBody
     public Result canAccess(HttpServletRequest request) {
         String ip = CommonUtils.getClientIp(request);
-        int maxCount = config.getInteger("aclCount", 2000); // 访问人数限制
+        long maxCount = aclService.maxCount(); // 访问人数限制
 
         // [1] 在 IP 列表中则继续
-        if (redisTemplate.opsForZSet().rank(RedisKey.ACL_KEY, ip) != null) {
+        if (aclService.inIpList(ip)) {
             logger.debug("Allowed, already in: " + ip);
             return Result.ok();
         }
 
-        // [2] 不在 IP 列表，但是小于 maxCount，则加入，继续
-        if (redisTemplate.opsForZSet().rank(RedisKey.ACL_KEY, ip) == null
-                && redisTemplate.opsForZSet().size(RedisKey.ACL_KEY) < maxCount) {
+        // [2] 不在 IP 列表，但是当前使用人数小于 maxCount，则加入，继续
+        if (aclService.currentCount() < aclService.maxCount()) {
             logger.debug("Allowed, new added: " + ip);
-            redisTemplate.opsForZSet().add(RedisKey.ACL_KEY, ip, System.currentTimeMillis());
+            aclService.addToIpList(ip);
             return Result.ok();
         }
 
@@ -66,7 +67,7 @@ public class RedisAclController {
     @GetMapping(UriView.URI_ACL_COUNT)
     @ResponseBody
     public Result<Long> count() {
-        return Result.ok(currentCount());
+        return Result.ok(aclService.currentCount());
     }
 
     /**
@@ -75,43 +76,18 @@ public class RedisAclController {
     @PutMapping(UriView.URI_ACL_RESET)
     @ResponseBody
     public Result reset() {
-        redisTemplate.delete(RedisKey.ACL_KEY);
+        aclService.reset();
         return Result.ok();
     }
 
     /**
      * 修改人数限制
-     * @param count 访问限制的人数
+     * @param maxCount 访问限制的人数
      */
-    @PutMapping(UriView.URI_ACL_COUNT_SET_UP)
+    @PutMapping(UriView.URI_ACL_MAX_COUNT)
     @ResponseBody
-    public Result setUpCount(@PathVariable int count, @RequestBody Map<String, String> map) {
+    public Result setUpCount(@PathVariable int maxCount, @RequestBody Map<String, String> map) {
         String password = map.get("password");
-
-        if (password == null || !password.equals(config.getString("aclPassword"))) {
-            return Result.error();
-        }
-
-        count = count > 0 ? count : 2000;
-        config.setProperty("aclCount", count);
-        logger.debug("访问人数限制到 {}", maxCount());
-
-        return Result.ok();
+        return aclService.setUpMaxCount(password, maxCount);
     }
-
-    private long currentCount() {
-        return redisTemplate.opsForZSet().size(RedisKey.ACL_KEY);
-    }
-
-    private long maxCount() {
-        return config.getInteger("aclCount", 2000);
-    }
-
-    private static Logger logger = LoggerFactory.getLogger(RedisAclController.class);
-
-    @Autowired
-    private StringRedisTemplate redisTemplate;
-
-    @Resource(name = "config")
-    private PropertiesConfiguration config;
 }
