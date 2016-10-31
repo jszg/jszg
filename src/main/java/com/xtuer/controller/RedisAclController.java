@@ -42,24 +42,18 @@ public class RedisAclController {
     @ResponseBody
     public Result canAccess(HttpServletRequest request) {
         String ip = CommonUtils.getClientIp(request);
-        long maxCount = aclService.maxCount(); // 访问人数限制
+        return aclService.canAccess(ip) ? Result.ok() : Result.error();
+    }
 
-        // [1] 在 IP 列表中则继续
-        if (aclService.inIpList(ip)) {
-            logger.debug("Allowed, already in: " + ip);
-            return Result.ok();
-        }
-
-        // [2] 不在 IP 列表，但是当前使用人数小于 maxCount，则加入，继续
-        if (aclService.currentCount() < aclService.maxCount()) {
-            logger.debug("Allowed, new added: " + ip);
-            aclService.addToIpList(ip);
-            return Result.ok();
-        }
-
-        // [3] 既不在 IP 列表，同时 IP 列表超过了 maxCount，则不许访问
-        logger.debug("Not allowed: " + ip);
-        return Result.error();
+    /**
+     * 判断用户是否可以访问
+     * 访问使用 JSONP
+     */
+    @GetMapping(UriView.URI_ACL_CAN_ACCESS_JSONP)
+    @ResponseBody
+    public String canAccessJsonp(@RequestParam String jsonpCallback, HttpServletRequest request) {
+        String ip = CommonUtils.getClientIp(request);
+        return String.format("%s({\"success\": %b})", jsonpCallback, aclService.canAccess(ip));
     }
 
     /**

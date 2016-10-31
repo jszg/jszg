@@ -21,6 +21,24 @@ public class RedisAclService {
     @Resource(name = "config")
     private PropertiesConfiguration config;
 
+    public boolean canAccess(String ip) {
+        // [1] 在 IP 列表中则继续
+        if (inIpList(ip)) {
+            logger.debug("Allowed, already in: " + ip);
+            return true;
+        }
+
+        // [2] 不在 IP 列表，但是当前使用人数小于 maxCount，则加入，继续
+        if (currentCount() < maxCount()) {
+            logger.debug("Allowed, new added: " + ip);
+            addToIpList(ip);
+            return true;
+        }
+
+        // [3] 既不在 IP 列表，同时 IP 列表超过了 maxCount，则不许访问
+        return false;
+    }
+
     public long currentCount() {
         return redisTemplate.opsForZSet().size(RedisKey.ACL_KEY);
     }

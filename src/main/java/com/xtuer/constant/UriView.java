@@ -63,4 +63,5 @@ public interface UriView {
     String URI_ACL_MAX_DURATION = "/acl/maxDuration/{maxDuration}"; // 修改人数限制
     String URI_ACL_CAN_ACCESS   = "/acl/canAccess"; // 是否可访问
     String URI_ACL_RESET        = "/acl/reset"; // 重置访问人数，即清空访问列表
+    String URI_ACL_CAN_ACCESS_JSONP = "/acl/canAccessJsonp"; // 是否可访问
 }

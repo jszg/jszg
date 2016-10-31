@@ -11,6 +11,7 @@
         <div id="info"></div>
         <script type="text/javascript">
             $(document).ready(function() {
+                // HTTP Cors 跨域
                 $.rest.get({url: 'http://192.168.10.26:8080/new-cert/acl/canAccess', success: function(result) {
                     console.log('success');
                     console.log(result);
@@ -21,6 +22,23 @@
                     console.log(error);
                     alert(error);
                 }});
+
+                // JSONP 跨域: http://qtdebug.com/spring-web/AJAX%20跨域访问.html
+                $.ajax({
+                    url: "http://192.168.10.26:8080/new-cert/acl/canAccessJsonp",
+                    type: "GET",
+                    dataType: "jsonp", // 表示要用 JSONP 进行跨域访问
+                    jsonp: "jsonpCallback", // 传递给服务器端请求处理程序或页面的，
+                                            // 用于取得浏览器端 jsonp 回调函数名的函数名
+                                            // (省略则用默认的，为 "callback")
+                    success: function(result) { // 随机生成回调函数名
+                        if (result.success) {
+                            console.log('jsonp true');
+                        } else {
+                            console.log('jsonp false');
+                        }
+                    }
+                });
             });
         </script>
     </body>
