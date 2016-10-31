@@ -315,7 +315,7 @@
                 </script>
             </table>
         </div>
-        <div id="no-local-sets-info">
+        <div id="no-local-sets-info" style="display: none">
             <span class="form-data" name="registerOrg" data-id="" data-name=""></span> 目前还没有安排确认点，请与该机构联系！
         </div>
     </div>
