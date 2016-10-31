@@ -293,3 +293,8 @@ input:read-only {
     padding-left: 160px;
     border-bottom: 1px solid #EEE;
 }
+
+#box-8 a {
+    color: red;
+    font-weight: bold;
+}
