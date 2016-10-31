@@ -11,7 +11,7 @@
     <link href="${static}/css/generic.css" rel="stylesheet" type="text/css">
     <link href="http://cdn.staticfile.org/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css">
     <link href="http://cdn.bootcss.com/zTree.v3/3.5.24/css/zTreeStyle/zTreeStyle.min.css" rel="stylesheet" type="text/css">
-    <script src="http://cdn.bootcss.com/jquery/1.12.4/jquery.min.js" charset="utf-8"></script>
+    <script src="http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js" charset="utf-8"></script>
     <script src="http://cdn.staticfile.org/webuploader/0.1.5/webuploader.min.js" charset="utf-8"></script>
     <script src="http://cdn.bootcss.com/zTree.v3/3.5.24/js/jquery.ztree.core.min.js" charset="utf-8"></script>
     <script src="http://cdn.staticfile.org/artTemplate.js/3.0/template.js" charset="utf-8"></script>

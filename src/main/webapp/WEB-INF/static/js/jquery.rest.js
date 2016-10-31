@@ -6,7 +6,7 @@
      *      Get    请求调用 $.rest.get()
      *      Create 请求调用 $.rest.create()
      *      Update 请求调用 $.rest.update()
-     *      Delete 请求调用 $.rest.delete()
+     *      Delete 请求调用 $.rest.remove()
      *
      * 调用例子:
      *      $.rest.get({url: '/rest', data: {name: 'Alice'}, success: function(result) {
@@ -16,7 +16,7 @@
     $.rest = {
         /**
          * 使用 Ajax 的方式执行 REST 的 GET 请求(服务器响应的数据根据 REST 的规范，应该是 Json 对象).
-         * 以下几个 REST 的函数 $.restCreate(), $.restUpdate(), $.restDelete() 只是请求的 HTTP 方法和 data 处理不一样，其他的都是相同的.
+         * 以下几个 REST 的函数 $.rest.create(), $.rest.update(), $.rest.remove() 只是请求的 HTTP 方法和 data 处理不一样，其他的都是相同的.
          *
          * @param {json} options 有以下几个选项:
          *        {string}   url       请求的 URL(必选)
@@ -42,7 +42,7 @@
             options.data = options.data ? JSON.stringify(options.data) : {};
             this.sendRequest(options);
         },
-        delete: function(options) {
+        remove: function(options) {
             options.httpMethod = 'DELETE';
             options.data = options.data ? JSON.stringify(options.data) : {};
             this.sendRequest(options);

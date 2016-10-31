@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <title>Demo</title>
     <link href="http://cdn.bootcss.com/zTree.v3/3.5.24/css/zTreeStyle/zTreeStyle.min.css" rel="stylesheet" type="text/css">
-    <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js" charset="utf-8"></script>
+    <script src="http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js" charset="utf-8"></script>
     <script src="http://cdn.bootcss.com/zTree.v3/3.5.24/js/jquery.ztree.core.min.js" charset="utf-8"></script>
     <script src="${static}/js/utils.js" charset="utf-8"></script>
     <script src="${static}/js/jquery.rest.js" charset="utf-8"></script>

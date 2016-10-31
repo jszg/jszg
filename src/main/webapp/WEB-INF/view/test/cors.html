@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Cors</title>
+
+        <script src="http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js" charset="utf-8"></script>
+        <script src="${static}/js/jquery.rest.js" charset="utf-8"></script>
+    </head>
+    <body>
+        <div id="info"></div>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $.rest.get({url: 'http://192.168.10.26:8080/new-cert/acl/canAccess', success: function(result) {
+                    console.log('success');
+                    console.log(result);
+                    $('#info').html(result.success);
+                }, error: function(error) {
+                    $('#info').html(error.responseText);
+                    console.log('error');
+                    console.log(error);
+                    alert(error);
+                }});
+            });
+        </script>
+    </body>
+</html>
