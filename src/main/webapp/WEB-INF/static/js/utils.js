@@ -185,13 +185,37 @@ UiUtils.insertOptions = function(selectId, optionsData, config) {
  * 关闭当前标签页
  */
 UiUtils.closeWindow = function() {
-    var userAgent = navigator.userAgent;
-    if (userAgent.indexOf("Firefox") != -1 || userAgent.indexOf("Presto") != -1) {
-        window.location.replace("about:blank");
+    var browserName = navigator.appName;
+    var browserVer = parseInt(navigator.appVersion);
+
+    if (browserName == "Microsoft Internet Explorer") {
+        var ie7 = (document.all && !window.opera && window.XMLHttpRequest) ? true : false;
+        if (ie7) {
+            // This method is required to close a window without any prompt for IE7 & greater versions.
+            window.open('', '_parent', '');
+            window.close();
+        } else {
+            // This method is required to close a window without any prompt for IE6
+            this.focus();
+            self.opener = this;
+            self.close();
+        }
     } else {
-        window.opener = null;
-        window.open("", "_self");
-        window.close();
+        // For NON-IE Browsers except Firefox which doesnt support Auto Close
+        try {
+            this.focus();
+            self.opener = this;
+            self.close();
+        } catch (e) {
+
+        }
+
+        // For Firefox
+        try {
+            window.location.replace("about:blank");
+        } catch (e) {
+
+        }
     }
 };
 
