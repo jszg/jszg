@@ -1,2 +1,74 @@
-当前访问人数: ${currentCount}<br>
-最大允许访问人数: ${maxCount}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>访问控制</title>
+        <script src="http://cdn.bootcss.com/jquery/1.12.4/jquery.min.js" charset="utf-8"></script>
+        <script src="${static}/js/jquery.rest.js" charset="utf-8"></script>
+        <script src="${static}/js/utils.js" charset="utf-8"></script>
+    </head>
+    <body>
+        当前访问人数: ${currentCount}<br>
+        允许访问人数: ${maxCount}<br>
+        最长停留时间: ${maxDuration} 分钟
+        <hr/>
+        修改允许访问人数: <input id="max-count"><button id="setup-max-count-button">确定</button>
+        <hr/>
+        修改最长停留时间: <input id="max-duration"><button id="setup-max-duration-button">确定</button> 单位为分钟
+        <hr/>
+        清空访问列表 <button id="reset-button">清空</button>
+
+        <script type="text/javascript">
+            $(document).ready(function() {
+                // 修改允许访问人数
+                $('#setup-max-count-button').click(function() {
+                    var maxCount = parseInt($('#max-count').val());
+
+                    if (isNaN(maxCount)) {
+                        alert('请输入整数');
+                        return;
+                    }
+
+                    $.rest.update({url: Urls.URI_ACL_MAX_COUNT, urlParams: {maxCount: maxCount}, data: {password: 'admin'}, success: function(result) {
+                        if (result.success) {
+                            location.reload(); // 刷新页面
+                        } else {
+                            alert(result.message);
+                        }
+                    }, error: function(error) {
+                        console.log(error.responseText);
+                    }});
+                });
+
+                // 修改最长停留时间
+                $('#setup-max-duration-button').click(function() {
+                    var maxDuration = parseInt($('#max-duration').val());
+
+                    if (isNaN(maxDuration)) {
+                        alert('请输入整数');
+                        return;
+                    }
+
+                    $.rest.update({url: Urls.URI_ACL_MAX_DURATION, urlParams: {maxDuration: maxDuration}, data: {password: 'admin'}, success: function(result) {
+                        if (result.success) {
+                            location.reload(); // 刷新页面
+                        } else {
+                            alert(result.message);
+                        }
+                    }, error: function(error) {
+                        console.log(error.responseText);
+                    }});
+                });
+
+                // 清空访问列表
+                $('#reset-button').click(function(event) {
+                    $.rest.update({url: Urls.URI_ACL_RESET, success: function(result) {
+                        if (result.success) {
+                            location.reload();
+                        }
+                    }});
+                });
+            });
+        </script>
+    </body>
+</html>

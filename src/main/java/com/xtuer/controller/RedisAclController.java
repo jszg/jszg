@@ -28,6 +28,7 @@ public class RedisAclController {
     public String aclPage(ModelMap map) {
         map.put("currentCount", aclService.currentCount()); // 当前人数
         map.put("maxCount", aclService.maxCount()); // 最大允许访问人数
+        map.put("maxDuration", aclService.maxDuration());
 
         return "acl.fm";
     }
@@ -86,8 +87,19 @@ public class RedisAclController {
      */
     @PutMapping(UriView.URI_ACL_MAX_COUNT)
     @ResponseBody
-    public Result setUpCount(@PathVariable int maxCount, @RequestBody Map<String, String> map) {
+    public Result setUpMaxCount(@PathVariable int maxCount, @RequestBody Map<String, String> map) {
         String password = map.get("password");
         return aclService.setUpMaxCount(password, maxCount);
+    }
+
+    /**
+     * 修改每人最大停留时间
+     * @param maxDuration 访问限制的人数
+     */
+    @PutMapping(UriView.URI_ACL_MAX_DURATION)
+    @ResponseBody
+    public Result setUpMaxDuration(@PathVariable int maxDuration, @RequestBody Map<String, String> map) {
+        String password = map.get("password");
+        return aclService.setUpMaxDuration(password, maxDuration);
     }
 }

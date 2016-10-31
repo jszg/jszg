@@ -34,7 +34,11 @@ Urls = {
 
     URI_ENROLL_SUBMIT:       '/new-cert/rest/signUp/enroll/submit',
     URI_UPLOAD_ENROLL_IMAGE: '/new-cert/upload-enroll-image',
-    WEB_UPLOADER_SWF: 'https://cdn.staticfile.org/webuploader/0.1.5/Uploader.swf'
+    WEB_UPLOADER_SWF: 'https://cdn.staticfile.org/webuploader/0.1.5/Uploader.swf',
+
+    URI_ACL_MAX_COUNT:    '/new-cert/acl/maxCount/{maxCount}',
+    URI_ACL_MAX_DURATION: '/new-cert/acl/maxDuration/{maxDuration}',
+    URI_ACL_RESET:        '/new-cert/acl/reset'
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
