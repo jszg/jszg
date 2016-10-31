@@ -23,10 +23,9 @@ import java.util.stream.Collectors;
 
 @Controller
 public class SignUpController {
-    private static final int[] DICT_TYPES = {5, 7, 25, 22, 21, 2, 3, 9, 24, 6, 4, 10, 23};
+    private static final int[] DICT_TYPES = {5, 7, 25, 22, 21, 2, 3, 9, 24, 6, 4, 10, 23, 30};
     private static final String[] DICT_TYPENAMES = {"nation", "eduLevel", "schoolQuale", "workUnitType", "learnType",
-            "normalMajor", "political", "pthLevel", "postQuale", "degree", "occupation", "idType", "teachGrade"};
-
+            "normalMajor", "political", "pthLevel", "postQuale", "degree", "occupation", "idType", "teachGrade", "schoolType"};
 
     // 所有资格种类
     @GetMapping(UriView.REST_CERT_TYPE)
@@ -220,8 +219,11 @@ public class SignUpController {
                 String subkey = String.format(RedisKey.DICTS_BY_TYPE, type);
                 if(type == 23){
                     map.put(DICT_TYPENAMES[i], redisUtils.get(dictReference, subkey, () -> dictMapper.findTeaGradesByStatus()));
+                } if(type == 30){
+                    map.put(DICT_TYPENAMES[i], redisUtils.get(dictReference, subkey, () -> dictMapper.findByDictTypeStatus1(type)));
+                } else {
+                    map.put(DICT_TYPENAMES[i], redisUtils.get(dictReference, subkey, () -> dictMapper.findByDictType(type)));
                 }
-                map.put(DICT_TYPENAMES[i], redisUtils.get(dictReference, subkey, () -> dictMapper.findByDictType(type)));
             }
 
             map.put(RedisKey.PROVINCES, redisUtils.get(new TypeReference<List<Province>>(){}, RedisKey.PROVINCES, () -> provinceMapper.findAll()));

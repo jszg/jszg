@@ -15,8 +15,17 @@
         ORDER BY code
     </select>
 
+  <select id="findByDictTypeStatus1" resultType="Dict">
+    SELECT
+    dic_id as id, name as name, status as status
+    FROM
+    T_DICT
+    WHERE DT_ID = #{dt_id} and status = 1
+    ORDER BY code
+  </select>
 
-    <select id="findTeaGradesByStatus" resultType="Dict">
+
+  <select id="findTeaGradesByStatus" resultType="Dict">
         SELECT
             dic_id as id, name as name, status as status
         FROM
