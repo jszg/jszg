@@ -12,7 +12,7 @@
        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
     <import resource="classpath:config/spring-view-controller.xml"/>
     <import resource="classpath:config/redis.xml"/>
-    <import resource="classpath:config/scheduler.xml"/>
+    <import resource="classpath:config/scheduler.xml"/> <!-- 如果不运行计划任务，把这一行删除即可 -->
 
     <!-- ⾃自动扫描的包名:
          在包名 com.xtuer.controller 下的标记为 @Controller, @Service, @Component 的类
