@@ -610,6 +610,7 @@
 <a id="recognize-orgs-dialog-trigger" href="#recognize-orgs-dialog" style="display: none">显示任教学科对话框</a>
 <div id="recognize-orgs-dialog" class="pop-dialog">
     <div class="content">
+        <div class="tip">双击机构名称或单击前面的 “+” 图标可以展开下级机构</div>
         <ul class="ztree"></ul>
     </div>
 
@@ -623,6 +624,7 @@
 <a id="register-subjects-dialog-trigger" href="#register-subjects-dialog" style="display: none">显示任教学科对话框</a>
 <div id="register-subjects-dialog" class="pop-dialog">
     <div class="content">
+        <div class="tip">双击任教学科名称或单击前面的 “+” 图标可以展开更具体的任教学科</div>
         <ul class="ztree"></ul>
     </div>
 
@@ -660,12 +662,8 @@
                     <td><button class="add-button">添加</button></td>
                 </tr>
             </table>
-            <!-- 所在省: <select id="provinces-for-college"><option value="-1">请选择-省</option></select>
-            学校名称: <input class="search-input">
-            <button class="search-button">搜索</button>
-            <button class="add-button">添加</button> -->
         </div>
-
+        <div class="tip">请先选择省份，再进行搜索。如果没有搜索到您的毕业学校，请点击 “添加” 按钮。新添加的毕业学校信息需要更正，请重新添加。</div>
         <div id="graduation-colleges-holder" style="overflow: scroll;"></div>
         <script id="graduationCollegesId" type="text/html">
             <ul id="graduation-colleges">
@@ -685,6 +683,7 @@
 <a id="majors-dialog-trigger" href="#majors-dialog" style="display: none">显示最高学历所学专业</a>
 <div id="majors-dialog" class="pop-dialog">
     <div class="content">
+        <div class="tip">双击专业名称或单击前面的 “+” 图标可以展开更具体的专业</div>
         <ul class="ztree"></ul>
     </div>
 
@@ -698,6 +697,7 @@
 <a id="technical-jobs-dialog-trigger" href="#technical-jobs-dialog" style="display: none">显示教师职务（职称）</a>
 <div id="technical-jobs-dialog" class="pop-dialog">
     <div class="content">
+        <div class="tip">双击职务名称或单击前面的 “+” 图标可以展开更具体的职务</div>
         <ul class="ztree"></ul>
     </div>
 
