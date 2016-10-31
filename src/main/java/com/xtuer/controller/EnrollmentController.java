@@ -9,6 +9,7 @@ import com.xtuer.dto.HistoryValid;
 import com.xtuer.dto.Registration;
 import com.xtuer.mapper.CommonMapper;
 import com.xtuer.service.EnrollmentService;
+import com.xtuer.service.RedisAclService;
 import com.xtuer.util.BrowserUtils;
 import com.xtuer.util.CommonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ public class EnrollmentController {
 
     @Autowired
     private CommonMapper commonMapper;
+
+    @Autowired
+    RedisAclService redisAclService;
 
     @PostMapping(UriView.URI_ENROLL_SUBMIT)
     @ResponseBody
@@ -105,6 +109,10 @@ public class EnrollmentController {
         // [8] 写入日志
         enrollmentService.saveUserLog(form, request);
 
+        // [9] remove from ip list
+        String ip = CommonUtils.getClientIp(request);
+        // removeFromIpList
+        redisAclService.removeFromIpList(ip);
         return Result.ok(form);
     }
 }

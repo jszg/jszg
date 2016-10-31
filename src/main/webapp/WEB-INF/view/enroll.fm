@@ -111,12 +111,12 @@
                 </tr>
                 <tr>
                     <td class="operation">身份证件号码</td>
-                    <td><input id="idNo" type="text" value="311012198808269015"></td>
+                    <td><input id="idNo" type="text" value=""></td>
                     <td><span class="description">请输入二代身份证号码（18位）<span></td>
                 </tr>
                 <tr>
                     <td class="operation">教师资格证书号码</td>
-                    <td><input id="certNo" value="20113102042000123"></td>
+                    <td><input id="certNo" value=""></td>
                     <td></td>
                 </tr>
             </table>
