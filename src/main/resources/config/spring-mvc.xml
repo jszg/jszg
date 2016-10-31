@@ -100,6 +100,11 @@
         <constructor-arg value="classpath:config/config.properties"/>
     </bean>
 
+    <!-- 跨域访问 -->
+    <mvc:cors>
+        <mvc:mapping path="/acl/canAccess" />
+    </mvc:cors>
+
     <!-- 对静态资源的访问，如 js, css, jpg, png -->
     <!-- 如 HTML 里访问 /js/jquery.js, 则实际访问的是 /WEB-INF/asset/js/jquery.js -->
     <mvc:resources mapping="/js/**"  location="/WEB-INF/static/js/"  cache-period="31556926"/>
