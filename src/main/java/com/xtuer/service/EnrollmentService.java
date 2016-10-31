@@ -172,7 +172,7 @@ public class EnrollmentService {
         //保存registration
         registrationMapper.insertRegistration(reg);
         //给enrollment设置值，并会写regId
-        form.setRegId(reg.getRegId());
+        form.setRegisterId(reg.getRegId());
         form.setCityId(this.getCityId(form.getOrgId()));
         enrollmentMapper.insertEnrollment(form);
         System.out.println("saveWhenNotInHistoryAndInRegistration");

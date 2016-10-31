@@ -16,9 +16,9 @@ public interface CommonMapper {
     List<Limitation> findLimitation(@Param("idNo") String idNo, @Param("certNo") String certNo);
     List<EnrollHistory> findEnrollHistory(@Param("idno") String idno, @Param("certno") String certno);
     List<HistoryValid> findHistoryValid(@Param("idno") String idno, @Param("certno") String certno);
-    HistoryValid findHistoryValidById(@Param("regId") int regId);
+    HistoryValid findHistoryValidById(@Param("regId") long regId);
     List<Registration> findRegistration(@Param("idno") String idno, @Param("certno") String certno);
-    Registration findRegistrationById(@Param("regId") int regId);
+    Registration findRegistrationById(@Param("regId") long regId);
     List<Enrollment> findEnrollment(@Param("idno") String idno, @Param("certno") String certno);
     List<Enrollment> findEnrollmentStatus0(@Param("idno") String idno, @Param("certno") String certno);
     List<OrgBatch> findOrgBatch(@Param("orgId") int orgId);

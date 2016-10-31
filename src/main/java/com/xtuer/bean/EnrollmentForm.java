@@ -162,7 +162,7 @@ public class EnrollmentForm {
     private Integer teachSubjectId;// 现任教学科
 
     @NotNull(message="认定的 id 不能为空")
-    private Integer registerId; // 认定的 id
+    private long registerId; // 认定的 id
 
     @NotNull(message="证书上的任教学科 id 不能为空")
     private Integer registerSubjectId; // 证书上的任教学科 id
