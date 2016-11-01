@@ -78,7 +78,7 @@ public class EnrollmentService {
         form.setCertAssignDate(temp.getCertAssignDate());
         form.setRecognizeOrgName(temp.getRecognizeOrgName());
         form.setSubjectId(temp.getSubjectId());
-        form.setCityId(this.getCityId(form.getOrgId()));
+        form.setCityId(this.getEnrollCityId(form.getOrgId()));
         form.setStatusMemo("new-cert");
         enrollmentMapper.insertEnrollment(form);
 
@@ -106,7 +106,7 @@ public class EnrollmentService {
         form.setCertAssignDate(temp.getCertAssignDate());
         form.setRecognizeOrgName(temp.getRecognizeOrgName());
         form.setSubjectId(temp.getSubjectId());
-        form.setCityId(this.getCityId(form.getOrgId()));
+        form.setCityId(this.getEnrollCityId(form.getOrgId()));
         form.setStatusMemo("new-cert");
         enrollmentMapper.insertEnrollment(form);
         System.out.println(JSON.toJSONString(form));
@@ -160,7 +160,7 @@ public class EnrollmentService {
         reg.setProvinceId(organizationMapper.findProvinceByOrgId(form.getRecognizeOrgId()).getProvinceId());
         reg.setOccupation(dictMapper.findByTypeAndCode(4,20).getId());
         reg.setIp(form.getIp());
-        reg.setCityId(this.getCityId(form.getRecognizeOrgId()));
+        reg.setCityId(this.getRegCityId(form.getRecognizeOrgId()));
         int year = CommonUtils.getCertYearFromRegistration(form.getCertNo(),form.getCertAssignDate());
         CertBatch certBatch = commonMapper.findByYear(year);
         if(certBatch != null){
@@ -175,7 +175,7 @@ public class EnrollmentService {
         registrationMapper.insertRegistration(reg);
         //给enrollment设置值，并会写regId
         form.setRegisterId(reg.getRegId());
-        form.setCityId(this.getCityId(form.getOrgId()));
+        form.setCityId(this.getEnrollCityId(form.getOrgId()));
         form.setStatusMemo("new-cert");
         enrollmentMapper.insertEnrollment(form);
         System.out.println("saveWhenNotInHistoryAndInRegistration");
@@ -213,12 +213,12 @@ public class EnrollmentService {
     }
 
     /**
-     * 获取机构所在市的 id
+     * 获取注册机构所在市的 id
      *
      * @param orgId 机构的 id
      * @return 市的 id
      */
-    public int getCityId(int orgId) {
+    public int getEnrollCityId(int orgId) {
         CityInfo cityInfo = commonMapper.findCityInfoByOrgId(orgId);
 
         // 如果是省或者市，返回自己
@@ -242,6 +242,43 @@ public class EnrollmentService {
             }
         }
 
+        return orgId;
+    }
+
+    /**
+     * 获取认定机构所在市的 id
+     *
+     * @param orgId 机构的 id
+     * @return 市的 id
+     */
+    public Integer getRegCityId(int orgId) {
+        CityInfo cityInfo = commonMapper.findCityInfoByOrgId(orgId);
+
+        // 如果是省，返回空
+        if (cityInfo.getOrgType() == SignUpConstants.T_PROVINCE){
+            return null;
+        }
+
+        // 如果是市，返回自己
+        if(cityInfo.getOrgType() == SignUpConstants.T_CITY){
+            return orgId;
+        }
+
+        // 如果是县
+        if (cityInfo.getOrgType() == SignUpConstants.T_COUNTY) {
+            // 如果上级机构是省(省管县)
+            if (cityInfo.getParentId() != 0 && cityInfo.getParentOrgType() == SignUpConstants.T_PROVINCE) {
+                // 如果是直辖市返回父级机构，否则返回自己
+                if (cityInfo.isProvinceCity()) {
+                    return cityInfo.getParentId();
+                } else {
+                    return orgId;
+                }
+            } else {
+                // 如果不是省级机构(市管县)，返回自己
+                return cityInfo.getParentId();
+            }
+        }
         return orgId;
     }
 
