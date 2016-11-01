@@ -138,7 +138,7 @@
     <!-- 如果 _proCode != 45 则为非广西的，证书签发日期必须小于 2008-08-01 之前 -->
     <span class="form-data" name="provinceCode" data-id="" data-name="-1" style="display: none"></span>
     <div class="registered content_bd">
-        <h4>您是第 <span class="form-data" name="enrollNumber" data-id="" data-name="-1"></span> 次参加教师资格注册。该证书的基本信息如下，请仔细核对是否与您手持证书的基本信息一致，如果有差异，请与发证机构联系。</h4>
+        <h4>您是第 <span class="form-data" name="enrollNumber" data-id="1" data-name="-1"></span> 次参加教师资格注册。该证书的基本信息如下，请仔细核对是否与您手持证书的基本信息一致，如果有差异，请与发证机构联系。</h4>
         <div class="ui-body">
            <table width="960" border="0" cellspacing="0" cellpadding="0" class="ui-view">
                <tr>

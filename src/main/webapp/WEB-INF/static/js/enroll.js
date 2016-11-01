@@ -348,7 +348,7 @@ StepValidator.validate3thStep = function() {
     // 有可能重复验证，清空以前的数据
     UiUtils.setFormData('inHistory',       -1, false);
     UiUtils.setFormData('inRegistration',  -1, false);
-    UiUtils.setFormData('enrollNumber',    -1, 0);
+    UiUtils.setFormData('enrollNumber',    -1, 1);
     UiUtils.setFormData('registerId',      -1, -1);
     UiUtils.setFormData('idType',          -1, '');
     UiUtils.setFormData('idNo',            -1, '');
@@ -380,7 +380,7 @@ StepValidator.validate3thStep = function() {
         return false;
     }
 
-    var enrollNumber = -1; // 教师资格注册的次数，如果为 -1 表示以前没有注册过
+    var enrollNumber = 1; // 教师资格注册的次数，如果为 -1 表示以前没有注册过
     var historyData; // 证书的历史数据
     var certificationValid = true; // 证书数据有误
     var invalid = false;
