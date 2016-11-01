@@ -248,7 +248,7 @@ function requestDicts() {
         UiUtils.insertOptions('certTypes', data.certTypes);          // 资格种类
         UiUtils.insertOptions('provinces', data.provinces, {templateId: 'provinceOptionTemplate'});   // 省
         UiUtils.insertOptions('provinces-for-college', data.provinces, {templateId: 'provinceOptionTemplate'}); // 省
-        UiUtils.insertOptions('id-types', data.idType, {remainFirstOption: false}); // 身份证
+        UiUtils.insertOptions('id-types', data.idType);              // 身份证
         UiUtils.insertOptions('nations', data.nation);               // 民族
         UiUtils.insertOptions('teach-grades', data.teachGrade);      // 现任教学段
         UiUtils.insertOptions('politicals', data.political);         // 政治面貌
