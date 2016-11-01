@@ -167,7 +167,7 @@ public class EnrollmentService {
             reg.setCertBatchId(certBatch.getId());
         }
 
-        reg.setEnrollProBatchId(commonMapper.findByProvinceId(organizationMapper.findProvinceByOrgId(form.getRecognizeOrgId()).getProvinceId()).getId());
+        reg.setEnrollProBatchId(commonMapper.findByProvinceId(form.getProvinceId()).getId());
         reg.setCertType(form.getCertTypeId());
         reg.setIdType(form.getIdTypeId());
         reg.setStatusMemo("new-cert");
