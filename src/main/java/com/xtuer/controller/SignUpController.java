@@ -213,16 +213,15 @@ public class SignUpController {
         Map<String, List<?>> dicts  = redisUtils.get(Map.class, key, () -> {
             Map<String, List<?>> map = new HashMap<>();
 
-            TypeReference<List<Dict>> dictReference = new TypeReference<List<Dict>>() {};
             for (int i = 0; i < DICT_TYPES.length; i++) {
                 final int type = DICT_TYPES[i];
-                String subkey = String.format(RedisKey.DICTS_BY_TYPE, type);
+
                 if(type == 23){
-                    map.put(DICT_TYPENAMES[i], redisUtils.get(dictReference, subkey, () -> dictMapper.findTeaGradesByStatus()));
+                    map.put(DICT_TYPENAMES[i], dictMapper.findTeaGradesByStatus());
                 } if(type == 30){
-                    map.put(DICT_TYPENAMES[i], redisUtils.get(dictReference, subkey, () -> dictMapper.findByDictTypeStatus1(type)));
+                    map.put(DICT_TYPENAMES[i], dictMapper.findByDictTypeStatus1(type));
                 } else {
-                    map.put(DICT_TYPENAMES[i], redisUtils.get(dictReference, subkey, () -> dictMapper.findByDictType(type)));
+                    map.put(DICT_TYPENAMES[i], dictMapper.findByDictType(type));
                 }
             }
 
