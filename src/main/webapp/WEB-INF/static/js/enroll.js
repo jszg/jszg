@@ -16,7 +16,7 @@ $(document).ready(function() {
 
     requestDicts();
 
-    //StepUtils.toStep(7); // 到第 N 步，测试使用
+    // StepUtils.toStep(7); // 到第 N 步，测试使用
     // requestLocalSets(21);
 
     // 点击取消按钮关闭弹出对话框
@@ -165,7 +165,8 @@ function handleNextAndPreviousEvents() {
     // 第七步的退出
     $('#box-7-exit').click(function() {
         if(confirm('您确定要 "退出" 吗？退出后所有信息都不会保存。\n点击 "确定" 直接退出，点击 "取消" 返回编辑界面')) {
-            UiUtils.closeWindow();
+            // UiUtils.closeWindow();
+            location.reload(); // 刷新当前页
         }
     });
 
