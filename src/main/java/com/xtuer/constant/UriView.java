@@ -53,7 +53,7 @@ public interface UriView {
     String REST_ENROLL_ORG_VALIDATION      = "/rest/signUp/enroll/orgs/{orgId}/validation";
 
     String URI_ENROLL_SUBMIT               = "/enroll/submit";
-    String URI_ENROLL_PHOTO                = "/enroll/photo/{enrollId}";
+    String URI_ENROLL_REG_PHOTO            = "/enroll/reg-photo/{enrollId}";
     String URI_UPLOAD_ENROLL_IMAGE         = "/enroll/upload-enroll-image";
 
     // 访问控制

@@ -10,18 +10,17 @@ import com.xtuer.dto.Registration;
 import com.xtuer.mapper.CommonMapper;
 import com.xtuer.service.EnrollmentService;
 import com.xtuer.service.RedisAclService;
-import com.xtuer.util.BrowserUtils;
 import com.xtuer.util.CommonUtils;
-import org.apache.commons.io.FileUtils;
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.DigestUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -37,6 +36,9 @@ import java.util.List;
 @Controller
 public class EnrollmentController {
     private static Logger logger = LoggerFactory.getLogger(EnrollmentController.class);
+
+    @Resource(name = "config")
+    private PropertiesConfiguration config;
 
     @Autowired
     private EnrollmentService enrollmentService;
@@ -129,9 +131,10 @@ public class EnrollmentController {
      * @param enrollId
      * @param response
      */
-    @GetMapping(UriView.URI_ENROLL_PHOTO)
-    public void enrollPhoto(@PathVariable long enrollId, HttpServletResponse response) {
-        String photoPath = enrollmentService.generateEnrollPhotoPath(enrollId);
+    @GetMapping(UriView.URI_ENROLL_REG_PHOTO)
+    public void enrollRegPhoto(@PathVariable long enrollId, HttpServletResponse response) {
+        String photoDir = config.getString("uploadRegPhotoDir"); // 图片的最终目录
+        String photoPath = enrollmentService.generateEnrollPhotoPath(enrollId, photoDir);
         InputStream in = null;
         OutputStream out = null;
 

@@ -33,9 +33,9 @@ Urls = {
     REST_ENROLL_ORG_VALIDATION:  '/new-cert/rest/signUp/enroll/orgs/{orgId}/validation', // 验证注册的注册机构
 
     URI_ENROLL_SUBMIT:       '/new-cert/enroll/submit',
-    URI_ENROLL_PHOTO:        '/new-cert/enroll/photo/{enrollId}',
+    URI_ENROLL_REG_PHOTO:    '/new-cert/enroll/reg-photo/{enrollId}',
     URI_UPLOAD_ENROLL_IMAGE: '/new-cert/enroll/upload-enroll-image',
-    
+
     WEB_UPLOADER_SWF: 'https://cdn.staticfile.org/webuploader/0.1.5/Uploader.swf',
     URI_ACL_MAX_COUNT:    '/new-cert/acl/maxCount/{maxCount}',
     URI_ACL_MAX_DURATION: '/new-cert/acl/maxDuration/{maxDuration}',

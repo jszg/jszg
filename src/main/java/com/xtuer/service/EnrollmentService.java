@@ -191,7 +191,8 @@ public class EnrollmentService {
         String tempDir = config.getString("uploadTemp"); // 图片的临时目录
         String tempName = form.getTmpPhoto();
         String tempPhotoPath = tempDir + File.separator + tempName; // 临时图片路径
-        String photoPath = generateEnrollPhotoPath(form.getEnrollId());
+        String photoDir = config.getString("uploadEnrollPhotoDir"); // 图片的最终目录
+        String photoPath = generateEnrollPhotoPath(form.getEnrollId(), photoDir);
 
         try {
             FileUtils.moveFile(new File(tempPhotoPath), new File(photoPath));
@@ -208,10 +209,9 @@ public class EnrollmentService {
      * @param enrollId
      * @return 图片路径
      */
-    public String generateEnrollPhotoPath(long enrollId) {
-        String photoDir = config.getString("uploadEnrollPhotoDir"); // 图片的最终目录
+    public String generateEnrollPhotoPath(long enrollId, String dir) {
         String photoName = String.format("%010d.jpg", enrollId);
-        String photoPath = photoDir + File.separator + photoName.substring(0,2) + File.separator +
+        String photoPath = dir + File.separator + photoName.substring(0,2) + File.separator +
                 photoName.substring(2,6) + File.separator + photoName.substring(6);
 
         return photoPath;

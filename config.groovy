@@ -1,9 +1,11 @@
 environments {
     development { // 本地开发环境，使用 MySQL
         staticBase = '/new-cert'
+        logDir = '/Users/Biao/Temp/logs'
+
         uploadTemp = '/var/www/upload/tmp'
         uploadEnrollPhotoDir = '/var/www/upload/storage/app_data/repository/photo/enroll_photo'
-        logDir = '/Users/Biao/Temp/logs'
+        uploadRegPhotoDir = '/var/www/upload/storage/app_data/repository/photo/enroll_photo'
 
         jdbc {
             driverClassName = 'com.mysql.jdbc.Driver'
@@ -21,9 +23,11 @@ environments {
 
     wxl1linux { // 文显龙的开发环境，使用 Oracle
         staticBase = '/new-cert'
+        logDir = '/Users/Biao/Temp/logs'
+
         uploadTemp = '/var/www/upload/tmp'
         uploadEnrollPhotoDir = '/var/www/upload/storage/app_data/repository/photo/enroll_photo'
-        logDir = '/Users/Biao/Temp/logs'
+        uploadRegPhotoDir = '/var/www/upload/storage/app_data/repository/photo/enroll_photo'
 
         jdbc {
             driverClassName = 'oracle.jdbc.driver.OracleDriver'
@@ -41,9 +45,11 @@ environments {
 
     wxl1win { // 文显龙的开发环境，使用 Oracle
         staticBase = '/new-cert'
+        logDir = 'D:/upload/tmp'
+
         uploadTemp = 'D:/upload/tmp'
         uploadEnrollPhotoDir = 'D:/upload/tmp'
-        logDir = 'D:/upload/tmp'
+        uploadRegPhotoDir = 'D:/upload/tmp'
 
         jdbc {
             driverClassName = 'oracle.jdbc.driver.OracleDriver'
@@ -61,9 +67,11 @@ environments {
 
     wxl2linux { // 文显龙的开发环境，使用 Oracle
         staticBase = '/new-cert'
+        logDir = '/Users/Biao/Temp/logs'
+
         uploadTemp = '/var/www/upload/tmp'
         uploadEnrollPhotoDir = '/var/www/upload/storage/app_data/repository/photo/enroll_photo'
-        logDir = '/Users/Biao/Temp/logs'
+        uploadRegPhotoDir = '/var/www/upload/storage/app_data/repository/photo/enroll_photo'
 
         jdbc {
             driverClassName = 'oracle.jdbc.driver.OracleDriver'
@@ -81,9 +89,11 @@ environments {
 
     wxl2win { // 文显龙的开发环境，使用 Oracle
         staticBase = '/new-cert'
+        logDir = 'D:/upload/tmp'
+
         uploadTemp = 'D:/upload/tmp'
         uploadEnrollPhotoDir = 'D:/upload/tmp'
-        logDir = 'D:/upload/tmp'
+        uploadRegPhotoDir = 'D:/upload/tmp'
 
         jdbc {
             driverClassName = 'oracle.jdbc.driver.OracleDriver'
@@ -101,9 +111,11 @@ environments {
 
     jszgtestlinux { // 北师大的测试环境，Linux 环境，使用 Oracle
         staticBase = '/new-cert'
+        logDir = '/usr/local/tomcat8.5.6/logs'
+
         uploadTemp = '/var/www/upload/tmp'
         uploadEnrollPhotoDir = '/opt/photo/enroll_photo'
-        logDir = '/usr/local/tomcat8.5.6/logs'
+        uploadRegPhotoDir = '/opt/photo/reg_photo'
 
         jdbc {
             driverClassName = 'oracle.jdbc.driver.OracleDriver'
@@ -121,9 +133,11 @@ environments {
 
     jszgtestwin { // 北师大的测试环境，Windows 环境，使用 Oracle
         staticBase = '/new-cert'
+        logDir = 'D:/upload/tmp'
+
         uploadTemp = 'D:/upload/tmp'
         uploadEnrollPhotoDir = 'D:/upload/tmp'
-        logDir = 'D:/upload/tmp'
+        uploadRegPhotoDir = 'D:/upload/tmp'
 
         jdbc {
             driverClassName = 'oracle.jdbc.driver.OracleDriver'
@@ -141,9 +155,11 @@ environments {
 
     jszg { // 北师大的正式环境，使用 Oracle
         staticBase = '/new-cert'
+        logDir = '/usr/local/tomcat8.5.6/logs'
+
         uploadTemp = '/var/www/upload/tmp'
         uploadEnrollPhotoDir = '/var/www/upload/storage/app_data/repository/photo/enroll_photo'
-        logDir = '/usr/local/tomcat8.5.6/logs'
+        uploadRegPhotoDir = '/var/www/upload/storage/app_data/repository/photo/reg_photo'
 
         jdbc {
             driverClassName = 'oracle.jdbc.driver.OracleDriver'

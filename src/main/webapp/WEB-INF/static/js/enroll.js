@@ -451,7 +451,7 @@ StepValidator.validate3thStep = function() {
         UiUtils.setFormData('nation',          -1, historyData.nationName);
 
         // 显示照片
-        var imgSrc = Urls.URI_ENROLL_PHOTO.format({enrollId: historyData.id});
+        var imgSrc = Urls.URI_ENROLL_REG_PHOTO.format({enrollId: historyData.id});
         $('.history-photo').append('<img src="' + imgSrc + '">');
 
         // 显示注册的信息，隐藏需要填写的信息
@@ -461,7 +461,7 @@ StepValidator.validate3thStep = function() {
     }
 
     // 显示照片：测试使用
-    // var imgSrc = Urls.URI_ENROLL_PHOTO.format({enrollId: 12345});
+    // var imgSrc = Urls.URI_ENROLL_REG_PHOTO.format({enrollId: 12345});
     // $('.history-photo').append('<img src="' + imgSrc + '">');
 
     UiUtils.setFormData('idType', idType.id, idType.name);
