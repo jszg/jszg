@@ -474,10 +474,13 @@ StepValidator.validate3thStep = function() {
  * @return {bool} 验证通过返回 true，否则返回 false
  */
 StepValidator.validate4thStep = function() {
-    var enrollNumber = parseInt(UiUtils.getFormData('#box-4', 'enrollNumber').name); // 已经注册的次数
+    //var enrollNumber = parseInt(UiUtils.getFormData('#box-4', 'enrollNumber').name); // 已经注册的次数
+    var box7 = '#box-7';
+    var inHistory         = UiUtils.getFormData(box7, 'inHistory').name === 'true';      // 证书是否在认定历史库
+    var inRegistration    = UiUtils.getFormData(box7, 'inRegistration').name === 'true'; // 证书是否在认定正式表
 
     // 没有注册过则需要验证用户输入，如果注册过了则不需要
-    if (0 === enrollNumber) {
+    if (!inHistory && !inRegistration) {
         var provinceCode    = parseInt(UiUtils.getFormData('#box-4', 'provinceCode').name);    // 认定机构
         var certAssignDate  = $.trim($('#cert-assign-date').val());             // 证书签发日期
         var certType        = UiUtils.getSelectedOption('#certTypes');          // 资格种类
