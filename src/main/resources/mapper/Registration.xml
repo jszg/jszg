@@ -17,33 +17,34 @@
         <selectKey resultType="long" order="BEFORE" keyProperty="regId">
             SELECT s_reg_id.nextval AS regId FROM dual
         </selectKey>
-
+        <![CDATA[
         INSERT INTO t_registration (
-            id_no,        cert_no,       cert_assign,        cb_id,
-            org_id,       subject,       name,               sex,
-            nation,       address,       birth_place,         cellphone,
-            degree,       edu_level,     email,               password,
-            graduate_school,  temp_school,  gradua_time,  learn_type,
-            major,        normal_major,  phone,      political,
-            pth_level,      residence,     technique_job,  work_units,
-            zip_cole,     exam,          status,         data_from,
-            delete_status,org_name,       province_id,    occupation,
-            ip,            city_id,      enroll_pro_batch_id, reg_id,
-            birthday,      ct_id,        id_type,             status_memo
+            id_no,              cert_no,                    cert_assign,                cb_id,
+            org_id,             subject,                    name,                       sex,
+            nation,             address,                    birth_place,                cellphone,
+            degree,             edu_level,                  email,                      password,
+            graduate_school,    temp_school,                gradua_time,                learn_type,
+            major,              normal_major,               phone,                      political,
+            pth_level,          residence,                  technique_job,              work_units,
+            zip_cole,           exam,                       status,                     data_from,
+            delete_status,      org_name,                   province_id,                occupation,
+            ip,                 city_id,                    enroll_pro_batch_id,        reg_id,
+            birthday,           ct_id,                      id_type,                    status_memo
         )
         VALUES (
-            #{idNo},     #{certNo},       #{certAssignDate}, #{certBatchId},
-            #{orgId},    #{subjectId},    #{name},       #{sex},
-            #{nation},   #{address},      #{birthPlace}, #{cellPhone},
-            #{degreeId}, #{eduLevelId},   #{email},      #{password},
-            #{graduateSchool},  #{graduateShoolName},   #{graduaTimeDate},        #{learnType},
-            #{majorId},  #{normalMajor},   #{phone},      #{political},
-            #{pthevelId},#{residence},    #{techniqueJobId},#{workUnits},
-            #{zipCode},  #{exam},         #{status},     #{dataFrom},
-            #{deleteStatus},    #{orgName},     #{provinceId},       #{occupation},
-            #{ip},      #{cityId},      #{enrollProBatchId},      #{regId},
-            #{birthdayDate}, #{certType},#{idType},          #{statusMemo}
+            #{idNo},            #{certNo},                  #{certAssignDate},          #{certBatchId,jdbcType=INTEGER},
+            #{orgId},           #{subjectId},               #{name},                    #{sex},
+            #{nation},          #{address},                 #{birthPlace},              #{cellPhone},
+            #{degreeId},        #{eduLevelId},              #{email},                   #{password},
+            #{graduateSchool},  #{graduateShoolName},       #{graduaTimeDate},          #{learnType},
+            #{majorId},         #{normalMajor},             #{phone},                   #{political},
+            #{pthevelId},       #{residence},               #{techniqueJobId},          #{workUnits},
+            #{zipCode},         #{exam},                    #{status},                  #{dataFrom},
+            #{deleteStatus},    #{orgName},                 #{provinceId},              #{occupation},
+            #{ip},              #{cityId,jdbcType=INTEGER}, #{enrollProBatchId},        #{regId},
+            #{birthdayDate},    #{certType},#{idType},      #{statusMemo}
         )
+        ]]>
     </insert>
 
     <update id="updateEnrollProBatch" parameterType="RegistrationForm">

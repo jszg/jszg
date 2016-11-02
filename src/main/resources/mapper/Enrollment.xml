@@ -52,38 +52,38 @@
         </selectKey>
 
         INSERT INTO t_enrollment (
-           	address,        apply_time,    begin_work_date,    begin_work_year,
-        	birth_place,    birthday,      cellphone,          cert_assign,
-        	cert_no,        cert_org_name, city_id,            confirm_status,
-            ct_id,          data_from,     degree,             delete_status,
-            edu_level,      email,         enr_id,             enroll_batch,
-            enroll_num,     gradua_time,   graduate_school,    graduate_school_name,
-            id_no,          id_type,       in_history,         in_registration,
-            ip,             judgmint_status, learn_type,       locale_id,
-            ls_id,          major,         name,               nation,
-            normal_major,   org_id,        password,           phone,
-            political,      post_quale,    province,           pth_level,
-            re_check_status, reg_id,       residence,          school_quale,
-            sex,            status,        subject,            tea_grade,
-            tea_subject,    technique_job, trigger_time,       work_date,
-            work_unit,      work_unit_type,zip_cole,           status_memo
+           	address,          apply_time,            begin_work_date,        begin_work_year,
+        	birth_place,      birthday,              cellphone,              cert_assign,
+        	cert_no,          cert_org_name,         city_id,                confirm_status,
+            ct_id,            data_from,             degree,                 delete_status,
+            edu_level,        email,                 enr_id,                 enroll_batch,
+            enroll_num,       gradua_time,           graduate_school,        graduate_school_name,
+            id_no,            id_type,               in_history,             in_registration,
+            ip,               judgmint_status,       learn_type,             locale_id,
+            ls_id,            major,                 name,                   nation,
+            normal_major,     org_id,                password,               phone,
+            political,        post_quale,            province,               pth_level,
+            re_check_status,  reg_id,                residence,              school_quale,
+            sex,              status,                subject,                tea_grade,
+            tea_subject,      technique_job,         trigger_time,           work_date,
+            work_unit,        work_unit_type,        zip_cole,               status_memo
         )
         VALUES (
-            #{address},     sysdate,       #{beginWorkYearDate}, #{beginWorkYearInt},
-            #{birthPlace},  #{birthdayDate}, #{cellphone}, #{certAssignDateDate},
-            #{certNo},      #{recognizeOrgName}, #{cityId},#{confirmStatus},
-            #{certTypeId},  #{dataFrom},   #{degreeId},        #{deleteStatus},
-            #{eduLevelId},  #{email},      #{enrollId},        #{enrollBatchId},
-            #{enrollNumber},#{graduationTimeDate}, #{graduationCollegeId}, #{graduationCollegeName},
-            #{idNo},        #{idTypeId},   #{inHistory},       #{inRegistration},
-            #{ip},          #{judgmentStatus}, #{learnTypeId}, #{localeId},
-            #{localSetId},  #{majorId},    #{name},            #{nationId},
-            #{normalMajorId}, #{orgId},    #{password},        #{phone},
-            #{politicalId}, #{postQualeId},#{provinceId},      #{pthLevelId},
-            #{reCheckStatus}, #{registerId}, #{residence}, #{schoolQualeId},
-            #{genderId},    #{status},     #{registerSubjectId}, #{teachGradeId},
-            #{teachSubjectId}, #{technicalJobId}, sysdate,     #{workDateDate},
-            #{workUnit},    #{workUnitTypeId}, #{zipCode},     #{statusMemo}
+            #{address},       sysdate,               #{beginWorkYearDate},   #{beginWorkYearInt},
+            #{birthPlace},    #{birthdayDate},       #{cellphone},           #{certAssignDateDate},
+            #{certNo},        #{recognizeOrgName},   #{cityId},              #{confirmStatus},
+            #{certTypeId},    #{dataFrom},           #{degreeId},            #{deleteStatus},
+            #{eduLevelId},    #{email},              #{enrollId},            #{enrollBatchId},
+            #{enrollNumber},  #{graduationTimeDate}, #{graduationCollegeId}, #{graduationCollegeName},
+            #{idNo},          #{idTypeId},           #{inHistory},           #{inRegistration},
+            #{ip},            #{judgmentStatus},     #{learnTypeId},         #{localeId},
+            #{localSetId},    #{majorId},            #{name},                #{nationId},
+            #{normalMajorId}, #{orgId},              #{password},            #{phone},
+            #{politicalId},   #{postQualeId},        #{provinceId},          #{pthLevelId},
+            #{reCheckStatus}, #{registerId},         #{residence},           #{schoolQualeId},
+            #{genderId},      #{status},             #{registerSubjectId},   #{teachGradeId},
+            #{teachSubjectId},#{technicalJobId},     sysdate,                #{workDateDate},
+            #{workUnit},      #{workUnitTypeId},     #{zipCode},             #{statusMemo}
         )
     </insert>
 

@@ -160,7 +160,9 @@ public class EnrollmentService {
         reg.setProvinceId(organizationMapper.findProvinceByOrgId(form.getRecognizeOrgId()).getProvinceId());
         reg.setOccupation(dictMapper.findByTypeAndCode(4,20).getId());
         reg.setIp(form.getIp());
-        reg.setCityId(this.getRegCityId(form.getRecognizeOrgId()));
+        if(this.getRegCityId(form.getRecognizeOrgId()) != null){
+            reg.setCityId(this.getRegCityId(form.getRecognizeOrgId()));
+        }
         int year = CommonUtils.getCertYearFromRegistration(form.getCertNo(),form.getCertAssignDate());
         CertBatch certBatch = commonMapper.findByYear(year);
         if(certBatch != null){
