@@ -36,7 +36,7 @@ function initWebUploader() {
         resize: true,              // 不压缩 image, 默认如果是 jpeg，文件上传前会压缩一把再上传！
         accept: { // 只允许上传图片
             title: 'Images',
-            extensions: 'gif,jpg,jpeg,bmp,png',
+            extensions: 'jpg,jpeg',
             mimeTypes: 'image/*'
         },
         compress: { // 对上传的图片进行裁剪处理
@@ -450,11 +450,19 @@ StepValidator.validate3thStep = function() {
         UiUtils.setFormData('birthday',        -1, historyData.birthday.substring(0, 10));
         UiUtils.setFormData('nation',          -1, historyData.nationName);
 
+        // 显示照片
+        var imgSrc = Urls.URI_ENROLL_PHOTO.format({enrollId: historyData.id});
+        $('.history-photo').append('<img src="' + imgSrc + '">');
+
         // 显示注册的信息，隐藏需要填写的信息
         $('#box-4 .unregistered').hide();
         $('#box-4 .registered').show();
         return true;
     }
+
+    // 显示照片：测试使用
+    // var imgSrc = Urls.URI_ENROLL_PHOTO.format({enrollId: 12345});
+    // $('.history-photo').append('<img src="' + imgSrc + '">');
 
     UiUtils.setFormData('idType', idType.id, idType.name);
     UiUtils.setFormData('certNo', -1, certNo);

@@ -298,3 +298,8 @@ input:read-only {
     color: red;
     font-weight: bold;
 }
+
+.history-photo img {
+    width: 114px;
+    height: 156px;
+}

@@ -52,9 +52,9 @@ public interface UriView {
     // 验证注册的注册机构
     String REST_ENROLL_ORG_VALIDATION      = "/rest/signUp/enroll/orgs/{orgId}/validation";
 
-    String URI_ENROLL_SUBMIT               = "/rest/signUp/enroll/submit";
-
-    String URI_UPLOAD_ENROLL_IMAGE         = "/upload-enroll-image";
+    String URI_ENROLL_SUBMIT               = "/enroll/submit";
+    String URI_ENROLL_PHOTO                = "/enroll/photo/{enrollId}";
+    String URI_UPLOAD_ENROLL_IMAGE         = "/enroll/upload-enroll-image";
 
     // 访问控制
     String URI_ACL                  = "/a-JSZG-c-649-l-Enroll"; // 访问控制的页面

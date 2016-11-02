@@ -32,10 +32,11 @@ Urls = {
     REST_ENROLL_STEP3:           '/new-cert/rest/signUp/enroll/step3?idNo={idNo}&certNo={certNo}', // 第三步验证
     REST_ENROLL_ORG_VALIDATION:  '/new-cert/rest/signUp/enroll/orgs/{orgId}/validation', // 验证注册的注册机构
 
-    URI_ENROLL_SUBMIT:       '/new-cert/rest/signUp/enroll/submit',
-    URI_UPLOAD_ENROLL_IMAGE: '/new-cert/upload-enroll-image',
+    URI_ENROLL_SUBMIT:       '/new-cert/enroll/submit',
+    URI_ENROLL_PHOTO:        '/new-cert/enroll/photo/{enrollId}',
+    URI_UPLOAD_ENROLL_IMAGE: '/new-cert/enroll/upload-enroll-image',
+    
     WEB_UPLOADER_SWF: 'https://cdn.staticfile.org/webuploader/0.1.5/Uploader.swf',
-
     URI_ACL_MAX_COUNT:    '/new-cert/acl/maxCount/{maxCount}',
     URI_ACL_MAX_DURATION: '/new-cert/acl/maxDuration/{maxDuration}',
     URI_ACL_RESET:        '/new-cert/acl/reset'

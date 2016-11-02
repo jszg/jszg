@@ -183,23 +183,38 @@ public class EnrollmentService {
         System.out.println("saveWhenNotInHistoryAndInRegistration");
     }
 
+    /**
+     * 保存 Enroll 的图片
+     * @param form
+     */
     public void saveEnrollPhoto(EnrollmentForm form) {
-        // 初始文件名为 enrollId 补齐 0 到 10 字符加图片后缀
-        // 保存路径: 0000001234.jpg to 00/0001/2345.jpg
         String tempDir = config.getString("uploadTemp"); // 图片的临时目录
-        String photoDir = config.getString("uploadEnrollPhotoDir"); // 图片的最终目录
-
         String tempName = form.getTmpPhoto();
-        String photoName = String.format("%010d", form.getEnrollId()) + "." + FilenameUtils.getExtension(tempName);
         String tempPhotoPath = tempDir + File.separator + tempName; // 临时图片路径
-        String photoPath = photoDir + File.separator + photoName.substring(0,2) + File.separator +
-                photoName.substring(2,6) + File.separator + photoName.substring(6);
+        String photoPath = generateEnrollPhotoPath(form.getEnrollId());
 
         try {
             FileUtils.moveFile(new File(tempPhotoPath), new File(photoPath));
         } catch (IOException e) {
             logger.warn("移动图片失败: {}", e.getMessage());
         }
+    }
+
+    /**
+     * 根据 enrollId 创建注册使用的图片路径
+     * 初始文件名为 enrollId 补齐 0 到 10 字符加图片后缀
+     * 保存路径: 0000001234.jpg to 00/0001/2345.jpg
+     *
+     * @param enrollId
+     * @return 图片路径
+     */
+    public String generateEnrollPhotoPath(long enrollId) {
+        String photoDir = config.getString("uploadEnrollPhotoDir"); // 图片的最终目录
+        String photoName = String.format("%010d.jpg", enrollId);
+        String photoPath = photoDir + File.separator + photoName.substring(0,2) + File.separator +
+                photoName.substring(2,6) + File.separator + photoName.substring(6);
+
+        return photoPath;
     }
 
     public void saveUserLog(EnrollmentForm form, HttpServletRequest request) {
