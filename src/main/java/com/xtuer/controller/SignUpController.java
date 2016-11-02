@@ -216,9 +216,9 @@ public class SignUpController {
             for (int i = 0; i < DICT_TYPES.length; i++) {
                 final int type = DICT_TYPES[i];
 
-                if(type == 23){
+                if(type == 23) {
                     map.put(DICT_TYPENAMES[i], dictMapper.findTeaGradesByStatus());
-                } if(type == 30){
+                } else if(type == 30) {
                     map.put(DICT_TYPENAMES[i], dictMapper.findByDictTypeStatus1(type));
                 } else {
                     map.put(DICT_TYPENAMES[i], dictMapper.findByDictType(type));
