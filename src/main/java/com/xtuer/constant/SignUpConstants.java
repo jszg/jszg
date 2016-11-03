@@ -12,7 +12,7 @@ public interface SignUpConstants {
     int STATUS_UN_DO    = 30;  // 撤销注册
     int STATUS_QUALIFIED     = 19; // ***注册合格
     int STATUS_CERT_LATER    = 27; // 暂缓注册
-    int ENROLL_DURATION      = 58; // 注册间隔是58个月
+    int ENROLL_DURATION      = 54; // 注册间隔是54个月
     int DELETE_STATUS_NORMAL = 0; // 正常
     int DELETE_STATUS_FORBID = 1; // 被限制
     int DELETE_STATUS_DELETE = 2; // 删除
