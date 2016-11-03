@@ -580,7 +580,7 @@
                             <span id="photo"><img></span><div id="filePicker">选择照片</div>
                             <span class="form-data" name="photo" data-id="" data-name="" style="display: none">
                         </td>
-                        <td colspan="4"><span class="description">申请人近 3 个月内的彩色证件照，淡蓝色、红色或白色背景，无边框；正面照，免冠，无头饰。现场确认时提交的照片与此电子照片同一底版，建议照片宽度为 114 像素，高度为 156 像素。  须按照要求由申请人本人上传，且必须与教师资格定期注册申请表上所贴照片底版相同<br><br>注意: 图片格式必须为 <b>jpg</b> 格式</span></td>
+                        <td colspan="4"><span class="description">申请人近 3 个月内的彩色证件照，淡蓝色、红色或白色背景，无边框；正面照，免冠，无头饰。现场确认时提交的照片与此电子照片同一底版，建议照片宽度为 114 像素，高度为 156 像素。  须按照要求由申请人本人上传，且必须与教师资格定期注册申请表上所贴照片底版相同<br><br><spna style="color:red;font-weight:blod;">注意: 图片格式必须为 <b>jpg</b> 格式</span></span></td>
                     </tr>
                 </table>
           </div>
