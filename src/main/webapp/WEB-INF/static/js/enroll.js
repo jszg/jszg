@@ -37,7 +37,8 @@ function initWebUploader() {
         accept: { // 只允许上传图片
             title: 'Images',
             extensions: 'jpg,jpeg',
-            mimeTypes: 'image/*'
+            // mimeTypes: 'image/*'
+            mimeTypes: 'image/jpg,image/jpeg'
         },
         compress: { // 对上传的图片进行裁剪处理
             width: 114,
