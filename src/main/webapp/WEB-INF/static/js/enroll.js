@@ -453,6 +453,7 @@ StepValidator.validate3thStep = function() {
 
         // 显示照片
         var imgSrc = Urls.URI_ENROLL_REG_PHOTO.format({enrollId: historyData.id});
+        $('.history-photo').empty();
         $('.history-photo').append('<img src="' + imgSrc + '">');
 
         // 显示注册的信息，隐藏需要填写的信息
