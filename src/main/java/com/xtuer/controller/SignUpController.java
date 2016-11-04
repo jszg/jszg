@@ -11,6 +11,8 @@ import com.xtuer.mapper.*;
 import com.xtuer.util.BrowserUtils;
 import com.xtuer.util.RedisUtils;
 import org.apache.commons.lang3.time.DateUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +28,9 @@ public class SignUpController {
     private static final int[] DICT_TYPES = {5, 7, 25, 22, 21, 2, 3, 9, 24, 6, 4, 10, 23, 30};
     private static final String[] DICT_TYPENAMES = {"nation", "eduLevel", "schoolQuale", "workUnitType", "learnType",
             "normalMajor", "political", "pthLevel", "postQuale", "degree", "occupation", "idType", "teachGrade", "schoolType"};
+
+    // 1. 创建 logger 对象
+    private static Logger logger = LoggerFactory.getLogger(SignUpController.class.getName());
 
     // 所有资格种类
     @GetMapping(UriView.REST_CERT_TYPE)
@@ -556,7 +561,7 @@ public class SignUpController {
                 userPortalLog.setBrowserName(BrowserUtils.getBrowserName(request));
                 commonMapper.insertUserPortalLog(userPortalLog);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.debug("插入用户操作日志失败！");
             }
         }
 
