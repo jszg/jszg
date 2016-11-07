@@ -22,12 +22,15 @@ Urls = {
     REST_SUBJECTS_BY_CERT_TYPE:  '/new-cert/rest/signUp/certTypes/{certTypeId}/subjects', // 注册的任教学科
     REST_SUBJECTS_BY_PARENT:     '/new-cert/rest/signUp/{parentId}/subjects', // 注册的任教学科
     REST_SUBJECTS_TEASUBJECT:    '/new-cert/rest/signUp/provinces/{provinceId}/teachGrades/{teachGradeId}/subjects', // 注册的现任教学科
+    REST_TEACH_SUBJECT_BY_NAME:  '/new-cert/rest/signUp/{teachGradeId}/{provinceId}/{name}/teachSubject',//注册第四步现任教学科按名称搜索
 
     REST_ZHUCE_MAJOR_PARENT:     '/new-cert/rest/signUp/majors/root', // 注册的最高学历所学专业根节点
     REST_MAJOR_CHILDREN:         '/new-cert/rest/signUp/{parentId}/majors/children', // 认定或注册的最高学历所学专业子节点
+    REST_MAJOR_SEARCH_BY_NAME:   '/new-cert/rest/signUp/{name}/majors',//根据所学专业名称查询
 
     REST_TECHNICAL_JOB_ROOT:     '/new-cert/rest/signUp/technicaljobs/root',
     REST_TECHNICAL_JOB_CHILDREN: '/new-cert/rest/signUp/{parentId}/technicaljobs/children',
+    REST_TECHNICAL_JOB_BY_NAME:  '/new-cert/rest/signUp/{name}/technicaljobs',//注册报名第七步根据名称查询教师职务
 
     REST_ENROLL_STEP3:           '/new-cert/rest/signUp/enroll/step3?idNo={idNo}&certNo={certNo}', // 第三步验证
     REST_ENROLL_ORG_VALIDATION:  '/new-cert/rest/signUp/enroll/orgs/{orgId}/validation', // 验证注册的注册机构

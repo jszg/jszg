@@ -19,4 +19,7 @@ public interface SubjectMapper {
     // 现任教学科父节点
     List<Subject> findBySubjectTypeAndProvince(@Param("teachGrade") int teachGrade, @Param("province") int province);
     // 现任教学科子节点 @see findByParentAndProvince
+
+    //注册第四步现任教学科按名称搜索
+    List<Subject> findByName(@Param("teachGradeId") int teachGradeId, @Param("provinceId") int provinceId, @Param("name") String name);
 }

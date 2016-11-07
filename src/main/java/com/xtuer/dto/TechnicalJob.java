@@ -15,5 +15,6 @@ public class TechnicalJob {
     private String name;
     private String code;
     private Integer parentId;
+    private String parentName;
 
 }

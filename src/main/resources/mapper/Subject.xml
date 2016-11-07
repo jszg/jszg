@@ -51,4 +51,20 @@
       and s.parent_id is null
     order by s.subject_code
   </select>
+
+    <select id="findByName" resultType="Subject">
+        <bind name="pattern" value="'%' + name + '%'" />
+        SELECT s.subject_id as id, s.name as name, p.name as parentName
+        FROM
+            T_SUBJECT s
+        LEFT JOIN
+            t_subject p ON s.parent_id = p.subject_id
+        WHERE
+            s.subject_type=#{teachGradeId}
+            AND ( s.province IS NULL  OR s.province=#{provinceId} )
+            AND s.status=1
+            AND (s.limit_type=3 OR s.limit_type=0 )
+            AND s.name LIKE #{pattern}
+        ORDER BY s.subject_code ASC
+    </select>
 </mapper>

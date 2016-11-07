@@ -16,7 +16,7 @@ $(document).ready(function() {
 
     requestDicts();
 
-    // StepUtils.toStep(7); // 到第 N 步，测试使用
+     StepUtils.toStep(7); // 到第 N 步，测试使用
     // requestLocalSets(21);
 
     // 点击取消按钮关闭弹出对话框
@@ -895,6 +895,30 @@ function handleTeachSubjectsDialog() {
     // 初始化 LeanModal 对话框
     $('#teach-subjects-dialog-trigger').leanModal({top: 50, overlay : 0.4});
 
+     //tab切换
+     $(".teach_subject_tab_content").hide(); //Hide all content
+     $("ul.teach_subject_tabs li:first").addClass("active").show(); //Activate first tab
+     $(".teach_subject_tab_content:first").show(); //Show first tab content
+     $("ul.teach_subject_tabs li").click(function() {
+         $("ul.teach_subject_tabs li").removeClass("active"); //Remove any "active" class
+         $(this).addClass("active"); //Add "active" class to selected tab
+         $(".teach_subject_tab_content").hide(); //Hide all tab content
+         var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
+         $(activeTab).fadeIn(); //Fade in the active content
+         return false;
+     });
+
+    // 点击搜索按钮，显示搜索的结果
+    $('#teach-subjects-dialog .search-button').click(function(event) {
+        var searchValue = $.trim($('#teach-subject-search-name').val());
+        var provinceId = UiUtils.getSelectedOption('#provinces').id;
+        var teachGradeId = UiUtils.getSelectedOption('#teach-grades').id;
+        $('#search-teach-subject-result tr:gt(0)').empty();
+        $.rest.get({url: Urls.REST_TEACH_SUBJECT_BY_NAME, urlParams: {teachGradeId:teachGradeId, provinceId:provinceId, name: searchValue}, success: function(result) {
+            $('#search-teach-subject-result').append(template('teachSubjectTemplate', {teachSubjects: result.data}));
+        }});
+    });
+
     $('#select-teach-subject-button').click(function(event) {
         var provinceId = UiUtils.getSelectedOption('#provinces').id;
         var teachGradeId = UiUtils.getSelectedOption('#teach-grades').id;
@@ -911,6 +935,13 @@ function handleTeachSubjectsDialog() {
 
         $('#teach-subjects-dialog-trigger').click(); // 显示对话框
 
+        //默认选中所学专业的第一个tab页
+        $("ul.teach_subject_tabs li:first").addClass("active").show();
+        $(".teach_subject_tab_content:first").show();
+        $(".teach_subject_tab_content:last").hide();
+        $('#teach-subject-search-name').val('');
+        $('#search-teach-subject-result tr:gt(0)').empty();
+
         // 加载现任教学科
         UiUtils.requestDataAndShowInTree($('#teach-subjects-dialog .ztree'), function(treeId, treeNode) {
             if(!treeNode) {
@@ -923,12 +954,23 @@ function handleTeachSubjectsDialog() {
 
     // 点击确定按钮，设置选中的学科，并隐藏对话框
     $('#teach-subjects-dialog .ok-button').click(function(event) {
-        var subjectNode = window.subjectsTree.getSelectedNodes()[0];
-        if (subjectNode) {
-            UiUtils.setFormData('teachSubject', subjectNode.id, subjectNode.name);
-            $("#lean_overlay").click();
-        } else {
-            alert('没有选中现任教学科');
+        if( $("ul.teach_subject_tabs li:first").hasClass('active')){
+            var subjectNode = window.subjectsTree.getSelectedNodes()[0];
+            if (subjectNode) {
+                UiUtils.setFormData('teachSubject', subjectNode.id, subjectNode.name);
+                $("#lean_overlay").click();
+            } else {
+                alert('没有选中现任教学科');
+            }
+        }else{
+            var $teachSubject = $('#search-teach-subject-result input:radio:checked');
+            if (0 === $teachSubject.length) {
+                alert('请选择 "现任教学科"');
+                return;
+            }else{
+                UiUtils.setFormData('teachSubject', $teachSubject.val(), $teachSubject.attr('data-name'));
+                $("#lean_overlay").click();
+            }
         }
     });
 }
@@ -1042,23 +1084,63 @@ function handleMajorsDialog() {
     // 初始化 LeanModal 对话框
     $('#majors-dialog-trigger').leanModal({top: 50, overlay : 0.4});
 
+    //tab切换
+     $(".major_tab_content").hide(); //Hide all content
+     $("ul.major_tabs li:first").addClass("active").show(); //Activate first tab
+     $(".major_tab_content:first").show(); //Show first tab content
+     $("ul.major_tabs li").click(function() {
+         $("ul.major_tabs li").removeClass("active"); //Remove any "active" class
+         $(this).addClass("active"); //Add "active" class to selected tab
+         $(".major_tab_content").hide(); //Hide all tab content
+         var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
+         $(activeTab).fadeIn(); //Fade in the active content
+         return false;
+     });
+
+    // 点击搜索按钮，显示搜索的结果
+    $('#majors-dialog .search-button').click(function(event) {
+        var searchValue = $.trim($('#major-search-name').val());
+        $('#search-major-result tr:gt(0)').empty();
+        $.rest.get({url: Urls.REST_MAJOR_SEARCH_BY_NAME, urlParams: {name: searchValue}, success: function(result) {
+            $('#search-major-result').append(template('majorsTemplate', {majors: result.data}));
+        }});
+    });
+
     // 点击确定按钮，设置选中的学科，并隐藏对话框
     $('#majors-dialog .ok-button').click(function(event) {
-        var subjectNode = window.subjectsTree.getSelectedNodes()[0];
-        if (subjectNode) {
-            if (0 === subjectNode.level) {
-                alert('请选择具体的所学专业');
-                return;
+        if( $("ul.major_tabs li:first").hasClass('active')){
+            var subjectNode = window.subjectsTree.getSelectedNodes()[0];
+            if (subjectNode) {
+                if (0 === subjectNode.level) {
+                    alert('请选择具体的所学专业');
+                    return;
+                }
+                UiUtils.setFormData('major', subjectNode.id, subjectNode.name);
+                $("#lean_overlay").click();
+            } else {
+                alert('没有选中任教学科');
             }
-            UiUtils.setFormData('major', subjectNode.id, subjectNode.name);
-            $("#lean_overlay").click();
-        } else {
-            alert('没有选中任教学科');
+        }else{
+            var $major = $('#search-major-result input:radio:checked');
+            if (0 === $major.length) {
+                alert('请选择 "最高学历所学专业"');
+                return;
+            }else{
+                UiUtils.setFormData('major', $major.val(), $major.attr('data-name'));
+                $("#lean_overlay").click();
+            }
         }
     });
 
     $('#select-major-button').click(function(event) {
         var eduLevelId = UiUtils.getSelectedOption('#edu-levels').id;
+
+        //默认选中所学专业的第一个tab页
+        $("ul.major_tabs li:first").addClass("active").show();
+        $(".major_tab_content:first").show();
+        $(".major_tab_content:last").hide();
+        $('#major-search-name').val('');
+        $('#search-major-result tr:gt(0)').empty();
 
         if (-1 == eduLevelId) {
             alert('请先选择 "最高学历"，然后才能选择 "最高学历所学专业"');
@@ -1093,24 +1175,65 @@ function handleTechnicalJobsDialog() {
     // 初始化 LeanModal 对话框
     $('#technical-jobs-dialog-trigger').leanModal({top: 50, overlay : 0.4});
 
+        //tab切换
+         $(".technical_jobs_tab_content").hide(); //Hide all content
+         $("ul.technical-jobs_tabs li:first").addClass("active").show(); //Activate first tab
+         $(".technical_jobs_tab_content:first").show(); //Show first tab content
+         $("ul.technical-jobs_tabs li").click(function() {
+             $("ul.technical-jobs_tabs li").removeClass("active"); //Remove any "active" class
+             $(this).addClass("active"); //Add "active" class to selected tab
+             $(".technical_jobs_tab_content").hide(); //Hide all tab content
+             var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
+             $(activeTab).fadeIn(); //Fade in the active content
+             return false;
+         });
+
+        // 点击搜索按钮，显示搜索的结果
+        $('#technical-jobs-dialog .search-button').click(function(event) {
+            var searchValue = $.trim($('#technical-jobs-search-name').val());
+            $('#search-technical-jobs-result tr:gt(0)').empty();
+            $.rest.get({url: Urls.REST_TECHNICAL_JOB_BY_NAME, urlParams: {name: searchValue}, success: function(result) {
+                $('#search-technical-jobs-result').append(template('technicalJobsTemplate', {technicalJobs: result.data}));
+            }});
+        });
+
     // 点击确定按钮，设置选中的学科，并隐藏对话框
     $('#technical-jobs-dialog .ok-button').click(function(event) {
-        var technicalJobNode = window.subjectsTree.getSelectedNodes()[0];
-        if (technicalJobNode) {
-            if (0 === technicalJobNode.level && '00' != technicalJobNode.code) {
-                alert('请选择具体的教师职务！');
-                return;
-            }
+        if( $("ul.technical-jobs_tabs li:first").hasClass('active')){
+            var technicalJobNode = window.subjectsTree.getSelectedNodes()[0];
+                if (technicalJobNode) {
+                    if (0 === technicalJobNode.level && '00' != technicalJobNode.code) {
+                        alert('请选择具体的教师职务！');
+                        return;
+                    }
 
-            UiUtils.setFormData('technicalJob', technicalJobNode.id, technicalJobNode.name);
-            $("#lean_overlay").click();
-        } else {
-            alert('请选择具体的教师职务');
+                    UiUtils.setFormData('technicalJob', technicalJobNode.id, technicalJobNode.name);
+                    $("#lean_overlay").click();
+                } else {
+                    alert('请选择具体的教师职务');
+                }
+        }else{
+            var $technicalJob = $('#search-technical-jobs-result input:radio:checked');
+            if (0 === $technicalJob.length) {
+                alert('请选择 "最高学历所学专业"');
+                return;
+            }else{
+                UiUtils.setFormData('technicalJob', $technicalJob.val(), $technicalJob.attr('data-name'));
+                $("#lean_overlay").click();
+            }
         }
+
     });
 
     $('#select-technical-job-button').click(function(event) {
         $('#technical-jobs-dialog-trigger').click(); // 显示对话框
+
+         //默认选中所学专业的第一个tab页
+        $("ul.technical-jobs_tabs li:first").addClass("active").show();
+        $(".technical_jobs_tab_content:first").show();
+        $(".technical_jobs_tab_content:last").hide();
+        $('#technical-jobs-search-name').val('');
+        $('#search-technical-jobs-result tr:gt(0)').empty();
 
         // 加载最高学历所学专业
         UiUtils.requestDataAndShowInTree($('#technical-jobs-dialog .ztree'), function(treeId, treeNode) {

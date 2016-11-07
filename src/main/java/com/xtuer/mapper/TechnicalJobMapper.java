@@ -13,4 +13,5 @@ import java.util.List;
 public interface TechnicalJobMapper {
     List<TechnicalJob> findRoots();
     List<TechnicalJob> findByParent(@Param("parentId") int parentId);
+    List<TechnicalJob> findByName(@Param("name") String name);
 }

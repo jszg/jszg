@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -182,6 +183,22 @@ public class SignUpController {
         return Result.ok(list);
     }
 
+    // 现任教学科按名称搜索
+    @GetMapping(UriView.REST_TEACH_SUBJECT_BY_NAME)
+    @ResponseBody
+    public Result<List<Subject>> getSubjectByName(@PathVariable("teachGradeId") int teachGradeId,@PathVariable("provinceId") int provinceId, @PathVariable("name") String name)
+            throws UnsupportedEncodingException {
+        if(name.isEmpty()){
+            return Result.ok(null);
+        }
+        name = new String(name.getBytes("iso-8859-1"),"utf-8");
+        List<Subject> list = subjectMapper.findByName(teachGradeId,provinceId,name);
+        if(list.isEmpty()){
+            return Result.ok(null);
+        }
+        return Result.ok(list);
+    }
+
     // 子节点
     @GetMapping(UriView.REST_SUBJECTS_BY_PARENT)
     @ResponseBody
@@ -343,6 +360,21 @@ public class SignUpController {
         return Result.ok(majors);
     }
 
+    //注册第七步最高学历所学专业按名称搜索
+    @GetMapping(UriView.REST_MAJOR_SEARCH_BY_NAME)
+    @ResponseBody
+    public Result<List<Major>> getMajorByName(@PathVariable("name") String name) throws UnsupportedEncodingException {
+        if(name.isEmpty()){
+            return Result.ok(null);
+        }
+        name = new String(name.getBytes("iso-8859-1"),"utf-8");
+        List<Major> majors = majorMapper.findByName(name);
+        if (majors.isEmpty()) {
+            return Result.ok(null);
+        }
+        return Result.ok(majors);
+    }
+
     // 专业技术职务根节点
     @GetMapping(UriView.REST_TECHNICAL_JOB_ROOT)
     @ResponseBody
@@ -358,6 +390,21 @@ public class SignUpController {
     public Result<List<TechnicalJob>> getChildrenTechnicalJobs(@PathVariable("parentId") int parentId) {
         String key = String.format(RedisKey.TECHNICAL_JOB_CHILDREN, parentId);
         List<TechnicalJob> jobs = redisUtils.get(new TypeReference<List<TechnicalJob>>(){}, key, () -> technicalJobMapper.findByParent(parentId));
+        return Result.ok(jobs);
+    }
+
+    // 专业技术职务子节点
+    @GetMapping(UriView.REST_TECHNICAL_JOB_BY_NAME)
+    @ResponseBody
+    public Result<List<TechnicalJob>> getTechnicalJobsByName(@PathVariable("name") String name) throws UnsupportedEncodingException {
+        if (name.isEmpty()){
+            return Result.ok(null);
+        }
+        name = new String(name.getBytes("iso-8859-1"),"utf-8");
+        List<TechnicalJob> jobs = technicalJobMapper.findByName(name);
+        if(jobs.isEmpty()){
+            return Result.ok(null);
+        }
         return Result.ok(jobs);
     }
 

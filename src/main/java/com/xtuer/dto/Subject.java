@@ -1,28 +1,19 @@
 package com.xtuer.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * 任教学科 dto.Subject:
  * subject_parentId: [{id, name}, {}]
  *
  * Created by microacup on 2016/10/17.
  */
+@Getter
+@Setter
 public class Subject {
     private int id;
     private String name;
+    private String parentName;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }

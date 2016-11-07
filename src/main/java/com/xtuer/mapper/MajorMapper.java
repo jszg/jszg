@@ -26,4 +26,7 @@ public interface MajorMapper {
     // childen:如果是认定
     List<Major> findByParentIdAndProvince(@Param("parentId") int parentId, @Param("provinceId") int provinceId);
 
+    //根据专业名称查询专业
+    List<Major> findByName(@Param("name") String name);
+
 }

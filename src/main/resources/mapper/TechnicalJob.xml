@@ -25,4 +25,18 @@
             t.parent_id = #{parentId}
         order by t.job_code
   </select>
+
+    <select id="findByName" resultType="TechnicalJob">
+        <bind name="pattern" value="'%' + name + '%'" />
+        SELECT
+            t.job_id AS id, t.name AS name, p.name AS parentName
+        FROM
+            t_technical_job t
+        LEFT JOIN
+            t_technical_job p ON t.parent_id = p.job_id
+        WHERE
+            t.name LIKE #{pattern} and t.parent_id is not null
+        ORDER BY
+            t.job_id ASC
+    </select>
 </mapper>

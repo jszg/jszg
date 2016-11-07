@@ -18,6 +18,7 @@ public interface UriView {
     String REST_SUBJECTS_BY_CERT_TYPE      = "/rest/signUp/certTypes/{certTypeId}/subjects";
     String REST_SUBJECTS_BY_PARENT         = "/rest/signUp/{parentId}/subjects";
     String REST_SUBJECTS_TEASUBJECT        = "/rest/signUp/provinces/{provinceId}/teachGrades/{teachGrade}/subjects";
+    String REST_TEACH_SUBJECT_BY_NAME     ="/rest/signUp/{teachGradeId}/{provinceId}/{name}/teachSubject";
 
     String REST_DICTS                      = "/rest/signUp/dicts";
     String REST_DICTS_BY_DICTTYPE          = "/rest/signUp/dicts/{dictTypeId}";
@@ -34,9 +35,11 @@ public interface UriView {
     String REST_ZHUCE_MAJOR_PARENT         = "/rest/signUp/majors/root";
     String REST_RENDING_MAJOR_PARENT       = "/rest/signUp/certTypes/{certTypeId}/{eduLevelId}/majors/root";
     String REST_MAJOR_CHILDREN             = "/rest/signUp/{parentId}/majors/children";
+    String REST_MAJOR_SEARCH_BY_NAME      = "/rest/signUp/{name}/majors";
 
     String REST_TECHNICAL_JOB_ROOT         = "/rest/signUp/technicaljobs/root";
     String REST_TECHNICAL_JOB_CHILDREN     = "/rest/signUp/{parentId}/technicaljobs/children";
+    String REST_TECHNICAL_JOB_BY_NAME      = "/rest/signUp/{name}/technicaljobs";
 
     String REST_LIMITATION                 = "/rest/signUp/limitation";
     String REST_ENROLLHISTORY              = "/rest/signUp/enrollhistory";
