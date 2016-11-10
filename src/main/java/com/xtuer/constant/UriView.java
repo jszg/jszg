@@ -8,7 +8,7 @@ public interface UriView {
     String REST_PROVINCES                  = "/rest/signUp/provinces";
     String REST_CITIES_BY_PROVINCE         = "/rest/signUp/provinces/{provinceId}/cities";
 
-    String REST_ORGS_RENDING               = "/rest/signUp/provinces/{provinceId}/cities/{cityId}/certTypes/{certTypeId}/orgs";
+    String REST_ORGS_REQUEST_BY_CERT_TYPE_PROVINCE_CITY   = "/rest/signUp/certTypes/{certTypeId}/adminLevel/{adminLevel}/provinces/{provinceId}/cities/{cityId}/orgs";
     String REST_ORGS_BY_ORGTYPE            = "/rest/signUp/orgtypes/{orgType}/orgs";
     String REST_ORGS_BY_PARENT             = "/rest/signUp/{parentId}/orgs";
     String REST_ORGS_REG                   = "/rest/signUp/reg/orgs";
@@ -19,14 +19,16 @@ public interface UriView {
     String REST_SUBJECTS_BY_PARENT         = "/rest/signUp/{parentId}/subjects";
     String REST_SUBJECTS_TEASUBJECT        = "/rest/signUp/provinces/{provinceId}/teachGrades/{teachGrade}/subjects";
     String REST_TEACH_SUBJECT_BY_NAME     ="/rest/signUp/{teachGradeId}/{provinceId}/{name}/teachSubject";
-
+    String REST_REQUEST_SUBJECTS           ="/rest/signUp/request/provinceId/{provinceId}/teachGrade/{teachGrade}/subjects";//非统考第三步任教学科父节点
+    String REST_REQUEST_SUBJECTS_CHILDREN    ="/rest/signUp/request/provinceId/{provinceId}/parentId/{parentId}/subjects";//非统考第三步任教学科子节点
+    String REST_REQUEST_SUBJECT_BY_NAME      ="/rest/signUp/request/teachGrade/{teachGrade}/provinceId/{provinceId}/name/{name}/subjects";//非统考第三步任教学科按名称查询
     String REST_DICTS                      = "/rest/signUp/dicts";
     String REST_DICTS_BY_DICTTYPE          = "/rest/signUp/dicts/{dictTypeId}";
     String REST_NATIONS                    = "/rest/signUp/nations";
     String REST_TEAGRADES                  = "/rest/signUp/teaGrades";
     String REST_EDULEVELS                  = "/rest/signUp/certTypes/{certTypeId}/eduLevels";
     String REST_ACADEMICDEGREE             = "/rest/signUp/certTypes/{certTypeId}/eduLevels/{eduLevel}/degrees";
-    String REST_LOCAL_SETS                 = "/rest/signUp/orgs/{orgId}/localSets";
+    String REST_LOCAL_SETS                 = "/rest/signUp/orgs/{orgId}/type/{type}/localSets";
     String REST_LOCAL_SETS_INFO            = "/rest/signUp/localSets/{localSetId}";
 
     String REST_COLLEGES                   = "/rest/signUp/colleges";
@@ -36,6 +38,9 @@ public interface UriView {
     String REST_RENDING_MAJOR_PARENT       = "/rest/signUp/certTypes/{certTypeId}/{eduLevelId}/majors/root";
     String REST_MAJOR_CHILDREN             = "/rest/signUp/{parentId}/majors/children";
     String REST_MAJOR_SEARCH_BY_NAME      = "/rest/signUp/{name}/majors";
+    String REST_REQUEST_MAJOR_PARENT      = "/rest/signUp/provinceId/{provinceId}/request/majors/root";//非统考第七步所学专业root
+    String REST_REQUEST_MAJOR_CHILDREN    = "/rest/signUp/provinceId/{provinceId}/{parentId}/request/majors/children";//非统考第七步所学专业children
+    String REST_REQUEST_MAJOR_NAME        = "/rest/signUp/provinceId/{provinceId}/{name}/request/majors/name";////非统考第七步所学专业按名称查询
 
     String REST_TECHNICAL_JOB_ROOT         = "/rest/signUp/technicaljobs/root";
     String REST_TECHNICAL_JOB_CHILDREN     = "/rest/signUp/{parentId}/technicaljobs/children";
@@ -52,12 +57,22 @@ public interface UriView {
     String REST_ENROLL_STEP4               = "/rest/signUp/enroll/step4";
     String REST_ENROLL_STEP7               = "/rest/signUp/enroll/step7";
 
+    // 非统考第六步验证
+    String REST_REQUEST_STEP6              = "/rest/signUp/request/step6";
+
+
     // 验证注册的注册机构
     String REST_ENROLL_ORG_VALIDATION      = "/rest/signUp/enroll/orgs/{orgId}/validation";
+
+    // 验证非统考的认定机构
+    String REST_REQUEST_ORG_VALIDATION      = "/rest/signUp/request/orgs/{orgId}/validation";
 
     String URI_ENROLL_SUBMIT               = "/enroll/submit";
     String URI_ENROLL_REG_PHOTO            = "/enroll/reg-photo/{enrollId}";
     String URI_UPLOAD_ENROLL_IMAGE         = "/enroll/upload-enroll-image";
+
+    String URI_REQUEST_SUBMIT              = "/request/submit";
+    String URI_REQUEST_REG_PHOTO          = "/enroll/request-photo/{regId}";
 
     // 访问控制
     String URI_ACL                  = "/a-JSZG-c-649-l-Enroll"; // 访问控制的页面

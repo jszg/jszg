@@ -12,10 +12,11 @@ Urls = {
     REST_ORGS_BY_CITY_AND_CERT_TYPE: '/new-cert/rest/signUp/cities/{cityId}/certTypes/{certTypeId}/orgs',
     REST_COLLEGES_BY_PROVINCE:       '/new-cert/rest/signUp/provinces/{provinceId}/colleges',
     REST_ORGS_REG:        '/new-cert/rest/signUp/reg/orgs?teachGrade={teachGradeId}&cityId={cityId}&provinceCity={provinceCity}', // 注册机构
-    REST_LOCALSETS:       '/new-cert/rest/signUp/orgs/{orgId}/localSets',
+    REST_LOCAL_SETS:       '/new-cert/rest/signUp/orgs/{orgId}/type/{type}/localSets',
     REST_LOCALSET_INFO:   '/new-cert/rest/signUp/localSets/{localSetId}',
     REST_ORGS_BY_ORGTYPE: '/new-cert/rest/signUp/orgtypes/{orgType}/orgs', // 注册的认定机构，ortType 为 4
     REST_ORGS_BY_PARENT:  '/new-cert/rest/signUp/{parentId}/orgs',
+    REST_ORGS_REQUEST_BY_CERT_TYPE_PROVINCE_CITY:  '/new-cert/rest/signUp/certTypes/{certTypeId}/adminLevel/{adminLevel}/provinces/{provinceId}/cities/{cityId}/orgs',//非统考第三步认定机构
 
     REST_SUBJECTS_ROOT:          '/new-cert/rest/signUp/provinces/{provinceId}/certTypes/{certTypeId}/subjects/root',
     REST_SUBJECTS_CHILDREN:      '/new-cert/rest/signUp/provinces/{provinceId}/{parentId}/subjects/children',
@@ -23,10 +24,18 @@ Urls = {
     REST_SUBJECTS_BY_PARENT:     '/new-cert/rest/signUp/{parentId}/subjects', // 注册的任教学科
     REST_SUBJECTS_TEASUBJECT:    '/new-cert/rest/signUp/provinces/{provinceId}/teachGrades/{teachGradeId}/subjects', // 注册的现任教学科
     REST_TEACH_SUBJECT_BY_NAME:  '/new-cert/rest/signUp/{teachGradeId}/{provinceId}/{name}/teachSubject',//注册第四步现任教学科按名称搜索
+    REST_REQUEST_SUBJECTS:       '/new-cert/rest/signUp/request/provinceId/{provinceId}/teachGrade/{teachGrade}/subjects',//非统考第三步任教学科树父节点
+    REST_REQUEST_SUBJECTS_CHILDREN: '/new-cert/rest/signUp/request/provinceId/{provinceId}/parentId/{parentId}/subjects',//非统考第三步任教学科树子节点
+    REST_REQUEST_SUBJECT_BY_NAME:  '/new-cert/rest/signUp/request/teachGrade/{teachGrade}/provinceId/{provinceId}/name/{name}/subjects',//非统考第三步任教学科按名称查询
 
     REST_ZHUCE_MAJOR_PARENT:     '/new-cert/rest/signUp/majors/root', // 注册的最高学历所学专业根节点
     REST_MAJOR_CHILDREN:         '/new-cert/rest/signUp/{parentId}/majors/children', // 认定或注册的最高学历所学专业子节点
     REST_MAJOR_SEARCH_BY_NAME:   '/new-cert/rest/signUp/{name}/majors',//根据所学专业名称查询
+
+    REST_REQUEST_MAJOR_PARENT:     '/new-cert/rest/signUp/provinceId/{provinceId}/request/majors/root',//非统考第七步所学专业root
+    REST_REQUEST_MAJOR_CHILDREN:   '/new-cert/rest/signUp/provinceId/{provinceId}/{parentId}/request/majors/children',//非统考第七步所学专业children
+    REST_REQUEST_MAJOR_NAME:      '/new-cert/rest/signUp/provinceId/{provinceId}/{name}/request/majors/name',//非统考第七步所学专业children
+
 
     REST_TECHNICAL_JOB_ROOT:     '/new-cert/rest/signUp/technicaljobs/root',
     REST_TECHNICAL_JOB_CHILDREN: '/new-cert/rest/signUp/{parentId}/technicaljobs/children',

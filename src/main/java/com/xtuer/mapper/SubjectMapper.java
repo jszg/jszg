@@ -22,4 +22,15 @@ public interface SubjectMapper {
 
     //注册第四步现任教学科按名称搜索
     List<Subject> findByName(@Param("teachGradeId") int teachGradeId, @Param("provinceId") int provinceId, @Param("name") String name);
+
+    //非统考第三步加载任教学科树父节点
+    List<Subject> findByCertTypeAndProvince(@Param("provinceId") int provinceId,  @Param("teachGrade") int teachGrade);
+
+    //非统考第三步加载任教学科树子节点
+    List<Subject> findChildByCertTypeAndProvince(@Param("provinceId") int provinceId,  @Param("parentId") int parentId);
+
+    //非统考第三步加载任教学科按名称查询
+    List<Subject> findRequestSubjectByName(@Param("teachGrade") int teachGrade, @Param("provinceId") int provinceId, @Param("name") String name);
+
+
 }

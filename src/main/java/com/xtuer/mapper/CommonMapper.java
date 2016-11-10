@@ -21,8 +21,8 @@ public interface CommonMapper {
     Registration findRegistrationById(@Param("regId") long regId);
     List<Enrollment> findEnrollment(@Param("idno") String idno, @Param("certno") String certno);
     List<Enrollment> findEnrollmentStatus0(@Param("idno") String idno, @Param("certno") String certno);
-    List<OrgBatch> findOrgBatch(@Param("orgId") int orgId);
-    List<OrgBatchTime> findOrgBatchTime(@Param("orgId") int orgId);
+    List<OrgBatch> findOrgBatch(@Param("orgId") int orgId, @Param("type") int type);
+    List<OrgBatchTime> findOrgBatchTime(@Param("orgId") int orgId, @Param("type") int type);
 
     // 插入UserPortalLog
     void insertUserPortalLog(UserPortalLog log);
@@ -32,4 +32,14 @@ public interface CommonMapper {
     //根据注册的省份查询省级计划
     ProvinceBatch findByProvinceId(@Param("provinceId") int provinceId);
     CertBatch findByYear(@Param("year") int year);
+
+    //非统考认定第三步验证
+    List<OrgCertType> findOrgCertTypeByOrgId(@Param("orgId") int orgId);
+
+    //非统考第六步根据名称和证件号码查询限制库
+    List<Limitation> findLimitationByNameAndIdNo(@Param("name") String name, @Param("idNo") String idNo);
+    List<HistoryValid> findByUserYear(@Param("name") String name, @Param("idNo") String idNo, @Param("year") int year);
+    List<Score> findByUserCertType(@Param("name") String name, @Param("idNo") String idNo, @Param("certTypeId") int certTypeId, @Param("subjectId") int subjectId);
+    List<HistoryValid> checkHistoryExists(@Param("name") String name, @Param("idNo") String idNo, @Param("certTypeId") int certTypeId, @Param("subjectId") int subjectId);
+
 }

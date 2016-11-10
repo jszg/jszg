@@ -97,11 +97,13 @@
                pb.status  AS status,
                ob.ob_id   AS orgBatchId,
                cb.cb_id   AS certBatchId
+               ob.begindate AS beginDate,
+               ob.enddate   AS endDate
            FROM
                t_org_batch ob
                LEFT JOIN t_province_batch pb ON pb.pb_id = ob.pb_id
                LEFT JOIN t_cert_batch cb on cb.cb_id = ob.cb_id
-           WHERE ob.org_id = #{orgId} AND ob.type = 2
+           WHERE ob.org_id = #{orgId} AND ob.type = #{type}
            ORDER BY ob.ob_id DESC
        ) WHERE <![CDATA[ ROWNUM <=1 ]]>
    </select>
@@ -119,7 +121,7 @@
                LEFT JOIN t_org_batch ob ON ob.ob_id = obt.ob_id
            WHERE
                ob.org_id = #{orgId}
-               AND ob.type = 2
+               AND ob.type = #{type}
                AND obt.valid_begin_date <![CDATA[ <= ]]> sysdate
                AND obt.valid_end_date >= sysdate
                ORDER BY obt.obt_id DESC
@@ -168,5 +170,66 @@
         WHERE cb.year = #{year} and cb.type=1 and cb.generate=1
     </select>
 
+    <select id="findOrgCertTypeByOrgId" resultType="OrgCertType">
+        SELECT
+            oct.cert_type_id AS certTypeId
+        FROM
+            t_org_cert_type oct
+        WHERE
+            oct.org_id = #{orgId}
 
+    </select>
+    <select id="findLimitationByNameAndIdNo" resultType="Limitation">
+        SELECT
+            l.due_time AS dueTime,
+            l.reason AS reason
+        FROM
+            t_limitation l
+        WHERE
+            l.name = #{name}
+            AND l.id_no = #{idNo}
+            AND (l.due_time IS NULL OR l.due_time > sysdate)
+    </select>
+    <select id="findByUserYear" resultType="HistoryValid">
+        SELECT
+            ct.ct_name AS certType
+        FROM
+            t_history_valid hv
+        LEFT JOIN
+            t_cert_batch cb
+        ON
+            cb.cb_id = hv.cb_id
+        LEFT JOIN
+            t_cert_type ct
+        ON
+            ct.ct_id = hv.ct_id
+        WHERE
+            hv.name = #{name}
+            AND hv.id_no = #{idNo}
+            AND cb.year = #{year}
+            AND hv.delete_status = 0
+    </select>
+    <select id="findByUserCertType" resultType="Score">
+        SELECT
+            *
+        FROM
+            t_score s
+        WHERE
+            s.user_name = #{name}
+            AND s.id_no = #{idNo}
+            AND s.cert_type = #{certTypeId}
+            AND s.subject = #{subjectId}
+    </select>
+    <select id="checkHistoryExists" resultType="HistoryValid">
+        SELECT
+            *
+        FROM
+            t_history_valid hv
+        WHERE
+            hv.name = #{name}
+            AND hv.id_no = #{idNo}
+            AND hv.ct_id = #{certTypeId}
+            AND hv.subject = #{subjectId}
+            AND hv.delete_status = 0
+    </select>
 </mapper>

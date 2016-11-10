@@ -1,5 +1,8 @@
 package com.xtuer.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Date;
 
 /**
@@ -7,6 +10,8 @@ import java.util.Date;
  *
  * Created by microacup on 2016/10/24.
  */
+@Getter
+@Setter
 public class HistoryValid {
     private int id;
     private String name;              //姓名
@@ -23,116 +28,5 @@ public class HistoryValid {
     private int deleteStatus;    //数据状态
     private Date certAssign;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getIdNo() {
-        return idNo;
-    }
-
-    public void setIdNo(String idNo) {
-        this.idNo = idNo;
-    }
-
-    public String getIdTypeName() {
-        return idTypeName;
-    }
-
-    public void setIdTypeName(String idTypeName) {
-        this.idTypeName = idTypeName;
-    }
-
-    public String getCertNo() {
-        return certNo;
-    }
-
-    public void setCertNo(String certNo) {
-        this.certNo = certNo;
-    }
-
-    public String getSexName() {
-        return sexName;
-    }
-
-    public void setSexName(String sexName) {
-        this.sexName = sexName;
-    }
-
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
-    public String getNationName() {
-        return nationName;
-    }
-
-    public void setNationName(String nationName) {
-        this.nationName = nationName;
-    }
-
-    public String getCertType() {
-        return certType;
-    }
-
-    public void setCertType(String certType) {
-        this.certType = certType;
-    }
-
-    public String getSubjectName() {
-        return subjectName;
-    }
-
-    public void setSubjectName(String subjectName) {
-        this.subjectName = subjectName;
-    }
-
-    public String getOrgName() {
-        return orgName;
-    }
-
-    public void setOrgName(String orgName) {
-        this.orgName = orgName;
-    }
-
-    public String getTmpPhoto() {
-        return tmpPhoto;
-    }
-
-    public void setTmpPhoto(String tmpPhoto) {
-        this.tmpPhoto = tmpPhoto;
-    }
-
-    public int getDeleteStatus() {
-        return deleteStatus;
-    }
-
-    public void setDeleteStatus(int deleteStatus) {
-        this.deleteStatus = deleteStatus;
-    }
-
-    public Date getCertAssign() {
-        return certAssign;
-    }
-
-    public void setCertAssign(Date certAssign) {
-        this.certAssign = certAssign;
-    }
 }
 

@@ -31,7 +31,7 @@ public class EnrollmentValidationController {
     @GetMapping(UriView.REST_ENROLL_ORG_VALIDATION)
     @ResponseBody
     public Result<?> validateOrganization(@PathVariable int orgId) {
-        List<OrgBatch> orgBatchs = commonMapper.findOrgBatch(orgId); // 查询注册机构注册计划
+        List<OrgBatch> orgBatchs = commonMapper.findOrgBatch(orgId,SignUpConstants.TYPE_ENROLL); // 查询注册机构注册计划
 
         if (orgBatchs.isEmpty()) {
             return new Result(false, "该机构目前未开展注册工作，请与该机构联系，了解其注册工作的时间安排");
@@ -50,7 +50,7 @@ public class EnrollmentValidationController {
             return new Result(false, "该机构注册工作目前未安排网上采集信息的时间，请与该机构联系，了解其注册工作的时间安排");
         }
 
-        List<OrgBatchTime> orgBatchTimes = commonMapper.findOrgBatchTime(orgId); // 查询网报时间段
+        List<OrgBatchTime> orgBatchTimes = commonMapper.findOrgBatchTime(orgId,SignUpConstants.TYPE_ENROLL); // 查询网报时间段
 
         if (orgBatchTimes.isEmpty()) {
             orgBatchTimes = commonMapper.findOrgBatchTimeByOrgBatchId(orgBatch.getOrgBatchId());

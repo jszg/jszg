@@ -23,5 +23,6 @@ public class Organization {
     private int parent;
     private int orgType;
     private Integer provinceId;
+    private String memo;
 
 }

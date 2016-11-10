@@ -29,4 +29,13 @@ public interface MajorMapper {
     //根据专业名称查询专业
     List<Major> findByName(@Param("name") String name);
 
+    //非统考第七步所学专业树父节点
+    List<Major> findRequestMajorRoot(@Param("provinceId") int provinceId);
+
+    //非统考第七步所学专业树子节点
+    List<Major> findRequestMajorChildren(@Param("provinceId") int provinceId, @Param("parentId") int parentId);
+
+    //非统考第七步所学专业按名称查询
+    List<Major> findRequestMajorByName(@Param("provinceId") int provinceId, @Param("name") String name);
+
 }

@@ -12,6 +12,6 @@ import java.util.List;
  * Created by microacup on 2016/10/24.
  */
 public interface LocalSetMapper {
-    List<LocalSet> findByOrgId(@Param("orgId") int orgId);
+    List<LocalSet> findByOrgId(@Param("orgId") int orgId, @Param("type") int type );
     LocalSetInfo findById(@Param("id") int id);
 }

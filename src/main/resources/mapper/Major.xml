@@ -35,7 +35,7 @@
       ORDER BY M.MAJOR_CODE
   </select>
 
-    <select id="findByName" resultType="Major">
+  <select id="findByName" resultType="Major">
         <bind name="pattern" value="'%' + name + '%'" />
         SELECT m.major_id as id, m.name as name, p.name as parentName
         FROM t_major m
@@ -43,5 +43,47 @@
         WHERE m.name LIKE #{pattern}
             AND m.status = 1
         ORDER BY m.major_code ASC
-    </select>
+  </select>
+  <select id="findRequestMajorRoot" resultType="Major">
+      SELECT
+          m.major_id AS id,
+          m.name AS name
+      FROM
+          t_major m
+      WHERE
+          (m.province IS NULL OR m.province = #{provinceId})
+          AND m.status = 1
+          AND m.parent_id IS NULL
+      ORDER BY
+          m.major_code
+  </select>
+  <select id="findRequestMajorChildren" resultType="Major">
+      SELECT
+          m.major_id AS id,
+          m.name AS name
+      FROM
+          t_major m
+      WHERE
+          (m.province IS NULL OR m.province = #{provinceId})
+          AND m.status = 1
+          AND m.parent_id = #{parentId}
+      ORDER BY
+          m.major_code
+  </select>
+  <select id="findRequestMajorByName" resultType="Major">
+      <bind name="pattern" value="'%' + name + '%'" />
+      SELECT
+          m.major_id AS id, m.name AS name, p.name AS parentName
+      FROM
+          t_major m
+      INNER JOIN
+          t_major p
+      ON
+          m.parent_id = p.major_id
+      WHERE m.name LIKE #{pattern}
+          AND (m.province IS NULL OR m.province = #{provinceId})
+          AND m.status = 1
+      ORDER BY
+          m.major_code ASC
+  </select>
 </mapper>

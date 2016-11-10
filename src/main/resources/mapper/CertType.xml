@@ -7,7 +7,15 @@
 <!--namespace 非常重要：必须是 Mapper 类的全路径-->
 <mapper namespace="com.xtuer.mapper.CertTypeMapper">
     <select id="findAll" resultType="CertType">
-        select CT_ID as id, CT_NAME as name from T_CERT_TYPE ORDER BY ct_code
+        SELECT
+            ct_id AS id,
+            ct_name AS name,
+            admin_level AS adminLevel,
+            teach_grade AS teachGrade
+        FROM
+            t_cert_type
+        ORDER BY
+            ct_code
     </select>
 
     <select id="findByTeachGrade" resultType="CertType">

@@ -52,7 +52,7 @@
     order by s.subject_code
   </select>
 
-    <select id="findByName" resultType="Subject">
+  <select id="findByName" resultType="Subject">
         <bind name="pattern" value="'%' + name + '%'" />
         SELECT s.subject_id as id, s.name as name, p.name as parentName
         FROM
@@ -66,5 +66,56 @@
             AND (s.limit_type=3 OR s.limit_type=0 )
             AND s.name LIKE #{pattern}
         ORDER BY s.subject_code ASC
-    </select>
+  </select>
+  <select id="findByCertTypeAndProvince" resultType="Subject">
+      SELECT
+            s.subject_id AS id, s.name AS name
+      FROM
+            t_subject s
+      WHERE
+            s.subject_type = #{teachGrade}
+            AND (s.exam_type = 2 OR s.exam_type = 0)
+            AND (s.limit_type = 0 OR s.limit_type = 3)
+            AND (s.province = #{provinceId} OR s.province IS NULL)
+            AND s.status = 1
+            AND s.parent_id IS NULL
+      ORDER BY
+            s.subject_code
+  </select>
+  <select id="findChildByCertTypeAndProvince" resultType="Subject">
+        SELECT
+            s.subject_id AS id, s.name AS name
+        FROM
+            t_subject s
+        WHERE
+            s.parent_id = #{parentId}
+            AND (s.exam_type = 2 OR s.exam_type = 0)
+            AND (s.limit_type = 0 OR s.limit_type = 3)
+            AND (s.province = #{provinceId} OR s.province IS NULL)
+            AND s.status = 1
+        ORDER BY
+            s.subject_code
+   </select>
+  <select id="findRequestSubjectByName" resultType="Subject">
+      <bind name="pattern" value="'%' + name + '%'" />
+      SELECT
+          s.subject_id AS id,
+          s.name       AS name,
+          p.name       AS parentName
+      FROM
+          t_subject s
+      LEFT　JOIN
+          t_subject p
+      ON
+          s.parent_id = p.subject_id
+      WHERE
+          s.name LIKE #{pattern}
+          AND (s.province IS NULL OR s.province = #{provinceId})
+          AND s.subject_type = #{teachGrade}
+          AND s.status = 1
+          AND (s.limit_type = 0 OR s.limit_type = 3)
+      ORDER BY
+          s.subject_code ASC
+  </select>
+
 </mapper>

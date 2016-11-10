@@ -52,5 +52,15 @@
         SET  enroll_pro_batch_id = #{provinceBatchId}
         where reg_id = #{registerId}
     </update>
+    <select id="findByNameAndIdNo" resultType="RegistrationForm">
+        SELECT
+            r,reg_id AS id
+        FROM
+            t_registration r
+        WHERE
+            r.id_no = #{name}
+            AND r.name = #{idNO}
+            AND r.data_from != 2
+    </select>
 
 </mapper>

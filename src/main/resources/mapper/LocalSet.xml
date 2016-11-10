@@ -20,7 +20,7 @@
         LEFT JOIN t_org_batch_time obt ON obt.obt_id = ls.obt_id
         WHERE ls.obt_id IN(
             SELECT obt.obt_id FROM t_org_batch_time obt
-            WHERE obt.ob_id = (SELECT MAX(t.ob_id) FROM t_org_batch t WHERE t.org_id = #{orgId} and t.type=2)
+            WHERE obt.ob_id = (SELECT MAX(t.ob_id) FROM t_org_batch t WHERE t.org_id = #{orgId} and t.type=#{type})
         )
         AND ls.assigned = 1
         AND o.status = 1

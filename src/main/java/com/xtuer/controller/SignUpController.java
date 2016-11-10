@@ -5,6 +5,7 @@ import com.xtuer.bean.EnrollStep4Form;
 import com.xtuer.bean.Result;
 import com.xtuer.bean.UserPortalLog;
 import com.xtuer.constant.RedisKey;
+import com.xtuer.constant.SignUpConstants;
 import com.xtuer.constant.UriView;
 import com.xtuer.dto.*;
 import com.xtuer.mapper.*;
@@ -59,15 +60,14 @@ public class SignUpController {
     }
 
     // 认定机构: 市或省下面的所有的认定机构
-    @GetMapping(UriView.REST_ORGS_RENDING)
+    @GetMapping(UriView.REST_ORGS_REQUEST_BY_CERT_TYPE_PROVINCE_CITY)
     @ResponseBody
-    public Result<List<Organization>> getOrgByCity(@PathVariable("provinceId") int provinceId,
-                                                   @PathVariable("cityId") int cityId,
-                                                   @PathVariable("certTypeId") int certTypeId) {
+    public Result<List<Organization>> getOrgByCity(@PathVariable("certTypeId") int certTypeId,@PathVariable("adminLevel") int adminLevel,
+                                                   @PathVariable("provinceId") int provinceId, @PathVariable("cityId") int cityId) {
         List<Organization> orgs = Collections.emptyList();
-        String key = String.format(RedisKey.ORGS_RENDING, provinceId, cityId, certTypeId);
+        String key = String.format(RedisKey.REST_ORGS_REQUEST_BY_CERT_TYPE_PROVINCE_CITY, certTypeId,adminLevel, provinceId, cityId);
         orgs = redisUtils.get(new TypeReference<List<Organization>>() {}, key,
-                () -> organizationMapper.findByProvinceAndCityAndCertTypeId(provinceId, cityId, certTypeId));
+                () -> organizationMapper.findByProvinceAndCityAndCertTypeId(certTypeId,adminLevel,provinceId, cityId));
         return Result.ok(orgs);
     }
 
@@ -173,6 +173,26 @@ public class SignUpController {
         return Result.ok(subjects);
     }
 
+    // 非统考第三步任教学科父节点
+    @GetMapping(UriView.REST_REQUEST_SUBJECTS)
+    @ResponseBody
+    public Result<List<Subject>> getRequestRootSubjects(@PathVariable("provinceId") int provinceId, @PathVariable("teachGrade") int teachGrade) {
+        String key = String.format(RedisKey.REST_REQUEST_SUBJECTS, provinceId, teachGrade);
+        List<Subject> subjects = redisUtils.get(new TypeReference<List<Subject>>(){}, key, () -> subjectMapper.findByCertTypeAndProvince(provinceId, teachGrade));
+        return Result.ok(subjects);
+    }
+
+    // 非统考第三步任教学科子节点
+    @GetMapping(UriView.REST_REQUEST_SUBJECTS_CHILDREN)
+    @ResponseBody
+    public Result<List<Subject>> getRequestChildrenSubjects(@PathVariable("provinceId") int provinceId, @PathVariable("parentId") int parentId) {
+        String key = String.format(RedisKey.REST_REQUEST_SUBJECTS_CHILDREN, provinceId, parentId);
+        List<Subject> subjects = redisUtils.get(new TypeReference<List<Subject>>(){}, key,
+                () -> subjectMapper.findChildByCertTypeAndProvince(provinceId,parentId));
+        return Result.ok(subjects);
+    }
+
+
     // 证书上的任教学科 (OrgCertTypeSubjectTreeController)
     // 父节点
     @GetMapping(UriView.REST_SUBJECTS_BY_CERT_TYPE)
@@ -193,6 +213,22 @@ public class SignUpController {
         }
         name = new String(name.getBytes("iso-8859-1"),"utf-8");
         List<Subject> list = subjectMapper.findByName(teachGradeId,provinceId,name);
+        if(list.isEmpty()){
+            return Result.ok(null);
+        }
+        return Result.ok(list);
+    }
+
+    // 非统考第三步任教学科按名称查询
+    @GetMapping(UriView.REST_REQUEST_SUBJECT_BY_NAME)
+    @ResponseBody
+    public Result<List<Subject>> getRequestSubjectByName(@PathVariable("teachGrade") int teachGrade,@PathVariable("provinceId") int provinceId, @PathVariable("name") String name)
+            throws UnsupportedEncodingException {
+        if(name.isEmpty()){
+            return Result.ok(null);
+        }
+        name = new String(name.getBytes("iso-8859-1"),"utf-8");
+        List<Subject> list = subjectMapper.findRequestSubjectByName(teachGrade,provinceId,name);
         if(list.isEmpty()){
             return Result.ok(null);
         }
@@ -257,9 +293,9 @@ public class SignUpController {
     // 确认点
     @GetMapping(UriView.REST_LOCAL_SETS)
     @ResponseBody
-    public Result<List<LocalSet>> getLocalSets(@PathVariable int orgId) {
-        String key = String.format(RedisKey.LOCAL_SETS, orgId);
-        List<LocalSet> list = redisUtils.get(new TypeReference<List<LocalSet>>() {}, key, () -> localSetMapper.findByOrgId(orgId));
+    public Result<List<LocalSet>> getLocalSets(@PathVariable int orgId,@PathVariable int type) {
+        String key = String.format(RedisKey.LOCAL_SETS, orgId, type);
+        List<LocalSet> list = redisUtils.get(new TypeReference<List<LocalSet>>() {}, key, () -> localSetMapper.findByOrgId(orgId,type));
 
         // 过滤时间
         Date now = new Date();
@@ -374,6 +410,40 @@ public class SignUpController {
         }
         return Result.ok(majors);
     }
+
+    // 非统考第七步的所学专业root
+    @GetMapping(UriView.REST_REQUEST_MAJOR_PARENT)
+    @ResponseBody
+    public Result<List<Major>> getRequestRootMajors(@PathVariable("provinceId") int provinceId) {
+        String key = String.format(RedisKey.MAJORS_REQUEST_ROOT, provinceId);
+        List<Major> majors = redisUtils.get(new TypeReference<List<Major>>(){}, key, () -> majorMapper.findRequestMajorRoot(provinceId));
+        return Result.ok(majors);
+    }
+
+    // 非统考第七步的所学专业root
+    @GetMapping(UriView.REST_REQUEST_MAJOR_CHILDREN)
+    @ResponseBody
+    public Result<List<Major>> getRequestChildMajors(@PathVariable("provinceId") int provinceId,@PathVariable("parentId") int parentId) {
+        String key = String.format(RedisKey.MAJORS_REQUEST_CHILREN, provinceId,parentId);
+        List<Major> majors = redisUtils.get(new TypeReference<List<Major>>(){}, key, () -> majorMapper.findRequestMajorChildren(provinceId,parentId));
+        return Result.ok(majors);
+    }
+
+    // 非统考第七步的所学专业root
+    @GetMapping(UriView.REST_REQUEST_MAJOR_NAME)
+    @ResponseBody
+    public Result<List<Major>> getRequestMajorsByName(@PathVariable("provinceId") int provinceId,@PathVariable("name") String name) throws UnsupportedEncodingException{
+        if(name.isEmpty()){
+            return Result.ok(null);
+        }
+        name = new String(name.getBytes("iso-8859-1"),"utf-8");
+        List<Major> majors = majorMapper.findRequestMajorByName(provinceId,name);
+        if (majors.isEmpty()) {
+            return Result.ok(null);
+        }
+        return Result.ok(majors);
+    }
+
 
     // 专业技术职务根节点
     @GetMapping(UriView.REST_TECHNICAL_JOB_ROOT)
@@ -514,7 +584,7 @@ public class SignUpController {
             }
         }
 
-        List<OrgBatch> orgBatchs = commonMapper.findOrgBatch(org.getId());
+        List<OrgBatch> orgBatchs = commonMapper.findOrgBatch(org.getId(), SignUpConstants.TYPE_ENROLL);
         if (orgBatchs.isEmpty()) {
             return new Result(false, "该机构目前未开展注册工作，请与该机构联系，了解其注册工作的时间安排");
         }
@@ -533,7 +603,7 @@ public class SignUpController {
             return new Result(false,  "该机构注册工作目前未安排网上采集信息的时间，请与该机构联系，了解其注册工作的时间安排");
         }
 
-        List<OrgBatchTime> orgBatchTimes = commonMapper.findOrgBatchTime(org.getId());
+        List<OrgBatchTime> orgBatchTimes = commonMapper.findOrgBatchTime(org.getId(),SignUpConstants.TYPE_ENROLL);
         if (!orgBatchTimes.isEmpty()) {
             StringBuffer buffer = new StringBuffer("该机构注册工作网上采集信息的时间段为:");
             String prependMsg = "";

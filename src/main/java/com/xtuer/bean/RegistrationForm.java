@@ -2,6 +2,7 @@ package com.xtuer.bean;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.validator.constraints.NotBlank;
 
 import java.util.Date;
 
@@ -19,13 +20,13 @@ public class RegistrationForm {
     private String address;//地址
     private String archiveno;//档案号
     private String birthday;//出生日期
-    private Date birthdayDate;
+    private Date   birthdayDate;
 
     private String birthPlace;//出生地
     private Integer certBatchId;//批次
     private String cellPhone;//手机
     private String certAssign;//证书签发日期
-    private Date certAssignDate;
+    private Date   certAssignDate;
 
     private String certNo;//证书号码
     private Integer cityId;//市
@@ -39,6 +40,7 @@ public class RegistrationForm {
     private Integer exam;//考试类型
     private Integer graduateSchool;//毕业学校
     private String graduateShoolName;//毕业学校名称
+    private Integer graduateId;//是否在校生
     private String graduaTime;//毕业时间
     private Date graduaTimeDate;
 
@@ -52,6 +54,7 @@ public class RegistrationForm {
     private Integer occupation;//现从事职业
     private Integer orgId;//机构id
     private String orgName;//机构名称
+    private Integer localeSet;//确认点安排
     private String phone;//手机
     private Integer political;//政治面貌
     private Integer provinceId;//省
@@ -64,6 +67,14 @@ public class RegistrationForm {
     private Integer subjectId;//任教学科
     private String password;//密码
     private Integer techniqueJobId;//教师职务
+    private Date applyTime;//申请日期
+    private Date lastModify;//最后修改日期
+    private String lastModifier;//最后修改人
+    private Date triggerTime;//触发时间
+    private String pthCertNo;//普通话证书
+    private String pthOrg;//普通话发证单位
+    @NotBlank(message="照片不能为空")
+    private String tmpPhoto; // 照片
     private String ip;//ip
     private String statusMemo;//备注,用于区分新旧系统报名数据
 

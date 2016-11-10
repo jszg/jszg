@@ -30,4 +30,8 @@ public interface SignUpConstants {
     int EXAM_TYPE_NO_EXAM = 0;
     int EXAM_TYPE_EXAM = 1;
 
+    int TYPE_CERT = 1;//代表认定
+    int TYPE_ENROLL = 2;//代表注册
+    int TYPE_COMMON = 0;
+
 }

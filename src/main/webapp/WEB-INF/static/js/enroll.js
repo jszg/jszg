@@ -194,7 +194,7 @@ function requestLocalSets(orgId) {
         return;
     }
 
-    $.rest.get({url: Urls.REST_LOCALSETS, urlParams: {orgId: orgId}, async: false, success: function(result) {
+    $.rest.get({url: Urls.REST_LOCAL_SETS, urlParams: {orgId: orgId, type : 2}, async: false, success: function(result) {
         $('#local-sets-div').hide();
         $('#no-local-sets-info').hide();
 
