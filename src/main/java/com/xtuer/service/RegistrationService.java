@@ -55,70 +55,63 @@ public class RegistrationService {
 
     public void save(RegistrationForm form,HttpServletRequest request){
         //首先给registration设置值
-        RegistrationForm reg = new RegistrationForm();
-
-        reg.setProvinceId(form.getProvinceId());
-        reg.setCertType(form.getCertType());
-        reg.setCityId(form.getCityId());
-        reg.setOrgId(form.getOrgId());
-        reg.setOrgName(form.getOrgName());
-        reg.setLocaleSet(form.getLocaleSet());
-        reg.setSubjectId(form.getSubjectId());
-        reg.setCertBatchId(form.getCertBatchId());
-        reg.setIdNo(form.getIdNo());
-        reg.setName(form.getName());
-        reg.setIdType(form.getIdType());
-        reg.setEmail(form.getEmail());
-        reg.setPassword(form.getPassword());
-        reg.setSex(form.getSex());
-        reg.setBirthdayDate(form.getBirthdayDate());
-        reg.setEduLevelId(form.getEduLevelId());
-        reg.setDegreeId(form.getDegreeId());
-        reg.setNation(form.getNation());
-        reg.setMajorId(form.getMajorId());
-        reg.setOccupation(form.getOccupation());
-        reg.setTechniqueJobId(form.getTechniqueJobId());
-        reg.setPolitical(form.getPolitical());
-        reg.setPthevelId(form.getPthevelId());
-        reg.setGraduateSchool(form.getGraduateSchool());
-        reg.setLearnType(form.getLearnType());
-        reg.setGraduaTimeDate(form.getGraduaTimeDate());
-        reg.setGraduateId(form.getGraduateId());
-        reg.setResidence(form.getResidence());
-        reg.setBirthPlace(form.getBirthPlace());
-        reg.setAddress(form.getAddress());
-        reg.setZipCode(form.getZipCode());
-        reg.setPhone(form.getPhone());
-        reg.setCellPhone(form.getCellPhone());
-        reg.setWorkUnits(form.getWorkUnits());
-        reg.setApplyTime(new Date());
-        reg.setDeleteStatus(0);// 正常
-        reg.setStatus(6);// 网报待确认
-        reg.setLastModify(new Date());
-        reg.setLastModifier(reg.getIdNo());
-        reg.setTriggerTime(new Date());
-        reg.setIp(CommonUtils.getClientIp(request));
-        reg.setStatusMemo("new-cert");
-        reg.setDataFrom(0);
-        reg.setNormalMajor(form.getNormalMajor());
-        reg.setExam(0);
-        reg.setPthCertNo(form.getPthCertNo());
-        reg.setPthOrg(form.getPthOrg());
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        registrationMapper.insertRegistration(reg);
+        try {
+            form.setBirthdayDate(DateUtils.parseDate(form.getBirthday(),DATE_FORMAT));
+            form.setGraduaTimeDate(DateUtils.parseDate(form.getGraduaTime(),DATE_FORMAT));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        form.setProvinceId(form.getProvinceId());
+        form.setCertType(form.getCertType());
+        form.setCityId(form.getCityId());
+        form.setOrgId(form.getOrgId());
+        form.setOrgName(form.getOrgName());
+        form.setLocaleId(form.getLocaleId());
+        form.setLocaleSet(form.getLocaleSet());
+        form.setSubjectId(form.getSubjectId());
+        form.setCertBatchId(form.getCertBatchId());
+        form.setIdNo(form.getIdNo());
+        form.setName(form.getName());
+        form.setIdType(form.getIdType());
+        form.setEmail(form.getEmail());
+        form.setPassword(form.getPassword());
+        form.setSex(form.getSex());
+        form.setBirthdayDate(form.getBirthdayDate());
+        form.setEduLevelId(form.getEduLevelId());
+        form.setDegreeId(form.getDegreeId());
+        form.setNation(form.getNation());
+        form.setMajorId(form.getMajorId());
+        form.setOccupation(form.getOccupation());
+        form.setTechniqueJobId(form.getTechniqueJobId());
+        form.setPolitical(form.getPolitical());
+        form.setPthevelId(form.getPthevelId());
+        form.setGraduateSchool(form.getGraduateSchool());
+        form.setLearnType(form.getLearnType());
+        form.setGraduaTimeDate(form.getGraduaTimeDate());
+        form.setGraduateId(form.getGraduateId());
+        form.setResidence(form.getResidence());
+        form.setBirthPlace(form.getBirthPlace());
+        form.setAddress(form.getAddress());
+        form.setZipCode(form.getZipCode());
+        form.setPhone(form.getPhone());
+        form.setCellPhone(form.getCellPhone());
+        form.setWorkUnits(form.getWorkUnits());
+        form.setNormalMajor(form.getNormalMajor());
+        form.setPthCertNo(form.getPthCertNo());
+        form.setPthOrg(form.getPthOrg());
+        form.setCityId(this.getRegCityId(form.getOrgId()));
+        form.setApplyTime(form.getApplyTime());
+        form.setDeleteStatus(form.getDeleteStatus());// 正常
+        form.setStatus(form.getStatus());// 网报待确认
+        form.setLastModify(form.getLastModify());
+        form.setLastModifier(form.getIdNo());
+        form.setTriggerTime(form.getTriggerTime());
+        form.setIp(form.getIp());
+        form.setStatusMemo(form.getStatusMemo());
+        form.setDataFrom(form.getDataFrom());
+        form.setExam(form.getExam());
+        form.setPassword(form.getPassword()); // 使用 MD5 编码密码
+        registrationMapper.insertRequestReg(form);
     }
 
     public void saveResum(RegistrationForm form){
@@ -136,7 +129,8 @@ public class RegistrationService {
         String tempDir = config.getString("uploadTemp"); // 图片的临时目录
         String tempName = form.getTmpPhoto();
         String tempPhotoPath = tempDir + File.separator + tempName; // 临时图片路径
-        String photoDir = config.getString("uploadEnrollPhotoDir"); // 图片的最终目录
+        String photoDir = config.getString("uploadRegPhotoDir"); // 图片的最终目录
+        System.out.println(form.getRegId());
         String photoPath = generateEnrollPhotoPath(form.getRegId(), photoDir);
 
         try {
@@ -167,7 +161,7 @@ public class RegistrationService {
         userPortalLog.setUserId(form.getIdNo());
         userPortalLog.setLogin(new Date());
         userPortalLog.setIp(form.getIp());
-        userPortalLog.setType(UserPortalLog.ENROLL_SUBMIT);
+        userPortalLog.setType(UserPortalLog.RENDING_SUBMIT);
         userPortalLog.setBrowserContent(BrowserUtils.getBrowserContent(request));
         userPortalLog.setBrowserName(BrowserUtils.getBrowserName(request));
 

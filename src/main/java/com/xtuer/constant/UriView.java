@@ -65,7 +65,7 @@ public interface UriView {
     String REST_ENROLL_ORG_VALIDATION      = "/rest/signUp/enroll/orgs/{orgId}/validation";
 
     // 验证非统考的认定机构
-    String REST_REQUEST_ORG_VALIDATION      = "/rest/signUp/request/orgs/{orgId}/validation";
+    String REST_REQUEST_ORG_VALIDATION      = "/rest/signUp/request/orgs/{orgId}/certType/{certTypeId}/validation";
 
     String URI_ENROLL_SUBMIT               = "/enroll/submit";
     String URI_ENROLL_REG_PHOTO            = "/enroll/reg-photo/{enrollId}";

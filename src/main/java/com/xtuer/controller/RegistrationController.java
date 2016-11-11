@@ -1,5 +1,6 @@
 package com.xtuer.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.xtuer.bean.EnrollmentForm;
 import com.xtuer.bean.RegistrationForm;
 import com.xtuer.bean.Result;
@@ -53,19 +54,30 @@ public class RegistrationController {
 
     @PostMapping(UriView.URI_REQUEST_SUBMIT)
     @ResponseBody
-    public Result<?> submitEnroll(@RequestBody @Valid RegistrationForm form, BindingResult result, HttpServletRequest request) {
+    public Result<?> submitRequest(@RequestBody @Valid RegistrationForm form, BindingResult result, HttpServletRequest request) {
         // [1] 数据验证
         Result<?> r = registrationService.validateParams(form, result);
         if (!r.isSuccess()) {
             return r;
         }
-
         // [2] 设置固定信息
-
-        // [3] 保存简历信息
-
-        // [4] 保存数据
+        form.setApplyTime(new Date());
+        form.setDeleteStatus(SignUpConstants.DELETE_STATUS_NORMAL);// 正常
+        form.setStatus(SignUpConstants.STATUS_UN_CONF);// 网报待确认
+        form.setLastModify(new Date());
+        form.setLastModifier(form.getIdNo());
+        form.setTriggerTime(new Date());
+        form.setIp(CommonUtils.getClientIp(request));
+        form.setStatusMemo("new-cert");
+        form.setDataFrom(SignUpConstants.DATA_FROM_USER_ADD);
+        form.setExam(SignUpConstants.EXAM_TYPE_NO_EXAM);
+        form.setPassword(CommonUtils.md5(form.getPassword())); // 使用 MD5 编码密码
+        // [3] 保存数据
         registrationService.save(form,request);
+        System.out.println(JSON.toJSONString(form));
+
+        // [4] 保存简历信息
+        //registrationService.saveResum(form);
 
         // [5] 保存图片
         registrationService.saveRequestPhoto(form);
@@ -73,37 +85,10 @@ public class RegistrationController {
         // [6] 写入日志
         registrationService.saveUserLog(form, request);
 
-        // [6] 写入日志
-        registrationService.saveResum(form);
-
         // [8] remove from ip list
         String ip = CommonUtils.getClientIp(request);
         // removeFromIpList
         redisAclService.removeFromIpList(ip);
         return Result.ok(form);
-    }
-
-    /**
-     * 访问注册用户的图片
-     * @param regId
-     * @param response
-     */
-    @GetMapping(UriView.URI_REQUEST_REG_PHOTO)
-    public void enrollRegPhoto(@PathVariable long regId, HttpServletResponse response) {
-        String photoDir = config.getString("uploadRegPhotoDir"); // 图片的最终目录
-        String photoPath = registrationService.generateEnrollPhotoPath(regId, photoDir);
-        InputStream in = null;
-        OutputStream out = null;
-
-        try {
-            in = new FileInputStream(photoPath);
-            out = response.getOutputStream();
-            IOUtils.copy(in, out);
-        } catch (Exception ex) {
-            logger.warn(ex.getMessage());
-        } finally {
-            IOUtils.closeQuietly(in);
-            IOUtils.closeQuietly(out);
-        }
     }
 }

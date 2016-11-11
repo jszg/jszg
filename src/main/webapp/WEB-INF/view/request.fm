@@ -300,6 +300,12 @@
 
 <!-- 第七步 -->
 <div id="box-7">
+    <!-- 隐藏数据 -->
+    <div style="display: none">
+        <span class="form-data" name="certBatchId" data-id="" data-name="-1"></span>
+        <span class="form-data" name="localeId" data-id="" data-name="-1"></span>
+        <span class="form-data" name="localSetId" data-id="" data-name="-1"></span>
+    </div>
     <div class="content_bd">
         <h4>基本信息：<b class="f_red f_size">（如要修改，请返回上一步）</b></h4>
         <div class="ui-body">
@@ -559,13 +565,15 @@
     <div id="box-8">
        <div class="content_bd">
          <div class="box-8">
-         <p><span>XXX</span>,您好！</p>
+         <p><span class="form-data" name="successRegName" data-id="" data-name=""></span>,您好！</p>
          <h2>您已完成注册！</h2>
          <P>为确保注册信息无误，请您及时<a href="/portal/request/index">登录系统</a>获取报名号，查看、修改注册信息，了解现场确认注意事项，打印申报材料。</P>
          <P>请记住进的如下登录信息：</P>
-         <P>姓名：<span>XXX</span></P>
-         <P>证件号码：<span>xxxxxxxxxxxxxx</span></P>
-         <P>密码招呼邮箱：<span>******************</span></P>
+         <P>姓名：<span class="form-data" name="successRegName" data-id="" data-name=""></span></P>
+         <P>证件号码：<span class="form-data" name="sucessIdNo" data-id="" data-name=""></span></P>
+         <P>密码找回邮箱：<span class="form-data" name="sucessEmail" data-id="" data-name=""></span></P>
+         <br/>
+         <P style="text-indent: 50px;color:red;font-weight:blod;"><a href="http://www.jszg.edu.cn">返回网站首页</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.jszg.edu.cn/portal/request/index">返回认定报名入口</a></P>
          </div>
        </div>
     </div>

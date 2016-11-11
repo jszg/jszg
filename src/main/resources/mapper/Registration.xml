@@ -54,13 +54,50 @@
     </update>
     <select id="findByNameAndIdNo" resultType="RegistrationForm">
         SELECT
-            r,reg_id AS id
+            r.reg_id AS id
         FROM
             t_registration r
         WHERE
-            r.id_no = #{name}
-            AND r.name = #{idNO}
+            r.id_no = #{idNo}
+            AND r.name = #{name}
             AND r.data_from != 2
     </select>
+    <insert id="insertRequestReg" parameterType="RegistrationForm">
+        <selectKey resultType="long" order="BEFORE" keyProperty="regId">
+            SELECT s_reg_id.nextval AS regId FROM dual
+        </selectKey>
+        <![CDATA[
+        INSERT INTO t_registration (
+            province_id,       ct_id,         city_id,       org_id,
+            org_name,          locale_id,     ls_id,         subject,
+            cb_id,             id_no,         name,          id_type,
+            email,             password,      sex,           birthday,
+            edu_level,         degree,        nation,        major,
+            occupation,        technique_job, political,     pth_level,
+            graduate_school,   learn_type,    gradua_time,   graduate_id,
+            residence,         birth_place,   address,       zip_cole,
+            phone,             cellphone,     work_units,    apply_time,
+            last_modify,       last_modifier, status,        delete_status,
+            status_memo,       exam,          data_from,     trigger_time,
+            ip,                normal_major,  pth_cert_no,   pth_org,
+            reg_id
+        )
+        VALUES (
+            #{provinceId},    #{certType},       #{cityId},         #{orgId},
+            #{orgName},       #{localeId},       #{localeSet},      #{subjectId},
+            #{certBatchId},   #{idNo},           #{name},           #{idType},
+            #{email},         #{password},       #{sex},            #{birthdayDate},
+            #{eduLevelId},    #{degreeId},       #{nation},         #{majorId},
+            #{occupation},    #{techniqueJobId}, #{political},      #{pthevelId},
+            #{graduateSchool},#{learnType},      #{graduaTimeDate}, #{graduateId},
+            #{residence},     #{birthPlace},     #{address},        #{zipCode},
+            #{phone},         #{cellPhone},      #{workUnits},      #{applyTime},
+            #{lastModify},    #{lastModifier},   #{status},         #{deleteStatus},
+            #{statusMemo},    #{exam},           #{dataFrom},       #{triggerTime},
+            #{ip},            #{normalMajor},    #{pthCertNo},      #{pthOrg},
+            #{regId}
+        )
+        ]]>
+    </insert>
 
 </mapper>

@@ -67,7 +67,7 @@
                 subject:1156
             };
 
-            $.rest.create({url: '/new-cert/rest/signUp/enroll/submit', data: params, async: false, success: function(result) {
+            $.rest.create({url: '/new-cert/rest/signUp/request/submit', data: params, async: false, success: function(result) {
                 if (!result.success) {
                     console.log(result.message);
                 } else {

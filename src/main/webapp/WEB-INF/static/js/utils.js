@@ -44,9 +44,17 @@ Urls = {
     REST_ENROLL_STEP3:           '/new-cert/rest/signUp/enroll/step3?idNo={idNo}&certNo={certNo}', // 第三步验证
     REST_ENROLL_ORG_VALIDATION:  '/new-cert/rest/signUp/enroll/orgs/{orgId}/validation', // 验证注册的注册机构
 
+
+    REST_REQUEST_STEP6:           '/new-cert/rest/signUp/request/step6?name={name}&idNo={idNo}&certTypeId={certTypeId}&subjectId={subjectId}',// 非统考第六步验证
+
+    REST_REQUEST_ORG_VALIDATION: '/new-cert/rest/signUp/request/orgs/{orgId}/certType/{certTypeId}/validation',// 验证非统考的认定机构
+
     URI_ENROLL_SUBMIT:       '/new-cert/enroll/submit',
     URI_ENROLL_REG_PHOTO:    '/new-cert/enroll/reg-photo/{enrollId}',
     URI_UPLOAD_ENROLL_IMAGE: '/new-cert/enroll/upload-enroll-image',
+
+    URI_REQUEST_SUBMIT:              '/new-cert/request/submit',
+    URI_REQUEST_REG_PHOTO:          '/new-cert/enroll/request-photo/{regId}',
 
     WEB_UPLOADER_SWF: 'https://cdn.staticfile.org/webuploader/0.1.5/Uploader.swf',
     URI_ACL_MAX_COUNT:    '/new-cert/acl/maxCount/{maxCount}',

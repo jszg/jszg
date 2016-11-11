@@ -5,6 +5,7 @@ $(document).ready(function() {
     handleChangeProvincesEvent(); // 处理切换省时加载城市的事件
     handleRequestOrgs();//处理第三步认定机构
     handleRequestSubjectsDialog(); // 第三步的任教学科
+    handleSearchLocalSets(); // 第四步的搜索确认点
     handleChangeProvincesForCollegeEvent();//第七步毕业学校
     handleMajorsDialog(); // 第七步的所学专业
     handleTechnicalJobsDialog();//第七步职业技术职务
@@ -139,8 +140,8 @@ StepValidator.validate3thStep = function() {
     var certTypeId = parseInt($('#certTypes option:selected').val()); // #provinces option:selected
     var provinceId = parseInt($('#provinces option:selected').val());
     var cityId     = parseInt($('#cities option:selected').val());
-    var orgId      = parseInt($('#orgs option:selected').val());
-    var subjectId  = parseInt($('#subject').attr('data-subject-id'));
+    var orgId      = parseInt($('#request-orgs option:selected').val());
+    var subjectId = UiUtils.getFormData('#box-3', 'request-subject-text').id; // 现任教学科
 
     if (-1 == certTypeId) {
         alert('请选择: 资格种类');
@@ -162,20 +163,19 @@ StepValidator.validate3thStep = function() {
         return false;
     }
 
-    if (-1 == subjectId) {
+    if (-1==subjectId) {
         alert('请选择: 任教学科');
         return false;
     }
-
-    // 验证注册机构，如果无效，则返回 false，不让继续第五步
+    // 验证非统考认定机构，如果无效，则返回 false，不让继续第四步
     var valid = true;
     $('#request-org-error').text('');
-    $.rest.get({url: Urls.REST_REQUEST_ORG_VALIDATION, urlParams: {orgId: registerOrg.id,certTypeId:certTypeId}, async: false, success: function(result) {
+    $.rest.get({url: Urls.REST_REQUEST_ORG_VALIDATION, urlParams: {orgId:orgId,certTypeId:certTypeId}, async: false, success: function(result) {
         if (!result.success) {
-            $('#register-org-error').text(result.message);
+            $('#request-org-error').text(result.message);
             valid = false;
         } else {
-            UiUtils.setFormData('certBatchId', -1, result.data.certBatchId);
+            UiUtils.setFormData('certBatchId', result.data.certBatchId, result.data.certBatchId);
         }
     }});
 
@@ -219,8 +219,9 @@ StepValidator.validate4thStep = function() {
         }
     }});
 
-    UiUtils.setFormData('box-7-locale-Set', localeId, $localSet.attr('data-name'));
-    UiUtils.setFormData('localSetId',-1, localSetId);
+    UiUtils.setFormData('box-7-locale-Set', localSetId, $localSet.attr('data-name'));
+    UiUtils.setFormData('localeId', localeId, localeId);
+    UiUtils.setFormData('localSetId',localSetId, localSetId);
 
     return true;
 };
@@ -264,11 +265,10 @@ StepValidator.validate6thStep = function(){
 
      var invalidMessage = '';
      var invalid = false;
-     var box7 = '#box-7';
-     var certTypeId          = UiUtils.getFormData(box7, 'box-7-certType').id;        // 申请资格种类
-     var subjectId           = UiUtils.getFormData(box7, 'box-7-request-Subject').id; // 任教学科
+     var certTypeId = parseInt($('#certTypes option:selected').val()); // #provinces option:selected
+     var subjectId = UiUtils.getFormData('#box-3', 'request-subject-text').id; // 现任教学科
      // 查询历史记录，如果有
-     $.rest.get({url: Urls.REST_REQUEST_STEP6, urlParams: {name: $name, idNo: $idNo,certType: certTypeId, subject: subjectId}, async: false, success: function(result) {
+     $.rest.get({url: Urls.REST_REQUEST_STEP6, urlParams: {name: $name, idNo: $idNo,certTypeId: certTypeId, subjectId: subjectId}, async: false, success: function(result) {
          if (!result.success) {
              invalid = true;
              invalidMessage = result.message;
@@ -310,6 +310,10 @@ StepValidator.validate7thStep = function(){
     var org               = UiUtils.getFormData(box7, 'box-7-request-Org').id;      // 认定机构
     var orgName           = UiUtils.getFormData(box7, 'box-7-request-Org').name;    // 认定机构
     var birthday          = UiUtils.getFormData(box7, 'birthday').name;           // 身份证号码
+    var provinceId        = UiUtils.getSelectedOption('#provinces').id;       // 所在省
+    var localeId          = UiUtils.getFormData(box7, 'localeId').id;       // 确认点
+    var localeSetId        = UiUtils.getFormData(box7, 'localSetId').id;       // 确认点安排
+    var certBatchId       = UiUtils.getFormData(box7, 'certBatchId').id;    // 注册批次
     ////////////////////////// 以上数据都不需要验证，前面步骤已经验证过了 //////////////////////////
 
     var password1 = $('#password1').val(); // 系统登录密码
@@ -378,40 +382,45 @@ StepValidator.validate7thStep = function(){
     // 通过验证
 
     var params = {
-        name: name,
-        idType: idTypeId,
-        idNo: idNo,
-        certType: certTypeId,
-        subjectId: subject,
+        provinceId:provinceId,
+        certType: certType,
         orgId: org,
         orgName: orgName,
-        localeSet: localeSet,
-        genderId: genderId,
+        localeId: localeId,
+        localeSet: localeSetId,
+        subjectId: subject,
+        certBatchId:certBatchId,
+        idNo: idNo,
+        name: name,
+        idType: idTypeId,
+        email:email,
+        password: password1,
+        sex:genderId,
         birthday: birthday,
-        pthLevelId: pthLevelId,
-        pthCertNo: pthCertNo,
-        pthOrg: pthOrg,
-        graduateId: graduateId,
-        graduationDate: graduationDate,
-        degreeId: degreeId,
         eduLevelId: eduLevelId,
-        graduationCollegeId: graduationCollegeId,
-        graduationCollegeName: graduationCollegeName,
+        degreeId: degreeId,
+        nation:nationId,
         majorId: majorId,
-        normalMajorId: normalMajorId,
-        learnTypeId: learnTypeId,
-        workUnit: workUnit,
-        occupations: occupations,
-        technicalJobId: technicalJobId,
+        occupation: occupations,
+        techniqueJobId: technicalJobId,
+        political:politicalId,
+        pthevelId: pthLevelId,
+        graduateSchool: graduationCollegeId,
+        learnType: learnTypeId,
+        graduaTime: graduationDate,
+        graduateId: graduateId,
         residence: residence,
         birthPlace: birthPlace,
         address: address,
         zipCode: zipCode,
         phone: phone,
         cellphone: cellphone,
-        photo: photo,
-        email:email,
-        password: password1
+        workUnits: workUnit,
+        normalMajor: normalMajorId,
+        pthCertNo: pthCertNo,
+        pthOrg: pthOrg,
+        genderId: genderId,
+        tmpPhoto: photo,
     };
 
     var passed = false;
@@ -428,7 +437,8 @@ StepValidator.validate7thStep = function(){
 
     if (!passed) { return false; } // 表单提交不成功，不进入第八步
     UiUtils.setFormData('successRegName', -1, name);
-    UiUtils.setFormData('email', -1, email); // 显示邮箱在第八步上要使用
+    UiUtils.setFormData('sucessEmail', -1, email); // 显示邮箱在第八步上要使用
+    UiUtils.setFormData('sucessIdNo', -1, idNo); // 显示邮箱在第八步上要使用
 
     return true;
 };
@@ -738,6 +748,39 @@ function requestLocalSets(orgId) {
             $('#local-sets-table').append(template('localSetsTemplate', {localSets: result.data}));
         }
     }});
+}
+
+/**
+ * 第四步的搜索
+ */
+function handleSearchLocalSets() {
+    $('#local-sets-div .search-button').click(searchLocalSets);
+    $('#local-sets-div .search-input').keyup(function(event) {
+        if (event.keyCode==13) {
+            searchLocalSets();
+        }
+    });
+    // 列出全部
+    $('#local-sets-div .show-all-button').click(function(event) {
+        $('#local-sets-table tr').show();
+    });
+
+    function searchLocalSets() {
+        $('#local-sets-table input:radio').removeAttr('checked'); // 取消选中
+        var text = $.trim($('#local-sets-div .search-input').val()); // 输入的 text
+
+        // [1] 如果输入内容为空白，显示所有的确认点
+        // [2] 如果确认点的名字包含输入的 text 则显示，否则隐藏
+        $('#local-sets-table tr:gt(0)').each(function(index, el) {
+            var name = $('td[name="name"]', this).text();
+
+            if (-1 != name.indexOf(text)) {
+                $(this).show();
+            } else {
+                $(this).hide();
+            }
+        });
+    }
 }
 
 /**

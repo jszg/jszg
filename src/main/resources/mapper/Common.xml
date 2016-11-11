@@ -96,7 +96,7 @@
                ob.pb_id   AS provinceBatch,
                pb.status  AS status,
                ob.ob_id   AS orgBatchId,
-               cb.cb_id   AS certBatchId
+               cb.cb_id   AS certBatchId,
                ob.begindate AS beginDate,
                ob.enddate   AS endDate
            FROM

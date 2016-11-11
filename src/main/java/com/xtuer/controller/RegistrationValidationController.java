@@ -26,7 +26,8 @@ public class RegistrationValidationController {
     /**
      * 验证非统考的认定机构
      *
-     * @param orgId 注册机构的 id
+     * @param orgId 认定机构的 id
+     *@param certTypeId 资格种类的 id
      * @return Result 对象
      */
     @GetMapping(UriView.REST_REQUEST_ORG_VALIDATION)
@@ -89,7 +90,7 @@ public class RegistrationValidationController {
 
             return new Result(success, buffer.toString());
         }else{
-            map.put("CertBatch", ob.getCertBatchId());
+            map.put("certBatchId", ob.getCertBatchId());
         }
         map.put("orgBatchTimes", orgBatchTimes.get(0));
 
@@ -99,7 +100,7 @@ public class RegistrationValidationController {
     // 非统考验证 Step6
     @GetMapping(UriView.REST_REQUEST_STEP6)
     @ResponseBody
-    public Result<?> enrollStep6(@RequestParam String name, @RequestParam String idNo, @PathVariable int certTypeId, @PathVariable int subjectId) {
+    public Result<?> enrollStep6(@RequestParam String name, @RequestParam String idNo, @RequestParam int certTypeId, @RequestParam int subjectId) {
         List<Limitation> limits = commonMapper.findLimitationByNameAndIdNo(name, idNo);
         if (!limits.isEmpty()) {
             Limitation limit = limits.get(0);
@@ -111,7 +112,7 @@ public class RegistrationValidationController {
             }
         }else{
             List<RegistrationForm> tmpList = registrationMapper.findByNameAndIdNo(name, idNo);
-            if(tmpList != null){
+            if(!tmpList.isEmpty()){
                 return new Result(false, "您已经填写了申报信息，请直接登录查看或修改申报信息！");
             }
         }
@@ -131,7 +132,6 @@ public class RegistrationValidationController {
         if(!scoreList.isEmpty() && scoreList.get(0) != null){
             return new Result(false, "请从统考入口报名");
         }
-
 
         return Result.ok();
     }
