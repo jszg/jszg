@@ -42,4 +42,6 @@ public interface CommonMapper {
     List<Score> findByUserCertType(@Param("name") String name, @Param("idNo") String idNo, @Param("certTypeId") int certTypeId, @Param("subjectId") int subjectId);
     List<HistoryValid> checkHistoryExists(@Param("name") String name, @Param("idNo") String idNo, @Param("certTypeId") int certTypeId, @Param("subjectId") int subjectId);
 
+    //保存简历信息
+    long insertResume(Resume resume);
 }

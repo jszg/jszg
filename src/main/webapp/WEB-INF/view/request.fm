@@ -484,7 +484,7 @@
     <div class="content_bd">
           <h4>个人简历：<b class="f_red f_size">（简历按照时间先后顺序从本人小学毕业后填起（当地教育局有其他规定的，按其规定填写），不得空项，至少两条，最多八条，必须填写到至今。简历超过8条的，删减前边的简历保留至 8 条为止。）</b></h4>
           <div class="ui-body" id="curriculum">
-              <table width="960" border="0" cellspacing="0" cellpadding="0">
+              <table width="960" border="0" cellspacing="0" cellpadding="0" id="resumForm">
                   <tr>
                     <td align="center">开始时间</td>
                     <td align="center">结束时间</td>

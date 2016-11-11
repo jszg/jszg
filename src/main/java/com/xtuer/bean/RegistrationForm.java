@@ -78,5 +78,6 @@ public class RegistrationForm {
     private String  tmpPhoto; // 照片
     private String  ip;//ip
     private String  statusMemo;//备注,用于区分新旧系统报名数据
+    private String  resumInfo;//简历信息
 
 }

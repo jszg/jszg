@@ -232,4 +232,16 @@
             AND hv.subject = #{subjectId}
             AND hv.delete_status = 0
     </select>
+    <insert id="insertResume" parameterType="Resume">
+        <![CDATA[
+        INSERT INTO t_resume (
+            res_id,               reg_id,         start_date,       end_date,
+            work_unit,           job,             certifier
+        )
+        VALUES (
+            s_res_id.nextval,    #{regId},       #{startDate},      #{endDate},
+            #{workUnit},         #{job},         #{certifier}
+        )
+        ]]>
+    </insert>
 </mapper>

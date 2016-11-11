@@ -379,6 +379,40 @@ StepValidator.validate7thStep = function(){
     if (!(/^[1-9][0-9]{5}$/.test(zipCode))) { alert('通讯地的邮编: 请输入 6 个数字的 "通讯地的邮编"');  return false; }
     if (!(/^\d{11}$/.test(cellphone)))      { alert('手机号码: 请输入 11 个数字的 "手机号码"');         return false; }
 
+   //判断简历信息是否完整
+   var resumIndex = 0;
+   var resumInfo = '';
+   var through = true;
+   $('#resumForm tr:gt(0)').each(function(index, el) {
+       var $inputs = $('input', this); // 找到每一行的所有输入框 input
+       // 分别取得每一个 input 的值
+       var startDate = $inputs.eq(0).val();
+       var endDate   = $inputs.eq(1).val();
+       var workUnit  = $inputs.eq(2).val();
+       var job       = $inputs.eq(3).val();
+       var certifier = $inputs.eq(4).val();
+       if(startDate.length > 0 && endDate.length > 0 && workUnit.length > 0 && job.length > 0 && certifier.length > 0){
+           resumIndex ++;
+           resumInfo += startDate + '-'+endDate+'-'+workUnit + '-'+job + '-'+certifier+',';
+       }else if(startDate .length == 0 && endDate .length == 0 && workUnit .length == 0 && job .length == 0 && certifier .length == 0){
+
+       }else{
+           alert('第'+(index+1)+'条简历保存失败！开始时间、结束时间、单位、职务、证明人都不能为空！');
+           through = false;
+           return false;
+       }
+   });
+    if(through == false){
+        return false;
+    }
+   if(resumIndex < 2){
+       alert('简历请填写至少两条！');
+       return false;
+   }
+   if(resumInfo.length > 0){
+       resumInfo = resumInfo.substring(0,resumInfo.length-1);
+   }
+
     // 通过验证
 
     var params = {
@@ -421,6 +455,7 @@ StepValidator.validate7thStep = function(){
         pthOrg: pthOrg,
         genderId: genderId,
         tmpPhoto: photo,
+        resumInfo: resumInfo
     };
 
     var passed = false;

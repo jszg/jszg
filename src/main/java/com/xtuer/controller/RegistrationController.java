@@ -77,7 +77,7 @@ public class RegistrationController {
         System.out.println(JSON.toJSONString(form));
 
         // [4] 保存简历信息
-        //registrationService.saveResum(form);
+        registrationService.saveResum(form);
 
         // [5] 保存图片
         registrationService.saveRequestPhoto(form);

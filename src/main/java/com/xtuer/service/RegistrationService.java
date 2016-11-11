@@ -1,6 +1,5 @@
 package com.xtuer.service;
 
-import com.alibaba.fastjson.JSON;
 import com.xtuer.bean.EnrollmentForm;
 import com.xtuer.bean.RegistrationForm;
 import com.xtuer.bean.Result;
@@ -9,6 +8,7 @@ import com.xtuer.constant.SignUpConstants;
 import com.xtuer.dto.CertBatch;
 import com.xtuer.dto.CityInfo;
 import com.xtuer.dto.ProvinceBatch;
+import com.xtuer.dto.Resume;
 import com.xtuer.mapper.*;
 import com.xtuer.util.BrowserUtils;
 import com.xtuer.util.CommonUtils;
@@ -116,9 +116,23 @@ public class RegistrationService {
 
     public void saveResum(RegistrationForm form){
         //首先给registration设置值
-        RegistrationForm reg = new RegistrationForm();
-
-        registrationMapper.insertRegistration(reg);
+        String resumInfo = form.getResumInfo();
+        if(!resumInfo.isEmpty()){
+            String[] resums = resumInfo.split(",");
+            for(int i = 0; i < resums.length; i++){
+                if(!resums[i].isEmpty()){
+                    String[] item = resums[i].split("-");
+                    Resume resume = new Resume();
+                    resume.setRegId(form.getRegId());
+                    resume.setStartDate(item[0]);
+                    resume.setEndDate(item[1]);
+                    resume.setWorkUnit(item[2]);
+                    resume.setJob(item[3]);
+                    resume.setCertifier(item[4]);
+                    commonMapper.insertResume(resume);
+                }
+            }
+        }
     }
 
     /**
