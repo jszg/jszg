@@ -244,4 +244,36 @@
         )
         ]]>
     </insert>
+    <select id="findByUserExamNo" resultType="Score">
+        SELECT
+            s.sco_id        AS id,
+            s.user_name     AS name,
+            s.id_no         AS idNo,
+            s.score_cert_no AS scoreCertNo,
+            s.id_type       AS idType,
+            d.name          AS idTypeName,
+            s.cert_type     AS certType,
+            ct.admin_level  AS adminLevel,
+            s.subject       AS subject,
+            ct.ct_name      AS certTypeName,
+            su.name         AS subjectName
+        FROM
+            t_score s
+        LEFT JOIN
+            t_cert_type ct
+        ON
+            ct.ct_id = s.cert_type
+        LEFT JOIN
+            t_subject su
+        ON
+            su.subject_id = s.subject
+        LEFT JOIN
+            t_dict d
+        ON
+            d.dic_id = s.id_type
+        WHERE
+            s.user_name=#{name}
+            AND s.id_no=#{idNo}
+            AND s.score_cert_no=#{scoreCertNo}
+    </select>
 </mapper>

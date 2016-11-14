@@ -7,7 +7,6 @@ import com.xtuer.constant.UriView;
 import com.xtuer.dto.*;
 import com.xtuer.mapper.CommonMapper;
 import com.xtuer.mapper.RegistrationMapper;
-import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,15 +22,64 @@ import java.util.*;
  * 认定使用的验证类
  */
 @Controller
-public class RegistrationValidationController {
+public class ExamValidationController {
+
+    // 统考验证 Step3
+    @GetMapping(UriView.REST_EXAM_STEP3)
+    @ResponseBody
+    public Result<?> enrollStep6(@RequestParam String name, @RequestParam String idNo, @RequestParam String scoreCertNo) throws UnsupportedEncodingException {
+        Map<String, Object> map = new HashMap<>();
+        if(name == null){
+            return Result.ok(null);
+        }
+        name = new String(name.getBytes("iso-8859-1"),"utf-8");
+        List<Limitation> limits = commonMapper.findLimitationByNameAndIdNo(name, idNo);
+        if (!limits.isEmpty()) {
+            Limitation limit = limits.get(0);
+            if (limit.getDueTime() == null)
+                return new Result(false, "您已丧失教师资格，不能再申请教师资格！");
+            else {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy年M月d日");
+                return new Result(false, "您因" + limit.getReason() + "被限制申请教师资格，限制结束时间为" + sdf.format(limit.getDueTime()));
+            }
+        }else{
+            List<RegistrationForm> tmpList = registrationMapper.findByNameAndIdNo(name, idNo);
+            if(!tmpList.isEmpty()){
+                return new Result(false, "您已经填写了申报信息，请直接登录查看或修改申报信息！");
+            }
+        }
+
+        Calendar c = Calendar.getInstance();
+        List<HistoryValid> hvList = commonMapper.findByUserYear(name, idNo, c.get(Calendar.YEAR));
+        Score score = null;
+        if(!hvList.isEmpty() && hvList.get(0) != null){
+            return new Result(false, "您在本年度内已经申请了" + hvList.get(0).getCertType() + "，同一自然年内不允许申请两种教师资格");
+        }else{
+            List<Score> scoreList = commonMapper.findByUserExamNo(name, idNo, scoreCertNo);
+            if(!scoreList.isEmpty()){
+                score = scoreList.get(0);
+            }
+            if(score == null){
+                return new Result(false, "您没有获得合格的统考成绩，无法通过该途径申报，如确认输入无误，请与参加统考时的考试机构联系!");
+            }else {
+                if(score.getExpiredTime() != null && score.getExpiredTime().before(new Date())){
+                    return new Result(false, "统考成绩截止日期已过!");
+                }
+            }
+        }
+        map.put("score", score);
+        return Result.ok(map);
+    }
+
+
     /**
-     * 验证非统考的认定机构
+     * 验证统考的认定机构
      *
      * @param orgId 认定机构的 id
      *@param certTypeId 资格种类的 id
      * @return Result 对象
      */
-    @GetMapping(UriView.REST_REQUEST_ORG_VALIDATION)
+    @GetMapping(UriView.REST_EXAM_ORG_VALIDATION)
     @ResponseBody
     public Result<?> validateRequestOrganization(@PathVariable int orgId, @PathVariable int certTypeId) {
         Map<String, Object> map = new HashMap<>();
@@ -98,48 +146,7 @@ public class RegistrationValidationController {
         return Result.ok(map);
     }
 
-    // 非统考验证 Step6
-    @GetMapping(UriView.REST_REQUEST_STEP6)
-    @ResponseBody
-    public Result<?> enrollStep6(@RequestParam String name, @RequestParam String idNo, @RequestParam int certTypeId, @RequestParam int subjectId) throws UnsupportedEncodingException {
-        if(name == null){
-            return Result.ok(null);
-        }
-        name = new String(name.getBytes("iso-8859-1"),"utf-8");
-        List<Limitation> limits = commonMapper.findLimitationByNameAndIdNo(name, idNo);
-        if (!limits.isEmpty()) {
-            Limitation limit = limits.get(0);
-            if (limit.getDueTime() == null)
-                return new Result(false, "您已丧失教师资格，不能再申请教师资格！");
-            else {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy年M月d日");
-                return new Result(false, "您因" + limit.getReason() + "被限制申请教师资格，限制结束时间为" + sdf.format(limit.getDueTime()));
-            }
-        }else{
-            List<RegistrationForm> tmpList = registrationMapper.findByNameAndIdNo(name, idNo);
-            if(!tmpList.isEmpty()){
-                return new Result(false, "您已经填写了申报信息，请直接登录查看或修改申报信息！");
-            }
-        }
 
-        Calendar c = Calendar.getInstance();
-        List<HistoryValid> hvList = commonMapper.findByUserYear(name, idNo, c.get(Calendar.YEAR));
-        if(!hvList.isEmpty() && hvList.get(0) != null){
-            return new Result(false, "您在本年度内已经申请了" + hvList.get(0).getCertType() + "，同一自然年内不允许申请两种教师资格");
-        }
-
-        List<HistoryValid> historyValidsList = commonMapper.checkHistoryExists(name, idNo, certTypeId, subjectId);
-        if(!historyValidsList.isEmpty() && historyValidsList.get(0) != null){
-            return new Result(false, "您已经申报过此种教师资格，不允许再次申报");
-        }
-
-        List<Score> scoreList = commonMapper.findByUserCertType(name, idNo, certTypeId, subjectId);
-        if(!scoreList.isEmpty() && scoreList.get(0) != null){
-            return new Result(false, "请从统考入口报名");
-        }
-
-        return Result.ok();
-    }
 
     @Autowired
     private CommonMapper commonMapper;

@@ -60,6 +60,9 @@ public interface UriView {
     // 非统考第六步验证
     String REST_REQUEST_STEP6              = "/rest/signUp/request/step6";
 
+    //统考第三步验证
+    String REST_EXAM_STEP3                 = "/rest/signUp/exam/step3";
+
 
     // 验证注册的注册机构
     String REST_ENROLL_ORG_VALIDATION      = "/rest/signUp/enroll/orgs/{orgId}/validation";
@@ -67,12 +70,18 @@ public interface UriView {
     // 验证非统考的认定机构
     String REST_REQUEST_ORG_VALIDATION      = "/rest/signUp/request/orgs/{orgId}/certType/{certTypeId}/validation";
 
+    // 验证统考的认定机构
+    String REST_EXAM_ORG_VALIDATION      = "/rest/signUp/exam/orgs/{orgId}/certType/{certTypeId}/validation";
+
     String URI_ENROLL_SUBMIT               = "/enroll/submit";
     String URI_ENROLL_REG_PHOTO            = "/enroll/reg-photo/{enrollId}";
     String URI_UPLOAD_ENROLL_IMAGE         = "/enroll/upload-enroll-image";
 
     String URI_REQUEST_SUBMIT              = "/request/submit";
-    String URI_REQUEST_REG_PHOTO          = "/enroll/request-photo/{regId}";
+    String URI_REQUEST_REG_PHOTO          = "/request/request-photo/{regId}";
+
+    String URI_EXAM_SUBMIT                 = "/exam/submit";
+    String URI_EXAM_REG_PHOTO          = "/exam/exam-photo/{regId}";
 
     // 访问控制
     String URI_ACL                  = "/a-JSZG-c-649-l-Enroll"; // 访问控制的页面

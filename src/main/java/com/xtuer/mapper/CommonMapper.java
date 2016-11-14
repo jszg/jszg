@@ -44,4 +44,8 @@ public interface CommonMapper {
 
     //保存简历信息
     long insertResume(Resume resume);
+
+    //统考报名根据姓名,证件号和统考合格名单查询
+    List<Score> findByUserExamNo(@Param("name") String name, @Param("idNo") String idNo, @Param("scoreCertNo") String scoreCertNo);
+
 }

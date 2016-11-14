@@ -16,7 +16,7 @@ $(document).ready(function() {
 
     requestDicts();
 
-     // StepUtils.toStep(7); // 到第 N 步，测试使用
+      StepUtils.toStep(7); // 到第 N 步，测试使用
     // requestLocalSets(21);
 
     // 点击取消按钮关闭弹出对话框
