@@ -16,7 +16,7 @@ $(document).ready(function() {
 
     requestDicts();
 
-      StepUtils.toStep(7); // 到第 N 步，测试使用
+     // StepUtils.toStep(7); // 到第 N 步，测试使用
     // requestLocalSets(21);
 
     // 点击取消按钮关闭弹出对话框
@@ -913,6 +913,11 @@ function handleTeachSubjectsDialog() {
         var searchValue = $.trim($('#teach-subject-search-name').val());
         var provinceId = UiUtils.getSelectedOption('#provinces').id;
         var teachGradeId = UiUtils.getSelectedOption('#teach-grades').id;
+        if(!searchValue){
+            alert('请输入搜索内容!');
+            return false;
+        }
+        searchValue = encodeURI(encodeURI(searchValue));
         $('#search-teach-subject-result tr:gt(0)').empty();
         $.rest.get({url: Urls.REST_TEACH_SUBJECT_BY_NAME, urlParams: {teachGradeId:teachGradeId, provinceId:provinceId, name: searchValue}, success: function(result) {
             $('#search-teach-subject-result').append(template('teachSubjectTemplate', {teachSubjects: result.data}));
@@ -1100,6 +1105,11 @@ function handleMajorsDialog() {
     // 点击搜索按钮，显示搜索的结果
     $('#majors-dialog .search-button').click(function(event) {
         var searchValue = $.trim($('#major-search-name').val());
+        if(!searchValue){
+            alert('请输入搜索内容!');
+            return false;
+        }
+        searchValue = encodeURI(encodeURI(searchValue));
         $('#search-major-result tr:gt(0)').empty();
         $.rest.get({url: Urls.REST_MAJOR_SEARCH_BY_NAME, urlParams: {name: searchValue}, success: function(result) {
             $('#search-major-result').append(template('majorsTemplate', {majors: result.data}));
@@ -1191,6 +1201,12 @@ function handleTechnicalJobsDialog() {
         // 点击搜索按钮，显示搜索的结果
         $('#technical-jobs-dialog .search-button').click(function(event) {
             var searchValue = $.trim($('#technical-jobs-search-name').val());
+            if(!searchValue){
+                alert('请输入搜索内容!');
+                return false;
+            }
+            searchValue = encodeURI(encodeURI(searchValue));
+            alert(''+searchValue);
             $('#search-technical-jobs-result tr:gt(0)').empty();
             $.rest.get({url: Urls.REST_TECHNICAL_JOB_BY_NAME, urlParams: {name: searchValue}, success: function(result) {
                 $('#search-technical-jobs-result').append(template('technicalJobsTemplate', {technicalJobs: result.data}));

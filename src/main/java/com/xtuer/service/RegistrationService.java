@@ -145,7 +145,7 @@ public class RegistrationService {
         String tempPhotoPath = tempDir + File.separator + tempName; // 临时图片路径
         String photoDir = config.getString("uploadRegPhotoDir"); // 图片的最终目录
         System.out.println(form.getRegId());
-        String photoPath = generateEnrollPhotoPath(form.getRegId(), photoDir);
+        String photoPath = generateRequestPhotoPath(form.getRegId(), photoDir);
 
         try {
             FileUtils.moveFile(new File(tempPhotoPath), new File(photoPath));
@@ -162,7 +162,7 @@ public class RegistrationService {
      * @param regId
      * @return 图片路径
      */
-    public String generateEnrollPhotoPath(long regId, String dir) {
+    public String generateRequestPhotoPath(long regId, String dir) {
         String photoName = String.format("%010d.jpg", regId);
         String photoPath = dir + File.separator + photoName.substring(0,2) + File.separator +
                 photoName.substring(2,6) + File.separator + photoName.substring(6);

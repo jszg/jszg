@@ -10,6 +10,7 @@ import com.xtuer.dto.Enrollment;
 import com.xtuer.dto.HistoryValid;
 import com.xtuer.dto.Registration;
 import com.xtuer.mapper.CommonMapper;
+import com.xtuer.mapper.RegistrationMapper;
 import com.xtuer.service.EnrollmentService;
 import com.xtuer.service.RedisAclService;
 import com.xtuer.service.RegistrationService;
@@ -47,6 +48,9 @@ public class RegistrationController {
     private RegistrationService registrationService;
 
     @Autowired
+    private RegistrationMapper registrationMapper;
+
+    @Autowired
     private CommonMapper commonMapper;
 
     @Autowired
@@ -59,6 +63,11 @@ public class RegistrationController {
         Result<?> r = registrationService.validateParams(form, result);
         if (!r.isSuccess()) {
             return r;
+        }
+        //验证certbatch idNo name 联合唯一
+        List<RegistrationForm> regList = registrationMapper.findByCbIdAndIdNoAndName(form.getName(),form.getIdNo(),form.getCertBatchId());
+        if(!regList.isEmpty()){
+            return new Result(false, "同一批次下已经存在相同的名称和证件号的记录");
         }
         // [2] 设置固定信息
         form.setApplyTime(new Date());

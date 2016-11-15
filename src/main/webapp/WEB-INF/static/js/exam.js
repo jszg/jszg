@@ -11,7 +11,7 @@ $(document).ready(function() {
     handleTechnicalJobsDialog();//第七步职业技术职务
 
     handleGraduationCollegesDialog(); // 第七步的最高学历毕业学校
-    StepUtils.toStep(7); // 到第 N 步，测试使用
+    //StepUtils.toStep(7); // 到第 N 步，测试使用
 
     requestDicts(); // 请求字典数据，初始化省，政治面貌等
 
@@ -188,6 +188,7 @@ StepValidator.validate3thStep = function(){
             UiUtils.setFormData('certType', score.certType, score.certTypeName);
             UiUtils.setFormData('subject', score.subject, score.subjectName);
             UiUtils.setFormData('adminLevel', score.adminLevel, score.adminLevel);
+            UiUtils.setFormData('scoreId', score.id, score.id);
          }
      }});
 
@@ -198,7 +199,8 @@ StepValidator.validate3thStep = function(){
      var idCard = new IdCard('', $.trim($idNo));
      var genderId          = idCard.gender;           // 性别
      var birthday          = idCard.birthdayString;           // 出生日期
-     UiUtils.setFormData('gender', genderId, genderId);
+     alert('birthday==='+birthday);
+     UiUtils.setFormData('gender', parseInt($.trim($idNo).substring(16, 17)), genderId);
      UiUtils.setFormData('birthday', birthday, birthday);
     return true;
 };
@@ -254,7 +256,7 @@ StepValidator.validate4thStep = function() {
     var requestOrg  = UiUtils.getSelectedOption('#request-orgs');   // 统考第三步认定机构
     requestLocalSets(requestOrg.id);//请求确认点
     var registerOrg  = UiUtils.getSelectedOption('#request-orgs');   // 认定机构
-    UiUtils.setFormData('registerOrg', registerOrg.id, registerOrg.name);
+    UiUtils.setFormData('recognizeOrg', registerOrg.id, registerOrg.name);
     return true;
 }
 
@@ -293,20 +295,23 @@ StepValidator.validate7thStep = function(){
     var localSet = {id: $localSet.val(), name: $localSet.attr('data-name')}; // 确认点
     var box7 = '#box-7';
 
-    var name  = UiUtils.getFormData(box7, 'name').name; // 姓名
-    var idTypeId = UiUtils.getFormData(box7, 'idType').id; // 证件类型
-    var idNo = UiUtils.getFormData(box7, 'idNo').id; // 身份证号码
+    var name       = UiUtils.getFormData(box7, 'name').name; // 姓名
+    var idTypeId   = UiUtils.getFormData(box7, 'idType').id; // 证件类型
+    var idNo       = UiUtils.getFormData(box7, 'idNo').id; // 身份证号码
     var certTypeId = UiUtils.getFormData(box7, 'certType').id; // 申请资格种类
-    var subjectId = UiUtils.getFormData(box7, 'subject').id; // 任教学科
-    var org = UiUtils.getFormData(box7, 'recognizeOrg').id; // 认定机构
-    var orgName = UiUtils.getFormData(box7, 'recognizeOrg').name; // 认定机构名称
+    var subjectId  = UiUtils.getFormData(box7, 'subject').id; // 任教学科
+    var org        = UiUtils.getFormData(box7, 'recognizeOrg').id; // 认定机构
+    var orgName    = UiUtils.getFormData(box7, 'recognizeOrg').name; // 认定机构名称
     var provinceId        = UiUtils.getSelectedOption('#provinces').id;       // 所在省
     var localeId          = UiUtils.getFormData(box7, 'localeId').id;       // 确认点
     var localeSetId        = UiUtils.getFormData(box7, 'localSetId').id;       // 确认点安排
     var certBatchId       = UiUtils.getFormData(box7, 'certBatchId').id;    // 注册批次
     var birthday          = UiUtils.getFormData(box7, 'birthday').name;       // 出生日期
     var genderId          = UiUtils.getFormData(box7, 'gender').id;           // 性别
+    var scoreCertNo       = UiUtils.getFormData(box7, 'scoreCertNo').id;           // 统考编号
+    var scoreId           = UiUtils.getFormData(box7, 'scoreId').id;           // 统考合格名单id
     ////////////////////////// 以上数据都不需要验证，前面步骤已经验证过了 //////////////////////////
+    alert('scoreId==='+scoreId);
 
     var password1 = $('#password1').val(); // 系统登录密码
     var password2 = $('#password2').val(); // 密码确认
@@ -409,20 +414,20 @@ StepValidator.validate7thStep = function(){
 
     var params = {
         provinceId:provinceId,
-        certType: certType,
+        certType: certTypeId,
         orgId: org,
         orgName: orgName,
         localeId: localeId,
         localeSet: localeSetId,
-        subjectId: subject,
+        subjectId: subjectId,
         certBatchId:certBatchId,
         idNo: idNo,
         name: name,
         idType: idTypeId,
         email:email,
         password: password1,
-        //sex:genderId,
-        //birthday: birthday,
+        sex:genderId,
+        birthday: birthday,
         eduLevelId: eduLevelId,
         degreeId: degreeId,
         nation:nationId,
@@ -447,7 +452,9 @@ StepValidator.validate7thStep = function(){
         pthOrg: pthOrg,
         genderId: genderId,
         tmpPhoto: photo,
-        resumInfo: resumInfo
+        resumInfo: resumInfo,
+        scoreCertNo: scoreCertNo,
+        scoreId: scoreId
     };
 
     var passed = false;
@@ -682,6 +689,11 @@ function handleRequestSubjectsDialog() {
     // 点击搜索按钮，显示搜索的结果
     $('#request-subjects-dialog .search-button').click(function(event) {
         var searchValue = $.trim($('#request-subject-search-name').val());
+        if(!searchValue){
+            alert('请输入搜索内容!');
+            return false;
+        }
+        searchValue = encodeURI(encodeURI(searchValue));
         var $certType = $('#certTypes option:selected');
         var teachGrade = $certType.attr('data-teach-grade');
         var provinceId = UiUtils.getSelectedOption('#provinces').id;
@@ -948,6 +960,11 @@ function handleMajorsDialog() {
     $('#majors-dialog .search-button').click(function(event) {
         var searchValue = $.trim($('#major-search-name').val());
         var provinceId = parseInt($('#provinces option:selected').val());
+        if(!searchValue){
+            alert('请输入搜索内容!');
+            return false;
+        }
+        searchValue = encodeURI(encodeURI(searchValue));
         $('#search-major-result tr:gt(0)').empty();
         $.rest.get({url: Urls.REST_MAJOR_SEARCH_BY_NAME, urlParams: {provinceId:provinceId,name: searchValue}, success: function(result) {
             $('#search-major-result').append(template('majorsTemplate', {majors: result.data}));
@@ -1033,6 +1050,11 @@ function handleTechnicalJobsDialog() {
         // 点击搜索按钮，显示搜索的结果
         $('#technical-jobs-dialog .search-button').click(function(event) {
             var searchValue = $.trim($('#technical-jobs-search-name').val());
+            if(!searchValue){
+                alert('请输入搜索内容!');
+                return false;
+            }
+            searchValue = encodeURI(encodeURI(searchValue));
             $('#search-technical-jobs-result tr:gt(0)').empty();
             $.rest.get({url: Urls.REST_TECHNICAL_JOB_BY_NAME, urlParams: {name: searchValue}, success: function(result) {
                 $('#search-technical-jobs-result').append(template('technicalJobsTemplate', {technicalJobs: result.data}));

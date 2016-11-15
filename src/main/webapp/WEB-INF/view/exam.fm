@@ -320,8 +320,9 @@
         <span class="form-data" name="certBatchId" data-id="" data-name="-1"></span>
         <span class="form-data" name="localeId" data-id="" data-name="-1"></span>
         <span class="form-data" name="localSetId" data-id="" data-name="-1"></span>
-
+        <span class="form-data" name="scoreCertNo" data-id="" data-name="-1"></span>
         <span class="form-data" name="recognizeOrg" data-id="" data-name="-1"></span>
+        <span class="form-data" name="scoreId" data-id="" data-name="-1"></span>
     </div>
     <div class="unregistered content_bd">
         <h4>基本信息：<b class="f_red f_size">（如要修改，请返回第三步）</b></h4>

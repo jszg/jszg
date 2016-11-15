@@ -105,7 +105,6 @@ public class RegistrationValidationController {
         if(name == null){
             return Result.ok(null);
         }
-        name = new String(name.getBytes("iso-8859-1"),"utf-8");
         List<Limitation> limits = commonMapper.findLimitationByNameAndIdNo(name, idNo);
         if (!limits.isEmpty()) {
             Limitation limit = limits.get(0);

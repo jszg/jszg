@@ -67,6 +67,10 @@ public class ExamValidationController {
                 }
             }
         }
+        List<HistoryValid> list = commonMapper.checkHistoryExists(name, idNo, score.getCertType(),score.getSubject());
+        if(!list.isEmpty()){
+            return new Result(false, "您已经申报过此种教师资格，不允许再次申报!");
+        }
         map.put("score", score);
         return Result.ok(map);
     }

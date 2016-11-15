@@ -18,4 +18,7 @@ public interface RegistrationMapper {
 
     //认定报名保存数据
     long insertRequestReg(RegistrationForm form);
+
+    //认定报名中 certBatch idNo name 联合唯一
+    List<RegistrationForm> findByCbIdAndIdNoAndName(@Param("name") String name, @Param("idNo") String idNo, @Param("certBatchId") int certBatchId);
 }

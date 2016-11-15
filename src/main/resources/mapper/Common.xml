@@ -276,4 +276,21 @@
             AND s.id_no=#{idNo}
             AND s.score_cert_no=#{scoreCertNo}
     </select>
+    <select id="findByScoreId" resultType="Score">
+        SELECT
+            *
+        FROM
+            t_score s
+        WHERE
+            s.sco_id=#{scoreId}
+    </select>
+    <update id="updateScoreStatus" parameterType="Score">
+        UPDATE
+            t_score
+        SET
+            cert_batch = #{certBatchId},
+            status = #{status}
+        WHERE
+            sco_id=#{scoreId}
+    </update>
 </mapper>

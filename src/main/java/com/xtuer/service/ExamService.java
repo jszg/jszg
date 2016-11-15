@@ -6,6 +6,7 @@ import com.xtuer.bean.UserPortalLog;
 import com.xtuer.constant.SignUpConstants;
 import com.xtuer.dto.CityInfo;
 import com.xtuer.dto.Resume;
+import com.xtuer.dto.Score;
 import com.xtuer.mapper.*;
 import com.xtuer.util.BrowserUtils;
 import com.xtuer.util.CommonUtils;
@@ -23,8 +24,10 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class ExamService {
@@ -111,6 +114,13 @@ public class ExamService {
         registrationMapper.insertRequestReg(form);
     }
 
+    public void updateScoreStatus(RegistrationForm form){
+        Score score = commonMapper.findByScoreId(form.getScoreId());
+        if(score != null){
+            commonMapper.updateScoreStatus(form.getCertBatchId(),SignUpConstants.STATUS_USED,form.getScoreId());
+        }
+    }
+
     public void saveResum(RegistrationForm form){
         //首先给registration设置值
         String resumInfo = form.getResumInfo();
@@ -136,13 +146,12 @@ public class ExamService {
      * 保存 Enroll 的图片
      * @param form
      */
-    public void saveRequestPhoto(RegistrationForm form) {
+    public void saveExamPhoto(RegistrationForm form) {
         String tempDir = config.getString("uploadTemp"); // 图片的临时目录
         String tempName = form.getTmpPhoto();
         String tempPhotoPath = tempDir + File.separator + tempName; // 临时图片路径
         String photoDir = config.getString("uploadRegPhotoDir"); // 图片的最终目录
-        System.out.println(form.getRegId());
-        String photoPath = generateEnrollPhotoPath(form.getRegId(), photoDir);
+        String photoPath = generateExamPhotoPath(form.getRegId(), photoDir);
 
         try {
             FileUtils.moveFile(new File(tempPhotoPath), new File(photoPath));
@@ -159,7 +168,7 @@ public class ExamService {
      * @param regId
      * @return 图片路径
      */
-    public String generateEnrollPhotoPath(long regId, String dir) {
+    public String generateExamPhotoPath(long regId, String dir) {
         String photoName = String.format("%010d.jpg", regId);
         String photoPath = dir + File.separator + photoName.substring(0,2) + File.separator +
                 photoName.substring(2,6) + File.separator + photoName.substring(6);

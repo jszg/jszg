@@ -34,4 +34,8 @@ public interface SignUpConstants {
     int TYPE_ENROLL = 2;//代表注册
     int TYPE_COMMON = 0;
 
+    //统考标示使用状态
+    int STATUS_USED = 1;// 使用
+    int STATUS_NO_USED = 0;// 未使用
+
 }

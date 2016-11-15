@@ -99,5 +99,15 @@
         )
         ]]>
     </insert>
+    <select id="findByCbIdAndIdNoAndName" resultType="RegistrationForm">
+        SELECT
+            *
+        FROM
+            t_registration r
+        WHERE
+            r.id_no = #{idNo}
+            AND r.name = #{name}
+            AND r.cb_id = #{certBatchId}
+    </select>
 
 </mapper>

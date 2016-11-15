@@ -79,5 +79,7 @@ public class RegistrationForm {
     private String  ip;//ip
     private String  statusMemo;//备注,用于区分新旧系统报名数据
     private String  resumInfo;//简历信息
+    private String scoreCertNo;//统考证书编号
+    private long scoreId;//统考合格名单id
 
 }

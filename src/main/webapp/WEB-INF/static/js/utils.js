@@ -58,7 +58,7 @@ Urls = {
     URI_UPLOAD_ENROLL_IMAGE: '/new-cert/enroll/upload-enroll-image',
 
     URI_REQUEST_SUBMIT:              '/new-cert/request/submit',
-    URI_REQUEST_REG_PHOTO:          '/new-cert/request/request-photo/{regId}',
+    URI_REQUEST_REG_PHOTO:          '/new-cert/exam/request-photo/{regId}',
 
     URI_EXAM_SUBMIT:                 '/new-cert/exam/submit',
     URI_REQUEST_REG_PHOTO:          '/new-cert/exam/exam-photo/{regId}',

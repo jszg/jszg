@@ -691,6 +691,11 @@ function handleRequestSubjectsDialog() {
     // 点击搜索按钮，显示搜索的结果
     $('#request-subjects-dialog .search-button').click(function(event) {
         var searchValue = $.trim($('#request-subject-search-name').val());
+        if(!searchValue){
+            alert('请输入搜索内容!');
+            return false;
+        }
+        searchValue = encodeURI(encodeURI(searchValue));
         var $certType = $('#certTypes option:selected');
         var teachGrade = $certType.attr('data-teach-grade');
         var provinceId = UiUtils.getSelectedOption('#provinces').id;
@@ -957,6 +962,11 @@ function handleMajorsDialog() {
     $('#majors-dialog .search-button').click(function(event) {
         var searchValue = $.trim($('#major-search-name').val());
         var provinceId = parseInt($('#provinces option:selected').val());
+        if(!searchValue){
+            alert('请输入搜索内容!');
+            return false;
+        }
+        searchValue = encodeURI(encodeURI(searchValue));
         $('#search-major-result tr:gt(0)').empty();
         $.rest.get({url: Urls.REST_MAJOR_SEARCH_BY_NAME, urlParams: {provinceId:provinceId,name: searchValue}, success: function(result) {
             $('#search-major-result').append(template('majorsTemplate', {majors: result.data}));
@@ -1042,6 +1052,11 @@ function handleTechnicalJobsDialog() {
         // 点击搜索按钮，显示搜索的结果
         $('#technical-jobs-dialog .search-button').click(function(event) {
             var searchValue = $.trim($('#technical-jobs-search-name').val());
+            if(!searchValue){
+                alert('请输入搜索内容!');
+                return false;
+            }
+            searchValue = encodeURI(encodeURI(searchValue));
             $('#search-technical-jobs-result tr:gt(0)').empty();
             $.rest.get({url: Urls.REST_TECHNICAL_JOB_BY_NAME, urlParams: {name: searchValue}, success: function(result) {
                 $('#search-technical-jobs-result').append(template('technicalJobsTemplate', {technicalJobs: result.data}));

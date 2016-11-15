@@ -6,6 +6,7 @@ import com.xtuer.bean.Result;
 import com.xtuer.constant.SignUpConstants;
 import com.xtuer.constant.UriView;
 import com.xtuer.mapper.CommonMapper;
+import com.xtuer.mapper.RegistrationMapper;
 import com.xtuer.service.ExamService;
 import com.xtuer.service.RedisAclService;
 import com.xtuer.service.RegistrationService;
@@ -24,6 +25,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Date;
+import java.util.List;
 
 /**
  * 注册的 Controller
@@ -42,6 +44,9 @@ public class ExamController {
     private CommonMapper commonMapper;
 
     @Autowired
+    private RegistrationMapper registrationMapper;
+
+    @Autowired
     RedisAclService redisAclService;
 
     @PostMapping(UriView.URI_EXAM_SUBMIT)
@@ -52,6 +57,13 @@ public class ExamController {
         if (!r.isSuccess()) {
             return r;
         }
+
+        //验证certbatch idNo name 联合唯一
+        List<RegistrationForm> regList = registrationMapper.findByCbIdAndIdNoAndName(form.getName(),form.getIdNo(),form.getCertBatchId());
+        if(!regList.isEmpty()){
+            return new Result(false, "同一批次下已经存在相同的名称和证件号的记录");
+        }
+
         // [2] 设置固定信息
         form.setApplyTime(new Date());
         form.setDeleteStatus(SignUpConstants.DELETE_STATUS_NORMAL);// 正常
@@ -66,15 +78,17 @@ public class ExamController {
         form.setPassword(CommonUtils.md5(form.getPassword())); // 使用 MD5 编码密码
         // [3] 保存数据
         examService.save(form,request);
-        System.out.println(JSON.toJSONString(form));
 
-        // [4] 保存简历信息
+        //[4]修改对应统考记录为已使用
+        examService.updateScoreStatus(form);
+
+        // [5] 保存简历信息
         examService.saveResum(form);
 
-        // [5] 保存图片
-        examService.saveRequestPhoto(form);
+        // [6] 保存图片
+        examService.saveExamPhoto(form);
 
-        // [6] 写入日志
+        // [7] 写入日志
         examService.saveUserLog(form, request);
 
         // [8] remove from ip list

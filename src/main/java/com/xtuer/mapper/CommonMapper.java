@@ -48,4 +48,9 @@ public interface CommonMapper {
     //统考报名根据姓名,证件号和统考合格名单查询
     List<Score> findByUserExamNo(@Param("name") String name, @Param("idNo") String idNo, @Param("scoreCertNo") String scoreCertNo);
 
+    //统考报名成功修改合格名单中的状态
+    void updateScoreStatus(@Param("certBatchId") int certBatchId,@Param("status") int status, @Param("scoreId") long scoreId);
+
+    Score findByScoreId(@Param("scoreId") long scoreId);
+
 }

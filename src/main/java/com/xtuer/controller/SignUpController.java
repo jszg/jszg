@@ -206,12 +206,15 @@ public class SignUpController {
     // 现任教学科按名称搜索
     @GetMapping(UriView.REST_TEACH_SUBJECT_BY_NAME)
     @ResponseBody
-    public Result<List<Subject>> getSubjectByName(@PathVariable("teachGradeId") int teachGradeId,@PathVariable("provinceId") int provinceId, @PathVariable("name") String name)
-            throws UnsupportedEncodingException {
+    public Result<List<Subject>> getSubjectByName(@PathVariable("teachGradeId") int teachGradeId,@PathVariable("provinceId") int provinceId, @PathVariable("name") String name) {
         if(name.isEmpty()){
             return Result.ok(null);
         }
-        name = new String(name.getBytes("iso-8859-1"),"utf-8");
+        try {
+            name = java.net.URLDecoder.decode(name,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         List<Subject> list = subjectMapper.findByName(teachGradeId,provinceId,name);
         if(list.isEmpty()){
             return Result.ok(null);
@@ -222,12 +225,15 @@ public class SignUpController {
     // 非统考第三步任教学科按名称查询
     @GetMapping(UriView.REST_REQUEST_SUBJECT_BY_NAME)
     @ResponseBody
-    public Result<List<Subject>> getRequestSubjectByName(@PathVariable("teachGrade") int teachGrade,@PathVariable("provinceId") int provinceId, @PathVariable("name") String name)
-            throws UnsupportedEncodingException {
+    public Result<List<Subject>> getRequestSubjectByName(@PathVariable("teachGrade") int teachGrade,@PathVariable("provinceId") int provinceId, @PathVariable("name") String name) {
         if(name.isEmpty()){
             return Result.ok(null);
         }
-        name = new String(name.getBytes("iso-8859-1"),"utf-8");
+        try {
+            name = java.net.URLDecoder.decode(name,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         List<Subject> list = subjectMapper.findRequestSubjectByName(teachGrade,provinceId,name);
         if(list.isEmpty()){
             return Result.ok(null);
@@ -399,11 +405,15 @@ public class SignUpController {
     //注册第七步最高学历所学专业按名称搜索
     @GetMapping(UriView.REST_MAJOR_SEARCH_BY_NAME)
     @ResponseBody
-    public Result<List<Major>> getMajorByName(@PathVariable("name") String name) throws UnsupportedEncodingException {
+    public Result<List<Major>> getMajorByName(@PathVariable("name") String name) {
         if(name.isEmpty()){
             return Result.ok(null);
         }
-        name = new String(name.getBytes("iso-8859-1"),"utf-8");
+        try {
+            name = java.net.URLDecoder.decode(name,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         List<Major> majors = majorMapper.findByName(name);
         if (majors.isEmpty()) {
             return Result.ok(null);
@@ -432,11 +442,15 @@ public class SignUpController {
     // 非统考第七步的所学专业root
     @GetMapping(UriView.REST_REQUEST_MAJOR_NAME)
     @ResponseBody
-    public Result<List<Major>> getRequestMajorsByName(@PathVariable("provinceId") int provinceId,@PathVariable("name") String name) throws UnsupportedEncodingException{
+    public Result<List<Major>> getRequestMajorsByName(@PathVariable("provinceId") int provinceId,@PathVariable("name") String name) {
         if(name.isEmpty()){
             return Result.ok(null);
         }
-        name = new String(name.getBytes("iso-8859-1"),"utf-8");
+        try {
+            name = java.net.URLDecoder.decode(name,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         List<Major> majors = majorMapper.findRequestMajorByName(provinceId,name);
         if (majors.isEmpty()) {
             return Result.ok(null);
@@ -466,11 +480,15 @@ public class SignUpController {
     // 专业技术职务子节点
     @GetMapping(UriView.REST_TECHNICAL_JOB_BY_NAME)
     @ResponseBody
-    public Result<List<TechnicalJob>> getTechnicalJobsByName(@PathVariable("name") String name) throws UnsupportedEncodingException {
+    public Result<List<TechnicalJob>> getTechnicalJobsByName(@PathVariable("name") String name){
         if (name.isEmpty()){
             return Result.ok(null);
         }
-        name = new String(name.getBytes("iso-8859-1"),"utf-8");
+        try {
+            name = java.net.URLDecoder.decode(name,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         List<TechnicalJob> jobs = technicalJobMapper.findByName(name);
         if(jobs.isEmpty()){
             return Result.ok(null);

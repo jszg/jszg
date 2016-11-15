@@ -14,7 +14,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class Score {
-    private int id;
+    private long id;
     private String  name;
     private Integer idType;
     private String  idTypeName;
@@ -26,6 +26,7 @@ public class Score {
     private Integer subject;
     private String  subjectName;
     private Integer adminLevel;
+    private Integer status;
 
 
 
