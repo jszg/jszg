@@ -199,7 +199,6 @@ StepValidator.validate3thStep = function(){
      var idCard = new IdCard('', $.trim($idNo));
      var genderId          = idCard.gender;           // 性别
      var birthday          = idCard.birthdayString;           // 出生日期
-     alert('birthday==='+birthday);
      UiUtils.setFormData('gender', parseInt($.trim($idNo).substring(16, 17)), genderId);
      UiUtils.setFormData('birthday', birthday, birthday);
     return true;
@@ -311,7 +310,6 @@ StepValidator.validate7thStep = function(){
     var scoreCertNo       = UiUtils.getFormData(box7, 'scoreCertNo').id;           // 统考编号
     var scoreId           = UiUtils.getFormData(box7, 'scoreId').id;           // 统考合格名单id
     ////////////////////////// 以上数据都不需要验证，前面步骤已经验证过了 //////////////////////////
-    alert('scoreId==='+scoreId);
 
     var password1 = $('#password1').val(); // 系统登录密码
     var password2 = $('#password2').val(); // 密码确认

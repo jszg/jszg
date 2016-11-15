@@ -83,7 +83,6 @@ public class RegistrationController {
         form.setPassword(CommonUtils.md5(form.getPassword())); // 使用 MD5 编码密码
         // [3] 保存数据
         registrationService.save(form,request);
-        System.out.println(JSON.toJSONString(form));
 
         // [4] 保存简历信息
         registrationService.saveResum(form);

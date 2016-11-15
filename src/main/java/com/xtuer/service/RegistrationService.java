@@ -144,7 +144,6 @@ public class RegistrationService {
         String tempName = form.getTmpPhoto();
         String tempPhotoPath = tempDir + File.separator + tempName; // 临时图片路径
         String photoDir = config.getString("uploadRegPhotoDir"); // 图片的最终目录
-        System.out.println(form.getRegId());
         String photoPath = generateRequestPhotoPath(form.getRegId(), photoDir);
 
         try {

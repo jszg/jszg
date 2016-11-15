@@ -58,8 +58,6 @@ public class EnrollmentService {
     private DictMapper dictMapper;
 
     public void saveWhenInHistory(EnrollmentForm form) {
-        System.out.println("saveWhenInHistory");
-
         // 使用表中现有的认定历史表中数据
         EnrollmentForm temp = enrollmentMapper.findHistoryValidByRegisterId(form.getRegisterId());
 
@@ -68,8 +66,6 @@ public class EnrollmentService {
         form.setIdTypeId(temp.getIdTypeId());
         form.setName(temp.getName());
         form.setCertTypeId(temp.getCertTypeId());
-        System.out.println(temp.getCertTypeId());
-        System.out.println(temp.getSubjectId());
         form.setRegisterSubjectId(temp.getSubjectId());
         form.setCertNo(temp.getCertNo());
         form.setNationId(temp.getNationId());
@@ -81,12 +77,9 @@ public class EnrollmentService {
         form.setCityId(this.getEnrollCityId(form.getOrgId()));
         form.setStatusMemo("new-cert");
         enrollmentMapper.insertEnrollment(form);
-
-        System.out.println(JSON.toJSONString(form));
     }
 
     public void saveWhenInRegistration(EnrollmentForm form) {
-        System.out.println("saveWhenInRegistration");
         //从认定申请表来的数据在定期注册时,要向认定表中回写省级注册计划信息
         ProvinceBatch pb = commonMapper.findByProvinceId(form.getProvinceId());
         registrationMapper.updateEnrollProBatch(pb.getId(),form.getRegisterId());
@@ -109,7 +102,6 @@ public class EnrollmentService {
         form.setCityId(this.getEnrollCityId(form.getOrgId()));
         form.setStatusMemo("new-cert");
         enrollmentMapper.insertEnrollment(form);
-        System.out.println(JSON.toJSONString(form));
     }
 
     public void saveWhenNotInHistoryAndInRegistration(EnrollmentForm form){
@@ -180,7 +172,6 @@ public class EnrollmentService {
         form.setCityId(this.getEnrollCityId(form.getOrgId()));
         form.setStatusMemo("new-cert");
         enrollmentMapper.insertEnrollment(form);
-        System.out.println("saveWhenNotInHistoryAndInRegistration");
     }
 
     /**
