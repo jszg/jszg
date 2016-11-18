@@ -451,8 +451,7 @@
                     <td><select id="learn-types" name="1"><option selected="selected" value="-1">请选择</option></select></td>
                     <td><span class="description">请按照申请认定所使用的学历进行填写</span></td>
                     <td class="operation">工作单位</td>
-                    <td><input id="work-unit" type="text"></td>
-                    <td></td>
+                    <td colspan="2"><input id="work-unit" type="text"></td>
                 </tr>
                 <tr>
                     <td class="operation">现从事职业</td>
