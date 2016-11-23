@@ -587,7 +587,7 @@
          <P>证件号码：<span class="form-data" name="sucessIdNo" data-id="" data-name=""></span></P>
          <P>密码找回邮箱：<span class="form-data" name="sucessEmail" data-id="" data-name=""></span></P>
          <br/>
-         <P style="text-indent: 50px;color:red;font-weight:blod;"><a href="http://www.jszg.edu.cn">返回网站首页</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.jszg.edu.cn/portal/request/index">返回认定报名入口</a></P>
+         <P style="text-indent: 50px;color:red;font-weight:blod;"><a href="http://www.jszg.edu.cn">返回网站首页</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="http://www.jszg.edu.cn/portal/request/index">登录系统</a></P>
          </div>
        </div>
     </div>
