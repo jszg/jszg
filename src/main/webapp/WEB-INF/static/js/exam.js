@@ -173,6 +173,7 @@ StepValidator.validate3thStep = function(){
      }
      var invalidMessage = '';
      var invalid = false;
+      $name = encodeURI(encodeURI($name));
      // 查询历史记录，如果有
      $.rest.get({url: Urls.REST_EXAM_STEP3, urlParams: {name: $name, idNo: $idNo,scoreCertNo: $scoreCertNo}, async: false, success: function(result) {
          if (!result.success) {
