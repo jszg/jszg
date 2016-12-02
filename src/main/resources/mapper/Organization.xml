@@ -7,74 +7,110 @@
 <!--namespace 非常重要：必须是 Mapper 类的全路径-->
 <mapper namespace="com.xtuer.mapper.OrganizationMapper">
     <select id="findByCertTypeAndCity" resultType="Organization">
-        SELECT org_id AS id, org_name AS name
-        FROM t_org
-        WHERE (org_id = #{city} OR parent_id = #{city})
+        SELECT
+            org_id   AS id,
+            org_name AS name
+        FROM
+            t_org
+        WHERE
+            (org_id = #{city} OR parent_id = #{city})
             AND org_type = (SELECT t_cert_type.admin_level FROM t_cert_type WHERE t_cert_type.ct_id = #{certTypeId})
             AND status=1
-            ORDER BY area_code
-    </select>
-
-    <select id="findByCertTypeAndProvince" resultType="Organization">
-        SELECT org_id AS id, org_name AS name
-        FROM t_org
-        WHERE (org_id = #{province} OR parent_id = #{province})
-        AND org_type = (SELECT t_cert_type.admin_level FROM t_cert_type WHERE t_cert_type.ct_id = #{certTypeId})
-        AND status=1
         ORDER BY area_code
     </select>
 
+    <select id="findByCertTypeAndProvince" resultType="Organization">
+        SELECT
+            org_id AS id,
+            org_name AS name
+        FROM
+            t_org
+        WHERE
+            (org_id = #{province} OR parent_id = #{province})
+            AND org_type = (SELECT t_cert_type.admin_level FROM t_cert_type WHERE t_cert_type.ct_id = #{certTypeId})
+            AND status=1
+        ORDER BY
+            area_code
+    </select>
+
     <select id="findByOrgType" resultType="Organization">
-        SELECT o.ORG_ID AS id, o.ORG_NAME AS name
-        FROM T_ORG o
-        WHERE o.ORG_TYPE= #{orgType}  AND o.STATUS = 1  ORDER BY o.AREA_CODE
+        SELECT
+            o.org_id   AS id,
+            o.org_name AS name
+        FROM
+            t_org o
+        WHERE
+            o.org_type= #{orgType}
+            AND o.status = 1
+        ORDER BY
+            o.area_code
     </select>
 
     <select id="findByOrgTypeEq4" resultType="Organization">
-      /*select o.ORG_ID as id, o.ORG_NAME as name, o.province_city as provinceCity
-      from T_ORG o
-      where o.ORG_TYPE= 4  and o.STATUS = 1  order by o.AREA_CODE*/
-      select distinct o.org_id as id, o.org_name as name,o.province_city as provinceCity, o.area_name as areaName, onl.old_name as
-      oldName,onl.change_date as changeDate,
-        o.area_code
-      from t_org o
-      left join t_org_name_log onl on o.org_id = onl.org_id
-      where o.org_type = 4 and o.status = 1
-        order by o.area_code
+      SELECT
+        o.org_id   AS id,
+        o.org_name AS name,
+        o.province_city AS provinceCity,
+        o.area_name     AS areaName
+      FROM
+        t_org o
+      WHERE
+        o.org_type = 4 and o.status = 1
+      ORDER BY o.area_code
     </select>
 
     <select id="findByParentId" resultType="Organization">
-        select distinct o.org_id as id, o.org_name as name,o.area_name as areaName, onl.old_name as oldName,onl.change_date as
-        changeDate,oal.annul_date as annulDate,
-        o.area_code
-        from t_org o
-        left join t_org_name_log onl on o.org_id = onl.org_id
-        left join t_org_annul_log oal on oal.org_id = o.org_id
-        where o.parent_id = #{parentId} and o.org_type != 1
-        order by o.area_code
+        SELECT
+            o.org_id AS id,
+            o.org_name AS name,
+            o.area_name AS areaName
+        FROM
+            t_org o
+        WHERE
+            o.parent_id = #{parentId} and o.org_type != 1
+        ORDER BY
+            o.area_code
     </select>
 
     <select id="findByOrgId" resultType="Organization">
-      select o.org_id as id ,o.org_name as name, o.PARENT_ID as parent, o.ORG_TYPE as orgType
-      from t_org o
-      where o.org_id = #{orgId}
-        order by o.area_code
+        SELECT
+            o.org_id    as id ,
+            o.org_name  as name,
+            o.parent_id as parent,
+            o.org_type  as orgType
+        FROM
+            t_org o
+        WHERE
+            o.org_id = #{orgId}
+        ORDER BY
+            o.area_code
     </select>
 
     <select id="findByProvinceCity" resultType="Organization">
-      select o.org_id as id ,o.org_name as name
-      from t_org o
-      where (o.org_id = #{provinceCityId} or( o.parent_id = #{provinceCityId} and o.org_type != 1 )) and o.status = 1
-        order by AREA_CODE
+        SELECT
+            o.org_id   AS id ,
+            o.org_name AS name
+        FROM
+            t_org o
+        WHERE
+            (o.org_id = #{provinceCityId} or( o.parent_id = #{provinceCityId} and o.org_type != 1 ))
+            AND o.status = 1
+        ORDER BY
+            area_code
     </select>
 
     <select id="findByCity" resultType="Organization">
-      select o.org_id as id ,o.org_name as name
-      from t_org o
-      where ((o.org_id = (select parent_id from t_org where org_id = #{cityId} ))
-        or(o.org_id = #{cityId} or( o.parent_id = #{cityId} and o.org_type != 1 )))
-        and o.status = 1
-        order by o.area_code
+        SELECT
+            o.org_id   AS id ,
+            o.org_name AS name
+        FROM
+            t_org o
+        WHERE
+            ((o.org_id = (select parent_id from t_org where org_id = #{cityId} ))
+            OR (o.org_id = #{cityId} or( o.parent_id = #{cityId} and o.org_type != 1 )))
+            AND o.status = 1
+        ORDER BY
+            o.area_code
     </select>
 
     <select id="findByProvinceAndCityAndCertTypeId" resultType="Organization">

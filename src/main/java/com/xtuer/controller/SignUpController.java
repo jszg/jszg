@@ -75,50 +75,79 @@ public class SignUpController {
     // 父机构
     @GetMapping(UriView.REST_ORGS_BY_ORGTYPE)
     @ResponseBody
-    public Result<List<Organization>> getOrgByOrgType(@PathVariable("orgType") int orgType, @RequestParam("date") String d) throws ParseException {
+    public Result<List<Organization>> getOrgByOrgType(@PathVariable("orgType") int orgType, @RequestParam("date") String certAssignDate) throws ParseException {
         String key = String.format(RedisKey.ORGS_BY_ORGTYPE, orgType);
 
-        Date date = DateUtils.parseDate(d, "yyyy-MM-dd");
+        Date date = DateUtils.parseDate(certAssignDate, "yyyy-MM-dd");
         List<Organization> organizations = null;
         if (orgType == 4) {
             organizations = redisUtils.get(new TypeReference<List<Organization>>(){}, key, () -> organizationMapper.findByOrgTypeEq4());
         } else {
             organizations = redisUtils.get(new TypeReference<List<Organization>>() {}, key, () -> organizationMapper.findByOrgType(orgType));
         }
-
-        organizations.stream()
-                .filter(o -> o.getChangeDate() != null && o.getOldName() != null && o.getChangeDate().after(date))
-                .forEach(o -> {
-                    o.setName(o.getOldName());
-                });
-
+        organizations = this.recoverOrginalOrgName(0,date,organizations);
         return Result.ok(organizations);
     }
 
     // 子机构
     @GetMapping(UriView.REST_ORGS_BY_PARENT)
     @ResponseBody
-    public Result<List<Organization>> getOrgByParentId(@PathVariable("parentId") int parentId, @RequestParam("date") String d) throws ParseException {
+    public Result<List<Organization>> getOrgByParentId(@PathVariable("parentId") int parentId, @RequestParam("date") String certAssignDate) throws ParseException {
         String key = String.format(RedisKey.ORGS_BY_PARENT, parentId);
-        Date date = DateUtils.parseDate(d, "yyyy-MM-dd");
+        Date date = DateUtils.parseDate(certAssignDate, "yyyy-MM-dd");
 
         List<Organization> list = redisUtils.get(new TypeReference<List<Organization>>(){}, key, () -> organizationMapper.findByParentId(parentId));
-        List<Organization> results = new ArrayList<>();
-        for (Organization o : list) {
-            if (o.getChangeDate() == null) {
-                results.add(o);
-                continue;
-            }
-            if (o.getAnnulDate() != null &&  o.getAnnulDate().before(date)) {
-                continue;
-            }
-            if (o.getChangeDate().after(date)) {
-                o.setName(o.getOldName());
-                results.add(o);
+        list = this.recoverOrginalOrgName(parentId,date,list);
+        return Result.ok(list);
+    }
+
+    //证书上的认定机构过滤
+    private List<Organization> recoverOrginalOrgName(Integer parentID, Date certAssign, List<Organization> orgs) {
+        List<Organization> all = new ArrayList<Organization>();
+        if (orgs != null && orgs.size() > 0) {
+            all.addAll(orgs);
+        }
+        if(certAssign != null){
+            if(parentID == 0){
+                List<OrgNameLog> orgNameLogList = commonMapper.findOrgNameLog();
+                orgNameLogList.stream().filter(onl -> onl.getChangeDate() != null && onl.getChangeDate().after(certAssign)).forEach(onl -> {
+                    this.renameOrAddOrg(all, onl.getOrgId(), onl.getOldName());
+                });
+            }else{
+                //更名后的机构，找变更之前的parent，变更时间，在，证书签发日期之后，证书签发时有效，不存在刚添加进去。存在则名称为变更前的名称。
+                List<OrgNameLog> orgNameLogs = commonMapper.findByOldParentId(parentID);
+                orgNameLogs.stream().filter(onl -> onl.getChangeDate() != null && onl.getChangeDate().after(certAssign)).forEach(onl -> {
+                    this.renameOrAddOrg(all, onl.getOrgId(), onl.getOldName());
+                });
+                //更名后的机构，变更到parent之中了，变更时间，在，证书签发日期之后，失效的了，删除
+                List<OrgNameLog> orgNameLogList = commonMapper.findOrgByNewDiffOrg(parentID);
+                orgNameLogList.stream().filter(onl -> onl.getChangeDate() != null && onl.getChangeDate().after(certAssign)).forEach(onl -> {
+                    all.remove(new Organization(onl.getOrgId()));
+                });
+                //撤销或合并机构，撤销或合并时间，在，证书签发日期，之前，说明机构失效了，删除
+                List<OrgAnnulLog> orgAnnulLogs = commonMapper.findOrgAnnulLogByParentId(parentID);
+                orgAnnulLogs.stream().filter(oal -> oal.getAnnulDate() != null && oal.getAnnulDate().before(certAssign)).forEach(oal -> {
+                    all.remove(new Organization(oal.getOrgId()));
+                });
             }
         }
+        return all;
+    }
 
-        return Result.ok(results);
+    private void renameOrAddOrg(Collection<Organization> orgs, Integer orgId, String reName) {
+        boolean find = false;
+        for (Organization org : orgs) {
+            if (org.getId().equals(orgId)) {
+                find = true;
+                org.setName(reName);
+                break;
+            }
+        }
+        if (!find) {
+            Organization org = new Organization(orgId);
+            org.setName(reName);
+            orgs.add(org);
+        }
     }
 
     // 注册机构

@@ -14,7 +14,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class Organization {
-    private int id;
+    private Integer id;
     private String name;
     private String areaName;
     private String oldName;
@@ -24,5 +24,13 @@ public class Organization {
     private int orgType;
     private Integer provinceId;
     private String memo;
+
+    public Organization(){
+
+    }
+
+    public Organization(Integer id){
+        this.id = id ;
+    }
 
 }

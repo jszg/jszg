@@ -53,4 +53,16 @@ public interface CommonMapper {
 
     Score findByScoreId(@Param("scoreId") long scoreId);
 
+    //查询机构更名日志
+    List<OrgNameLog> findOrgNameLog();
+
+    //查询机构更名日志
+    List<OrgNameLog> findByOldParentId(Integer parentId);
+
+    //查询机构更名日志
+    List<OrgNameLog> findOrgByNewDiffOrg(Integer parentId);
+
+    //查询机构更名日志
+    List<OrgAnnulLog> findOrgAnnulLogByParentId(Integer parentId);
+
 }

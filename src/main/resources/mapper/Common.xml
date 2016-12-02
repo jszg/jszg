@@ -293,4 +293,53 @@
         WHERE
             sco_id=#{scoreId}
     </update>
+    <select id="findOrgNameLog" resultType="OrgNameLog">
+        SELECT DISTINCT
+            onl.org_id      AS orgId ,
+            onl.old_name    AS oldName,
+            onl.change_date AS changeDate
+        FROM
+            T_ORG_NAME_LOG onl
+        WHERE
+            onl.old_parent_id IS NULL
+        ORDER BY
+            onl.change_date DESC
+    </select>
+    <select id="findByOldParentId" resultType="OrgNameLog">
+        SELECT DISTINCT
+            onl.org_id      AS orgId ,
+            onl.old_name    AS oldName,
+            onl.change_date AS changeDate
+        FROM
+            T_ORG_NAME_LOG onl
+        WHERE
+            onl.old_parent_id = #{parentId}
+        ORDER BY
+            onl.change_date DESC
+    </select>
+
+    <select id="findOrgByNewDiffOrg" resultType="OrgNameLog">
+        SELECT DISTINCT
+            onl.org_id      AS orgId ,
+            onl.old_name    AS oldName,
+            onl.change_date AS changeDate
+        FROM
+            T_ORG_NAME_LOG onl
+        WHERE
+            onl.new_parent_id = #{parentId}
+            AND onl.old_parent_id != onl.new_parent_id
+        ORDER BY
+            onl.change_date DESC
+    </select>
+
+    <select id="findOrgAnnulLogByParentId" resultType="OrgAnnulLog">
+        SELECT DISTINCT
+            oal.org_id AS orgId ,
+            oal.annul_date annulDate
+        FROM
+            t_org_annul_log oal
+        WHERE
+            oal.parent_id = #{parentId}
+            AND oal.annul_type = 1
+    </select>
 </mapper>

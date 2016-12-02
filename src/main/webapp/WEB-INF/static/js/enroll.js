@@ -818,7 +818,7 @@ function handleRecognizeOrgsDialog() {
 
         $('#recognize-orgs-dialog-trigger').click(); // 显示对话框
 
-        // 加载任教学科
+        // 加载认定机构
         UiUtils.requestDataAndShowInTree($('#recognize-orgs-dialog .ztree'), function(treeId, treeNode) {
             if(!treeNode) {
                 return Urls.REST_ORGS_BY_ORGTYPE.format({orgType: 4}) + '?date=' + certAssignDate;
@@ -828,7 +828,7 @@ function handleRecognizeOrgsDialog() {
         });
     });
 
-    // 点击确定按钮，设置选中的学科，并隐藏对话框
+    // 点击确定按钮，设置选中的认定机构，并隐藏对话框
     $('#recognize-orgs-dialog .ok-button').click(function(event) {
         var orgNode = window.subjectsTree.getSelectedNodes()[0];
         if (orgNode) {
