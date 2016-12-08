@@ -335,7 +335,7 @@
     <select id="findOrgAnnulLogByParentId" resultType="OrgAnnulLog">
         SELECT DISTINCT
             oal.org_id AS orgId ,
-            oal.annul_date annulDate
+            oal.annul_date AS annulDate
         FROM
             t_org_annul_log oal
         WHERE
