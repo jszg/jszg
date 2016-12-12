@@ -76,10 +76,10 @@ public class RegistrationValidationController {
                 String prependMsg = "";
                 if (batchTime.getValidBeginDate() != null && batchTime.getValidEndDate() != null) {
                     if (batchTime.getValidBeginDate().after(new Date())) {
-                        prependMsg = "很抱歉，该机构的网上报名时间未到，";
+                        prependMsg = "很抱歉，该机构的网上报名时间未到";
                     }
                     if (batchTime.getValidEndDate().before(new Date())) {
-                        prependMsg = "很抱歉，该机构的网上报名时间已截止，";
+                        prependMsg = "很抱歉，该机构的网上报名时间已截止";
                     }
                 }
                 buffer.append(String.format("%s: %s 到 %s; ", prependMsg,
