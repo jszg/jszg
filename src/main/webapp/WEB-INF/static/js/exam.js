@@ -11,7 +11,7 @@ $(document).ready(function() {
     handleTechnicalJobsDialog();//第七步职业技术职务
 
     handleGraduationCollegesDialog(); // 第七步的最高学历毕业学校
-    //StepUtils.toStep(7); // 到第 N 步，测试使用
+    StepUtils.toStep(7); // 到第 N 步，测试使用
 
     requestDicts(); // 请求字典数据，初始化省，政治面貌等
 
@@ -603,6 +603,7 @@ function requestDicts() {
         UiUtils.insertOptions('degrees', data.degree);            // 最高学历
         UiUtils.insertOptions('pth-levels', data.pthLevel);       // 普通话水平
         UiUtils.insertOptions('learn-types', data.learnType);     // 学习形式
+        UiUtils.insertOptions('school-types', data.schoolType);      // 最高毕业学校的学校类型
         UiUtils.insertOptions('occupations', data.occupation);    // 现从事职业
         UiUtils.insertOptions('normal-majors', data.normalMajor); // 专业类别
     }});
