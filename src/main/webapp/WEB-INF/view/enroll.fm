@@ -269,7 +269,7 @@
                 <tr>
                     <td class="operation">注册机构</td>
                     <td><select id="register-orgs"><option selected="selected" value="-1">请选择</option></select></td>
-                    <td><span class="error" id="register-org-error"></span></td>
+                    <td><span id="register-org-error"></span></td>
                 </tr>
                 <tr>
                     <td class="operation">现任教学科</td>

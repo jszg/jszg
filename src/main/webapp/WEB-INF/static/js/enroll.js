@@ -536,6 +536,7 @@ StepValidator.validate4thStep = function() {
     $('#register-org-error').text('');
     $.rest.get({url: Urls.REST_ENROLL_ORG_VALIDATION, urlParams: {orgId: registerOrg.id}, async: false, success: function(result) {
         if (!result.success) {
+            $('#register-org-error').addClass('error');
             $('#register-org-error').text(result.message);
             valid = false;
         } else {

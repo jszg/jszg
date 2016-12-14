@@ -152,7 +152,7 @@
                         </select>
                     </td>
                     <td>
-                        <span class="error" id="request-org-error"></span>
+                        <span id="request-org-error"></span>
                         <span class="description"><fon>申请认定幼儿园、小学、初级中学教师资格时，认定机构选择区、县级教育局；申请认定高级中学、中等职业学校、中等职业学校实习指导教师资格时，认定机构选择地、州、市级教育局。<br></font><font color="red">河北省认定中小学和幼儿园教师资格的认定权限已经调整，“认定机构”只能选择系统提供的教育局名称。<br></font><font>高等学校拟聘或已聘任的教学科研人员申请认定高等学校教师资格只能选择任教（拟任教）学校所在地的省（自治区、直辖市）教育厅（教委）。</font></span>
                     </td>
                 </tr>
@@ -485,7 +485,7 @@
         </div>
     </div>
     <div class="content_bd">
-          <h4>个人简历：<b class="f_red f_size">（简历按照时间先后顺序从本人小学毕业后填起（当地教育局有其他规定的，按其规定填写），不得空项，至少两条，最多八条，必须填写到至今。简历超过8条的，删减前边的简历保留至 8 条为止。）</b></h4>
+          <h4>个人简历：<b class="f_red f_size">（简历按照时间先后顺序从本人小学毕业后填起（当地教育局有其他规定的，按其规定填写），不得空项，至少两条，最多八条，必须填写到至今。简历超过8条的，删减前边的简历保留至 8 条为止。开始时间、结束时间，如果所报名的教育局没有具体格式要求，可以选如下格式：YYYY/MM/DD，YYYY/MM）</b></h4>
           <div class="ui-body" id="curriculum">
               <table width="960" border="0" cellspacing="0" cellpadding="0" id="resumForm">
                   <tr>

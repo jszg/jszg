@@ -11,7 +11,7 @@ $(document).ready(function() {
     handleTechnicalJobsDialog();//第七步职业技术职务
 
     handleGraduationCollegesDialog(); // 第七步的最高学历毕业学校
-    StepUtils.toStep(7); // 到第 N 步，测试使用
+    //StepUtils.toStep(7); // 到第 N 步，测试使用
 
     requestDicts(); // 请求字典数据，初始化省，政治面貌等
 
@@ -173,7 +173,7 @@ StepValidator.validate3thStep = function(){
      }
      var invalidMessage = '';
      var invalid = false;
-      $name = encodeURI(encodeURI($name));
+     $name = encodeURI(encodeURI($name));
      // 查询历史记录，如果有
      $.rest.get({url: Urls.REST_EXAM_STEP3, urlParams: {name: $name, idNo: $idNo,scoreCertNo: $scoreCertNo}, async: false, success: function(result) {
          if (!result.success) {
@@ -239,10 +239,11 @@ StepValidator.validate4thStep = function() {
 
     // 验证非统考认定机构，如果无效，则返回 false，不让继续第四步
     var valid = true;
-    $('#request-org-error').text('');
+    $('#exam-org-error').text('');
     $.rest.get({url: Urls.REST_REQUEST_ORG_VALIDATION, urlParams: {orgId:orgId,certTypeId:certTypeId}, async: false, success: function(result) {
         if (!result.success) {
-            $('#request-org-error').text(result.message);
+            $('#exam-org-error').addClass('error');
+            $('#exam-org-error').text(result.message);
             valid = false;
         } else {
             UiUtils.setFormData('certBatchId', result.data.certBatchId, result.data.certBatchId);
@@ -393,7 +394,7 @@ StepValidator.validate7thStep = function(){
        }else if(startDate .length == 0 && endDate .length == 0 && workUnit .length == 0 && job .length == 0 && certifier .length == 0){
 
        }else{
-           alert('第'+(index+1)+'条简历保存失败！开始时间、结束时间、单位、职务、证明人都不能为空！开始时间、结束时间，如果所报名的教育局没有具体格式要求，可以选如下格式：YYYY/MM/DD，YYYY/MM');
+           alert('第'+(index+1)+'条简历保存失败！开始时间、结束时间、单位、职务、证明人都不能为空！');
            through = false;
            return false;
        }

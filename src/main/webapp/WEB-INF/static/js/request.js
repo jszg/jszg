@@ -172,6 +172,7 @@ StepValidator.validate3thStep = function() {
     $('#request-org-error').text('');
     $.rest.get({url: Urls.REST_REQUEST_ORG_VALIDATION, urlParams: {orgId:orgId,certTypeId:certTypeId}, async: false, success: function(result) {
         if (!result.success) {
+            $('#request-org-error').addClass('error');
             $('#request-org-error').text(result.message);
             valid = false;
         } else {
@@ -267,6 +268,7 @@ StepValidator.validate6thStep = function(){
      var invalid = false;
      var certTypeId = parseInt($('#certTypes option:selected').val()); // #provinces option:selected
      var subjectId = UiUtils.getFormData('#box-3', 'request-subject-text').id; // 现任教学科
+     $name = encodeURI(encodeURI($name));
      // 查询历史记录，如果有
      $.rest.get({url: Urls.REST_REQUEST_STEP6, urlParams: {name: $name, idNo: $idNo,certTypeId: certTypeId, subjectId: subjectId}, async: false, success: function(result) {
          if (!result.success) {
@@ -397,7 +399,7 @@ StepValidator.validate7thStep = function(){
        }else if(startDate .length == 0 && endDate .length == 0 && workUnit .length == 0 && job .length == 0 && certifier .length == 0){
 
        }else{
-           alert('第'+(index+1)+'条简历保存失败！开始时间、结束时间、单位、职务、证明人都不能为空！开始时间、结束时间，如果所报名的教育局没有具体格式要求，可以选如下格式：YYYY/MM/DD，YYYY/MM');
+           alert('第'+(index+1)+'条简历保存失败！开始时间、结束时间、单位、职务、证明人都不能为空！');
            through = false;
            return false;
        }
