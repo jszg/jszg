@@ -252,6 +252,8 @@ StepValidator.validate4thStep = function() {
 
     if (!valid) {
         return false;
+    }else{
+         $('#exam-org-error').removeClass('error');
     }
 
     var requestOrg  = UiUtils.getSelectedOption('#request-orgs');   // 统考第三步认定机构

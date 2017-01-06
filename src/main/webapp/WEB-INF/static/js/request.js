@@ -182,6 +182,8 @@ StepValidator.validate3thStep = function() {
 
     if (!valid) {
         return false;
+    }else{
+        $('#request-org-error').removeClass('error');
     }
 
     var requestOrg  = UiUtils.getSelectedOption('#request-orgs');   // 非统考第三步认定机构

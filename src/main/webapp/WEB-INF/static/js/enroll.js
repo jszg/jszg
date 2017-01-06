@@ -546,8 +546,9 @@ StepValidator.validate4thStep = function() {
 
     if (!valid) {
         return false;
+    }else{
+        $('#register-org-error').removeClass('error');
     }
-
     UiUtils.setFormData('teachGrade', teachGrade.id, teachGrade.name);
     UiUtils.setFormData('province', province.id, province.name);
     UiUtils.setFormData('registerOrg', registerOrg.id, registerOrg.name);

@@ -105,6 +105,11 @@ public class RegistrationValidationController {
         if(name == null){
             return Result.ok(null);
         }
+        try {
+            name = java.net.URLDecoder.decode(name,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         List<Limitation> limits = commonMapper.findLimitationByNameAndIdNo(name, idNo);
         if (!limits.isEmpty()) {
             Limitation limit = limits.get(0);
