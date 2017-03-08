@@ -126,7 +126,7 @@ environments {
         }
 
         redis {
-            host = '192.168.8.112'
+            host = '172.16.4.2'
             port = 6379
         }
     }
@@ -148,7 +148,7 @@ environments {
         }
 
         redis {
-            host = '192.168.8.112'
+            host = '172.16.4.2'
             port = 6379
         }
     }
@@ -170,7 +170,7 @@ environments {
         }
 
         redis {
-            host = '192.168.8.116'
+            host = '172.16.7.2'
             port = 6379
         }
     }
