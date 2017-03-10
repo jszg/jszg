@@ -96,18 +96,6 @@ public class CommonUtils {
             }else{
                 year = 1900 + Integer.parseInt(certNo.substring(0, 2));
             }
-        } else {
-            SimpleDateFormat sdf  =   new  SimpleDateFormat( " yyyy-MM-dd" );
-            Calendar cal = Calendar.getInstance();
-            try {
-                cal.setTime(sdf.parse(certAssign));
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-            year = cal.get(Calendar.YEAR);
-            if (cal.get(Calendar.MONTH) <= Calendar.JUNE) {
-                year--;
-            }
         }
         return year;
     }

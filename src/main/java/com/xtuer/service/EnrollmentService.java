@@ -104,7 +104,7 @@ public class EnrollmentService {
         enrollmentMapper.insertEnrollment(form);
     }
 
-    public void saveWhenNotInHistoryAndInRegistration(EnrollmentForm form){
+    public  Result<?> saveWhenNotInHistoryAndInRegistration(EnrollmentForm form){
         //首先给registration设置值
         RegistrationForm reg = new RegistrationForm();
         reg.setIdNo(form.getIdNo());
@@ -117,7 +117,6 @@ public class EnrollmentService {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        reg.setCertBatchId(form.getCertBatchId());
         reg.setOrgId(form.getRecognizeOrgId());
         reg.setSubjectId(form.getRegisterSubjectId());
         reg.setName(form.getName());
@@ -159,8 +158,9 @@ public class EnrollmentService {
         CertBatch certBatch = commonMapper.findByYear(year);
         if(certBatch != null){
             reg.setCertBatchId(certBatch.getId());
+        }else{
+            return new Result(false, "请仔细检查证书号码或证书签发日期是否有误！");
         }
-
         reg.setEnrollProBatchId(commonMapper.findByProvinceId(form.getProvinceId()).getId());
         reg.setCertType(form.getCertTypeId());
         reg.setIdType(form.getIdTypeId());
@@ -172,6 +172,7 @@ public class EnrollmentService {
         form.setCityId(this.getEnrollCityId(form.getOrgId()));
         form.setStatusMemo("new-cert");
         enrollmentMapper.insertEnrollment(form);
+        return Result.ok();
     }
 
     /**
