@@ -179,7 +179,6 @@ public class EnrollmentValidationController {
             List<Registration> registrations = commonMapper.findRegistration(idNo, certNo);
             if (!registrations.isEmpty()) {
                 registration = registrations.get(0);
-                enrollment.setInRegistration(Boolean.TRUE);
                 enrollment.setInRegistration(true);
             }else{
                 int year = 0;

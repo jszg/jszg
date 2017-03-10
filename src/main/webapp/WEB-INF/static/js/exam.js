@@ -857,7 +857,7 @@ function handleChangeProvincesForCollegeEvent() {
 }
 
 /**
- * 最高学历毕业学校
+ * 最高学历毕业学校9
  */
 function handleGraduationCollegesDialog() {
     // 初始化 LeanModal 对话框

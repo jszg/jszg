@@ -428,17 +428,17 @@ CertNo.validate = function(certNo) {
 
     var certNoYear;
     if(certNo.length == 15){
-    	certNoYear = '19' + certNo.substring(0, 2);
-    	if(certNoYear < '1996'){
-    		alert("教师资格证书号码不规范，请检查您的证书号码，或者去发证机关规范教师资格证书后再报名");
-    		return false;
+                certNoYear = '19' + certNo.substring(0, 2);
+                if(certNoYear < '1996'){
+                    alert("教师资格证书号码不规范，请检查您的证书号码，或者去发证机关规范教师资格证书后再报名");
+                    return false;
     	}
     }
 
     if(certNo.length == 17){
     	certNoYear = certNo.substring(0, 4);
     	var nowYear = new Date().getFullYear();
-    	if(certNoYear < '1996' || certNoYear > nowYear){
+    	if(certNoYear < '1996' || certNoYear >= '2012' || certNoYear > nowYear){
     		alert("教师资格证书号码不规范，请检查您的证书号码，或者去发证机关规范教师资格证书后再报名");
     		return false;
     	}
