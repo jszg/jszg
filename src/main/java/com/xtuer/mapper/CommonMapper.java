@@ -65,4 +65,6 @@ public interface CommonMapper {
     //查询机构更名日志
     List<OrgAnnulLog> findOrgAnnulLogByParentId(Integer parentId);
 
+    //查詢最高学历和资格种类关联表
+    List<CertTypeLink> findByCertTypeAndEduLevel(@Param("certTypeId") int certTypeId, @Param("eduLevelId") int eduLevelId);
 }

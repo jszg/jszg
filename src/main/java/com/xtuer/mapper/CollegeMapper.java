@@ -13,4 +13,5 @@ import java.util.List;
 public interface CollegeMapper {
     List<College> findAll();
     List<College> findByProvinceId(@Param("provinceId") int provinceId);
+    List<College> findByName(@Param("name") String name);
 }

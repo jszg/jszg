@@ -8,7 +8,7 @@ package com.xtuer.dto;
 public class Dict {
     private int id;
     private String name;
-    private boolean status;
+    private boolean status = true;
 
     public int getId() {
         return id;

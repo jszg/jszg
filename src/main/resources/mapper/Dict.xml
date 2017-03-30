@@ -15,7 +15,7 @@
         ORDER BY code
     </select>
 
-  <select id="findByDictTypeStatus1" resultType="Dict">
+  <select id="findByDictTypeStatus" resultType="Dict">
     SELECT
     dic_id as id, name as name, status as status
     FROM
@@ -41,23 +41,41 @@
     </select>
 
     <select id="findEduLevels" resultType="Dict">
-      select d.dic_id as id,d.name as name,d.STATUS as status
-      from t_cert_type_link c
-      left join t_dict d on c.edu_level_id=d.dic_id
-      where c.ct_id= #{ct_id} ORDER BY code
-    </select>
-
-    <select id="findAcademicDegrees" resultType="Dict">
-        select d.dic_id as id,d.name as name,d.STATUS as status
-        from t_cert_type_link_extend c left join t_dict d on c.target_id=d.dic_id
-        where c.link_id=(select ctl.ctl_id from t_cert_type_link ctl where ctl.ct_id = #{ct_id} and ctl.edu_level_id = #{eduLevel})
-          and c.target_type=1 ORDER BY code
+      SELECT
+        d.dic_id AS id,
+        d.name AS name,
+        d.STATUS AS status
+      FROM
+        t_cert_type_link c
+      LEFT JOIN
+        t_dict d ON c.edu_level_id=d.dic_id
+      WHERE
+        c.ct_id= #{ct_id}
+      ORDER BY
+        code
     </select>
 
     <select id="findByTypeAndCode" resultType="Dict">
-        SELECT d.dic_id AS  id,
-                d.name   AS  name
-        FROM t_dict d
-        where d.dt_id = #{dtId} and d.code = #{code}
+        SELECT
+          d.dic_id AS  id,
+          d.name   AS  name
+        FROM
+          t_dict d
+        WHERE
+          d.dt_id = #{dtId} AND d.code = #{code}
+    </select>
+
+    <select id="findDegreessByCertTypeIdAndEduLevelId" resultType="Dict">
+        SELECT
+            d.dic_id AS  id,
+            d.name   AS  name
+        FROM
+          t_cert_type_link_extend c
+        LEFT JOIN
+          t_dict d ON c.target_id=d.dic_id
+        LEFT JOIN
+          t_cert_type_link ctl ON ctl.ctl_id = c.link_id
+        WHERE
+          ctl.ct_id = #{certTypeId} AND ctl.edu_level_id = #{eduLevelId} AND c.target_type=1 AND d.dt_id=6
     </select>
 </mapper>

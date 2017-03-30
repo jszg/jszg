@@ -40,6 +40,7 @@ Urls = {
     REST_TECHNICAL_JOB_ROOT:     '/new-cert/rest/signUp/technicaljobs/root',
     REST_TECHNICAL_JOB_CHILDREN: '/new-cert/rest/signUp/{parentId}/technicaljobs/children',
     REST_TECHNICAL_JOB_BY_NAME:  '/new-cert/rest/signUp/{name}/technicaljobs',//注册报名第七步根据名称查询教师职务
+    REST_COLLEGE_BY_NAME:       '/new-cert/rest/signUp/{name}/colleges',//根据学校名字查询是否已经存在
 
     REST_ENROLL_STEP3:           '/new-cert/rest/signUp/enroll/step3?idNo={idNo}&certNo={certNo}', // 第三步验证
     REST_ENROLL_ORG_VALIDATION:  '/new-cert/rest/signUp/enroll/orgs/{orgId}/validation', // 验证注册的注册机构
@@ -51,7 +52,10 @@ Urls = {
 
     REST_REQUEST_ORG_VALIDATION: '/new-cert/rest/signUp/request/orgs/{orgId}/certType/{certTypeId}/validation',// 验证非统考的认定机构
 
-     REST_EXAM_ORG_VALIDATION: '/new-cert/rest/signUp/exam/orgs/{orgId}/certType/{certTypeId}/validation',// 验证统考的认定机构
+    REST_EXAM_ORG_VALIDATION: '/new-cert/rest/signUp/exam/orgs/{orgId}/certType/{certTypeId}/validation',// 验证统考的认定机构
+
+    REST_EDU_LEVELS:   '/new-cert/rest/signUp/certTypes/{certTypeId}/eduLevels',//根据资格种类显示最高学历
+    REST_DEGREE_BY_CERT_TYPE_AND_EDU_LEVEL:  '/new-cert/rest/signUp/certType/{certTypeId}/eduLevel/{eduLevelId}/degrees',//认定报名根据资格种类和最高学历选择最高学位
 
     URI_ENROLL_SUBMIT:       '/new-cert/enroll/submit',
     URI_ENROLL_REG_PHOTO:    '/new-cert/enroll/reg-photo/{enrollId}',
@@ -114,9 +118,9 @@ UiUtils.setFormData = function(formDataName, id, name) {
  */
 UiUtils.getFormData = function(containerSelector, formDataName) {
     var $dataSpan = $('span.form-data[name="' + formDataName + '"]', $(containerSelector));
-    var id = parseInt($dataSpan.attr('data-id'));
-    id = (!id) ? -1 : id; // 如果 id 不存在，则为 -1
-
+    var id = $dataSpan.attr('data-id');
+    id = /^(-)?\d+(\.\d+)?$/.test(id) ? id : -1; // 取得整型 ID
+    // id = (!id) ? -1 : id; // 如果 id 不存在，则为 -1
     return {
         id: id,
         name: $dataSpan.attr('data-name')
@@ -389,6 +393,7 @@ function IdCard(name, idNo) {
     this.birthdayMonth  = this.birthday.substring(4, 6);
     this.birthdayDay    = this.birthday.substring(6, 8);
     this.gender         = (parseInt(idNo.substring(16, 17)) % 2 === 0) ? '女' : '男';
+    this.genderValue    = (parseInt(idNo.substring(16, 17)) % 2 === 0) ? 2 : 1;
     this.birthdayString = this.birthdayYear + '-' + this.birthdayMonth + '-' + this.birthdayDay;
 }
 

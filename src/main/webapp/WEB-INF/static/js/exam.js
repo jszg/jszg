@@ -9,6 +9,7 @@ $(document).ready(function() {
     handleChangeProvincesForCollegeEvent();//第七步毕业学校
     handleMajorsDialog(); // 第七步的所学专业
     handleTechnicalJobsDialog();//第七步职业技术职务
+    handleChangeEduLevelForDegreeEvent(); //第七步根据最高学历选择最高学位
 
     handleGraduationCollegesDialog(); // 第七步的最高学历毕业学校
     //StepUtils.toStep(7); // 到第 N 步，测试使用
@@ -129,7 +130,7 @@ function initWebUploader() {
 function StepValidator () {}
 
 
-//验证第6步数据
+//验证第3步数据
 StepValidator.validate3thStep = function(){
     var $name = $.trim($('#name').val());
     var $idNo = $.trim($('#idNo').val());
@@ -172,19 +173,20 @@ StepValidator.validate3thStep = function(){
         return false;
      }
      var invalidMessage = '';
+     var certTypeId = '';
      var invalid = false;
-     $name = encodeURI(encodeURI($name));
      // 查询历史记录，如果有
-     $.rest.get({url: Urls.REST_EXAM_STEP3, urlParams: {name: $name, idNo: $idNo,scoreCertNo: $scoreCertNo}, async: false, success: function(result) {
+     $.rest.get({url: Urls.REST_EXAM_STEP3, urlParams: {name: encodeURI(encodeURI($name)), idNo: $idNo,scoreCertNo: $scoreCertNo}, async: false, success: function(result) {
          if (!result.success) {
              invalid = true;
              invalidMessage = result.message;
              return;
          }else{
             var score = result.data.score;
+            certTypeId = score.certType;
             UiUtils.setFormData('name', score.name, score.name);
             UiUtils.setFormData('idType', score.idType, score.idTypeName);
-            UiUtils.setFormData('idNo', score.idNo, score.idNo);
+            UiUtils.setFormData('idNo', -1, score.idNo);
             UiUtils.setFormData('scoreCertNo', score.scoreCertNo, score.scoreCertNo);
             UiUtils.setFormData('certType', score.certType, score.certTypeName);
             UiUtils.setFormData('subject', score.subject, score.subjectName);
@@ -193,6 +195,15 @@ StepValidator.validate3thStep = function(){
          }
      }});
 
+      //根据选择的资格种类,给第七步的最高学历赋值
+      $.rest.get({url: Urls.REST_EDU_LEVELS, urlParams: {certTypeId:certTypeId}, async: false, success: function(result) {
+          if (!result.success) {
+              valid = false;
+          } else {
+              UiUtils.insertOptions('edu-levels', result.data); // 最高学历
+          }
+      }});
+
      if (invalid) {
          alert(invalidMessage);
          return false;
@@ -200,7 +211,8 @@ StepValidator.validate3thStep = function(){
      var idCard = new IdCard('', $.trim($idNo));
      var genderId          = idCard.gender;           // 性别
      var birthday          = idCard.birthdayString;           // 出生日期
-     UiUtils.setFormData('gender', parseInt($.trim($idNo).substring(16, 17)), genderId);
+     UiUtils.setFormData('gender', idCard.genderValue, genderId);
+     //UiUtils.setFormData('gender', parseInt($.trim($idNo).substring(16, 17)), genderId);
      UiUtils.setFormData('birthday', birthday, birthday);
     return true;
 };
@@ -297,10 +309,9 @@ StepValidator.validate7thStep = function(){
     var $localSet = $('#local-sets-table input:radio:checked');
     var localSet = {id: $localSet.val(), name: $localSet.attr('data-name')}; // 确认点
     var box7 = '#box-7';
-
     var name       = UiUtils.getFormData(box7, 'name').name; // 姓名
     var idTypeId   = UiUtils.getFormData(box7, 'idType').id; // 证件类型
-    var idNo       = UiUtils.getFormData(box7, 'idNo').id; // 身份证号码
+    var idNo       = UiUtils.getFormData(box7, 'idNo').name; // 身份证号码
     var certTypeId = UiUtils.getFormData(box7, 'certType').id; // 申请资格种类
     var subjectId  = UiUtils.getFormData(box7, 'subject').id; // 任教学科
     var org        = UiUtils.getFormData(box7, 'recognizeOrg').id; // 认定机构
@@ -314,7 +325,6 @@ StepValidator.validate7thStep = function(){
     var scoreCertNo       = UiUtils.getFormData(box7, 'scoreCertNo').id;           // 统考编号
     var scoreId           = UiUtils.getFormData(box7, 'scoreId').id;           // 统考合格名单id
     ////////////////////////// 以上数据都不需要验证，前面步骤已经验证过了 //////////////////////////
-
     var password1 = $('#password1').val(); // 系统登录密码
     var password2 = $('#password2').val(); // 密码确认
     var email = $.trim($('#email').val()); // 密码找回邮箱
@@ -350,7 +360,6 @@ StepValidator.validate7thStep = function(){
     var phone               = $.trim($('#phone').val());                        // 联系电话
     var cellphone           = $.trim($('#cellphone').val());                    // 手机
     var photo               = UiUtils.getFormData(box7, 'photo').name;          // 照片
-
     if (-1 === nationId)            { alert('请选择 "民族"');            return false; }
     if (-1 === politicalId)         { alert('请选择 "政治面貌"');        return false; }
     if (-1 === pthLevelId)          { alert('请选择 "普通话水平"');      return false; }
@@ -366,7 +375,7 @@ StepValidator.validate7thStep = function(){
     if (-1 === learnTypeId)         { alert('请选择 "学习形式"');        return false; }
     if (!workUnit)                  { alert('请输入 "工作单位"');        return false; }
     if (-1 === occupations)         { alert('请选择 "现从事职业"');      return false; }
-    if (-1 === technicalJobId)      { alert('请选择 "职业技术职务"');    return false; }
+    if (-1 === technicalJobId)      { alert('请选择 "专业技术职务"');    return false; }
     if (!residence)                 { alert('请输入 "户籍所在地"');      return false; }
     if (!birthPlace)                { alert('请输入 "出生地"');          return false; }
     if (!address)                   { alert('请输入 "通讯地址"');        return false; }
@@ -413,7 +422,6 @@ StepValidator.validate7thStep = function(){
    }
 
     // 通过验证
-
     var params = {
         provinceId:provinceId,
         certType: certTypeId,
@@ -439,6 +447,7 @@ StepValidator.validate7thStep = function(){
         political:politicalId,
         pthevelId: pthLevelId,
         graduateSchool: graduationCollegeId,
+        graduateSchoolName: graduationCollegeName,
         learnType: learnTypeId,
         graduaTime: graduationDate,
         graduateId: graduateId,
@@ -602,7 +611,7 @@ function requestDicts() {
         //UiUtils.insertOptions('id-types', data.idType, {name: '身份证'}); // 身份证
         UiUtils.insertOptions('nations', data.nation);            // 民族
         UiUtils.insertOptions('politicals', data.political);      // 政治面貌
-        UiUtils.insertOptions('edu-levels', data.eduLevel);       // 最高学位
+        //UiUtils.insertOptions('edu-levels', data.eduLevel);       // 最高学位
         UiUtils.insertOptions('degrees', data.degree);            // 最高学历
         UiUtils.insertOptions('pth-levels', data.pthLevel);       // 普通话水平
         UiUtils.insertOptions('learn-types', data.learnType);     // 学习形式
@@ -646,12 +655,14 @@ function handleChangeProvincesEvent() {
         if (isProvinceCity) {
             // 直辖市的市为它自己
             var cities = [{id: provinceId, name: $province.text(), provinceCity: true}];
-            UiUtils.insertOptions('cities', cities, {templateId: 'provinceOptionTemplate'});
+            //UiUtils.insertOptions('cities', cities, {templateId: 'provinceOptionTemplate'});
+            UiUtils.insertOptions('cities', cities, {remainFirstOption: false});
         }else if (-1 != provinceId) {
             //如果是高校或者资格种类的行政级别大于市(3)
             if(7 == certTypeId || $certType.attr('data-admin-level') > 3){
                 var cities = [{id: provinceId, name: $province.text(), provinceCity: true}];
-                UiUtils.insertOptions('cities', cities, {templateId: 'provinceOptionTemplate'});
+                //UiUtils.insertOptions('cities', cities, {templateId: 'provinceOptionTemplate'});
+                UiUtils.insertOptions('cities', cities, {remainFirstOption: false});
             }else{
                 // provinceId 为 -1 表示选择了 "请选择"，则不加载省的城市
                 $.rest.get({url: Urls.REST_CITIES_BY_PROVINCE, urlParams: {provinceId: provinceId}, success: function(result) {
@@ -857,6 +868,26 @@ function handleChangeProvincesForCollegeEvent() {
 }
 
 /**
+ * 处理切换最高学历时加载最高学位事件
+ */
+function handleChangeEduLevelForDegreeEvent() {
+    $('#edu-levels').change(function() {
+        $('#degrees').empty();
+        var box7 = '#box-7';
+        var eduLevelId = parseInt($('#edu-levels option:selected').val());
+        var certTypeId = UiUtils.getFormData(box7, 'certType').id;
+        if (-1 != eduLevelId && -1 !=certTypeId) {
+            //根据选择的资格种类,第七步的最高学历给最高学位赋值
+            $.rest.get({url: Urls.REST_DEGREE_BY_CERT_TYPE_AND_EDU_LEVEL, urlParams: {certTypeId:certTypeId,eduLeve:eduLevelId}, async: false, success: function(result) {
+                if (result.success) {
+                    UiUtils.insertOptions('#degrees', result.data); // 最高学位
+                }
+            }});
+        }
+    });
+}
+
+/**
  * 最高学历毕业学校9
  */
 function handleGraduationCollegesDialog() {
@@ -920,6 +951,17 @@ function handleGraduationCollegesDialog() {
 
         if (!collegeName) {
             alert('没有输入 "学校名称""');
+            return;
+        }
+
+        var validateCollege = false;
+        $.rest.get({url: Urls.REST_COLLEGE_BY_NAME, urlParams: {name: encodeURI(encodeURI(collegeName))}, async: false, success: function(result) {
+            if (result.data.length != 0) {
+                 validateCollege=true;
+            }
+        }});
+        if(validateCollege){
+            alert('学校名称已经存在!');
             return;
         }
 
@@ -1086,7 +1128,7 @@ function handleTechnicalJobsDialog() {
             var technicalJobNode = window.subjectsTree.getSelectedNodes()[0];
                 if (technicalJobNode) {
                     if (0 === technicalJobNode.level && '00' != technicalJobNode.code) {
-                        alert('请选择具体的教师职务！');
+                        alert('双击职务名称或单击前面的 “+” 图标可以展开更具体的职务！');
                         return;
                     }
 

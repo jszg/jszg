@@ -81,6 +81,8 @@ public class RegistrationController {
         form.setDataFrom(SignUpConstants.DATA_FROM_USER_ADD);
         form.setExam(SignUpConstants.EXAM_TYPE_NO_EXAM);
         form.setPassword(CommonUtils.md5(form.getPassword())); // 使用 MD5 编码密码
+        form.setScoreCertNo("");
+        form.setPrintStatus(0);
         // [3] 保存数据
         registrationService.save(form,request);
 

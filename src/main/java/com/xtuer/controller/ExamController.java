@@ -76,6 +76,7 @@ public class ExamController {
         form.setDataFrom(SignUpConstants.DATA_FROM_USER_ADD);
         form.setExam(SignUpConstants.EXAM_TYPE_EXAM);
         form.setPassword(CommonUtils.md5(form.getPassword())); // 使用 MD5 编码密码
+        form.setPrintStatus(0);
         // [3] 保存数据
         examService.save(form,request);
 

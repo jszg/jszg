@@ -103,7 +103,7 @@ public class ExamValidationController {
         //[2] 所选机构是否已经开展工作 是否有认定的功能
         List<OrgBatch> orgBatchs = commonMapper.findOrgBatch(orgId,SignUpConstants.TYPE_CERT); // 查询非统考认定机构认定计划
         if (orgBatchs.isEmpty()) {
-            return new Result(false, "该机构目前未开展注册工作，请与该机构联系，了解其注册工作的时间安排");
+            return new Result(false, "该机构目前未开展认定工作，请与该机构联系，了解其认定工作的时间安排");
         }
         Date now = new Date();
         OrgBatch ob = orgBatchs.get(0);
@@ -124,7 +124,7 @@ public class ExamValidationController {
             }
 
             // 如果有网报时间，则判断时间是否合法
-            StringBuffer buffer = new StringBuffer("该机构注册工作网上采集信息的时间段为: ");
+            StringBuffer buffer = new StringBuffer();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy 年 MM 月 dd 日");
             boolean success = true;
 
@@ -132,10 +132,10 @@ public class ExamValidationController {
                 String prependMsg = "";
                 if (batchTime.getValidBeginDate() != null && batchTime.getValidEndDate() != null) {
                     if (batchTime.getValidBeginDate().after(new Date())) {
-                        prependMsg = "很抱歉，该机构的网上报名时间未到";
+                        prependMsg = "该机构的网上报名时间未到，报名时间为";
                     }
                     if (batchTime.getValidEndDate().before(new Date())) {
-                        prependMsg = "很抱歉，该机构的网上报名时间已截止";
+                        prependMsg = "该机构的网上报名时间结束，报名时间为";
                     }
                 }
                 buffer.append(String.format("%s: %s 到 %s; ", prependMsg,

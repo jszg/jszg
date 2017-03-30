@@ -31,12 +31,13 @@ public interface RedisKey {
     String DICTS_BY_TYPE = "dicts_%d"; // dicts_{dictTypeId}
     String TEAGRADES = "teaGrades"; // teaGrades
     String EDULEVELS = "eduLevels_%d"; // eduLevels_{certTypeId}
-    String ACADEMICDEGREE = "academic_degree_%d_%d"; // academic_degree_{certTypeId}_{eduLevel}
 
     String LOCAL_SETS = "localsets_%d_%d"; // localsets_{orgId}_{type}
 
     String COLLEGES = "colleges"; // colleges
     String COLLEGES_BY_PROVINCE = "colleges_p_%d"; // colleges_p_{provinceId}
+    String DEGREES_BY_CERT_TYPE_EDU_LEVEL = "DEGREES_CERTTYPE_EDULEVEL_%d_%d"; // colleges_p_{provinceId}
+    String DEGREES_BY_STATUS_TYPE ="DEGREES_STATUS_TYPE_%d_%d";
 
     String MAJORS_ZHUCE_ROOT = "majors_root";
     String MAJORS_REQUEST_ROOT = "majors_request_root_%d";  //majors_root_{provinceId}

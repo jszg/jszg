@@ -29,20 +29,22 @@
             zip_cole,           exam,                       status,                     data_from,
             delete_status,      org_name,                   province_id,                occupation,
             ip,                 city_id,                    enroll_pro_batch_id,        reg_id,
-            birthday,           ct_id,                      id_type,                    status_memo
+            birthday,           ct_id,                      id_type,                    status_memo,
+            print_status
         )
         VALUES (
             #{idNo},            #{certNo},                  #{certAssignDate},          #{certBatchId,jdbcType=INTEGER},
             #{orgId},           #{subjectId},               #{name},                    #{sex},
             #{nation},          #{address},                 #{birthPlace},              #{cellPhone},
             #{degreeId},        #{eduLevelId},              #{email},                   #{password},
-            #{graduateSchool},  #{graduateShoolName},       #{graduaTimeDate},          #{learnType},
+            #{graduateSchool},  #{graduateSchoolName},       #{graduaTimeDate},          #{learnType},
             #{majorId},         #{normalMajor},             #{phone},                   #{political},
             #{pthevelId},       #{residence},               #{techniqueJobId},          #{workUnits},
             #{zipCode},         #{exam},                    #{status},                  #{dataFrom},
             #{deleteStatus},    #{orgName},                 #{provinceId},              #{occupation},
             #{ip},              #{cityId,jdbcType=INTEGER}, #{enrollProBatchId},        #{regId},
-            #{birthdayDate},    #{certType},#{idType},      #{statusMemo}
+            #{birthdayDate},    #{certType},                #{idType},                  #{statusMemo},
+            #{printStatus}
         )
         ]]>
     </insert>
@@ -80,10 +82,10 @@
             last_modify,       last_modifier, status,        delete_status,
             status_memo,       exam,          data_from,     trigger_time,
             ip,                normal_major,  pth_cert_no,   pth_org,
-            reg_id
+            reg_id,            exam_cert_no,  temp_school,   print_status
         )
         VALUES (
-            #{provinceId},    #{certType},       #{cityId},         #{orgId},
+            #{provinceId},    #{certType},       #{cityId,jdbcType=INTEGER},#{orgId},
             #{orgName},       #{localeId},       #{localeSet},      #{subjectId},
             #{certBatchId},   #{idNo},           #{name},           #{idType},
             #{email},         #{password},       #{sex},            #{birthdayDate},
@@ -95,7 +97,7 @@
             #{lastModify},    #{lastModifier},   #{status},         #{deleteStatus},
             #{statusMemo},    #{exam},           #{dataFrom},       #{triggerTime},
             #{ip},            #{normalMajor},    #{pthCertNo},      #{pthOrg},
-            #{regId}
+            #{regId},         #{scoreCertNo,jdbcType=VARCHAR},#{graduateSchoolName},#{printStatus}
         )
         ]]>
     </insert>

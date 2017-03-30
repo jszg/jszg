@@ -342,4 +342,12 @@
             oal.parent_id = #{parentId}
             AND oal.annul_type = 1
     </select>
+    <select id="findByCertTypeAndEduLevel" resultType="CertTypeLink">
+        SELECT
+            ctl.ctl_id AS id
+        FROM
+            t_cert_type_link ctl
+        WHERE
+          ctl.ct_id = #{certTypeId} AND ctl.edu_level_id = #{eduLevelId}
+    </select>
 </mapper>

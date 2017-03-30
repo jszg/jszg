@@ -1,6 +1,7 @@
 package com.xtuer.controller;
 
 import com.alibaba.fastjson.TypeReference;
+import com.sun.javafx.geom.transform.BaseTransform;
 import com.xtuer.bean.EnrollStep4Form;
 import com.xtuer.bean.Result;
 import com.xtuer.bean.UserPortalLog;
@@ -95,7 +96,6 @@ public class SignUpController {
     public Result<List<Organization>> getOrgByParentId(@PathVariable("parentId") int parentId, @RequestParam("date") String certAssignDate) throws ParseException {
         String key = String.format(RedisKey.ORGS_BY_PARENT, parentId);
         Date date = DateUtils.parseDate(certAssignDate, "yyyy-MM-dd");
-
         List<Organization> list = redisUtils.get(new TypeReference<List<Organization>>(){}, key, () -> organizationMapper.findByParentId(parentId));
         list = this.recoverOrginalOrgName(parentId,date,list);
         return Result.ok(list);
@@ -312,7 +312,7 @@ public class SignUpController {
                 if(type == 23) {
                     map.put(DICT_TYPENAMES[i], dictMapper.findTeaGradesByStatus());
                 } else if(type == 30) {
-                    map.put(DICT_TYPENAMES[i], dictMapper.findByDictTypeStatus1(type));
+                    map.put(DICT_TYPENAMES[i], dictMapper.findByDictTypeStatus(type));
                 } else {
                     map.put(DICT_TYPENAMES[i], dictMapper.findByDictType(type));
                 }
@@ -367,23 +367,13 @@ public class SignUpController {
     }
 
     // 最高学历:认定报名中,最高学历eduLevels是和资格种类关联的
-    @GetMapping(UriView.REST_EDULEVELS)
+    @GetMapping(UriView.REST_EDU_LEVELS)
     @ResponseBody
     public Result<List<Dict>> getEduLevels(@PathVariable("certTypeId") int certTypeId) {
         String key = String.format(RedisKey.EDULEVELS, certTypeId);
-        List<Dict> dicts = redisUtils.get(new TypeReference<List<Dict>>(){}, key, () -> dictMapper.findEduLevels(certTypeId));
-        return Result.ok(dicts);
+        List<Dict> eduLevels = redisUtils.get(new TypeReference<List<Dict>>(){}, key, () -> dictMapper.findEduLevels(certTypeId));
+        return Result.ok(eduLevels);
     }
-
-    //最高学位
-    @GetMapping(UriView.REST_ACADEMICDEGREE)
-    @ResponseBody
-    public Result<List<Dict>> getAcademicDegrees(@PathVariable("certTypeId") int certTypeId, @PathVariable("eduLevel") int eduLevel) {
-        String key = String.format(RedisKey.ACADEMICDEGREE, certTypeId, eduLevel);
-        List<Dict> dicts = redisUtils.get(new TypeReference<List<Dict>>(){}, key, () -> dictMapper.findAcademicDegrees(certTypeId, eduLevel));
-        return Result.ok(dicts);
-    }
-
 
     // 所有学校
     @GetMapping(UriView.REST_COLLEGES)
@@ -394,6 +384,23 @@ public class SignUpController {
         return Result.ok(colleges);
     }
 
+    // 所有学校
+    @GetMapping(UriView.REST_COLLEGE_BY_NAME)
+    @ResponseBody
+    public Result<List<College>> getCollegesByName(@PathVariable("name") String name) {
+        if (name.isEmpty()){
+            return Result.ok(null);
+        }
+        try {
+            name = java.net.URLDecoder.decode(name,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        List<College> colleges = collegeMapper.findByName(name);
+        return Result.ok(colleges);
+    }
+
+
     // 按省份找学校
     @GetMapping(UriView.REST_COLLEGES_BY_PROVINCE)
     @ResponseBody
@@ -401,6 +408,21 @@ public class SignUpController {
         String key = String.format(RedisKey.COLLEGES_BY_PROVINCE, provinceId);
         List<College> colleges = redisUtils.get(new TypeReference<List<College>>(){}, key, () -> collegeMapper.findByProvinceId(provinceId));
         return Result.ok(colleges);
+    }
+
+    // 认定报名根据资格种类和最高学历选择最高学位
+    @GetMapping(UriView.REST_DEGREE_BY_CERT_TYPE_AND_EDU_LEVEL)
+    @ResponseBody
+    public Result<List<Dict>> getDegreessByCertTypeIdAndEduLevelId(@PathVariable("certTypeId") int certTypeId,@PathVariable("eduLevelId") int eduLevelId) {
+        String key = String.format(RedisKey.DEGREES_BY_CERT_TYPE_EDU_LEVEL, certTypeId, eduLevelId);;
+        List<Dict> degrees = redisUtils.get(new TypeReference<List<Dict>>(){}, key, () -> dictMapper.findDegreessByCertTypeIdAndEduLevelId(certTypeId,eduLevelId));
+        if(!degrees.isEmpty()){
+            return Result.ok(degrees);
+        }else{
+            key = String.format(RedisKey.DEGREES_BY_STATUS_TYPE, SignUpConstants.DICT_STATUS_ENABLE, SignUpConstants.ID_DEGREE);
+            degrees = redisUtils.get(new TypeReference<List<Dict>>(){}, key, () ->dictMapper.findByDictTypeStatus(SignUpConstants.ID_DEGREE));
+            return Result.ok(degrees);
+        }
     }
 
     // 认定的根节点
@@ -417,6 +439,7 @@ public class SignUpController {
     @ResponseBody
     public Result<List<Major>> getZhuceRootMajors(@PathVariable("certTypeId") int certTypeId, @PathVariable("eduLevelId") int eduLevelId) {
         String key = String.format(RedisKey.MAJORS_RENDING_ROOT, certTypeId, eduLevelId);
+
         List<Major> majors = redisUtils.get(new TypeReference<List<Major>>(){}, key,
                 () -> majorMapper.findByCertTypeIdAndEduLevelId(certTypeId, eduLevelId));
         return Result.ok(majors);

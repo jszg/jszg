@@ -18,8 +18,8 @@ public class RegistrationForm {
     private long regId;
 
     private String  address;//地址
-    private String  archiveno;//档案号
-    private String  birthday;//出生日期
+    private String  archiveNo;//档案号
+    private String  birthDay;//出生日期
     private Date    birthdayDate;
 
     private String  birthPlace;//出生地
@@ -39,7 +39,7 @@ public class RegistrationForm {
     private Integer enrollProBatchId;//注册批次
     private Integer exam;//考试类型
     private Integer graduateSchool;//毕业学校
-    private String  graduateShoolName;//毕业学校名称
+    private String  graduateSchoolName;//毕业学校名称
     private Integer graduateId;//是否在校生
     private String  graduaTime;//毕业时间
     private Date    graduaTimeDate;
@@ -81,5 +81,6 @@ public class RegistrationForm {
     private String  resumInfo;//简历信息
     private String scoreCertNo;//统考证书编号
     private long scoreId;//统考合格名单id
+    private Integer printStatus;//打印状态
 
 }

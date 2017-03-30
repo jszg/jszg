@@ -130,7 +130,7 @@ public class EnrollmentService {
         reg.setEmail(form.getEmail());
         reg.setPassword(form.getPassword());
         reg.setGraduateSchool(form.getGraduationCollegeId());
-        reg.setGraduateShoolName(form.getGraduationCollegeName());
+        reg.setGraduateSchoolName(form.getGraduationCollegeName());
         reg.setGraduaTime(form.getGraduationTime());
         reg.setLearnType(form.getLearnTypeId());
         reg.setMajorId(form.getMajorId());
@@ -144,6 +144,7 @@ public class EnrollmentService {
         reg.setZipCode(form.getZipCode());
         reg.setExam(SignUpConstants.EXAM_TYPE_NO_EXAM );
         reg.setStatus(30);
+        reg.setPrintStatus(0);
         reg.setDataFrom(2);
         reg.setDeleteStatus(0);
         reg.setOrgId(form.getRecognizeOrgId());

@@ -38,4 +38,11 @@ public interface SignUpConstants {
     int STATUS_USED = 1;// 使用
     int STATUS_NO_USED = 0;// 未使用
 
+    //最高学位
+    int ID_DEGREE = 6;
+    //字典数据启用状态,0未启用,1启用
+    int DICT_STATUS_ENABLE = 1;
+    int DICT_STATUS_DISABLE = 0;
+
+
 }

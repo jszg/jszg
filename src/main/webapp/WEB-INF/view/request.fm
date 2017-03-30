@@ -446,7 +446,7 @@
                     <td class="operation">现从事职业</td>
                     <td><select id="occupations" name="1"><option value="-1">请选择</option></select></td>
                     <td></td>
-                    <td class="operation">职业技术职务</td>
+                    <td class="operation">专业技术职务</td>
                     <td colspan="2">
                         <button id="select-technical-job-button">请选择...</button>
                         <span class="form-data" name="technicalJob" data-id="" data-name=""></span>
@@ -559,7 +559,7 @@
             <img src="${static}/img/signup/button-prev.gif" alt="上一步" border="0" id="box-7-previous" data-step="7">
         </a>
         <a href="javascript:void(0)" class="next-step">
-            <img src="${static}/img/signup/button-next.gif" alt="下一步" border="0" id="box-7-next">
+            <img src="${static}/img/signup/button-submit.gif" alt="提交" border="0" id="box-7-next">
         </a>
     </div>
 </div>

@@ -26,7 +26,7 @@ public interface UriView {
     String REST_DICTS_BY_DICTTYPE          = "/rest/signUp/dicts/{dictTypeId}";
     String REST_NATIONS                    = "/rest/signUp/nations";
     String REST_TEAGRADES                  = "/rest/signUp/teaGrades";
-    String REST_EDULEVELS                  = "/rest/signUp/certTypes/{certTypeId}/eduLevels";
+    String REST_EDU_LEVELS                  = "/rest/signUp/certTypes/{certTypeId}/eduLevels";
     String REST_ACADEMICDEGREE             = "/rest/signUp/certTypes/{certTypeId}/eduLevels/{eduLevel}/degrees";
     String REST_LOCAL_SETS                 = "/rest/signUp/orgs/{orgId}/type/{type}/localSets";
     String REST_LOCAL_SETS_INFO            = "/rest/signUp/localSets/{localSetId}";
@@ -41,10 +41,12 @@ public interface UriView {
     String REST_REQUEST_MAJOR_PARENT      = "/rest/signUp/provinceId/{provinceId}/request/majors/root";//非统考第七步所学专业root
     String REST_REQUEST_MAJOR_CHILDREN    = "/rest/signUp/provinceId/{provinceId}/{parentId}/request/majors/children";//非统考第七步所学专业children
     String REST_REQUEST_MAJOR_NAME        = "/rest/signUp/provinceId/{provinceId}/{name}/request/majors/name";////非统考第七步所学专业按名称查询
+    String REST_DEGREE_BY_CERT_TYPE_AND_EDU_LEVEL = "/rest/signUp/certType/{certTypeId}/eduLevel/{eduLevelId}/degrees";//认定报名根据资格种类和最高学历选择最高学位
 
     String REST_TECHNICAL_JOB_ROOT         = "/rest/signUp/technicaljobs/root";
     String REST_TECHNICAL_JOB_CHILDREN     = "/rest/signUp/{parentId}/technicaljobs/children";
     String REST_TECHNICAL_JOB_BY_NAME      = "/rest/signUp/{name}/technicaljobs";
+    String REST_COLLEGE_BY_NAME             ="/rest/signUp/{name}/colleges";
 
     String REST_LIMITATION                 = "/rest/signUp/limitation";
     String REST_ENROLLHISTORY              = "/rest/signUp/enrollhistory";

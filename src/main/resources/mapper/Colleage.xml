@@ -22,4 +22,14 @@
     WHERE
         name = #{}
   </select>
+  <select id="findByName" resultType="College">
+        SELECT
+            t.college_id AS id, t.name AS name
+        FROM
+            t_college t
+        WHERE
+            t.name = #{name}
+        ORDER BY
+            t.college_id ASC
+  </select>
 </mapper>

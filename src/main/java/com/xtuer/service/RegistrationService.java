@@ -56,61 +56,13 @@ public class RegistrationService {
     public void save(RegistrationForm form,HttpServletRequest request){
         //首先给registration设置值
         try {
-            form.setBirthdayDate(DateUtils.parseDate(form.getBirthday(),DATE_FORMAT));
+            form.setBirthdayDate(DateUtils.parseDate(form.getBirthDay(),DATE_FORMAT));
             form.setGraduaTimeDate(DateUtils.parseDate(form.getGraduaTime(),DATE_FORMAT));
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        form.setProvinceId(form.getProvinceId());
-        form.setCertType(form.getCertType());
-        form.setCityId(form.getCityId());
-        form.setOrgId(form.getOrgId());
-        form.setOrgName(form.getOrgName());
-        form.setLocaleId(form.getLocaleId());
-        form.setLocaleSet(form.getLocaleSet());
-        form.setSubjectId(form.getSubjectId());
-        form.setCertBatchId(form.getCertBatchId());
-        form.setIdNo(form.getIdNo());
-        form.setName(form.getName());
-        form.setIdType(form.getIdType());
-        form.setEmail(form.getEmail());
-        form.setPassword(form.getPassword());
-        form.setSex(form.getSex());
-        form.setBirthdayDate(form.getBirthdayDate());
-        form.setEduLevelId(form.getEduLevelId());
-        form.setDegreeId(form.getDegreeId());
-        form.setNation(form.getNation());
-        form.setMajorId(form.getMajorId());
-        form.setOccupation(form.getOccupation());
-        form.setTechniqueJobId(form.getTechniqueJobId());
-        form.setPolitical(form.getPolitical());
-        form.setPthevelId(form.getPthevelId());
-        form.setGraduateSchool(form.getGraduateSchool());
-        form.setLearnType(form.getLearnType());
-        form.setGraduaTimeDate(form.getGraduaTimeDate());
-        form.setGraduateId(form.getGraduateId());
-        form.setResidence(form.getResidence());
-        form.setBirthPlace(form.getBirthPlace());
-        form.setAddress(form.getAddress());
-        form.setZipCode(form.getZipCode());
-        form.setPhone(form.getPhone());
-        form.setCellPhone(form.getCellPhone());
-        form.setWorkUnits(form.getWorkUnits());
-        form.setNormalMajor(form.getNormalMajor());
-        form.setPthCertNo(form.getPthCertNo());
-        form.setPthOrg(form.getPthOrg());
         form.setCityId(this.getRegCityId(form.getOrgId()));
-        form.setApplyTime(form.getApplyTime());
-        form.setDeleteStatus(form.getDeleteStatus());// 正常
-        form.setStatus(form.getStatus());// 网报待确认
-        form.setLastModify(form.getLastModify());
         form.setLastModifier(form.getIdNo());
-        form.setTriggerTime(form.getTriggerTime());
-        form.setIp(form.getIp());
-        form.setStatusMemo(form.getStatusMemo());
-        form.setDataFrom(form.getDataFrom());
-        form.setExam(form.getExam());
-        form.setPassword(form.getPassword()); // 使用 MD5 编码密码
         registrationMapper.insertRequestReg(form);
     }
 
@@ -266,7 +218,7 @@ public class RegistrationService {
         try {
             // 例如 2012-22-12-12 也是能够被转换为日期，所以最后需要再格式化回去为合法的日期
             Date graduationTime = DateUtils.parseDate(form.getGraduaTime(), DATE_FORMAT);
-            Date birthday = DateUtils.parseDate(form.getBirthday(), DATE_FORMAT);
+            Date birthday = DateUtils.parseDate(form.getBirthDay(), DATE_FORMAT);
             form.setGraduaTimeDate(graduationTime);
             form.setBirthdayDate(birthday);
         } catch (ParseException e) {

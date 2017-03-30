@@ -16,7 +16,7 @@ public interface DictMapper {
 
     List<Dict> findByDictType(@Param("dt_id") int dictTypeId);
 
-    List<Dict> findByDictTypeStatus1(@Param("dt_id") int dictTypeId);
+    List<Dict> findByDictTypeStatus(@Param("dt_id") int dictTypeId);
 
     List<TeachGrade> findTeaGrades();
 
@@ -24,8 +24,9 @@ public interface DictMapper {
 
     List<Dict> findEduLevels(@Param("ct_id") int certTypeId);
 
-    List<Dict> findAcademicDegrees(@Param("ct_id") int certTypeId, @Param("eduLevel") int eduLevel);
-
     //根据字典类型和编码查询
     Dict findByTypeAndCode(@Param("dtId") int dtId, @Param("code") int code);
+
+    //认定报名根据资格种类和最高学历选择最高学位
+    List<Dict> findDegreessByCertTypeIdAndEduLevelId(@Param("certTypeId") int certTypeId, @Param("eduLevelId") int eduLevelId);
 }

@@ -99,7 +99,7 @@
             7. 本网站尊重并保护申请人网上申报留存的个人申请信息，非经申请人本人同意，本网站不会主动公开、编辑、披露或透露任何申请人个人申请信息，但根据法律法规规定必须披露的或司法部门或其他法律授权的机关依照法定程序要求提供的除外。<br/>
         </p>
         <br/>
-        <input type="checkbox" id="agree-checkbox" checked="true"> <label for="agree-checkbox">已阅读并完全同意</label>
+        <input type="checkbox" id="agree-checkbox" checked="false"> <label for="agree-checkbox">已阅读并完全同意</label>
     </div>
     <div class="action-bar">
         <a href="javascript:void(0)" class="pre-step">
@@ -457,7 +457,7 @@
                     <td class="operation">现从事职业</td>
                     <td><select id="occupations" name="1"><option value="-1">请选择</option></select></td>
                     <td></td>
-                    <td class="operation">职业技术职务</td>
+                    <td class="operation">专业技术职务</td>
                     <td colspan="2">
                         <button id="select-technical-job-button">请选择...</button>
                         <span class="form-data" name="technicalJob" data-id="" data-name=""></span>
@@ -570,7 +570,7 @@
             <img src="${static}/img/signup/button-prev.gif" alt="上一步" border="0" id="box-7-previous" data-step="7">
         </a>
         <a href="javascript:void(0)" class="next-step">
-            <img src="${static}/img/signup/button-next.gif" alt="下一步" border="0" id="box-7-next">
+            <img src="${static}/img/signup/button-submit.gif" alt="提交" border="0" id="box-7-next">
         </a>
     </div>
 </div>

@@ -1052,6 +1052,17 @@ function handleGraduationCollegesDialog() {
             return;
         }
 
+        var validateCollege = false;
+        $.rest.get({url: Urls.REST_COLLEGE_BY_NAME, urlParams: {name: encodeURI(encodeURI(collegeName))}, async: false, success: function(result) {
+            if (result.data.length != 0) {
+                 validateCollege=true;
+            }
+        }});
+        if(validateCollege){
+            alert('学校名称已经存在!');
+            return;
+        }
+
         UiUtils.setFormData('graduationCollege', -collegeType.id, collegeName);
         $("#lean_overlay").click();
 

@@ -56,7 +56,7 @@ public class ExamService {
     public void save(RegistrationForm form,HttpServletRequest request){
         //首先给registration设置值
         try {
-            form.setBirthdayDate(DateUtils.parseDate(form.getBirthday(),DATE_FORMAT));
+            form.setBirthdayDate(DateUtils.parseDate(form.getBirthDay(),DATE_FORMAT));
             form.setGraduaTimeDate(DateUtils.parseDate(form.getGraduaTime(),DATE_FORMAT));
         } catch (ParseException e) {
             e.printStackTrace();
@@ -111,6 +111,8 @@ public class ExamService {
         form.setDataFrom(form.getDataFrom());
         form.setExam(form.getExam());
         form.setPassword(form.getPassword()); // 使用 MD5 编码密码
+        form.setScoreCertNo(form.getScoreCertNo());
+        System.out.println(form.getScoreCertNo());
         registrationMapper.insertRequestReg(form);
     }
 
@@ -273,7 +275,7 @@ public class ExamService {
         try {
             // 例如 2012-22-12-12 也是能够被转换为日期，所以最后需要再格式化回去为合法的日期
             Date graduationTime = DateUtils.parseDate(form.getGraduaTime(), DATE_FORMAT);
-            Date birthday = DateUtils.parseDate(form.getBirthday(), DATE_FORMAT);
+            Date birthday = DateUtils.parseDate(form.getBirthDay(), DATE_FORMAT);
             form.setGraduaTimeDate(graduationTime);
             form.setBirthdayDate(birthday);
         } catch (ParseException e) {
