@@ -389,7 +389,7 @@ StepValidator.validate7thStep = function(){
     if (!cellphone)                 { alert('请输入 "手机"');            return false; }
     if (!photo)                     { alert('请上传 "照片"');            return false; }
 
-    if (!(/^[1-9][0-9]{5}$/.test(zipCode))) { alert('通讯地的邮编: 请输入 6 个数字的 "通讯地的邮编"');  return false; }
+    if (!(/^\d{6}$/.test(zipCode))) { alert('通讯地的邮编: 请输入 6 个数字的 "通讯地的邮编"');  return false; }
     if (!(/^\d{11}$/.test(cellphone)))      { alert('手机号码: 请输入 11 个数字的 "手机号码"');         return false; }
 
    //判断简历信息是否完整
@@ -1004,7 +1004,6 @@ function handleGraduationCollegesDialog() {
 function handleMajorsDialog() {
     // 初始化 LeanModal 对话框
     $('#majors-dialog-trigger').leanModal({top: 50, overlay : 0.4});
-
     //tab切换
      $(".major_tab_content").hide(); //Hide all content
      $("ul.major_tabs li:first").addClass("active").show(); //Activate first tab
@@ -1027,8 +1026,10 @@ function handleMajorsDialog() {
             return false;
         }
         searchValue = encodeURI(encodeURI(searchValue));
+        var eduLevelId = parseInt($('#edu-levels option:selected').val());
+        var certTypeId = parseInt($('#certTypes option:selected').val());
         $('#search-major-result tr:gt(0)').empty();
-        $.rest.get({url: Urls.REST_MAJOR_SEARCH_BY_NAME, urlParams: {provinceId:provinceId,name: searchValue}, success: function(result) {
+        $.rest.get({url: Urls.REST_MAJOR_SEARCH_BY_NAME_REQUEST, urlParams: {provinceId:provinceId,name: searchValue,certTypeId:certTypeId,eduLevelId:eduLevelId}, success: function(result) {
             $('#search-major-result').append(template('majorsTemplate', {majors: result.data}));
         }});
     });
@@ -1076,11 +1077,12 @@ function handleMajorsDialog() {
         }
 
         $('#majors-dialog-trigger').click(); // 显示对话框
-
+        var eduLevelId = parseInt($('#edu-levels option:selected').val());
+        var certTypeId = parseInt($('#certTypes option:selected').val());
         // 加载最高学历所学专业
         UiUtils.requestDataAndShowInTree($('#majors-dialog .ztree'), function(treeId, treeNode) {
             if(!treeNode) {
-                return Urls.REST_REQUEST_MAJOR_PARENT.format({provinceId:provinceId});
+                return Urls.REST_REQUEST_MAJOR_PARENT.format({provinceId:provinceId,certTypeId:certTypeId,eduLevelId:eduLevelId});
             } else {
                 return Urls.REST_REQUEST_MAJOR_CHILDREN.format({provinceId:provinceId,parentId: treeNode.id});
             }

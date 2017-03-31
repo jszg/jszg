@@ -37,8 +37,10 @@ public interface UriView {
     String REST_ZHUCE_MAJOR_PARENT         = "/rest/signUp/majors/root";
     String REST_RENDING_MAJOR_PARENT       = "/rest/signUp/certTypes/{certTypeId}/{eduLevelId}/majors/root";
     String REST_MAJOR_CHILDREN             = "/rest/signUp/{parentId}/majors/children";
-    String REST_MAJOR_SEARCH_BY_NAME      = "/rest/signUp/{name}/majors";
-    String REST_REQUEST_MAJOR_PARENT      = "/rest/signUp/provinceId/{provinceId}/request/majors/root";//非统考第七步所学专业root
+    String REST_MAJOR_SEARCH_BY_NAME      = "/rest/signUp/name/{name}/majors";
+    String REST_MAJOR_SEARCH_BY_NAME_REQUEST      = "/rest/signUp/name/{name}/certType/{certTypeId}/eduLevel/{eduLevelId}/majors";
+
+    String REST_REQUEST_MAJOR_PARENT      = "/rest/signUp/provinceId/{provinceId}/certType/{certTypeId}/eduLevel/{eduLevelId}/request/majors/root";//非统考第七步所学专业root
     String REST_REQUEST_MAJOR_CHILDREN    = "/rest/signUp/provinceId/{provinceId}/{parentId}/request/majors/children";//非统考第七步所学专业children
     String REST_REQUEST_MAJOR_NAME        = "/rest/signUp/provinceId/{provinceId}/{name}/request/majors/name";////非统考第七步所学专业按名称查询
     String REST_DEGREE_BY_CERT_TYPE_AND_EDU_LEVEL = "/rest/signUp/certType/{certTypeId}/eduLevel/{eduLevelId}/degrees";//认定报名根据资格种类和最高学历选择最高学位

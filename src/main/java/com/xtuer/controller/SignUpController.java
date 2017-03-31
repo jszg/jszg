@@ -410,21 +410,6 @@ public class SignUpController {
         return Result.ok(colleges);
     }
 
-    // 认定报名根据资格种类和最高学历选择最高学位
-    @GetMapping(UriView.REST_DEGREE_BY_CERT_TYPE_AND_EDU_LEVEL)
-    @ResponseBody
-    public Result<List<Dict>> getDegreessByCertTypeIdAndEduLevelId(@PathVariable("certTypeId") int certTypeId,@PathVariable("eduLevelId") int eduLevelId) {
-        String key = String.format(RedisKey.DEGREES_BY_CERT_TYPE_EDU_LEVEL, certTypeId, eduLevelId);;
-        List<Dict> degrees = redisUtils.get(new TypeReference<List<Dict>>(){}, key, () -> dictMapper.findDegreessByCertTypeIdAndEduLevelId(certTypeId,eduLevelId));
-        if(!degrees.isEmpty()){
-            return Result.ok(degrees);
-        }else{
-            key = String.format(RedisKey.DEGREES_BY_STATUS_TYPE, SignUpConstants.DICT_STATUS_ENABLE, SignUpConstants.ID_DEGREE);
-            degrees = redisUtils.get(new TypeReference<List<Dict>>(){}, key, () ->dictMapper.findByDictTypeStatus(SignUpConstants.ID_DEGREE));
-            return Result.ok(degrees);
-        }
-    }
-
     // 认定的根节点
     @GetMapping(UriView.REST_ZHUCE_MAJOR_PARENT)
     @ResponseBody
@@ -439,7 +424,6 @@ public class SignUpController {
     @ResponseBody
     public Result<List<Major>> getZhuceRootMajors(@PathVariable("certTypeId") int certTypeId, @PathVariable("eduLevelId") int eduLevelId) {
         String key = String.format(RedisKey.MAJORS_RENDING_ROOT, certTypeId, eduLevelId);
-
         List<Major> majors = redisUtils.get(new TypeReference<List<Major>>(){}, key,
                 () -> majorMapper.findByCertTypeIdAndEduLevelId(certTypeId, eduLevelId));
         return Result.ok(majors);
@@ -473,13 +457,59 @@ public class SignUpController {
         return Result.ok(majors);
     }
 
+    //注册第七步最高学历所学专业按名称搜索
+    @GetMapping(UriView.REST_MAJOR_SEARCH_BY_NAME_REQUEST)
+    @ResponseBody
+    public Result<List<Major>> getRequestMajorByName(@PathVariable("name") String name, @PathVariable("certTypeId") int certTypeId, @PathVariable("eduLevelId") int eduLevelId) {
+        if(name.isEmpty()){
+            return Result.ok(null);
+        }
+        try {
+            name = java.net.URLDecoder.decode(name,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        List<Major> list = majorMapper.findByCertTypeIdAndEduLevelId(certTypeId,eduLevelId);
+        if(!list.isEmpty()){
+            List<Major> majorList = majorMapper.findByCertTypeIdAndEduLevelIdAndName(name,certTypeId,eduLevelId);
+            return Result.ok(majorList);
+        }
+        List<Major> majors = majorMapper.findByName(name);
+        if (majors.isEmpty()) {
+            return Result.ok(null);
+        }
+        return Result.ok(majors);
+    }
+
+    // 认定报名根据资格种类和最高学历选择最高学位
+    @GetMapping(UriView.REST_DEGREE_BY_CERT_TYPE_AND_EDU_LEVEL)
+    @ResponseBody
+    public Result<List<Dict>> getDegreesByCertTypeIdAndEduLevelId(@PathVariable("certTypeId") int certTypeId,@PathVariable("eduLevelId") int eduLevelId) {
+        String key = String.format(RedisKey.DEGREES_BY_CERT_TYPE_EDU_LEVEL, certTypeId, eduLevelId);
+        List<Dict> degrees = redisUtils.get(new TypeReference<List<Dict>>(){}, key, () -> dictMapper.findDegreessByCertTypeIdAndEduLevelId(certTypeId,eduLevelId));
+        if(!degrees.isEmpty()){
+            return Result.ok(degrees);
+        }else{
+            key = String.format(RedisKey.DEGREES_BY_STATUS_TYPE, SignUpConstants.DICT_STATUS_ENABLE, SignUpConstants.ID_DEGREE);
+            degrees = redisUtils.get(new TypeReference<List<Dict>>(){}, key, () ->dictMapper.findByDictTypeStatus(SignUpConstants.ID_DEGREE));
+            return Result.ok(degrees);
+        }
+    }
+
     // 非统考第七步的所学专业root
     @GetMapping(UriView.REST_REQUEST_MAJOR_PARENT)
     @ResponseBody
-    public Result<List<Major>> getRequestRootMajors(@PathVariable("provinceId") int provinceId) {
-        String key = String.format(RedisKey.MAJORS_REQUEST_ROOT, provinceId);
-        List<Major> majors = redisUtils.get(new TypeReference<List<Major>>(){}, key, () -> majorMapper.findRequestMajorRoot(provinceId));
-        return Result.ok(majors);
+    public Result<List<Major>> getRequestRootMajors(@PathVariable("provinceId") int provinceId,@PathVariable("certTypeId") int certTypeId,@PathVariable("eduLevelId") int eduLevelId) {
+        String key = String.format(RedisKey.MAJORS_REQUEST_ROOT_CERTTYPE_EDULEVEL, certTypeId,eduLevelId);
+        //首先查看所学专业和最高学历关联表中是否有数据
+        List<Major> majors = redisUtils.get(new TypeReference<List<Major>>(){}, key, () -> majorMapper.findByCertTypeIdAndEduLevelId(certTypeId,eduLevelId));
+        if(!majors.isEmpty()){
+            return Result.ok(majors);
+        }else{
+            key = String.format(RedisKey.MAJORS_REQUEST_ROOT, provinceId);
+            majors = redisUtils.get(new TypeReference<List<Major>>(){}, key, () -> majorMapper.findRequestMajorRoot(provinceId));
+            return Result.ok(majors);
+        }
     }
 
     // 非统考第七步的所学专业root

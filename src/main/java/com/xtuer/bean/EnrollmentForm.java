@@ -122,7 +122,7 @@ public class EnrollmentForm {
     private String address; // 通讯地址
 
     @NotBlank(message="通讯地的邮编不能为空")
-    @Pattern(regexp="^[1-9][0-9]{5}$", message="请填写 6 位阿拉伯数字的邮编")
+    @Pattern(regexp="^\\d{6}$", message="请填写 6 位阿拉伯数字的邮编")
     private String zipCode; // 通讯地的邮编
 
     @NotBlank(message="联系电话不能为空")

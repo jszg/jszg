@@ -2,6 +2,7 @@ package com.xtuer.mapper;
 
 import com.xtuer.dto.Major;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -22,6 +23,9 @@ public interface MajorMapper {
 
     // parent:如果是认定的
     List<Major> findByCertTypeIdAndEduLevelId(@Param("certTypeId") int certTypeId, @Param("eduLevelId") int eduLevelId);
+
+    // parent:如果是认定的
+    List<Major> findByCertTypeIdAndEduLevelIdAndName(@Param("name") String name, @Param("certTypeId") int certTypeId, @Param("eduLevelId") int eduLevelId);
 
     // childen:如果是认定
     List<Major> findByParentIdAndProvince(@Param("parentId") int parentId, @Param("provinceId") int provinceId);

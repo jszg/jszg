@@ -41,6 +41,10 @@ public interface RedisKey {
 
     String MAJORS_ZHUCE_ROOT = "majors_root";
     String MAJORS_REQUEST_ROOT = "majors_request_root_%d";  //majors_root_{provinceId}
+    String MAJORS_REQUEST_ROOT_CERTTYPE_EDULEVEL = "majors_request_root_%d_%d";  //majors_root_{certTypeId}_{eduLevelId}
+
+
+
     String MAJORS_REQUEST_CHILREN = "majors_request_children_%d_%d";  //majors_root_{provinceId}_{parentId}
     String MAJORS_ZHUCE_CHILREN = "majors_children_%d"; // majors_chilren_{parentId}
     String MAJORS_RENDING_ROOT = "majors_rending_root_%d_%d"; // majors_rending_root_{certTypeId}_{eduLevelId}

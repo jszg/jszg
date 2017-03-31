@@ -30,9 +30,10 @@ Urls = {
 
     REST_ZHUCE_MAJOR_PARENT:     '/new-cert/rest/signUp/majors/root', // 注册的最高学历所学专业根节点
     REST_MAJOR_CHILDREN:         '/new-cert/rest/signUp/{parentId}/majors/children', // 认定或注册的最高学历所学专业子节点
-    REST_MAJOR_SEARCH_BY_NAME:   '/new-cert/rest/signUp/{name}/majors',//根据所学专业名称查询
+    REST_MAJOR_SEARCH_BY_NAME:   '/new-cert/rest/signUp/name/{name}/majors',//根据所学专业名称查询
+    REST_MAJOR_SEARCH_BY_NAME_REQUEST:   '/new-cert/rest/signUp/name/{name}/certType/{certTypeId}/eduLevel/{eduLevelId}/majors',//根据所学专业名称查询
 
-    REST_REQUEST_MAJOR_PARENT:     '/new-cert/rest/signUp/provinceId/{provinceId}/request/majors/root',//非统考第七步所学专业root
+    REST_REQUEST_MAJOR_PARENT:     '/new-cert/rest/signUp/provinceId/{provinceId}/certType/{certTypeId}/eduLevel/{eduLevelId}/request/majors/root',//非统考第七步所学专业root
     REST_REQUEST_MAJOR_CHILDREN:   '/new-cert/rest/signUp/provinceId/{provinceId}/{parentId}/request/majors/children',//非统考第七步所学专业children
     REST_REQUEST_MAJOR_NAME:      '/new-cert/rest/signUp/provinceId/{provinceId}/{name}/request/majors/name',//非统考第七步所学专业children
 

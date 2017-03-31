@@ -360,6 +360,7 @@ StepValidator.validate7thStep = function(){
     var phone               = $.trim($('#phone').val());                        // 联系电话
     var cellphone           = $.trim($('#cellphone').val());                    // 手机
     var photo               = UiUtils.getFormData(box7, 'photo').name;          // 照片
+    alert('zipCode=='+zipCode);
     if (-1 === nationId)            { alert('请选择 "民族"');            return false; }
     if (-1 === politicalId)         { alert('请选择 "政治面貌"');        return false; }
     if (-1 === pthLevelId)          { alert('请选择 "普通话水平"');      return false; }
@@ -384,7 +385,7 @@ StepValidator.validate7thStep = function(){
     if (!cellphone)                 { alert('请输入 "手机"');            return false; }
     if (!photo)                     { alert('请上传 "照片"');            return false; }
 
-    if (!(/^[1-9][0-9]{5}$/.test(zipCode))) { alert('通讯地的邮编: 请输入 6 个数字的 "通讯地的邮编"');  return false; }
+    if (!(/^\d{6}$/.test(zipCode))) { alert('通讯地的邮编: 请输入 6 个数字的 "通讯地的邮编"');  return false; }
     if (!(/^\d{11}$/.test(cellphone)))      { alert('手机号码: 请输入 11 个数字的 "手机号码"');         return false; }
 
    //判断简历信息是否完整
@@ -612,7 +613,7 @@ function requestDicts() {
         UiUtils.insertOptions('nations', data.nation);            // 民族
         UiUtils.insertOptions('politicals', data.political);      // 政治面貌
         //UiUtils.insertOptions('edu-levels', data.eduLevel);       // 最高学位
-        UiUtils.insertOptions('degrees', data.degree);            // 最高学历
+        //UiUtils.insertOptions('degrees', data.degree);            // 最高学历
         UiUtils.insertOptions('pth-levels', data.pthLevel);       // 普通话水平
         UiUtils.insertOptions('learn-types', data.learnType);     // 学习形式
         UiUtils.insertOptions('school-types', data.schoolType);      // 最高毕业学校的学校类型
@@ -878,9 +879,9 @@ function handleChangeEduLevelForDegreeEvent() {
         var certTypeId = UiUtils.getFormData(box7, 'certType').id;
         if (-1 != eduLevelId && -1 !=certTypeId) {
             //根据选择的资格种类,第七步的最高学历给最高学位赋值
-            $.rest.get({url: Urls.REST_DEGREE_BY_CERT_TYPE_AND_EDU_LEVEL, urlParams: {certTypeId:certTypeId,eduLeve:eduLevelId}, async: false, success: function(result) {
+            $.rest.get({url: Urls.REST_DEGREE_BY_CERT_TYPE_AND_EDU_LEVEL, urlParams: {certTypeId:certTypeId,eduLevelId:eduLevelId}, async: false, success: function(result) {
                 if (result.success) {
-                    UiUtils.insertOptions('#degrees', result.data); // 最高学位
+                    UiUtils.insertOptions('degrees', result.data); // 最高学位
                 }
             }});
         }
@@ -1026,8 +1027,11 @@ function handleMajorsDialog() {
             return false;
         }
         searchValue = encodeURI(encodeURI(searchValue));
+        var box7 = '#box-7';
+        var eduLevelId = parseInt($('#edu-levels option:selected').val());
+        var certTypeId = UiUtils.getFormData(box7, 'certType').id;
         $('#search-major-result tr:gt(0)').empty();
-        $.rest.get({url: Urls.REST_MAJOR_SEARCH_BY_NAME, urlParams: {provinceId:provinceId,name: searchValue}, success: function(result) {
+        $.rest.get({url: Urls.REST_MAJOR_SEARCH_BY_NAME_REQUEST, urlParams: {provinceId:provinceId,name: searchValue,certTypeId:certTypeId,eduLevelId:eduLevelId}, success: function(result) {
             $('#search-major-result').append(template('majorsTemplate', {majors: result.data}));
         }});
     });
@@ -1075,11 +1079,13 @@ function handleMajorsDialog() {
         }
 
         $('#majors-dialog-trigger').click(); // 显示对话框
-
+        var box7 = '#box-7';
+        var eduLevelId = parseInt($('#edu-levels option:selected').val());
+        var certTypeId = UiUtils.getFormData(box7, 'certType').id;
         // 加载最高学历所学专业
         UiUtils.requestDataAndShowInTree($('#majors-dialog .ztree'), function(treeId, treeNode) {
             if(!treeNode) {
-                return Urls.REST_REQUEST_MAJOR_PARENT.format({provinceId:provinceId});
+                return Urls.REST_REQUEST_MAJOR_PARENT.format({provinceId:provinceId,certTypeId:certTypeId,eduLevelId:eduLevelId});
             } else {
                 return Urls.REST_REQUEST_MAJOR_CHILDREN.format({provinceId:provinceId,parentId: treeNode.id});
             }

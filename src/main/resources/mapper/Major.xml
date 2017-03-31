@@ -19,11 +19,37 @@
   </select>
 
   <select id="findByCertTypeIdAndEduLevelId" resultType="Major">
-      SELECT M.MAJOR_ID as id,M.NAME as name, M.MAJOR_CODE as code
-      FROM T_CERT_TYPE_LINK_EXTEND C
-      LEFT JOIN T_MAJOR M ON C.TARGET_ID=M.MAJOR_ID
-      WHERE C.LINK_ID=(SELECT C.CTL_ID FROM T_CERT_TYPE_LINK C WHERE C.CT_ID = #{certTypeId} AND C.EDU_LEVEL_ID = #{eduLevelId})
-          AND C.TARGET_TYPE=0 ORDER BY M.major_code
+      SELECT
+        m.major_id AS id,
+        m.name AS name,
+        m.major_code AS code
+      FROM
+        t_cert_type_link_extend ctle
+      LEFT JOIN
+        t_major m ON ctle.target_id=m.major_id
+      WHERE
+        ctle.link_id=(SELECT c.ctl_id FROM t_cert_type_link c WHERE c.ct_id = #{certTypeId} AND c.edu_level_id = #{eduLevelId})
+          AND ctle.target_type=0
+      ORDER BY
+        m.major_code
+  </select>
+
+  <select id="findByCertTypeIdAndEduLevelIdAndName" resultType="Major">
+      <bind name="pattern" value="'%' + name + '%'" />
+      SELECT
+          m.major_id AS id,
+          m.name AS name,
+          m.major_code AS code
+      FROM
+        t_cert_type_link_extend ctle
+      LEFT JOIN
+        t_major m ON ctle.target_id=m.major_id
+      WHERE
+        m.name LIKE #{pattern}
+        AND ctle.link_id=(SELECT c.ctl_id FROM t_cert_type_link c WHERE c.ct_id = #{certTypeId} AND c.edu_level_id = #{eduLevelId})
+        AND ctle.target_type=0
+      ORDER BY
+        m.major_code
   </select>
 
   <select id="findByParentIdAndProvince" resultType="Major">
