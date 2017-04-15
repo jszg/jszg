@@ -21,6 +21,46 @@
     <context:component-scan base-package="com.xtuer.service"/>
     <context:component-scan base-package="com.xtuer.controller"/>
 
+    <!--表单重复提交的拦截
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/enroll"/>
+            <bean class="com.xtuer.interceptor.TokenValidator">
+                <property name="redisTemplate" ref="redisTemplate"/>
+            </bean>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/enroll/submit"/>
+            <bean class="com.xtuer.interceptor.TokenValidator">
+                <property name="redisTemplate" ref="redisTemplate"/>
+            </bean>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/request"/>
+            <bean class="com.xtuer.interceptor.TokenValidator">
+                <property name="redisTemplate" ref="redisTemplate"/>
+            </bean>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/request/submit"/>
+            <bean class="com.xtuer.interceptor.TokenValidator">
+                <property name="redisTemplate" ref="redisTemplate"/>
+            </bean>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/exam"/>
+            <bean class="com.xtuer.interceptor.TokenValidator">
+                <property name="redisTemplate" ref="redisTemplate"/>
+            </bean>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/exam/submit"/>
+            <bean class="com.xtuer.interceptor.TokenValidator">
+                <property name="redisTemplate" ref="redisTemplate"/>
+            </bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+    -->
     <!-- 支持注解映射 -->
     <mvc:annotation-driven>
         <!--enableMatrixVariables="true">-->

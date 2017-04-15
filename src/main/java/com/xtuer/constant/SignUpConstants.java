@@ -44,5 +44,8 @@ public interface SignUpConstants {
     int DICT_STATUS_ENABLE = 1;
     int DICT_STATUS_DISABLE = 0;
 
+    //最高学历
+    int ID_EDU_LEVEL = 7;
+
 
 }

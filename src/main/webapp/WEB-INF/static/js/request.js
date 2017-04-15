@@ -122,6 +122,7 @@ function initWebUploader() {
         }, 114, 156); // 100 * 100 为缩略图多大小
     };
 }
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                           验证                                                //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -474,7 +475,7 @@ StepValidator.validate7thStep = function(){
 
     var passed = false;
 
-    $.rest.create({url: Urls.URI_REQUEST_SUBMIT, data: params, async: false, success: function(result) {
+    $.rest.create({url: Urls.URI_REQUEST_SUBMIT, data: params, urlParams:{token: $('#token').val()}, async: false, success: function(result) {
         if (!result.success) {
             alert(result.message); // 弹出错误消息
         } else {
@@ -571,6 +572,15 @@ function handleNextAndPreviousEvents() {
             $('#box-7').hide();
             $('#box-8').show();
             $('.bz8').addClass('active');
+        }
+    });
+
+
+    // 第七步的退出
+    $('#box-7-exit').click(function() {
+        if(confirm('您确定要 "退出" 吗？退出后所有信息都不会保存。\n点击 "确定" 直接退出，点击 "取消" 返回编辑界面')) {
+            // UiUtils.closeWindow();
+            location.href='http://www.jszg.edu.cn/portal/request/exit'; //  跳转到认定首页
         }
     });
 
@@ -1039,10 +1049,6 @@ function handleMajorsDialog() {
         if( $("ul.major_tabs li:first").hasClass('active')){
             var subjectNode = window.subjectsTree.getSelectedNodes()[0];
             if (subjectNode) {
-                if (0 === subjectNode.level) {
-                    alert('请选择具体的所学专业');
-                    return;
-                }
                 UiUtils.setFormData('major', subjectNode.id, subjectNode.name);
                 $("#lean_overlay").click();
             } else {

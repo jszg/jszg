@@ -122,6 +122,7 @@ function initWebUploader() {
         }, 114, 156); // 100 * 100 为缩略图多大小
     };
 }
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                           验证                                                //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -173,17 +174,17 @@ StepValidator.validate3thStep = function(){
         return false;
      }
      var invalidMessage = '';
-     var certTypeId = '';
      var invalid = false;
      // 查询历史记录，如果有
      $.rest.get({url: Urls.REST_EXAM_STEP3, urlParams: {name: encodeURI(encodeURI($name)), idNo: $idNo,scoreCertNo: $scoreCertNo}, async: false, success: function(result) {
          if (!result.success) {
              invalid = true;
              invalidMessage = result.message;
+             alert(invalidMessage);
              return;
          }else{
             var score = result.data.score;
-            certTypeId = score.certType;
+            var certTypeId = score.certType;
             UiUtils.setFormData('name', score.name, score.name);
             UiUtils.setFormData('idType', score.idType, score.idTypeName);
             UiUtils.setFormData('idNo', -1, score.idNo);
@@ -195,17 +196,7 @@ StepValidator.validate3thStep = function(){
          }
      }});
 
-      //根据选择的资格种类,给第七步的最高学历赋值
-      $.rest.get({url: Urls.REST_EDU_LEVELS, urlParams: {certTypeId:certTypeId}, async: false, success: function(result) {
-          if (!result.success) {
-              valid = false;
-          } else {
-              UiUtils.insertOptions('edu-levels', result.data); // 最高学历
-          }
-      }});
-
      if (invalid) {
-         alert(invalidMessage);
          return false;
      }
      var idCard = new IdCard('', $.trim($idNo));
@@ -267,6 +258,15 @@ StepValidator.validate4thStep = function() {
     }else{
          $('#exam-org-error').removeClass('error');
     }
+
+    //根据选择的资格种类,给第七步的最高学历赋值
+    $.rest.get({url: Urls.REST_EDU_LEVELS, urlParams: {certTypeId:certTypeId}, async: false, success: function(result) {
+       if (!result.success) {
+           valid = false;
+       } else {
+           UiUtils.insertOptions('edu-levels', result.data); // 最高学历
+       }
+    }});
 
     var requestOrg  = UiUtils.getSelectedOption('#request-orgs');   // 统考第三步认定机构
     requestLocalSets(requestOrg.id);//请求确认点
@@ -360,7 +360,7 @@ StepValidator.validate7thStep = function(){
     var phone               = $.trim($('#phone').val());                        // 联系电话
     var cellphone           = $.trim($('#cellphone').val());                    // 手机
     var photo               = UiUtils.getFormData(box7, 'photo').name;          // 照片
-    alert('zipCode=='+zipCode);
+
     if (-1 === nationId)            { alert('请选择 "民族"');            return false; }
     if (-1 === politicalId)         { alert('请选择 "政治面貌"');        return false; }
     if (-1 === pthLevelId)          { alert('请选择 "普通话水平"');      return false; }
@@ -470,8 +470,7 @@ StepValidator.validate7thStep = function(){
     };
 
     var passed = false;
-
-    $.rest.create({url: Urls.URI_EXAM_SUBMIT, data: params, async: false, success: function(result) {
+    $.rest.create({url: Urls.URI_EXAM_SUBMIT, data: params, urlParams:{token: $('#token').val()}, async: false, success: function(result) {
         if (!result.success) {
             alert(result.message); // 弹出错误消息
         } else {
@@ -568,6 +567,14 @@ function handleNextAndPreviousEvents() {
             $('#box-7').hide();
             $('#box-8').show();
             $('.bz8').addClass('active');
+        }
+    });
+
+    // 第七步的退出
+    $('#box-7-exit').click(function() {
+        if(confirm('您确定要 "退出" 吗？退出后所有信息都不会保存。\n点击 "确定" 直接退出，点击 "取消" 返回编辑界面')) {
+            // UiUtils.closeWindow();
+            location.href='http://www.jszg.edu.cn/portal/request/exit'; // 跳转到认定首页
         }
     });
 
@@ -1041,10 +1048,6 @@ function handleMajorsDialog() {
         if( $("ul.major_tabs li:first").hasClass('active')){
             var subjectNode = window.subjectsTree.getSelectedNodes()[0];
             if (subjectNode) {
-                if (0 === subjectNode.level) {
-                    alert('请选择具体的所学专业');
-                    return;
-                }
                 UiUtils.setFormData('major', subjectNode.id, subjectNode.name);
                 $("#lean_overlay").click();
             } else {

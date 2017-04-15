@@ -21,4 +21,5 @@
     <bean id="redisUtils" class="com.xtuer.util.RedisUtils">
         <property name="redisTemplate" ref="redisTemplate"/>
     </bean>
+
 </beans>

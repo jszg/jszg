@@ -8,20 +8,28 @@
 <mapper namespace="com.xtuer.mapper.DictMapper">
     <select id="findByDictType" resultType="Dict">
         SELECT
-            dic_id as id, name as name, status as status
+            dic_id AS id,
+            name AS name,
+            status AS status
         FROM
             T_DICT
-        WHERE DT_ID = #{dt_id}
-        ORDER BY code
+        WHERE
+          DT_ID = #{dt_id}
+        ORDER BY
+          code
     </select>
 
   <select id="findByDictTypeStatus" resultType="Dict">
     SELECT
-    dic_id as id, name as name, status as status
+      dic_id AS id,
+      name AS name,
+      status AS status
     FROM
-    T_DICT
-    WHERE DT_ID = #{dt_id} and status = 1
-    ORDER BY code
+      T_DICT
+    WHERE
+      DT_ID = #{dt_id} and status = 1
+    ORDER BY
+      code
   </select>
 
 

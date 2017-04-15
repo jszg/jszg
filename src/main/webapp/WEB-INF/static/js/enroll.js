@@ -28,6 +28,10 @@ $(document).ready(function() {
 });
 
 function initWebUploader() {
+    if ( !WebUploader.Uploader.support() ) {
+        alert( 'Web Uploader 不支持您的浏览器！如果你使用的是IE浏览器，请尝试升级 flash 播放器,或则使用火狐、谷歌等浏览器');
+        throw new Error( 'WebUploader does not support the browser you are using.' );
+    }
     var uploader = WebUploader.create({
         auto: true,                 // 自动上传
         swf: Urls.WEB_UPLOADER_SWF, // swf 文件路径
@@ -167,7 +171,7 @@ function handleNextAndPreviousEvents() {
     $('#box-7-exit').click(function() {
         if(confirm('您确定要 "退出" 吗？退出后所有信息都不会保存。\n点击 "确定" 直接退出，点击 "取消" 返回编辑界面')) {
             // UiUtils.closeWindow();
-            location.reload(); // 刷新当前页
+            location.href='http://www.jszg.edu.cn/portal/enroll/exit'; // 跳转到注册首页
         }
     });
 
@@ -322,7 +326,6 @@ function handleRequestRegisterOrgs() {
 
         $.rest.get({url: Urls.REST_ORGS_REG, urlParams: {teachGradeId: teachGradeId, cityId: cityId, provinceCity: provinceCity},
             success: function(result) {
-                console.log(result.data);
                 UiUtils.insertOptions('register-orgs', result.data);
         }});
     });
@@ -742,8 +745,7 @@ StepValidator.validate7thStep = function() {
     };
 
     var passed = false;
-
-    $.rest.create({url: Urls.URI_ENROLL_SUBMIT, data: params, async: false, success: function(result) {
+    $.rest.create({url: Urls.URI_ENROLL_SUBMIT, data: params,urlParams:{token: $('#token').val()}, async: false, success: function(result) {
         if (!result.success) {
             alert(result.message); // 弹出错误消息
         } else {

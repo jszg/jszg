@@ -372,7 +372,11 @@ public class SignUpController {
     public Result<List<Dict>> getEduLevels(@PathVariable("certTypeId") int certTypeId) {
         String key = String.format(RedisKey.EDULEVELS, certTypeId);
         List<Dict> eduLevels = redisUtils.get(new TypeReference<List<Dict>>(){}, key, () -> dictMapper.findEduLevels(certTypeId));
-        return Result.ok(eduLevels);
+        if(!eduLevels.isEmpty()){
+            return Result.ok(eduLevels);
+        }else{
+            return Result.ok(dictMapper.findByDictType(SignUpConstants.ID_EDU_LEVEL));
+        }
     }
 
     // 所有学校

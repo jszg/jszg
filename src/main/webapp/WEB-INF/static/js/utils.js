@@ -58,17 +58,17 @@ Urls = {
     REST_EDU_LEVELS:   '/new-cert/rest/signUp/certTypes/{certTypeId}/eduLevels',//根据资格种类显示最高学历
     REST_DEGREE_BY_CERT_TYPE_AND_EDU_LEVEL:  '/new-cert/rest/signUp/certType/{certTypeId}/eduLevel/{eduLevelId}/degrees',//认定报名根据资格种类和最高学历选择最高学位
 
-    URI_ENROLL_SUBMIT:       '/new-cert/enroll/submit',
+    URI_ENROLL_SUBMIT:       '/new-cert/enroll/submit?token={token}',
     URI_ENROLL_REG_PHOTO:    '/new-cert/enroll/reg-photo/{enrollId}',
     URI_UPLOAD_ENROLL_IMAGE: '/new-cert/enroll/upload-enroll-image',
 
-    URI_REQUEST_SUBMIT:              '/new-cert/request/submit',
+    URI_REQUEST_SUBMIT:              '/new-cert/request/submit?token={token}',
     URI_REQUEST_REG_PHOTO:          '/new-cert/exam/request-photo/{regId}',
 
-    URI_EXAM_SUBMIT:                 '/new-cert/exam/submit',
+    URI_EXAM_SUBMIT:                 '/new-cert/exam/submit?token={token}',
     URI_REQUEST_REG_PHOTO:          '/new-cert/exam/exam-photo/{regId}',
 
-    WEB_UPLOADER_SWF: 'https://cdn.staticfile.org/webuploader/0.1.5/Uploader.swf',
+    WEB_UPLOADER_SWF:      '/new-cert/lib/webuploader/Uploader.swf',
     URI_ACL_MAX_COUNT:    '/new-cert/acl/maxCount/{maxCount}',
     URI_ACL_MAX_DURATION: '/new-cert/acl/maxDuration/{maxDuration}',
     URI_ACL_RESET:        '/new-cert/acl/reset'
@@ -444,7 +444,7 @@ CertNo.validate = function(certNo) {
     if(certNo.length == 17){
     	certNoYear = certNo.substring(0, 4);
     	var nowYear = new Date().getFullYear();
-    	if(certNoYear < '1996' || certNoYear >= '2012' || certNoYear > nowYear){
+    	if(certNoYear < '1996' || certNoYear > nowYear){
     		alert("教师资格证书号码不规范，请检查您的证书号码，或者去发证机关规范教师资格证书后再报名");
     		return false;
     	}
