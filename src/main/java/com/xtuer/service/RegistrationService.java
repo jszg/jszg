@@ -103,6 +103,12 @@ public class RegistrationService {
         } catch (IOException e) {
             logger.warn("移动图片失败: {}", e.getMessage());
         }
+
+        try {
+            FileUtils.deleteQuietly(new File(tempPhotoPath));
+        } catch (Exception e) {
+            logger.warn("临时目录图片删除失败: {}", e.getMessage());
+        }
     }
 
     /**

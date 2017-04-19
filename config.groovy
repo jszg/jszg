@@ -109,6 +109,28 @@ environments {
         }
     }
 
+    wxl3win { // 文显龙的开发环境，使用使用北师大数据库
+        staticBase = '/new-cert'
+        logDir = 'D:/upload/tmp'
+
+        uploadTemp = 'D:/upload/tmp'
+        uploadEnrollPhotoDir = 'D:/upload/tmp'
+        uploadRegPhotoDir = 'D:/upload/tmp'
+
+        jdbc {
+            driverClassName = 'oracle.jdbc.driver.OracleDriver'
+            url = 'jdbc:oracle:thin:@223.202.53.56:6666:ORCL'
+            username = 'certification'
+            password = 'jszg649'
+            validationQuery = 'SELECT 1 FROM dual'
+        }
+
+        redis {
+            host = '127.0.0.1'
+            port = 6379
+        }
+    }
+
     jszgtestlinux { // 北师大的测试环境，Linux 环境，使用 Oracle
         staticBase = '/new-cert'
         logDir = '/usr/local/tomcat8.5.6/logs'

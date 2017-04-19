@@ -17,6 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,6 +50,7 @@ public class EnrollmentController {
     @Autowired
     RedisAclService redisAclService;
 
+    @Transactional(rollbackFor = Exception.class)
     @PostMapping(UriView.URI_ENROLL_SUBMIT)
     @ResponseBody
     public Result<?> submitEnroll(@RequestBody @Valid EnrollmentForm form, BindingResult result, HttpServletRequest request) {

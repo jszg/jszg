@@ -1,13 +1,11 @@
 package com.xtuer.service;
 
-import com.alibaba.fastjson.JSON;
 import com.xtuer.bean.EnrollmentForm;
 import com.xtuer.bean.RegistrationForm;
 import com.xtuer.bean.Result;
 import com.xtuer.bean.UserPortalLog;
 import com.xtuer.constant.SignUpConstants;
 import com.xtuer.dto.CertBatch;
-import com.xtuer.dto.CertType;
 import com.xtuer.dto.CityInfo;
 import com.xtuer.dto.ProvinceBatch;
 import com.xtuer.mapper.*;
@@ -15,23 +13,21 @@ import com.xtuer.util.BrowserUtils;
 import com.xtuer.util.CommonUtils;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
 import javax.annotation.Resource;
-import javax.servlet.Registration;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.Date;
-import java.util.Map;
 
 @Service
 public class EnrollmentService {
@@ -104,6 +100,7 @@ public class EnrollmentService {
         enrollmentMapper.insertEnrollment(form);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public  Result<?> saveWhenNotInHistoryAndInRegistration(EnrollmentForm form){
         //首先给registration设置值
         RegistrationForm reg = new RegistrationForm();
@@ -191,6 +188,11 @@ public class EnrollmentService {
             FileUtils.moveFile(new File(tempPhotoPath), new File(photoPath));
         } catch (IOException e) {
             logger.warn("移动图片失败: {}", e.getMessage());
+        }
+        try {
+            FileUtils.deleteQuietly(new File(tempPhotoPath));
+        } catch (Exception e) {
+            logger.warn("临时目录图片删除失败: {}", e.getMessage());
         }
     }
 
