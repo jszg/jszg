@@ -29,4 +29,6 @@ public interface DictMapper {
 
     //认定报名根据资格种类和最高学历选择最高学位
     List<Dict> findDegreessByCertTypeIdAndEduLevelId(@Param("certTypeId") int certTypeId, @Param("eduLevelId") int eduLevelId);
+
+    List<Dict> findIdType(@Param("dtId") int dtId, @Param("ct_id") int certTypeId);
 }

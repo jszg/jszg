@@ -1,22 +1,15 @@
 package com.xtuer.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.xtuer.bean.EnrollmentForm;
 import com.xtuer.bean.RegistrationForm;
 import com.xtuer.bean.Result;
 import com.xtuer.constant.SignUpConstants;
 import com.xtuer.constant.UriView;
-import com.xtuer.dto.Enrollment;
-import com.xtuer.dto.HistoryValid;
-import com.xtuer.dto.Registration;
 import com.xtuer.mapper.CommonMapper;
 import com.xtuer.mapper.RegistrationMapper;
-import com.xtuer.service.EnrollmentService;
 import com.xtuer.service.RedisAclService;
 import com.xtuer.service.RegistrationService;
 import com.xtuer.util.CommonUtils;
 import org.apache.commons.configuration.PropertiesConfiguration;
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -58,7 +47,7 @@ public class RegistrationController {
 
     @PostMapping(UriView.URI_REQUEST_SUBMIT)
     @ResponseBody
-    public Result<?> submitRequest(@RequestBody @Valid RegistrationForm form, BindingResult result, HttpServletRequest request) {
+    public Result<?> submitRequest(@RequestBody @Valid RegistrationForm form, BindingResult result, HttpServletRequest request,@RequestParam String token) {
         // [1] 数据验证
         Result<?> r = registrationService.validateParams(form, result);
         if (!r.isSuccess()) {
@@ -84,8 +73,7 @@ public class RegistrationController {
         form.setScoreCertNo("");
         form.setPrintStatus(0);
         // [3] 保存数据
-        registrationService.save(form,request);
-
+        registrationService.save(form);
         // [4] 保存简历信息
         registrationService.saveResum(form);
 

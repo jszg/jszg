@@ -21,7 +21,7 @@
     <context:component-scan base-package="com.xtuer.service"/>
     <context:component-scan base-package="com.xtuer.controller"/>
 
-    <!--表单重复提交的拦截
+    <!--表单重复提交的拦截-->
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/enroll"/>
@@ -60,7 +60,7 @@
             </bean>
         </mvc:interceptor>
     </mvc:interceptors>
-    -->
+
     <!-- 支持注解映射 -->
     <mvc:annotation-driven>
         <!--enableMatrixVariables="true">-->

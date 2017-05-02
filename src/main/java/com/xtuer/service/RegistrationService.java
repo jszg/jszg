@@ -53,7 +53,7 @@ public class RegistrationService {
     @Autowired
     private DictMapper dictMapper;
 
-    public void save(RegistrationForm form,HttpServletRequest request){
+    public void save(RegistrationForm form){
         //首先给registration设置值
         try {
             form.setBirthdayDate(DateUtils.parseDate(form.getBirthDay(),DATE_FORMAT));

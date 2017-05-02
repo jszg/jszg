@@ -190,6 +190,15 @@ StepValidator.validate3thStep = function() {
         }
     }});
 
+     //根据选择的资格种类,给第六步的证件类型赋值,当为高等学校教师资格时显示台湾居民来往大陆通行证
+     $.rest.get({url: Urls.REST_ID_TYPE_CERT_TYPE, urlParams: {certTypeId:certTypeId}, async: false, success: function(result) {
+        if (!result.success) {
+            valid = false;
+        } else {
+            UiUtils.insertOptions('id-types', result.data); //证件类型
+        }
+     }});
+
     if (!valid) {
         return false;
     }else{
@@ -281,8 +290,11 @@ StepValidator.validate6thStep = function(){
      var invalid = false;
      var certTypeId = parseInt($('#certTypes option:selected').val()); // #provinces option:selected
      var subjectId = UiUtils.getFormData('#box-3', 'request-subject-text').id; // 现任教学科
+
+     // 显示身份证上的信息
+     var idCard = new IdCard('', $idNo);
      // 查询历史记录，如果有
-     $.rest.get({url: Urls.REST_REQUEST_STEP6, urlParams: {name: encodeURI(encodeURI($name)), idNo: $idNo,certTypeId: certTypeId, subjectId: subjectId}, async: false, success: function(result) {
+     $.rest.get({url: Urls.REST_REQUEST_STEP6, urlParams: {name: encodeURI(encodeURI($name)), idNo: idCard.idNo,certTypeId: certTypeId, subjectId: subjectId}, async: false, success: function(result) {
          if (!result.success) {
              invalid = true;
              invalidMessage = result.message;
@@ -295,15 +307,13 @@ StepValidator.validate6thStep = function(){
          return false;
      }
 
-      // 显示身份证上的信息
-     var idCard = new IdCard('', $idNo);
      UiUtils.setFormData('idNo', -1, idCard.idNo);
      UiUtils.setFormData('birthday', -1, idCard.birthdayString);
      UiUtils.setFormData('gender', (idCard.gender === '男') ? 1 : 2, idCard.gender);
 
      var idType   = UiUtils.getSelectedOption('#id-types');
      UiUtils.setFormData('box-7-name', -1, $name);
-     UiUtils.setFormData('box-7-idNo', -1, $idNo);
+     UiUtils.setFormData('box-7-idNo', -1, idCard.idNo);
      UiUtils.setFormData('box-7-idType', idType.id, idType.name);
     return true;
 };
@@ -621,7 +631,7 @@ function requestDicts() {
         UiUtils.insertOptions('certTypes', data.certTypes,{templateId:'certTypeOptionTemplate'});       // 资格种类
         UiUtils.insertOptions('provinces', data.provinces, {templateId: 'provinceOptionTemplate'});   // 省
         UiUtils.insertOptions('provinces-for-college', data.provinces, {templateId: 'provinceOptionTemplate'});   // 省
-        UiUtils.insertOptions('id-types', data.idType, {remainFirstOption: false, filters: ['身份证','港澳居民身份证']}); // 身份证
+        //UiUtils.insertOptions('id-types', data.idType, {remainFirstOption: false, filters: ['身份证','港澳居民身份证']}); // 身份证
         //UiUtils.insertOptions('id-types', data.idType, {name: '身份证'}); // 身份证
         UiUtils.insertOptions('nations', data.nation);            // 民族
         UiUtils.insertOptions('politicals', data.political);      // 政治面貌

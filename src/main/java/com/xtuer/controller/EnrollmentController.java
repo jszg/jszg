@@ -6,6 +6,7 @@ import com.xtuer.constant.SignUpConstants;
 import com.xtuer.constant.UriView;
 import com.xtuer.dto.Enrollment;
 import com.xtuer.dto.HistoryValid;
+import com.xtuer.dto.ProvinceBatch;
 import com.xtuer.dto.Registration;
 import com.xtuer.mapper.CommonMapper;
 import com.xtuer.service.EnrollmentService;
@@ -53,7 +54,7 @@ public class EnrollmentController {
     @Transactional(rollbackFor = Exception.class)
     @PostMapping(UriView.URI_ENROLL_SUBMIT)
     @ResponseBody
-    public Result<?> submitEnroll(@RequestBody @Valid EnrollmentForm form, BindingResult result, HttpServletRequest request) {
+    public Result<?> submitEnroll(@RequestBody @Valid EnrollmentForm form, BindingResult result, HttpServletRequest request,@RequestParam String token) {
         // [1] 数据验证
         Result<?> r = enrollmentService.validateParams(form, result);
         if (!r.isSuccess()) {

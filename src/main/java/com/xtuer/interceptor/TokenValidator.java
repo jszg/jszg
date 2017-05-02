@@ -19,8 +19,11 @@ public class TokenValidator implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if(!"GET".equalsIgnoreCase(request.getMethod())){
             String clientToken = request.getParameter("token");
+            if(clientToken == null || clientToken.isEmpty()){
+                throw new RuntimeException("重复提交表单");
+            }
             String serverToken = redisTemplate.opsForValue().get(clientToken);
-            if(clientToken == null || clientToken.isEmpty() || !clientToken.equals(serverToken)){
+            if(!clientToken.equals(serverToken)){
                 throw new RuntimeException("重复提交表单");
             }
             redisTemplate.delete(clientToken);

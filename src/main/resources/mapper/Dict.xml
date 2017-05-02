@@ -23,13 +23,26 @@
     SELECT
       dic_id AS id,
       name AS name,
-      status AS status
+      status AS status,
+      code AS code
     FROM
       T_DICT
     WHERE
       DT_ID = #{dt_id} and status = 1
     ORDER BY
       code
+  </select>
+  <select id="findIdType" resultType="Dict">
+    SELECT
+        dic_id AS id,
+        name AS name,
+        status AS status
+    FROM
+        T_DICT
+    WHERE
+        DT_ID = #{dt_id} and status = 1
+    ORDER BY
+    code
   </select>
 
 

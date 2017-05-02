@@ -27,6 +27,7 @@ public interface UriView {
     String REST_NATIONS                    = "/rest/signUp/nations";
     String REST_TEAGRADES                  = "/rest/signUp/teaGrades";
     String REST_EDU_LEVELS                  = "/rest/signUp/certTypes/{certTypeId}/eduLevels";
+    String REST_ID_TYPE_CERT_TYPE          = "/rest/signUp/certTypes/{certTypeId}/idTypes";
     String REST_ACADEMICDEGREE             = "/rest/signUp/certTypes/{certTypeId}/eduLevels/{eduLevel}/degrees";
     String REST_LOCAL_SETS                 = "/rest/signUp/orgs/{orgId}/type/{type}/localSets";
     String REST_LOCAL_SETS_INFO            = "/rest/signUp/localSets/{localSetId}";

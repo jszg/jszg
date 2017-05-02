@@ -7,6 +7,7 @@ import com.xtuer.bean.UserPortalLog;
 import com.xtuer.constant.SignUpConstants;
 import com.xtuer.dto.CertBatch;
 import com.xtuer.dto.CityInfo;
+import com.xtuer.dto.HistoryValid;
 import com.xtuer.dto.ProvinceBatch;
 import com.xtuer.mapper.*;
 import com.xtuer.util.BrowserUtils;
@@ -53,9 +54,10 @@ public class EnrollmentService {
     @Autowired
     private DictMapper dictMapper;
 
+    @Transactional(rollbackFor = Exception.class)
     public void saveWhenInHistory(EnrollmentForm form) {
         // 使用表中现有的认定历史表中数据
-        EnrollmentForm temp = enrollmentMapper.findHistoryValidByRegisterId(form.getRegisterId());
+        HistoryValid temp = commonMapper.findHistoryValidByRegisterId(form.getRegisterId());
 
         form.setRegisterId(form.getRegisterId());
         form.setIdNo(temp.getIdNo());
@@ -75,25 +77,26 @@ public class EnrollmentService {
         enrollmentMapper.insertEnrollment(form);
     }
 
+    @Transactional(rollbackFor = Exception.class)
     public void saveWhenInRegistration(EnrollmentForm form) {
         //从认定申请表来的数据在定期注册时,要向认定表中回写省级注册计划信息
         ProvinceBatch pb = commonMapper.findByProvinceId(form.getProvinceId());
         registrationMapper.updateEnrollProBatch(pb.getId(),form.getRegisterId());
 
         // 使用表中现有认定正式表的数据
-        EnrollmentForm temp = enrollmentMapper.findRegistrationByRegisterId(form.getRegisterId());
-        form.setRegisterId(temp.getRegisterId());
+        RegistrationForm temp = registrationMapper.findRegistrationByRegisterId(form.getRegisterId());
+        form.setRegisterId(temp.getRegId());
         form.setCertNo(temp.getCertNo());
-        form.setIdTypeId(temp.getIdTypeId());
-        form.setCertTypeId(temp.getCertTypeId());
+        form.setIdTypeId(temp.getIdType());
+        form.setCertTypeId(temp.getCertType());
         form.setRegisterSubjectId(temp.getSubjectId());
         form.setIdNo(temp.getIdNo());
         form.setName(temp.getName());
-        form.setNationId(temp.getNationId());
-        form.setGenderId(temp.getGenderId());
-        form.setBirthday(temp.getBirthday());
-        form.setCertAssignDate(temp.getCertAssignDate());
-        form.setRecognizeOrgName(temp.getRecognizeOrgName());
+        form.setNationId(temp.getNation());
+        form.setGenderId(temp.getSex());
+        form.setBirthday(temp.getBirthDay());
+        form.setCertAssignDate(temp.getCertAssign());
+        form.setRecognizeOrgName(temp.getOrgName());
         form.setSubjectId(temp.getSubjectId());
         form.setCityId(this.getEnrollCityId(form.getOrgId()));
         form.setStatusMemo("new-cert");

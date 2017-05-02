@@ -10,23 +10,22 @@
     <link href="${static}/css/signup.css" rel="stylesheet" type="text/css">
     <link href="${static}/css/generic.css" rel="stylesheet" type="text/css">
 
-
-    <link href="http://cdn.staticfile.org/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css">
-    <link href="http://cdn.bootcss.com/zTree.v3/3.5.24/css/zTreeStyle/zTreeStyle.min.css" rel="stylesheet" type="text/css">
-    <script src="http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js" charset="utf-8"></script>
-    <script src="http://cdn.staticfile.org/webuploader/0.1.5/webuploader.min.js" charset="utf-8"></script>
-    <script src="http://cdn.bootcss.com/zTree.v3/3.5.24/js/jquery.ztree.core.min.js" charset="utf-8"></script>
-    <script src="http://cdn.staticfile.org/artTemplate.js/3.0/template.js" charset="utf-8"></script>
+    <link href="${static}/lib/webuploader/webuploader.css" rel="stylesheet" type="text/css">
+    <link href="${static}/lib/ztree/zTreeStyle.css" rel="stylesheet" type="text/css">
+    <script src="${static}/lib/jquery.js" charset="utf-8"></script>
+    <script src="${static}/lib/webuploader/webuploader.js" charset="utf-8"></script>
+    <script src="${static}/lib/ztree/jquery.ztree.core.js" charset="utf-8"></script>
+    <script src="${static}/lib/template.js" charset="utf-8"></script>
 
     <script src="${static}/lib/jquery.leanModal.min.js" charset="utf-8"></script>
     <script src="${static}/lib/laydate/laydate.js" charset="utf-8"></script>
     <script src="${static}/js/utils.js" charset="utf-8"></script>
     <script src="${static}/js/jquery.rest.js" charset="utf-8"></script>
-    <script src="${static}/js/request.js" type="text/javascript"></script>
+    <script src="${static}/js/exam.js" type="text/javascript"></script>
 
     <!--[if lt IE 9]>
-    <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <script src="${static}/lib/html5shiv.min.js"></script>
+    <script src="${static}/lib/respond.min.js"></script>
     <![endif]-->
 </head>
 
@@ -38,10 +37,10 @@
     <ul>
         <li class="bz bz1 active" style="z-index: 10" data-step="1"><span>申报第一步</span><br/><span>申报人必读</span></li>
         <li class="bz bz2" style="z-index: 9" data-step="2"><span>申报第二步</span><br/><span>确认服务条款</span></li>
-        <li class="bz bz3" style="z-index: 8" data-step="3"><span>申报第三步</span><br/><span>选择认定机构</span></li>
-        <li class="bz bz4" style="z-index: 7" data-step="4"><span>申报第四步</span><br/><span>选择确认点</span></li>
-        <li class="bz bz5" style="z-index: 6" data-step="5"><span>申报第五步</span><br/><span>阅读注意事项</span></li>
-        <li class="bz bz6" style="z-index: 5" data-step="6"><span>申报第六步</span><br/><span>填写身份信息</span></li>
+        <li class="bz bz3" style="z-index: 8" data-step="3"><span>申报第三步</span><br/><span>填写身份信息</span></li>
+        <li class="bz bz4" style="z-index: 7" data-step="4"><span>申报第四步</span><br/><span>选择认定机构</span></li>
+        <li class="bz bz5" style="z-index: 6" data-step="5"><span>申报第五步</span><br/><span>选择确认点</span></li>
+        <li class="bz bz6" style="z-index: 5" data-step="6"><span>申报第六步</span><br/><span>阅读注意事项</span></li>
         <li class="bz bz7" style="z-index: 4" data-step="7"><span>申报第七步</span><br/><span>填写申请材料</span></li>
         <li class="bz bz8" style="z-index: 3" data-step="8"><span>申报第八步</span><br>完成</li>
     </ul>
@@ -91,7 +90,7 @@
 <!-- 第二步 -->
 <div id="box-2">
     <div class="content_bd">
-        <h4>网上申报协议</h4>
+        <h4>确认服务条款</h4>
         <p>
             1. 本网站网上申报系统的所有权归中国教师资格网。<br/>
             2. 教师资格申请人已经认真阅读本网站中提供的“申请人必读”中的内容，符合国家规定的申请条件。<br/>
@@ -114,26 +113,88 @@
     </div>
 </div>
 
-<!--第三步 -->
+<!-- 第三步 -->
 <div id="box-3">
     <div class="content_bd">
-        <h4>请选择资格种类和认定机构<font style="font-size:95%;color:red">（在河北省申请认定中小学和幼儿园教师资格的申请人，认定机构请选择市级（含省直管县）教育局）</font></h4>
-
+        <h4>填写身份信息</h4>
         <div class="ui-body">
-            <table border='0' cellspacing="0" cellpadding="0">
-                <!-- 选择资格种类 -->
+            <table width="960" border="0" cellspacing="0" cellpadding="0">
+                <tbody>
                 <tr>
-                    <td width="100" class="operation"><label>资格种类</label></td>
-                    <td width="150">
-                        <select id="certTypes" name="certTypes" class="ui-field"><option selected="selected" value="-1">请选择</option></select>
+                    <td width="130" class="operation">姓名</td>
+                    <td width="150"><input class="ui-field" id="name" name="name" value=""></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="operation">身份证件号码</td>
+                    <td>
+                        <input class="ui-field" id="idNo" name="idNo" value="">
                     </td>
                     <td></td>
                 </tr>
+                <tr>
+                    <td class="operation">考试合格证明编号</td>
+                    <td>
+                        <input class="ui-field" id="scoreCertNo" name="scoreCertNo" value="">
+                    </td>
+                    <td><span ><font color='red'>注意：如果您不知道考试合格证明编号，请登录<a href='http://www.ntce.cn' target='_blank'>http://www.ntce.cn</a>，从“成绩查询”栏目查询；<br/>如果成绩查询结果里没有“考试合格证明”的相关信息，请从“未参加全国统考申请人网报入口”报名。</font></span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="action-bar">
+        <a href="javascript:void(0)" class="pre-step">
+            <img src="${static}/img/signup/button-prev.gif" alt="上一步" border="0" id="box-3-previous" data-step="3">
+        </a>
+        <a href="javascript:void(0)" class="next-step">
+            <img src="${static}/img/signup/button-next.gif" alt="下一步" border="0" id="box-3-next">
+        </a>
+    </div>
+</div>
 
+<!--第四步 -->
+<div id="box-4">
+    <!-- 隐藏数据 -->
+    <div style="display: none">
+        <span class="form-data" name="adminLevel" data-id="" data-name="-1"></span>
+    </div>
+    <div class="unregistered content_bd">
+        <h4>认定信息</h4>
+        <div class="ui-body">
+           <table width="960" border="0" cellspacing="0" cellpadding="0" class="ui-view">
+                 <tr>
+                    <td class="operation">姓名</td>
+                    <td width="280"><span class="form-data" name="name" data-id="" data-name=""></span></td>
+                    <td></td>
+                    <td class="operation">证件类型</td>
+                    <td width="289"><span class="form-data" name="idType" data-id="" data-name=""></span></td>
+                </tr>
+                <tr>
+                    <td width="194" class="operation">身份证件号码</td>
+                    <td width="238"><span class="form-data" name="idNo" data-id="" data-name=""></span></td>
+                    <td></td>
+                    <td width="194" class="operation">考试合格证明编号</td>
+                    <td width="238"><span class="form-data" name="scoreCertNo" data-id="" data-name=""></span></td>
+                </tr>
+                <tr>
+                    <td width="194" class="operation">申请资格种类</td>
+                    <td width="238"><span class="form-data" name="certType" data-id="" data-name=""></span></td>
+                    <td></td>
+                    <td width="194" class="operation">任教学科</td>
+                    <td width="238"><span class="form-data" name="subject" data-id="" data-name=""></span></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="content_bd">
+        <h4>请选择认定机构<font style="font-size:95%;color:red">（在河北省申请认定中小学和幼儿园教师资格的申请人，认定机构请选择市级（含省直管县）教育局）</font></h4>
+        <div class="ui-body">
+            <table width="960" border="0" cellspacing="0" cellpadding="0" class="mytable">
                 <!-- 选择省 -->
                 <tr>
-                    <td class="operation"><label>选择省</label></td>
-                    <td><select id="provinces"><option selected="selected" value="-1">请选择</option></select></td>
+                    <td width="130" class="operation"><label>选择省</label></td>
+                    <td width="150"><select id="provinces"><option selected="selected" value="-1">请选择</option></select></td>
                     <td>
                         <span><font>在职教师或其他社会人员选择工作单位（人事档案）所在地或户籍所在地的省份和地、州、市（含省直管县）；应届毕业生只能在毕业前最后一学期申请认定，应届毕业生选择就读学校所在地的省份和地、州、市（含省直管县）。</font></span>
                     </td>
@@ -155,17 +216,8 @@
                         </select>
                     </td>
                     <td>
-                        <span id="request-org-error"></span>
+                        <span id="exam-org-error"></span>
                         <span class="description"><fon>申请认定幼儿园、小学、初级中学教师资格时，认定机构选择区、县级教育局；申请认定高级中学、中等职业学校、中等职业学校实习指导教师资格时，认定机构选择地、州、市级教育局。<br></font><font color="red">河北省认定中小学和幼儿园教师资格的认定权限已经调整，“认定机构”只能选择系统提供的教育局名称。<br></font><font>高等学校拟聘或已聘任的教学科研人员申请认定高等学校教师资格只能选择任教（拟任教）学校所在地的省（自治区、直辖市）教育厅（教委）。</font></span>
-                    </td>
-                </tr>
-
-                <!-- 选择任教学科 -->
-                <tr>
-                    <td class="operation"><label>任教学科</label></td>
-                    <td colspan="2">
-                        <button id="select-request-subject-button">请选择...</button>
-                        <span class="form-data" name="request-subject-text" data-id="" data-name=""></span>
                     </td>
                 </tr>
             </table>
@@ -173,16 +225,16 @@
     </div>
     <div class="action-bar">
         <a href="javascript:void(0)" class="pre-step">
-            <img src="${static}/img/signup/button-prev.gif" alt="上一步" border="0" id="box-3-previous" data-step="3">
+            <img src="${static}/img/signup/button-prev.gif" alt="上一步" border="0" id="box-4-previous" data-step="4">
         </a>
         <a href="javascript:void(0)" class="next-step">
-            <img src="${static}/img/signup/button-next.gif" alt="下一步" border="0" id="box-3-next">
+            <img src="${static}/img/signup/button-next.gif" alt="下一步" border="0" id="box-4-next">
         </a>
     </div>
 </div>
 
-<!-- 第四步 -->
-<div id="box-4">
+<!-- 第五步 -->
+<div id="box-5">
     <div class="content_bd">
             <h4>选择确认点:</h4>
             <div id="local-sets-div" class="ui-body">
@@ -217,16 +269,16 @@
         </div>
         <div class="action-bar">
             <a href="javascript:void(0)" class="pre-step">
-                <img src="${static}/img/signup/button-prev.gif" alt="上一步" border="0" id="box-5-previous" data-step="4">
+                <img src="${static}/img/signup/button-prev.gif" alt="上一步" border="0" id="box-5-previous" data-step="5">
             </a>
             <a href="javascript:void(0)" class="next-step">
-                <img src="${static}/img/signup/button-next.gif" alt="下一步" border="0" id="box-4-next">
+                <img src="${static}/img/signup/button-next.gif" alt="下一步" border="0" id="box-5-next">
             </a>
         </div>
 </div>
 
-<!-- 第五步 -->
-<div id="box-5">
+<!-- 第六步 -->
+<div id="box-6">
     <div class="content_bd">
             <h4>注意事项</h4>
             <div id="local-set-info">
@@ -255,50 +307,12 @@
         </div>
         <div class="action-bar">
             <a href="javascript:void(0)" class="pre-step">
-                <img src="${static}/img/signup/button-prev.gif" alt="上一步" border="0" id="box-6-previous" data-step="5">
+                <img src="${static}/img/signup/button-prev.gif" alt="上一步" border="0" id="box-6-previous" data-step="6">
             </a>
             <a href="javascript:void(0)" class="next-step">
-                <img src="${static}/img/signup/button-next-with-read.gif" alt="下一步" border="0" id="box-5-next">
+                <img src="${static}/img/signup/button-next-with-read.gif" alt="下一步" border="0" id="box-6-next">
             </a>
         </div>
-</div>
-
-<!-- 第六步 -->
-<div id="box-6">
-    <div class="content_bd">
-        <h4>填写身份信息</h4>
-        <div class="ui-body">
-            <table width="960" border="0" cellspacing="0" cellpadding="0">
-                <tbody>
-                <tr>
-                    <td width="130" class="operation">姓名</td>
-                    <td width="150"><input class="ui-field" id="name" name="name" value=""></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td class="operation">证件类型</td>
-                    <td><select id="id-types"><option selected="selected" value="-1">请选择</option></select></td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td class="operation">身份证件号码</td>
-                    <td>
-                        <input class="ui-field" id="idNo" name="idNo" value="">
-                    </td>
-                    <td></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="action-bar">
-        <a href="javascript:void(0)" class="pre-step">
-            <img src="${static}/img/signup/button-prev.gif" alt="上一步" border="0" id="box-6-previous" data-step="6">
-        </a>
-        <a href="javascript:void(0)" class="next-step">
-            <img src="${static}/img/signup/button-next.gif" alt="下一步" border="0" id="box-6-next">
-        </a>
-    </div>
 </div>
 
 <!-- 第七步 -->
@@ -308,42 +322,38 @@
         <span class="form-data" name="certBatchId" data-id="" data-name="-1"></span>
         <span class="form-data" name="localeId" data-id="" data-name="-1"></span>
         <span class="form-data" name="localSetId" data-id="" data-name="-1"></span>
+        <span class="form-data" name="scoreCertNo" data-id="" data-name="-1"></span>
+        <span class="form-data" name="recognizeOrg" data-id="" data-name="-1"></span>
+        <span class="form-data" name="scoreId" data-id="" data-name="-1"></span>
         <input type="input" name="token" id="token" value="${token!}">
     </div>
-    <div class="content_bd">
-        <h4>基本信息：<b class="f_red f_size">（如要修改，请返回上一步）</b></h4>
+    <div class="unregistered content_bd">
+        <h4>基本信息：<b class="f_red f_size">（如要修改，请返回第三步）</b></h4>
         <div class="ui-body">
-            <table width="960" border="0" cellspacing="0" cellpadding="0" class="ui-view">
+           <table width="960" border="0" cellspacing="0" cellpadding="0" class="ui-view">
                 <tr>
-                    <td class="operation">姓名:</td>
-                    <td width="280"><span class="form-data" name="box-7-name" data-id="" data-name=""></span></td>
-                    <td></td>
-                    <td class="operation">证件类型:</td>
-                    <td  width="289"><span class="form-data" name="box-7-idType" data-id="" data-name=""></span></td>
-                </tr>
-                <tr>
-                    <td width="194" class="operation">身份证件号码:</td>
-                    <td width="238"><span class="form-data" name="box-7-idNo" data-id="" data-name=""></span></td>
-                    <td></td>
-                    <td width="194" class="operation">申请资格种类:</td>
-                    <td width="238"><span class="form-data" name="box-7-certType" data-id="" data-name=""></span></td>
-                </tr>
-                <tr>
-                    <td width="194" class="operation">任教学科:</td>
-                    <td width="238"><span class="form-data" name="box-7-request-Subject" data-id="" data-name=""></span></td>
-                    <td></td>
-                    <td class="operation">确认点:</td>
-                    <td width="238"><span class="form-data" name="box-7-locale-Set" data-id="" data-name=""></span></td>
-                </tr>
-                <tr>
-                    <td width="194" class="operation">认定机构:</td>
-                    <td width="238"><span class="form-data" name="box-7-request-Org" data-id="" data-name=""></span></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-            </table>
-            </div>
+                   <td class="operation">姓名</td>
+                   <td width="280"><span class="form-data" name="name" data-id="" data-name=""></span></td>
+                   <td></td>
+                   <td class="operation">证件类型</td>
+                   <td width="289"><span class="form-data" name="idType" data-id="" data-name=""></span></td>
+               </tr>
+               <tr>
+                   <td width="194" class="operation">身份证件号码</td>
+                   <td width="238"><span class="form-data" name="idNo" data-id="" data-name=""></span></td>
+                   <td></td>
+                   <td width="194" class="operation">考试合格证明编号</td>
+                   <td width="238"><span class="form-data" name="scoreCertNo" data-id="" data-name=""></span></td>
+               </tr>
+               <tr>
+                   <td width="194" class="operation">申请资格种类</td>
+                   <td width="238"><span class="form-data" name="certType" data-id="" data-name=""></span></td>
+                   <td></td>
+                   <td width="194" class="operation">任教学科</td>
+                   <td width="238"><span class="form-data" name="subject" data-id="" data-name=""></span></td>
+               </tr>
+           </table>
+        </div>
     </div>
     <div class="content_bd">
         <h4>登录信息：<b class="f_red f_size">（必须牢记登录信息）</b></h4>

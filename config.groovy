@@ -31,7 +31,7 @@ environments {
 
         jdbc {
             driverClassName = 'oracle.jdbc.driver.OracleDriver'
-            url = 'jdbc:oracle:thin:@192.168.10.25:1521:CERT'
+            url = 'jdbc:oracle:thin:@192.168.10.25:1521:orcl'
             username = 'certification'
             password = '123456'
             validationQuery = 'SELECT 1 FROM dual'
@@ -53,7 +53,7 @@ environments {
 
         jdbc {
             driverClassName = 'oracle.jdbc.driver.OracleDriver'
-            url = 'jdbc:oracle:thin:@192.168.10.25:1521:TCERT'
+            url = 'jdbc:oracle:thin:@192.168.10.25:1521:ORCL'
             username = 'certification'
             password = '123456'
             validationQuery = 'SELECT 1 FROM dual'
@@ -76,7 +76,7 @@ environments {
         jdbc {
             driverClassName = 'oracle.jdbc.driver.OracleDriver'
             url = 'jdbc:oracle:thin:@192.168.10.25:1521:ORCL'
-            username = 'wenxl'
+            username = 'certification'
             password = '123456'
             validationQuery = 'SELECT 1 FROM dual'
         }
@@ -98,7 +98,7 @@ environments {
         jdbc {
             driverClassName = 'oracle.jdbc.driver.OracleDriver'
             url = 'jdbc:oracle:thin:@192.168.10.25:1521:ORCL'
-            username = 'wenxl'
+            username = 'certification'
             password = '123456'
             validationQuery = 'SELECT 1 FROM dual'
         }

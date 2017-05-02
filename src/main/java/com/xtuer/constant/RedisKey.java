@@ -31,6 +31,7 @@ public interface RedisKey {
     String DICTS_BY_TYPE = "dicts_%d"; // dicts_{dictTypeId}
     String TEAGRADES = "teaGrades"; // teaGrades
     String EDULEVELS = "eduLevels_%d"; // eduLevels_{certTypeId}
+    String IDTYPRS = "idTypes_%d"; // idTypes_{certTypeId}
 
     String LOCAL_SETS = "localsets_%d_%d"; // localsets_{orgId}_{type}
 

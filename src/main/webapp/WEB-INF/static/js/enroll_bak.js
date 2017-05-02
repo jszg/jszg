@@ -391,10 +391,8 @@ StepValidator.validate3thStep = function() {
     var invalid = false;
     var invalidMessage = '';
 
-    // 显示身份证上的信息
-    var idCard = new IdCard('', idNo);
     // 查询历史记录，如果有
-    $.rest.get({url: Urls.REST_ENROLL_STEP3, urlParams: {idNo: idCard.idNo, certNo: certNo}, async: false, success: function(result) {
+    $.rest.get({url: Urls.REST_ENROLL_STEP3, urlParams: {idNo: idNo, certNo: certNo}, async: false, success: function(result) {
         if (!result.success) {
             invalid = true;
             invalidMessage = result.message;
@@ -474,6 +472,8 @@ StepValidator.validate3thStep = function() {
     UiUtils.setFormData('idType', idType.id, idType.name);
     UiUtils.setFormData('certNo', -1, certNo);
 
+    // 显示身份证上的信息
+    var idCard = new IdCard('', idNo);
     UiUtils.setFormData('idNo', -1, idCard.idNo);
     UiUtils.setFormData('birthday', -1, idCard.birthdayString);
     UiUtils.setFormData('gender', (idCard.gender === '男') ? 1 : 2, idCard.gender);
@@ -745,7 +745,7 @@ StepValidator.validate7thStep = function() {
     };
 
     var passed = false;
-    $.rest.create({url: Urls.URI_ENROLL_SUBMIT, data: params, urlParams:{token: $('#token').val()}, async: false, success: function(result) {
+    $.rest.create({url: Urls.URI_ENROLL_SUBMIT, data: params, async: false, success: function(result) {
         if (!result.success) {
             alert(result.message); // 弹出错误消息
         } else {

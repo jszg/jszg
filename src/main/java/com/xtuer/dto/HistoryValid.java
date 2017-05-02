@@ -19,7 +19,7 @@ public class HistoryValid {
     private String idTypeName;        //证件类型
     private String certNo;            //教师资格证书号码
     private String sexName;              //性别
-    private Date birthday;            //出生日期
+    private String birthday;            //出生日期
     private String nationName;        //民族
     private String certType;     //资格种类
     private String subjectName;           //任教学科
@@ -27,6 +27,15 @@ public class HistoryValid {
     private String tmpPhoto;         //照片
     private int deleteStatus;    //数据状态
     private Date certAssign;
+    private Long registerId;
+    private Integer certTypeId;
+    private Integer subjectId;
+    private Integer nationId;
+    private Integer genderId;
+    private String certAssignDate;
+    private String recognizeOrgName;
+    private Integer idTypeId;
+
 
 }
 

@@ -5,8 +5,8 @@ import com.xtuer.constant.SignUpConstants;
 import com.xtuer.constant.UriView;
 import com.xtuer.dto.*;
 import com.xtuer.mapper.CommonMapper;
-import com.xtuer.util.CommonUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -22,6 +23,8 @@ import java.util.*;
  */
 @Controller
 public class EnrollmentValidationController {
+
+    public static final String DATE_FORMAT = "yyyy-MM-dd";
     /**
      * 验证注册的注册机构
      *
@@ -92,6 +95,7 @@ public class EnrollmentValidationController {
     @GetMapping(UriView.REST_ENROLL_STEP3)
     @ResponseBody
     public Result<?> enrollStep3(@RequestParam String idNo, @RequestParam String certNo) {
+        System.out.println(idNo);
         List<Limitation> limits = commonMapper.findLimitation(idNo, certNo);
 
         if (!limits.isEmpty() && limits.get(0).getStatus() == SignUpConstants.S_REVIEWED) {
@@ -215,7 +219,11 @@ public class EnrollmentValidationController {
             registration.setName(historyValid.getName());
             registration.setCertNo(certNo);
             registration.setIdNo(idNo);
-            registration.setBirthday(historyValid.getBirthday());
+            try {
+                registration.setBirthday(DateUtils.parseDate(historyValid.getBirthday(),DATE_FORMAT));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             registration.setNationName(historyValid.getNationName());
             registration.setOrgName(historyValid.getOrgName());
             registration.setSexName(historyValid.getSexName());

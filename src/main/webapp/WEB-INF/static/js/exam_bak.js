@@ -140,19 +140,43 @@ StepValidator.validate3thStep = function(){
         alert('姓名不能为空!');
         return false;
     }
+
+    if (!IdCard.validate($idNo)) {//证件类型为身份证时校验
+        alert('请输入有效的身份证号码');
+        return false;
+    }
+
     if(!$idNo){
         alert('身份证件号码不能为空!');
         return false;
+    }else{
+          //判断是否输入有全角
+         for (var i = $idNo.length-1; i >= 0; i--){
+    　　　　var unicode=$idNo.charCodeAt(i);
+    　　    if (unicode>65280 && unicode<65375){
+    　　　　　　alert("输入全角字符'"+$idNo[i]+"',身份证件号码不能输入'全角字符'!");
+                return false;
+    　　　　}
+    　　}
     }
+
+     if($idNo.length != 18){
+        alert('身份证件号码必须为18位!');
+        return false;
+     }
+     var par=/^[0-9]*$/;
+     if(!par.test($idNo.substring(0,17))){
+         alert('身份证件号码前17位必须为数字!');
+         return false;
+     }
      if(!$scoreCertNo){
         alert('请输入统考合格证编号!');
         return false;
      }
      var invalidMessage = '';
      var invalid = false;
-     var idCard = new IdCard('', $.trim($idNo));
      // 查询历史记录，如果有
-     $.rest.get({url: Urls.REST_EXAM_STEP3, urlParams: {name: encodeURI(encodeURI($name)), idNo: idCard.idNo,scoreCertNo: $scoreCertNo}, async: false, success: function(result) {
+     $.rest.get({url: Urls.REST_EXAM_STEP3, urlParams: {name: encodeURI(encodeURI($name)), idNo: $idNo,scoreCertNo: $scoreCertNo}, async: false, success: function(result) {
          if (!result.success) {
              invalid = true;
              invalidMessage = result.message;
@@ -175,7 +199,7 @@ StepValidator.validate3thStep = function(){
      if (invalid) {
          return false;
      }
-
+     var idCard = new IdCard('', $.trim($idNo));
      var genderId          = idCard.gender;           // 性别
      var birthday          = idCard.birthdayString;           // 出生日期
      UiUtils.setFormData('gender', idCard.genderValue, genderId);
@@ -446,7 +470,7 @@ StepValidator.validate7thStep = function(){
     };
 
     var passed = false;
-    $.rest.create({url: Urls.URI_EXAM_SUBMIT, data: params, urlParams:{token: $('#token').val()}, async: false, success: function(result) {
+    $.rest.create({url: Urls.URI_EXAM_SUBMIT, data: params, async: false, success: function(result) {
         if (!result.success) {
             alert(result.message); // 弹出错误消息
         } else {

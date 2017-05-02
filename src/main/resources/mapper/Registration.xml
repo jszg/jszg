@@ -112,4 +112,24 @@
             AND r.cb_id = #{certBatchId}
     </select>
 
+    <select id="findRegistrationByRegisterId" resultType="RegistrationForm">
+        SELECT
+        r.reg_id      AS registerId,
+        r.id_no       AS idNo,
+        r.name        AS name,
+        r.ct_id       AS certTypeId,
+        r.subject     AS subjectId,
+        r.cert_no     AS certNo,
+        r.nation      AS nationId,
+        r.sex         AS genderId,
+        r.birthday    AS birthday,
+        r.cert_assign AS certAssignDate,
+        r.org_name    AS recognizeOrgName,
+        r.id_type     AS idTypeId
+        FROM
+        t_registration r
+        WHERE
+        r.reg_id = #{registerId}
+    </select>
+
 </mapper>

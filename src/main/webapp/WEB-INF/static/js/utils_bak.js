@@ -56,17 +56,16 @@ Urls = {
     REST_EXAM_ORG_VALIDATION: '/new-cert/rest/signUp/exam/orgs/{orgId}/certType/{certTypeId}/validation',// 验证统考的认定机构
 
     REST_EDU_LEVELS:   '/new-cert/rest/signUp/certTypes/{certTypeId}/eduLevels',//根据资格种类显示最高学历
-    REST_ID_TYPE_CERT_TYPE:   '/new-cert/rest/signUp/certTypes/{certTypeId}/idTypes',//根据选择的资格种类,给第六步的证件类型赋值,当为高等学校教师资格时显示台湾居民来往大陆通行证
     REST_DEGREE_BY_CERT_TYPE_AND_EDU_LEVEL:  '/new-cert/rest/signUp/certType/{certTypeId}/eduLevel/{eduLevelId}/degrees',//认定报名根据资格种类和最高学历选择最高学位
 
-    URI_ENROLL_SUBMIT:       '/new-cert/enroll/submit?token={token}',
+    URI_ENROLL_SUBMIT:       '/new-cert/enroll/submit',
     URI_ENROLL_REG_PHOTO:    '/new-cert/enroll/reg-photo/{enrollId}',
     URI_UPLOAD_ENROLL_IMAGE: '/new-cert/enroll/upload-enroll-image',
 
-    URI_REQUEST_SUBMIT:              '/new-cert/request/submit?token={token}',
+    URI_REQUEST_SUBMIT:              '/new-cert/request/submit',
     URI_REQUEST_REG_PHOTO:          '/new-cert/exam/request-photo/{regId}',
 
-    URI_EXAM_SUBMIT:                 '/new-cert/exam/submit?token={token}',
+    URI_EXAM_SUBMIT:                 '/new-cert/exam/submit',
     URI_REQUEST_REG_PHOTO:          '/new-cert/exam/exam-photo/{regId}',
 
     WEB_UPLOADER_SWF:      '/new-cert/lib/webuploader/Uploader.swf',

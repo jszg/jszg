@@ -78,7 +78,6 @@ public class SignUpController {
     @ResponseBody
     public Result<List<Organization>> getOrgByOrgType(@PathVariable("orgType") int orgType, @RequestParam("date") String certAssignDate) throws ParseException {
         String key = String.format(RedisKey.ORGS_BY_ORGTYPE, orgType);
-
         Date date = DateUtils.parseDate(certAssignDate, "yyyy-MM-dd");
         List<Organization> organizations = null;
         if (orgType == 4) {
@@ -177,7 +176,6 @@ public class SignUpController {
                 organizations = redisUtils.get(orgReference, key, () -> organizationMapper.findByCity(cityId));
             }
         }
-
         return Result.ok(organizations);
     }
 
@@ -379,6 +377,27 @@ public class SignUpController {
         }
     }
 
+    // 根据选择的资格种类,给第六步的证件类型赋值,当为高等学校教师资格时显示台湾居民来往大陆通行证
+    @GetMapping(UriView.REST_ID_TYPE_CERT_TYPE)
+    @ResponseBody
+    public Result<List<Dict>> getIdTypes(@PathVariable("certTypeId") int certTypeId) {
+        String key = String.format(RedisKey.IDTYPRS, certTypeId);
+        //List<Dict> idTypes = redisUtils.get(new TypeReference<List<Dict>>(){}, key, () -> dictMapper.findIdType(SignUpConstants.ID_TYPE,certTypeId));
+        List<Dict> idTypes = dictMapper.findByDictTypeStatus(SignUpConstants.ID_TYPE);
+        if(certTypeId == SignUpConstants.CERT_TYPE_HIGH){//代表高等学校教师资格
+            return Result.ok(idTypes);
+        }else{
+            Iterator<Dict> iter = idTypes.iterator();
+            while(iter.hasNext()){
+                Dict dict = iter.next();
+                if("5".equals(dict.getCode()) ){
+                    iter.remove();
+                }
+            }
+            return Result.ok(idTypes);
+        }
+    }
+
     // 所有学校
     @GetMapping(UriView.REST_COLLEGES)
     @ResponseBody
@@ -388,7 +407,7 @@ public class SignUpController {
         return Result.ok(colleges);
     }
 
-    // 所有学校
+    // 根据名字查询学校
     @GetMapping(UriView.REST_COLLEGE_BY_NAME)
     @ResponseBody
     public Result<List<College>> getCollegesByName(@PathVariable("name") String name) {

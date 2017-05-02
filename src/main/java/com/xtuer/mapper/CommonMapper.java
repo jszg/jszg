@@ -1,5 +1,6 @@
 package com.xtuer.mapper;
 
+import com.xtuer.bean.EnrollmentForm;
 import com.xtuer.bean.UserPortalLog;
 import com.xtuer.dto.*;
 import org.apache.ibatis.annotations.Param;
@@ -67,4 +68,7 @@ public interface CommonMapper {
 
     //查詢最高学历和资格种类关联表
     List<CertTypeLink> findByCertTypeAndEduLevel(@Param("certTypeId") int certTypeId, @Param("eduLevelId") int eduLevelId);
+
+    //根据认定id查询认定历史表
+    HistoryValid findHistoryValidByRegisterId(@Param("registerId") long registerId);
 }

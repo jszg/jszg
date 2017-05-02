@@ -46,6 +46,10 @@ public interface SignUpConstants {
 
     //最高学历
     int ID_EDU_LEVEL = 7;
+    int ID_TYPE = 10;
+
+    //高等学校教师资格
+    int CERT_TYPE_HIGH = 7;
 
 
 }

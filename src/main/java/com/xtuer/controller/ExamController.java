@@ -19,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
@@ -51,7 +52,7 @@ public class ExamController {
 
     @PostMapping(UriView.URI_EXAM_SUBMIT)
     @ResponseBody
-    public Result<?> submitRequest(@RequestBody @Valid RegistrationForm form, BindingResult result, HttpServletRequest request) {
+    public Result<?> submitRequest(@RequestBody @Valid RegistrationForm form, BindingResult result, HttpServletRequest request, @RequestParam String token) {
         // [1] 数据验证
         Result<?> r = examService.validateParams(form, result);
         if (!r.isSuccess()) {
