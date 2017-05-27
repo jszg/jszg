@@ -69,12 +69,18 @@ function requestSubjects() {
 }
 
 function initWebUploader() {
+    if ( !WebUploader.Uploader.support() ) {
+        alert( 'Web Uploader 不支持您的浏览器！如果你使用的是IE浏览器，请尝试升级 flash 播放器,或则使用火狐、谷歌等浏览器');
+        throw new Error( 'WebUploader does not support the browser you are using.' );
+    }
+    var allMaxSize = 50;
     var uploader = WebUploader.create({
         auto: true,                 // 自动上传
         swf: Urls.WEB_UPLOADER_SWF, // swf 文件路径
         server: Urls.URI_UPLOAD_ENROLL_IMAGE, // 文件接收服务端
         pick: '#filePicker',       // 选择文件的按钮，内部根据当前运行时创建，可能是 input 元素，也可能是 flash.
         resize: true,              // 不压缩 image, 默认如果是 jpeg，文件上传前会压缩一把再上传！
+        fileSizeLimit: 50*1024,//限制大小50k，所有被选文件，超出选择不上
         accept: { // 只允许上传图片
             title: 'Images',
             extensions: 'jpg,jpeg',
@@ -96,11 +102,14 @@ function initWebUploader() {
         uploader.removeFile(file, true); // 启用多次上传
     };
 
-    // 上传成功，例如抛异常
-    // response 为服务器返回来的数据
-    uploader.onUploadError = function(file, response) {
-        // console.log(response);
-    };
+    //  验证大小
+    uploader.on("error",function (type){
+         if(type == "F_DUPLICATE"){
+              alert("系统提示:请不要重复选择文件！");
+         }else if(type == "Q_EXCEED_SIZE_LIMIT"){
+              alert("系统提示:所选附件总大小不可超过" + allMaxSize + "K哦！换个小点的文件吧！");
+         }
+     });
 
     // 上传进度 [0.0, 1.0]
     // fileQueued 时创建进度条，uploadProgress 更新进度条
@@ -252,12 +261,18 @@ StepValidator.validate6thStep = function(){
     var $name = $.trim($('#name').val());
     var $idNo = $.trim($('#idNo').val());
     var $idType = $('#id-types').val();
+    var idType = UiUtils.getSelectedOption('#id-types'); // 证件类型
     if(!$name){
         alert('姓名不能为空!');
         return false;
     }
 
-    if ($idType == 36 && !IdCard.validate($idNo)) {//证件类型为身份证时校验
+    if($idType==-1){
+        alert('请选择证件类型!');
+        return false;
+    }
+
+    if (idType.name == '身份证' && !IdCard.validate($idNo)) {//证件类型为身份证时校验
         alert('请输入有效的身份证号码');
         return false;
     }
@@ -269,19 +284,19 @@ StepValidator.validate6thStep = function(){
           //判断是否输入有全角
          for (var i = $idNo.length-1; i >= 0; i--){
     　　　　var unicode=$idNo.charCodeAt(i);
-    　　    if ($idType == 36 && unicode>65280 && unicode<65375){
+    　　    if (idType.name == '身份证' && unicode>65280 && unicode<65375){
     　　　　　　alert("输入全角字符'"+$idNo[i]+"',身份证件号码不能输入'全角字符'!");
                 return false;
     　　　　}
     　　}
     }
 
-     if($idType == 36 && $idNo.length != 18){
+     if(idType.name == '身份证' && $idNo.length != 18){
         alert('身份证件号码必须为18位!');
         return false;
      }
      var par=/^[0-9]*$/;
-     if($idType == 36 && !par.test($idNo.substring(0,17))){
+     if(idType.name == '身份证' && !par.test($idNo.substring(0,17))){
          alert('身份证件号码前17位必须为数字!');
          return false;
      }
@@ -294,7 +309,7 @@ StepValidator.validate6thStep = function(){
      // 显示身份证上的信息
      var idCard = new IdCard('', $idNo);
      // 查询历史记录，如果有
-     $.rest.get({url: Urls.REST_REQUEST_STEP6, urlParams: {name: encodeURI(encodeURI($name)), idNo: idCard.idNo,certTypeId: certTypeId, subjectId: subjectId}, async: false, success: function(result) {
+     $.rest.get({url: Urls.REST_REQUEST_STEP6, urlParams: {idType:$idType, name: encodeURI(encodeURI($name)), idNo: idCard.idNo,certTypeId: certTypeId, subjectId: subjectId}, async: false, success: function(result) {
          if (!result.success) {
              invalid = true;
              invalidMessage = result.message;
@@ -308,10 +323,12 @@ StepValidator.validate6thStep = function(){
      }
 
      UiUtils.setFormData('idNo', -1, idCard.idNo);
-     UiUtils.setFormData('birthday', -1, idCard.birthdayString);
-     UiUtils.setFormData('gender', (idCard.gender === '男') ? 1 : 2, idCard.gender);
-
-     var idType   = UiUtils.getSelectedOption('#id-types');
+     if (idType.name == '身份证'){
+         $("#gender").val((idCard.gender === '男') ? 1 : 2);
+         $("#gender").attr({ disabled: 'true' });
+         $("#birthday-date").val(idCard.birthdayString);
+         $("#birthday-date").attr({ disabled: 'true' });
+     }
      UiUtils.setFormData('box-7-name', -1, $name);
      UiUtils.setFormData('box-7-idNo', -1, idCard.idNo);
      UiUtils.setFormData('box-7-idType', idType.id, idType.name);
@@ -325,14 +342,14 @@ StepValidator.validate7thStep = function(){
     var box7 = '#box-7';
 
     var name              = UiUtils.getFormData(box7, 'box-7-name').name;           // 姓名
-    var genderId          = UiUtils.getFormData(box7, 'gender').id;           // 性别
+    var genderId          = $.trim($('#gender').val());           // 性别
     var idTypeId          = UiUtils.getFormData(box7, 'box-7-idType').id;           // 证件类型
     var idNo              = UiUtils.getFormData(box7, 'box-7-idNo').name;           // 身份证号码
     var certType          = UiUtils.getFormData(box7, 'box-7-certType').id;        // 申请资格种类
     var subject           = UiUtils.getFormData(box7, 'box-7-request-Subject').id; // 任教学科
     var org               = UiUtils.getFormData(box7, 'box-7-request-Org').id;      // 认定机构
     var orgName           = UiUtils.getFormData(box7, 'box-7-request-Org').name;    // 认定机构
-    var birthday          = UiUtils.getFormData(box7, 'birthday').name;           // 身份证号码
+    var birthday          = $.trim($('#birthday-date').val()) ;           // 出生日期
     var provinceId        = UiUtils.getSelectedOption('#provinces').id;       // 所在省
     var cityId            = UiUtils.getSelectedOption('#cities').id;       // 所在市
     var localeId          = UiUtils.getFormData(box7, 'localeId').id;       // 确认点
@@ -615,7 +632,15 @@ function initializeDatePicker() {
         format: 'YYYY-MM-DD',
         istoday: true
     };
+
+    // 出生日期
+    var birtydayDatePicker = {
+        elem: '#birthday-date',
+        format: 'YYYY-MM-DD',
+        istoday: true
+    };
     laydate(graduationDatePicker);
+    laydate(birtydayDatePicker);
 }
 
 
@@ -704,13 +729,14 @@ function handleChangeProvincesEvent() {
  */
 function handleRequestOrgs() {
     $('#certTypes,#provinces, #cities').change(function(event) {
+        UiUtils.onlyPleaseSelectOption('request-orgs');
         var certTypeId = UiUtils.getSelectedOption('#certTypes').id;
         var $certType = $('#certTypes option:selected');
         var adminLevel = $certType.attr('data-admin-level');
         var provinceId = UiUtils.getSelectedOption('#provinces').id;
         var $cityId = $('#cities option:selected');
         var cityId = parseInt($cityId.val());
-        if (-1 === certTypeId || -1 === cityId) {
+        if (-1 === certTypeId || -1 === provinceId || -1 === cityId) {
             return;
         }
         UiUtils.setFormData('request-subject-text', '','');
@@ -790,7 +816,7 @@ function handleRequestSubjectsDialog() {
             if(!treeNode) {
                 return Urls.REST_REQUEST_SUBJECTS.format({provinceId: provinceId, teachGrade: teachGrade});
             } else {
-                return Urls.REST_REQUEST_SUBJECTS_CHILDREN.format({provinceId: provinceId, parentId: treeNode.id});
+                return Urls.REST_REQUEST_SUBJECTS_CHILDREN.format({provinceId: provinceId, teachGrade: teachGrade, parentId: treeNode.id});
             }
         });
     });

@@ -17,39 +17,59 @@
             order by t.subject_code
   </select>
 
-  <select id="findByParentAndProvince" resultType="Subject">
-        select s.SUBJECT_ID as id, s.NAME as name FROM T_SUBJECT s
-        where s.parent_id=#{parent}
-           and (s.limit_type=0 or s.limit_type=3 )
-           and (s.exam_type=2  or s.exam_type=0 )
-           and (s.province is null  or s.province=#{province} )
-           and s.status=1
-           order by s.subject_code
+  <select id="findByCertTypeAndOrg" resultType="Subject">
+      SELECT
+        s.subject_id AS id,
+        s.name AS name
+      FROM
+        t_subject s
+      WHERE
+          s.subject_type=(select ct.teach_grade from t_cert_type ct  where ct.ct_id=#{certTypeId})
+          and ( s.province=#{orgId}  or s.province is null )
+          and s.status=1 and ( s.parent_id is null ) order by s.subject_code
   </select>
 
-  <select id="findByCertType" resultType="Subject">
-      select s.SUBJECT_ID as id, s.NAME as name
-      FROM T_SUBJECT s
-      where s.subject_type=(select ct.teach_grade from T_CERT_TYPE ct  where ct.ct_id=#{certTypeId})
-        and s.status=1 and ( s.parent_id is null ) order by s.subject_code
+  <select id="findByParentCertTypeAndOrgAndStatus" resultType="Subject">
+      SELECT
+        s.subject_id AS id,
+        s.name AS name
+      FROM
+        t_subject s
+      WHERE
+        s.parent_id= #{parentId}  and ( s.province=#{orgId}  or s.province is null ) and s.status=1  order by s.subject_code
   </select>
 
   <select id="findByParent" resultType="Subject">
-     select s.SUBJECT_ID as id, s.NAME as name
-     from T_SUBJECT s
-     where s.parent_id= #{parent}  and s.status=1  order by s.subject_code
+        select s.SUBJECT_ID as id, s.NAME as name
+        from T_SUBJECT s
+        where s.parent_id= #{parent}  and s.status=1  order by s.subject_code
   </select>
 
   <select id="findBySubjectTypeAndProvince" resultType="Subject">
     select s.SUBJECT_ID as id, s.NAME as name
     from t_subject s
     where s.subject_type=#{teachGrade}
-      and (s.exam_type=2 or s.exam_type=0)
       and (s.limit_type=0 or s.limit_type=3)
       and (s.province=#{province} or s.province is null)
       and s.status=1
       and s.parent_id is null
     order by s.subject_code
+  </select>
+
+  <select id="findByParentAndProvince" resultType="Subject">
+        SELECT
+            s.subject_id AS id,
+            s.name AS name
+        FROM
+            t_subject s
+        WHERE
+            s.parent_id=#{parent}
+            AND s.subject_type=#{teachGrade}
+            AND (s.limit_type=0 or s.limit_type=3 )
+            AND (s.province is null  or s.province=#{province} )
+            AND s.status=1
+        ORDER BY
+            s.subject_code
   </select>
 
   <select id="findByName" resultType="Subject">
@@ -78,7 +98,7 @@
             AND (s.limit_type = 0 OR s.limit_type = 3)
             AND (s.province = #{provinceId} OR s.province IS NULL)
             AND s.status = 1
-            AND s.parent_id IS NULL
+            AND s.parent_id is null
       ORDER BY
             s.subject_code
   </select>
@@ -89,6 +109,7 @@
             t_subject s
         WHERE
             s.parent_id = #{parentId}
+            AND s.subject_type = #{teachGrade}
             AND (s.exam_type = 2 OR s.exam_type = 0)
             AND (s.limit_type = 0 OR s.limit_type = 3)
             AND (s.province = #{provinceId} OR s.province IS NULL)
@@ -110,9 +131,10 @@
           s.parent_id = p.subject_id
       WHERE
           s.name LIKE #{pattern}
-          AND (s.province IS NULL OR s.province = #{provinceId})
+          AND (s.province is null OR s.province = #{provinceId})
           AND s.subject_type = #{teachGrade}
           AND s.status = 1
+          AND (s.exam_type = 2 OR s.exam_type = 0)
           AND (s.limit_type = 0 OR s.limit_type = 3)
       ORDER BY
           s.subject_code ASC

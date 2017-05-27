@@ -10,12 +10,12 @@
     <link href="${static}/css/signup.css" rel="stylesheet" type="text/css">
     <link href="${static}/css/generic.css" rel="stylesheet" type="text/css">
 
-    <link href="http://cdn.staticfile.org/webuploader/0.1.5/webuploader.css" rel="stylesheet" type="text/css">
-    <link href="http://cdn.bootcss.com/zTree.v3/3.5.24/css/zTreeStyle/zTreeStyle.min.css" rel="stylesheet" type="text/css">
-    <script src="http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js" charset="utf-8"></script>
-    <script src="http://cdn.staticfile.org/webuploader/0.1.5/webuploader.min.js" charset="utf-8"></script>
-    <script src="http://cdn.bootcss.com/zTree.v3/3.5.24/js/jquery.ztree.core.min.js" charset="utf-8"></script>
-    <script src="http://cdn.staticfile.org/artTemplate.js/3.0/template.js" charset="utf-8"></script>
+    <link href="${static}/lib/webuploader/webuploader.css" rel="stylesheet" type="text/css">
+    <link href="${static}/lib/ztree/zTreeStyle.css" rel="stylesheet" type="text/css">
+    <script src="${static}/lib/jquery.js" charset="utf-8"></script>
+    <script src="${static}/lib/webuploader/webuploader.js" charset="utf-8"></script>
+    <script src="${static}/lib/ztree/jquery.ztree.core.js" charset="utf-8"></script>
+    <script src="${static}/lib/template.js" charset="utf-8"></script>
 
     <script src="${static}/lib/jquery.leanModal.min.js" charset="utf-8"></script>
     <script src="${static}/lib/laydate/laydate.js" charset="utf-8"></script>
@@ -31,7 +31,7 @@
 
 <body>
 <div class="request">
-<h1>欢迎使用教师资格认定管理-网上申报系统</h1>
+<h1>欢迎使用中国教师资格网--教师资格认定申报系统</h1>
 <div class="declare">
     <h2>网上申<br>报流程</h2>
     <ul>

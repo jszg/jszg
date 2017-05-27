@@ -65,9 +65,8 @@ public class SignUpController {
     @ResponseBody
     public Result<List<Organization>> getOrgByCity(@PathVariable("certTypeId") int certTypeId,@PathVariable("adminLevel") int adminLevel,
                                                    @PathVariable("provinceId") int provinceId, @PathVariable("cityId") int cityId) {
-        List<Organization> orgs = Collections.emptyList();
         String key = String.format(RedisKey.REST_ORGS_REQUEST_BY_CERT_TYPE_PROVINCE_CITY, certTypeId,adminLevel, provinceId, cityId);
-        orgs = redisUtils.get(new TypeReference<List<Organization>>() {}, key,
+        List<Organization> orgs = redisUtils.get(new TypeReference<List<Organization>>() {}, key,
                 () -> organizationMapper.findByProvinceAndCityAndCertTypeId(certTypeId,adminLevel,provinceId, cityId));
         return Result.ok(orgs);
     }
@@ -118,7 +117,7 @@ public class SignUpController {
                 orgNameLogs.stream().filter(onl -> onl.getChangeDate() != null && onl.getChangeDate().after(certAssign)).forEach(onl -> {
                     this.renameOrAddOrg(all, onl.getOrgId(), onl.getOldName());
                 });
-                //更名后的机构，变更到parent之中了，变更时间，在，证书签发日期之后，失效的了，删除
+                //更名后的机构，变更到parent之中了，变更时间在证书签发日期之后，失效的了，删除
                 List<OrgNameLog> orgNameLogList = commonMapper.findOrgByNewDiffOrg(parentID);
                 orgNameLogList.stream().filter(onl -> onl.getChangeDate() != null && onl.getChangeDate().after(certAssign)).forEach(onl -> {
                     all.remove(new Organization(onl.getOrgId()));
@@ -189,17 +188,6 @@ public class SignUpController {
         return Result.ok(subjects);
     }
 
-    // 省下面指定父节点的任教学科
-    @GetMapping(UriView.REST_SUBJECTS_CHILDREN)
-    @ResponseBody
-    public Result<List<Subject>> getChildrenSubjects(@PathVariable("provinceId") int provinceId, @PathVariable("parentId") int parentId) {
-        String key = String.format(RedisKey.SUBJECTS_CHILDREN, provinceId, parentId);
-        List<Subject> subjects = redisUtils.get(new TypeReference<List<Subject>>(){}, key,
-                () -> subjectMapper.findByParentAndProvince(parentId, provinceId));
-
-        return Result.ok(subjects);
-    }
-
     // 非统考第三步任教学科父节点
     @GetMapping(UriView.REST_REQUEST_SUBJECTS)
     @ResponseBody
@@ -212,23 +200,15 @@ public class SignUpController {
     // 非统考第三步任教学科子节点
     @GetMapping(UriView.REST_REQUEST_SUBJECTS_CHILDREN)
     @ResponseBody
-    public Result<List<Subject>> getRequestChildrenSubjects(@PathVariable("provinceId") int provinceId, @PathVariable("parentId") int parentId) {
+    public Result<List<Subject>> getRequestChildrenSubjects(@PathVariable("provinceId") int provinceId, @PathVariable("teachGrade") int teachGrade, @PathVariable("parentId") int parentId) {
         String key = String.format(RedisKey.REST_REQUEST_SUBJECTS_CHILDREN, provinceId, parentId);
         List<Subject> subjects = redisUtils.get(new TypeReference<List<Subject>>(){}, key,
-                () -> subjectMapper.findChildByCertTypeAndProvince(provinceId,parentId));
+                () -> subjectMapper.findChildByCertTypeAndProvince(provinceId,teachGrade,parentId));
         return Result.ok(subjects);
     }
 
 
-    // 证书上的任教学科 (OrgCertTypeSubjectTreeController)
-    // 父节点
-    @GetMapping(UriView.REST_SUBJECTS_BY_CERT_TYPE)
-    @ResponseBody
-    public Result<List<Subject>> getSubjectByCertType(@PathVariable("certTypeId") int certTypeId) {
-        String key = String.format(RedisKey.SUBJECTS_BY_CERTTYPE, certTypeId);
-        List<Subject> list = redisUtils.get(new TypeReference<List<Subject>>(){}, key, () -> subjectMapper.findByCertType(certTypeId));
-        return Result.ok(list);
-    }
+
 
     // 现任教学科按名称搜索
     @GetMapping(UriView.REST_TEACH_SUBJECT_BY_NAME)
@@ -277,7 +257,25 @@ public class SignUpController {
         return Result.ok(subjects);
     }
 
-    // 现任教学科 父节点, 子节点@see getChildrenSubjects
+    // 证书上的任教学科 父节点
+    @GetMapping(UriView.REST_SUBJECTS_BY_CERTTYPE_ORG)
+    @ResponseBody
+    public Result<List<Subject>> getSubjectByCertType(@PathVariable("certTypeId") int certTypeId, @PathVariable("orgId") int orgId) {
+        String key = String.format(RedisKey.SUBJECTS_BY_CERTTYPE_ORG, certTypeId,orgId);
+        List<Subject> list = redisUtils.get(new TypeReference<List<Subject>>(){}, key, () -> subjectMapper.findByCertTypeAndOrg(certTypeId,orgId));
+        return Result.ok(list);
+    }
+
+    //  证书上的任教学科 子节点
+    @GetMapping(UriView.REST_SUBJECTS_BY_PARENT_BY_CERT_TYPE_ORG)
+    @ResponseBody
+    public Result<List<Subject>> getSubjectByParentCertTypeAndOrg(@PathVariable("parentId") int parentId, @PathVariable("orgId") int orgId) {
+        String key = String.format(RedisKey.SUBJECTS_BY_PARENT_ORG_STATUS, parentId, orgId, SignUpConstants.DICT_STATUS_ENABLE);
+        List<Subject> subjects = redisUtils.get(new TypeReference<List<Subject>>(){}, key, () -> subjectMapper.findByParentCertTypeAndOrgAndStatus(parentId, orgId));
+        return Result.ok(subjects);
+    }
+
+    //注册报名现任教学科 父节点, 子节点@see getChildrenSubjects
     @GetMapping(UriView.REST_SUBJECTS_TEASUBJECT)
     @ResponseBody
     public Result<List<Subject>> getTeaSubjects(@PathVariable("provinceId") int provinceId, @PathVariable("teachGrade") int teachGrade) {
@@ -285,6 +283,17 @@ public class SignUpController {
         List<Subject> list = redisUtils.get(new TypeReference<List<Subject>>(){}, key,
                 () -> subjectMapper.findBySubjectTypeAndProvince(teachGrade, provinceId));
         return Result.ok(list);
+    }
+
+    // 注册报名省下面指定子节点的现任教学科
+    @GetMapping(UriView.REST_SUBJECTS_CHILDREN)
+    @ResponseBody
+    public Result<List<Subject>> getChildrenSubjects(@PathVariable("provinceId") int provinceId, @PathVariable("teachGrade") int teachGrade, @PathVariable("parentId") int parentId) {
+        String key = String.format(RedisKey.SUBJECTS_CHILDREN, provinceId, parentId);
+        List<Subject> subjects = redisUtils.get(new TypeReference<List<Subject>>(){}, key,
+                () -> subjectMapper.findByParentAndProvince(parentId,teachGrade, provinceId));
+
+        return Result.ok(subjects);
     }
 
     // 按照字典类型查询字典数据
@@ -433,38 +442,28 @@ public class SignUpController {
         return Result.ok(colleges);
     }
 
-    // 认定的根节点
-    @GetMapping(UriView.REST_ZHUCE_MAJOR_PARENT)
+    // 注册第七步所学专业的根节点
+    @GetMapping(UriView.REST_ENROLL_MAJOR_PARENT)
     @ResponseBody
-    public Result<List<Major>> getRendingRootMajors() {
-        String key = RedisKey.MAJORS_ZHUCE_ROOT;
-        List<Major> majors = redisUtils.get(new TypeReference<List<Major>>(){}, key, () -> majorMapper.findRoot());
+    public Result<List<Major>> getRendingRootMajors(@PathVariable("provinceId") int provinceId) {
+        String key = String.format(RedisKey.MAJORS_ENROLL_ROOT,provinceId);
+        List<Major> majors = redisUtils.get(new TypeReference<List<Major>>(){}, key, () -> majorMapper.findRoot(provinceId));
         return Result.ok(majors);
     }
 
-    // 注册的根节点
-    @GetMapping(UriView.REST_RENDING_MAJOR_PARENT)
+    // 注册第七步所学专业的子节点
+    @GetMapping(UriView.REST_ENROLL_MAJOR_CHILDREN)
     @ResponseBody
-    public Result<List<Major>> getZhuceRootMajors(@PathVariable("certTypeId") int certTypeId, @PathVariable("eduLevelId") int eduLevelId) {
-        String key = String.format(RedisKey.MAJORS_RENDING_ROOT, certTypeId, eduLevelId);
-        List<Major> majors = redisUtils.get(new TypeReference<List<Major>>(){}, key,
-                () -> majorMapper.findByCertTypeIdAndEduLevelId(certTypeId, eduLevelId));
-        return Result.ok(majors);
-    }
-
-    // 注册或认定的子节点
-    @GetMapping(UriView.REST_MAJOR_CHILDREN)
-    @ResponseBody
-    public Result<List<Major>> getZhuceChildrenMajors(@PathVariable("parentId") int parentId) {
-        String key = String.format(RedisKey.MAJORS_ZHUCE_CHILREN, parentId);
-        List<Major> majors = redisUtils.get(new TypeReference<List<Major>>(){}, key, () -> majorMapper.findByParentId(parentId));
+    public Result<List<Major>> getZhuceChildrenMajors(@PathVariable("provinceId") int provinceId, @PathVariable("parentId") int parentId) {
+        String key = String.format(RedisKey.MAJORS_ENROLL_CHILREN, provinceId,parentId);
+        List<Major> majors = redisUtils.get(new TypeReference<List<Major>>(){}, key, () -> majorMapper.findByParentIdAndProvince(parentId,provinceId));
         return Result.ok(majors);
     }
 
     //注册第七步最高学历所学专业按名称搜索
     @GetMapping(UriView.REST_MAJOR_SEARCH_BY_NAME)
     @ResponseBody
-    public Result<List<Major>> getMajorByName(@PathVariable("name") String name) {
+    public Result<List<Major>> getMajorByName(@PathVariable("provinceId") int provinceId, @PathVariable("name") String name) {
         if(name.isEmpty()){
             return Result.ok(null);
         }
@@ -473,31 +472,7 @@ public class SignUpController {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        List<Major> majors = majorMapper.findByName(name);
-        if (majors.isEmpty()) {
-            return Result.ok(null);
-        }
-        return Result.ok(majors);
-    }
-
-    //注册第七步最高学历所学专业按名称搜索
-    @GetMapping(UriView.REST_MAJOR_SEARCH_BY_NAME_REQUEST)
-    @ResponseBody
-    public Result<List<Major>> getRequestMajorByName(@PathVariable("name") String name, @PathVariable("certTypeId") int certTypeId, @PathVariable("eduLevelId") int eduLevelId) {
-        if(name.isEmpty()){
-            return Result.ok(null);
-        }
-        try {
-            name = java.net.URLDecoder.decode(name,"UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-        List<Major> list = majorMapper.findByCertTypeIdAndEduLevelId(certTypeId,eduLevelId);
-        if(!list.isEmpty()){
-            List<Major> majorList = majorMapper.findByCertTypeIdAndEduLevelIdAndName(name,certTypeId,eduLevelId);
-            return Result.ok(majorList);
-        }
-        List<Major> majors = majorMapper.findByName(name);
+        List<Major> majors = majorMapper.findByName(provinceId, name);
         if (majors.isEmpty()) {
             return Result.ok(null);
         }
@@ -519,13 +494,13 @@ public class SignUpController {
         }
     }
 
-    // 非统考第七步的所学专业root
+    // 统考和非统考第七步的所学专业root
     @GetMapping(UriView.REST_REQUEST_MAJOR_PARENT)
     @ResponseBody
     public Result<List<Major>> getRequestRootMajors(@PathVariable("provinceId") int provinceId,@PathVariable("certTypeId") int certTypeId,@PathVariable("eduLevelId") int eduLevelId) {
         String key = String.format(RedisKey.MAJORS_REQUEST_ROOT_CERTTYPE_EDULEVEL, certTypeId,eduLevelId);
         //首先查看所学专业和最高学历关联表中是否有数据
-        List<Major> majors = redisUtils.get(new TypeReference<List<Major>>(){}, key, () -> majorMapper.findByCertTypeIdAndEduLevelId(certTypeId,eduLevelId));
+        List<Major> majors = redisUtils.get(new TypeReference<List<Major>>(){}, key, () -> majorMapper.findByCertTypeIdAndEduLevelId(provinceId,certTypeId,eduLevelId));
         if(!majors.isEmpty()){
             return Result.ok(majors);
         }else{
@@ -535,7 +510,7 @@ public class SignUpController {
         }
     }
 
-    // 非统考第七步的所学专业root
+    // 统考和非统考第七步的所学专业child
     @GetMapping(UriView.REST_REQUEST_MAJOR_CHILDREN)
     @ResponseBody
     public Result<List<Major>> getRequestChildMajors(@PathVariable("provinceId") int provinceId,@PathVariable("parentId") int parentId) {
@@ -544,10 +519,10 @@ public class SignUpController {
         return Result.ok(majors);
     }
 
-    // 非统考第七步的所学专业root
-    @GetMapping(UriView.REST_REQUEST_MAJOR_NAME)
+    //统考和非统考认定第七步最高学历所学专业按名称搜索
+    @GetMapping(UriView.REST_MAJOR_SEARCH_BY_NAME_REQUEST)
     @ResponseBody
-    public Result<List<Major>> getRequestMajorsByName(@PathVariable("provinceId") int provinceId,@PathVariable("name") String name) {
+    public Result<List<Major>> getRequestMajorByName(@PathVariable("provinceId") int provinceId, @PathVariable("name") String name, @PathVariable("certTypeId") int certTypeId, @PathVariable("eduLevelId") int eduLevelId) {
         if(name.isEmpty()){
             return Result.ok(null);
         }
@@ -556,13 +531,17 @@ public class SignUpController {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        List<Major> majors = majorMapper.findRequestMajorByName(provinceId,name);
+        List<Major> list = majorMapper.findByCertTypeIdAndEduLevelId(provinceId,certTypeId,eduLevelId);
+        if(!list.isEmpty()){
+            List<Major> majorList = majorMapper.findByCertTypeIdAndEduLevelIdAndName(provinceId,name,certTypeId,eduLevelId);
+            return Result.ok(majorList);
+        }
+        List<Major> majors = majorMapper.findByName(provinceId, name);
         if (majors.isEmpty()) {
             return Result.ok(null);
         }
         return Result.ok(majors);
     }
-
 
     // 专业技术职务根节点
     @GetMapping(UriView.REST_TECHNICAL_JOB_ROOT)

@@ -31,4 +31,7 @@ public interface DictMapper {
     List<Dict> findDegreessByCertTypeIdAndEduLevelId(@Param("certTypeId") int certTypeId, @Param("eduLevelId") int eduLevelId);
 
     List<Dict> findIdType(@Param("dtId") int dtId, @Param("ct_id") int certTypeId);
+
+    //根据字典类型和编码查询
+    Dict findById(@Param("idType") Integer idType);
 }

@@ -7,6 +7,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 验证注册认定的表单提交防止表单重复提交
@@ -38,7 +39,7 @@ public class TokenValidator implements HandlerInterceptor {
         }
         String token = UUID.randomUUID().toString().replaceAll("-", "").toUpperCase();
         modelAndView.addObject("token", token);
-        redisTemplate.opsForValue().set(token, token);
+        redisTemplate.opsForValue().set(token, token,3600, TimeUnit.SECONDS);
     }
 
     @Override

@@ -258,11 +258,13 @@
             s.id_no         AS idNo,
             s.score_cert_no AS scoreCertNo,
             s.id_type       AS idType,
+            s.expired_time  AS expiredTime,
             d.name          AS idTypeName,
             s.cert_type     AS certType,
             ct.admin_level  AS adminLevel,
             s.subject       AS subject,
             ct.ct_name      AS certTypeName,
+            ct.admin_level  AS adminLevel,
             su.name         AS subjectName
         FROM
             t_score s
@@ -308,9 +310,9 @@
         FROM
             T_ORG_NAME_LOG onl
         WHERE
-            onl.old_parent_id IS NULL
+            onl.old_parent_id is null
         ORDER BY
-            onl.change_date DESC
+            onl.change_date desc
     </select>
     <select id="findByOldParentId" resultType="OrgNameLog">
         SELECT DISTINCT

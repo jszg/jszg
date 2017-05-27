@@ -19,23 +19,24 @@ Urls = {
     REST_ORGS_REQUEST_BY_CERT_TYPE_PROVINCE_CITY:  '/new-cert/rest/signUp/certTypes/{certTypeId}/adminLevel/{adminLevel}/provinces/{provinceId}/cities/{cityId}/orgs',//非统考第三步认定机构
 
     REST_SUBJECTS_ROOT:          '/new-cert/rest/signUp/provinces/{provinceId}/certTypes/{certTypeId}/subjects/root',
-    REST_SUBJECTS_CHILDREN:      '/new-cert/rest/signUp/provinces/{provinceId}/{parentId}/subjects/children',
-    REST_SUBJECTS_BY_CERT_TYPE:  '/new-cert/rest/signUp/certTypes/{certTypeId}/subjects', // 注册的任教学科
+    REST_SUBJECTS_CHILDREN:      '/new-cert/rest/signUp/provinces/{provinceId}/teachGrade/{teachGrade}/{parentId}/subjects/children',
+    REST_SUBJECTS_BY_CERTTYPE_ORG:  '/new-cert/rest/signUp/certTypes/{certTypeId}/org/{orgId}/subjects', // 证书上的的任教学科
     REST_SUBJECTS_BY_PARENT:     '/new-cert/rest/signUp/{parentId}/subjects', // 注册的任教学科
+
+    REST_SUBJECTS_BY_PARENT_BY_CERT_TYPE_ORG:     '/new-cert/rest/signUp/parent/{parentId}/org/{orgId}/subjects', // 注册的任教学科的子节点
     REST_SUBJECTS_TEASUBJECT:    '/new-cert/rest/signUp/provinces/{provinceId}/teachGrades/{teachGradeId}/subjects', // 注册的现任教学科
     REST_TEACH_SUBJECT_BY_NAME:  '/new-cert/rest/signUp/{teachGradeId}/{provinceId}/{name}/teachSubject',//注册第四步现任教学科按名称搜索
     REST_REQUEST_SUBJECTS:       '/new-cert/rest/signUp/request/provinceId/{provinceId}/teachGrade/{teachGrade}/subjects',//非统考第三步任教学科树父节点
-    REST_REQUEST_SUBJECTS_CHILDREN: '/new-cert/rest/signUp/request/provinceId/{provinceId}/parentId/{parentId}/subjects',//非统考第三步任教学科树子节点
+    REST_REQUEST_SUBJECTS_CHILDREN: '/new-cert/rest/signUp/request/provinceId/{provinceId}/teachGrade/{teachGrade}/parentId/{parentId}/subjects',//非统考第三步任教学科树子节点
     REST_REQUEST_SUBJECT_BY_NAME:  '/new-cert/rest/signUp/request/teachGrade/{teachGrade}/provinceId/{provinceId}/name/{name}/subjects',//非统考第三步任教学科按名称查询
 
-    REST_ZHUCE_MAJOR_PARENT:     '/new-cert/rest/signUp/majors/root', // 注册的最高学历所学专业根节点
-    REST_MAJOR_CHILDREN:         '/new-cert/rest/signUp/{parentId}/majors/children', // 认定或注册的最高学历所学专业子节点
-    REST_MAJOR_SEARCH_BY_NAME:   '/new-cert/rest/signUp/name/{name}/majors',//根据所学专业名称查询
-    REST_MAJOR_SEARCH_BY_NAME_REQUEST:   '/new-cert/rest/signUp/name/{name}/certType/{certTypeId}/eduLevel/{eduLevelId}/majors',//根据所学专业名称查询
+    REST_ENROLL_MAJOR_PARENT:     '/new-cert/rest/signUp/province/{provinceId}/majors/root', // 注册的最高学历所学专业根节点
+    REST_ENROLL_MAJOR_CHILDREN:         '/new-cert/rest/signUp/province/{provinceId}/{parentId}/majors/children', // 认定或注册的最高学历所学专业子节点
+    REST_MAJOR_SEARCH_BY_NAME:   '/new-cert/rest/signUp/province/{provinceId}/name/{name}/majors',//注册根据所学专业名称查询
+    REST_MAJOR_SEARCH_BY_NAME_REQUEST:   '/new-cert/rest/signUp/province/{provinceId}/name/{name}/certType/{certTypeId}/eduLevel/{eduLevelId}/majors',//根据所学专业名称查询
 
     REST_REQUEST_MAJOR_PARENT:     '/new-cert/rest/signUp/provinceId/{provinceId}/certType/{certTypeId}/eduLevel/{eduLevelId}/request/majors/root',//非统考第七步所学专业root
     REST_REQUEST_MAJOR_CHILDREN:   '/new-cert/rest/signUp/provinceId/{provinceId}/{parentId}/request/majors/children',//非统考第七步所学专业children
-    REST_REQUEST_MAJOR_NAME:      '/new-cert/rest/signUp/provinceId/{provinceId}/{name}/request/majors/name',//非统考第七步所学专业children
 
 
     REST_TECHNICAL_JOB_ROOT:     '/new-cert/rest/signUp/technicaljobs/root',
@@ -43,11 +44,11 @@ Urls = {
     REST_TECHNICAL_JOB_BY_NAME:  '/new-cert/rest/signUp/{name}/technicaljobs',//注册报名第七步根据名称查询教师职务
     REST_COLLEGE_BY_NAME:       '/new-cert/rest/signUp/{name}/colleges',//根据学校名字查询是否已经存在
 
-    REST_ENROLL_STEP3:           '/new-cert/rest/signUp/enroll/step3?idNo={idNo}&certNo={certNo}', // 第三步验证
+    REST_ENROLL_STEP3:           '/new-cert/rest/signUp/enroll/step3?idType={idType}&idNo={idNo}&certNo={certNo}', // 第三步验证
     REST_ENROLL_ORG_VALIDATION:  '/new-cert/rest/signUp/enroll/orgs/{orgId}/validation', // 验证注册的注册机构
 
 
-    REST_REQUEST_STEP6:           '/new-cert/rest/signUp/request/step6?name={name}&idNo={idNo}&certTypeId={certTypeId}&subjectId={subjectId}',// 非统考第六步验证
+    REST_REQUEST_STEP6:           '/new-cert/rest/signUp/request/step6?idType={idType}&name={name}&idNo={idNo}&certTypeId={certTypeId}&subjectId={subjectId}',// 非统考第六步验证
 
     REST_EXAM_STEP3:             '/new-cert/rest/signUp/exam/step3?name={name}&idNo={idNo}&scoreCertNo={scoreCertNo}',// 统考第三步验证
 
@@ -64,10 +65,8 @@ Urls = {
     URI_UPLOAD_ENROLL_IMAGE: '/new-cert/enroll/upload-enroll-image',
 
     URI_REQUEST_SUBMIT:              '/new-cert/request/submit?token={token}',
-    URI_REQUEST_REG_PHOTO:          '/new-cert/exam/request-photo/{regId}',
 
     URI_EXAM_SUBMIT:                 '/new-cert/exam/submit?token={token}',
-    URI_REQUEST_REG_PHOTO:          '/new-cert/exam/exam-photo/{regId}',
 
     WEB_UPLOADER_SWF:      '/new-cert/lib/webuploader/Uploader.swf',
     URI_ACL_MAX_COUNT:    '/new-cert/acl/maxCount/{maxCount}',

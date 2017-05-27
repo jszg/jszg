@@ -43,6 +43,7 @@ public interface SignUpConstants {
     //字典数据启用状态,0未启用,1启用
     int DICT_STATUS_ENABLE = 1;
     int DICT_STATUS_DISABLE = 0;
+    String DICT_CODE_ID_NO = "1";
 
     //最高学历
     int ID_EDU_LEVEL = 7;

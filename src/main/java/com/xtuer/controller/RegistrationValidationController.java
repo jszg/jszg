@@ -6,7 +6,9 @@ import com.xtuer.constant.SignUpConstants;
 import com.xtuer.constant.UriView;
 import com.xtuer.dto.*;
 import com.xtuer.mapper.CommonMapper;
+import com.xtuer.mapper.DictMapper;
 import com.xtuer.mapper.RegistrationMapper;
+import com.xtuer.util.IdUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -100,7 +102,7 @@ public class RegistrationValidationController {
     // 非统考验证 Step6
     @GetMapping(UriView.REST_REQUEST_STEP6)
     @ResponseBody
-    public Result<?> enrollStep6(@RequestParam String name, @RequestParam String idNo, @RequestParam int certTypeId, @RequestParam int subjectId) throws UnsupportedEncodingException {
+    public Result<?> enrollStep6(@RequestParam Integer idType, @RequestParam String name, @RequestParam String idNo, @RequestParam int certTypeId, @RequestParam int subjectId) throws UnsupportedEncodingException {
         if(name == null){
             return Result.ok(null);
         }
@@ -108,6 +110,12 @@ public class RegistrationValidationController {
             name = java.net.URLDecoder.decode(name,"UTF-8");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+        }
+        Dict dict = dictMapper.findById(idType);
+        if (dict.getCode().equals(SignUpConstants.DICT_CODE_ID_NO)) {
+            if (!IdUtils.isIDCard(idNo)) {
+                return new Result(false, "身份证号码不正确");
+            }
         }
         List<Limitation> limits = commonMapper.findLimitationByNameAndIdNo(name, idNo);
         if (!limits.isEmpty()) {
@@ -148,4 +156,6 @@ public class RegistrationValidationController {
     private CommonMapper commonMapper;
     @Autowired
     private RegistrationMapper registrationMapper;
+    @Autowired
+    private DictMapper dictMapper;
 }

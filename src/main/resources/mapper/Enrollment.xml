@@ -31,11 +31,11 @@
         VALUES (
             #{address},       sysdate,               #{beginWorkYearDate},   #{beginWorkYearInt},
             #{birthPlace},    #{birthdayDate},       #{cellphone},           #{certAssignDateDate},
-            #{certNo},        #{recognizeOrgName},   #{cityId},              #{confirmStatus},
+            #{certNo,jdbcType=VARCHAR},#{recognizeOrgName},   #{cityId},     #{confirmStatus},
             #{certTypeId},    #{dataFrom},           #{degreeId},            #{deleteStatus},
             #{eduLevelId},    #{email},              #{enrollId},            #{enrollBatchId},
             #{enrollNumber},  #{graduationTimeDate}, #{graduationCollegeId}, #{graduationCollegeName},
-            #{idNo},          #{idTypeId},           #{inHistory},           #{inRegistration},
+            #{idNo,jdbcType=VARCHAR},#{idTypeId},    #{inHistory},           #{inRegistration},
             #{ip},            #{judgmentStatus},     #{learnTypeId},         #{localeId},
             #{localSetId},    #{majorId},            #{name},                #{nationId},
             #{normalMajorId}, #{orgId},              #{password},            #{phone},

@@ -14,13 +14,15 @@ public interface UriView {
     String REST_ORGS_REG                   = "/rest/signUp/reg/orgs";
 
     String REST_SUBJECTS_ROOT              = "/rest/signUp/provinces/{provinceId}/certTypes/{certTypeId}/subjects/root";
-    String REST_SUBJECTS_CHILDREN          = "/rest/signUp/provinces/{provinceId}/{parentId}/subjects/children";
-    String REST_SUBJECTS_BY_CERT_TYPE      = "/rest/signUp/certTypes/{certTypeId}/subjects";
+    String REST_SUBJECTS_CHILDREN          = "/rest/signUp/provinces/{provinceId}/teachGrade/{teachGrade}/{parentId}/subjects/children";
+    String REST_SUBJECTS_BY_CERTTYPE_ORG   = "/rest/signUp/certTypes/{certTypeId}/org/{orgId}/subjects";
     String REST_SUBJECTS_BY_PARENT         = "/rest/signUp/{parentId}/subjects";
+
+    String REST_SUBJECTS_BY_PARENT_BY_CERT_TYPE_ORG         = "/rest/signUp/parent/{parentId}/org/{orgId}/subjects";  //注册报名证书上的任教学科加载子节点
     String REST_SUBJECTS_TEASUBJECT        = "/rest/signUp/provinces/{provinceId}/teachGrades/{teachGrade}/subjects";
     String REST_TEACH_SUBJECT_BY_NAME     ="/rest/signUp/{teachGradeId}/{provinceId}/{name}/teachSubject";
     String REST_REQUEST_SUBJECTS           ="/rest/signUp/request/provinceId/{provinceId}/teachGrade/{teachGrade}/subjects";//非统考第三步任教学科父节点
-    String REST_REQUEST_SUBJECTS_CHILDREN    ="/rest/signUp/request/provinceId/{provinceId}/parentId/{parentId}/subjects";//非统考第三步任教学科子节点
+    String REST_REQUEST_SUBJECTS_CHILDREN    ="/rest/signUp/request/provinceId/{provinceId}/teachGrade/{teachGrade}/parentId/{parentId}/subjects";//非统考第三步任教学科子节点
     String REST_REQUEST_SUBJECT_BY_NAME      ="/rest/signUp/request/teachGrade/{teachGrade}/provinceId/{provinceId}/name/{name}/subjects";//非统考第三步任教学科按名称查询
     String REST_DICTS                      = "/rest/signUp/dicts";
     String REST_DICTS_BY_DICTTYPE          = "/rest/signUp/dicts/{dictTypeId}";
@@ -28,22 +30,19 @@ public interface UriView {
     String REST_TEAGRADES                  = "/rest/signUp/teaGrades";
     String REST_EDU_LEVELS                  = "/rest/signUp/certTypes/{certTypeId}/eduLevels";
     String REST_ID_TYPE_CERT_TYPE          = "/rest/signUp/certTypes/{certTypeId}/idTypes";
-    String REST_ACADEMICDEGREE             = "/rest/signUp/certTypes/{certTypeId}/eduLevels/{eduLevel}/degrees";
     String REST_LOCAL_SETS                 = "/rest/signUp/orgs/{orgId}/type/{type}/localSets";
     String REST_LOCAL_SETS_INFO            = "/rest/signUp/localSets/{localSetId}";
 
     String REST_COLLEGES                   = "/rest/signUp/colleges";
     String REST_COLLEGES_BY_PROVINCE       = "/rest/signUp/provinces/{provinceId}/colleges";
 
-    String REST_ZHUCE_MAJOR_PARENT         = "/rest/signUp/majors/root";
-    String REST_RENDING_MAJOR_PARENT       = "/rest/signUp/certTypes/{certTypeId}/{eduLevelId}/majors/root";
-    String REST_MAJOR_CHILDREN             = "/rest/signUp/{parentId}/majors/children";
-    String REST_MAJOR_SEARCH_BY_NAME      = "/rest/signUp/name/{name}/majors";
-    String REST_MAJOR_SEARCH_BY_NAME_REQUEST      = "/rest/signUp/name/{name}/certType/{certTypeId}/eduLevel/{eduLevelId}/majors";
+    String REST_ENROLL_MAJOR_PARENT         = "/rest/signUp/province/{provinceId}/majors/root";
+    String REST_ENROLL_MAJOR_CHILDREN             = "/rest/signUp/province/{provinceId}/{parentId}/majors/children";
+    String REST_MAJOR_SEARCH_BY_NAME           = "/rest/signUp/province/{provinceId}/name/{name}/majors";
+    String REST_MAJOR_SEARCH_BY_NAME_REQUEST      = "/rest/signUp/province/{provinceId}/name/{name}/certType/{certTypeId}/eduLevel/{eduLevelId}/majors";
 
     String REST_REQUEST_MAJOR_PARENT      = "/rest/signUp/provinceId/{provinceId}/certType/{certTypeId}/eduLevel/{eduLevelId}/request/majors/root";//非统考第七步所学专业root
     String REST_REQUEST_MAJOR_CHILDREN    = "/rest/signUp/provinceId/{provinceId}/{parentId}/request/majors/children";//非统考第七步所学专业children
-    String REST_REQUEST_MAJOR_NAME        = "/rest/signUp/provinceId/{provinceId}/{name}/request/majors/name";////非统考第七步所学专业按名称查询
     String REST_DEGREE_BY_CERT_TYPE_AND_EDU_LEVEL = "/rest/signUp/certType/{certTypeId}/eduLevel/{eduLevelId}/degrees";//认定报名根据资格种类和最高学历选择最高学位
 
     String REST_TECHNICAL_JOB_ROOT         = "/rest/signUp/technicaljobs/root";
@@ -83,10 +82,8 @@ public interface UriView {
     String URI_UPLOAD_ENROLL_IMAGE         = "/enroll/upload-enroll-image";
 
     String URI_REQUEST_SUBMIT              = "/request/submit";
-    String URI_REQUEST_REG_PHOTO          = "/request/request-photo/{regId}";
 
     String URI_EXAM_SUBMIT                 = "/exam/submit";
-    String URI_EXAM_REG_PHOTO          = "/exam/exam-photo/{regId}";
 
     // 访问控制
     String URI_ACL                  = "/a-JSZG-c-649-l-Enroll"; // 访问控制的页面

@@ -4,16 +4,13 @@ $(document).ready(function() {
     handleNextAndPreviousEvents(); // 处理下一步，上一步的事件
     handleChangeProvincesEvent(); // 处理切换省时加载城市的事件
     handleRequestOrgs();//处理第三步认定机构
-    handleRequestSubjectsDialog(); // 第三步的任教学科
-    handleSearchLocalSets(); // 第四步的搜索确认点
+    handleSearchLocalSets(); // 第五步的搜索确认点
     handleChangeProvincesForCollegeEvent();//第七步毕业学校
     handleMajorsDialog(); // 第七步的所学专业
     handleTechnicalJobsDialog();//第七步职业技术职务
     handleChangeEduLevelForDegreeEvent(); //第七步根据最高学历选择最高学位
-
     handleGraduationCollegesDialog(); // 第七步的最高学历毕业学校
     //StepUtils.toStep(7); // 到第 N 步，测试使用
-
     requestDicts(); // 请求字典数据，初始化省，政治面貌等
 
      // 点击取消按钮关闭弹出对话框
@@ -69,12 +66,18 @@ function requestSubjects() {
 }
 
 function initWebUploader() {
+    if ( !WebUploader.Uploader.support() ) {
+        alert( 'Web Uploader 不支持您的浏览器！如果你使用的是IE浏览器，请尝试升级 flash 播放器,或则使用火狐、谷歌等浏览器');
+        throw new Error( 'WebUploader does not support the browser you are using.' );
+    }
+    var allMaxSize = 50;
     var uploader = WebUploader.create({
         auto: true,                 // 自动上传
         swf: Urls.WEB_UPLOADER_SWF, // swf 文件路径
         server: Urls.URI_UPLOAD_ENROLL_IMAGE, // 文件接收服务端
         pick: '#filePicker',       // 选择文件的按钮，内部根据当前运行时创建，可能是 input 元素，也可能是 flash.
         resize: true,              // 不压缩 image, 默认如果是 jpeg，文件上传前会压缩一把再上传！
+        fileSizeLimit: 50*1024,//限制大小50k，所有被选文件，超出选择不上
         accept: { // 只允许上传图片
             title: 'Images',
             extensions: 'jpg,jpeg',
@@ -85,6 +88,7 @@ function initWebUploader() {
             width: 114,
             height: 156,
             allowMagnify: false,
+            compressSize: 50*1024,
             crop: false // false 为等比缩放
         }
     });
@@ -96,11 +100,14 @@ function initWebUploader() {
         uploader.removeFile(file, true); // 启用多次上传
     };
 
-    // 上传成功，例如抛异常
-    // response 为服务器返回来的数据
-    uploader.onUploadError = function(file, response) {
-        // console.log(response);
-    };
+     //  验证大小
+    uploader.on("error",function (type){
+         if(type == "F_DUPLICATE"){
+              alert("系统提示:请不要重复选择文件！");
+         }else if(type == "Q_EXCEED_SIZE_LIMIT"){
+              alert("系统提示:所选附件总大小不可超过" + allMaxSize + "K哦！换个小点的文件吧！");
+         }
+     });
 
     // 上传进度 [0.0, 1.0]
     // fileQueued 时创建进度条，uploadProgress 更新进度条
@@ -196,7 +203,6 @@ StepValidator.validate3thStep = function(){
 StepValidator.validate4thStep = function() {
     var subjectId  = UiUtils.getFormData('#box-4', 'subject').id; // 任教学科
     var certTypeId = UiUtils.getFormData('#box-4', 'certType').id; // 申请资格种类
-
     var provinceId = parseInt($('#provinces option:selected').val());
     var cityId     = parseInt($('#cities option:selected').val());
     var orgId      = parseInt($('#request-orgs option:selected').val());
@@ -620,7 +626,6 @@ function requestGraduationColleges(provinceId) {
     }
 }
 
-
 /**
  * 处理切换省时加载城市的事件
  * 1. 如果是直辖市，则它的城市为自己且没有 '请选择' 选项
@@ -629,22 +634,21 @@ function requestGraduationColleges(provinceId) {
  * 3. 其他加载省下的城市，且有 '请选择' 选项
  */
 function handleChangeProvincesEvent() {
-    $('#certTypes,#provinces').change(function() {
+    $('#provinces').change(function() {
         UiUtils.onlyPleaseSelectOption('cities');
         var $province = $('#provinces option:selected');
-        var $certType = $('#certTypes option:selected');
         var provinceId = parseInt($province.val());
-        var certTypeId = parseInt($certType.val());
+        var certTypeId = UiUtils.getFormData('#box-4', 'certType').id; // 申请资格种类
+        var adminLevel = UiUtils.getFormData('#box-4', 'adminLevel').id; // 申请资格种类
         var isProvinceCity = ('true' === $province.attr('data-province-city')); // 是否直辖市
         if (isProvinceCity) {
             // 直辖市的市为它自己
-            var cities = [{id: provinceId, name: $province.text(), provinceCity: true}];
-            //UiUtils.insertOptions('cities', cities, {templateId: 'provinceOptionTemplate'});
+            var cities = [{id: provinceId, name: '无需选择', provinceCity: true}];
             UiUtils.insertOptions('cities', cities, {remainFirstOption: false});
         }else if (-1 != provinceId) {
             //如果是高校或者资格种类的行政级别大于市(3)
-            if(7 == certTypeId || $certType.attr('data-admin-level') > 3){
-                var cities = [{id: provinceId, name: $province.text(), provinceCity: true}];
+            if(7 == certTypeId || adminLevel > 3){
+                var cities = [{id: provinceId, name: '无需选择', provinceCity: true}];
                 //UiUtils.insertOptions('cities', cities, {templateId: 'provinceOptionTemplate'});
                 UiUtils.insertOptions('cities', cities, {remainFirstOption: false});
             }else{
@@ -653,7 +657,6 @@ function handleChangeProvincesEvent() {
                     UiUtils.insertOptions('cities', result.data);
                 }});
             }
-
         }
     });
 }
@@ -664,6 +667,7 @@ function handleChangeProvincesEvent() {
  */
 function handleRequestOrgs() {
     $('#provinces, #cities').change(function(event) {
+        UiUtils.onlyPleaseSelectOption('request-orgs');
         var certTypeId = UiUtils.getFormData('#box-4', 'certType').id; // 申请资格种类
         var adminLevel = UiUtils.getFormData('#box-4', 'adminLevel').id; // 申请资格种类行政级别
         var provinceId = UiUtils.getSelectedOption('#provinces').id;
@@ -677,103 +681,6 @@ function handleRequestOrgs() {
                 console.log(result.data);
                 UiUtils.insertOptions('request-orgs', result.data);
         }});
-    });
-}
-
-/**
- * 第三步的任教学科
- */
-function handleRequestSubjectsDialog() {
-    // 初始化 LeanModal 对话框
-    $('#request-subjects-dialog-trigger').leanModal({top: 50, overlay : 0.4});
-
-     //tab切换
-     $(".request_subject_tab_content").hide(); //Hide all content
-     $("ul.request_subject_tabs li:first").addClass("active").show(); //Activate first tab
-     $(".request_subject_tab_content:first").show(); //Show first tab content
-     $("ul.request_subject_tabs li").click(function() {
-         $("ul.request_subject_tabs li").removeClass("active"); //Remove any "active" class
-         $(this).addClass("active"); //Add "active" class to selected tab
-         $(".request_subject_tab_content").hide(); //Hide all tab content
-         var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
-         $(activeTab).fadeIn(); //Fade in the active content
-         return false;
-     });
-
-    // 点击搜索按钮，显示搜索的结果
-    $('#request-subjects-dialog .search-button').click(function(event) {
-        var searchValue = $.trim($('#request-subject-search-name').val());
-        if(!searchValue){
-            alert('请输入搜索内容!');
-            return false;
-        }
-        searchValue = encodeURI(encodeURI(searchValue));
-        var $certType = $('#certTypes option:selected');
-        var teachGrade = $certType.attr('data-teach-grade');
-        var provinceId = UiUtils.getSelectedOption('#provinces').id;
-        $('#search-request-subject-result tr:gt(0)').empty();
-        $.rest.get({url: Urls.REST_REQUEST_SUBJECT_BY_NAME, urlParams: {teachGrade:teachGrade, provinceId:provinceId, name: searchValue}, success: function(result) {
-            $('#search-request-subject-result').append(template('requestSubjectTemplate', {requestSubjects: result.data}));
-        }});
-    });
-
-    $('#select-request-subject-button').click(function(event) {
-        var orgId = UiUtils.getSelectedOption('#request-orgs').id;
-        var certTypeId = UiUtils.getSelectedOption('#certTypes').id;
-        var $certType = $('#certTypes option:selected');
-        var teachGrade = $certType.attr('data-teach-grade');
-        var provinceId = UiUtils.getSelectedOption('#provinces').id;
-        var cityId = UiUtils.getSelectedOption('#cities').id;
-
-        if (-1 === certTypeId) {
-            alert('请先选择 "资格种类"，然后才能选择 "任教学科"');
-            return;
-        }
-
-        if (-1 === orgId) {
-            alert('请先选择 "认定机构"，然后才能选择 "任教学科"');
-            return;
-        }
-
-        $('#request-subjects-dialog-trigger').click(); // 显示对话框
-
-        //默认选中所学专业的第一个tab页
-        $("ul.request_subject_tabs li:first").addClass("active").show();
-        $(".request_subject_tab_content:first").show();
-        $(".request_subject_tab_content:last").hide();
-        $('#request-subject-search-name').val('');
-        $('#search-request-subject-result tr:gt(0)').empty();
-
-        // 加载现任教学科
-        UiUtils.requestDataAndShowInTree($('#request-subjects-dialog .ztree'), function(treeId, treeNode) {
-            if(!treeNode) {
-                return Urls.REST_REQUEST_SUBJECTS.format({provinceId: provinceId, teachGrade: teachGrade});
-            } else {
-                return Urls.REST_REQUEST_SUBJECTS_CHILDREN.format({provinceId: provinceId, parentId: treeNode.id});
-            }
-        });
-    });
-
-    // 点击确定按钮，设置选中的学科，并隐藏对话框
-    $('#request-subjects-dialog .ok-button').click(function(event) {
-        if( $("ul.request_subject_tabs li:first").hasClass('active')){
-            var subjectNode = window.subjectsTree.getSelectedNodes()[0];
-            if (subjectNode) {
-                UiUtils.setFormData('request-subject-text', subjectNode.id, subjectNode.name);
-                $("#lean_overlay").click();
-            } else {
-                alert('没有选中现任教学科');
-            }
-        }else{
-            var $requestSubject = $('#search-request-subject-result input:radio:checked');
-            if (0 === $requestSubject.length) {
-                alert('请选择 "现任教学科"');
-                return;
-            }else{
-                UiUtils.setFormData('request-subject-text', $requestSubject.val(), $requestSubject.attr('data-name'));
-                $("#lean_overlay").click();
-            }
-        }
     });
 }
 

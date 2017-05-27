@@ -48,7 +48,9 @@
 
   <select id="findTeaGradesByStatus" resultType="Dict">
         SELECT
-            dic_id as id, name as name, status as status
+            dic_id AS id,
+            name AS name,
+            status AS status
         FROM
             T_DICT
         WHERE DT_ID = 23 AND <![CDATA[rownum <= 5]]>
@@ -84,6 +86,17 @@
           t_dict d
         WHERE
           d.dt_id = #{dtId} AND d.code = #{code}
+    </select>
+
+    <select id="findById" resultType="Dict">
+        SELECT
+            d.dic_id AS  id,
+            d.name   AS  name,
+            d.code   AS code
+        FROM
+            t_dict d
+        WHERE
+            d.dic_id = #{idType}
     </select>
 
     <select id="findDegreessByCertTypeIdAndEduLevelId" resultType="Dict">

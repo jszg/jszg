@@ -14,7 +14,7 @@ import java.util.List;
 public interface MajorMapper {
 
     // parent:如果是注册的
-    List<Major> findRoot();
+    List<Major> findRoot(@PathVariable("provinceId") int provinceId);
 
     // childen:如果是注册
     List<Major> findByParentIdStatus1(@Param("parentId") int parentId);
@@ -22,16 +22,16 @@ public interface MajorMapper {
     List<Major> findByParentId(@Param("parentId") int parentId);
 
     // parent:如果是认定的
-    List<Major> findByCertTypeIdAndEduLevelId(@Param("certTypeId") int certTypeId, @Param("eduLevelId") int eduLevelId);
+    List<Major> findByCertTypeIdAndEduLevelId(@Param("provinceId") int provinceId, @Param("certTypeId") int certTypeId, @Param("eduLevelId") int eduLevelId);
 
     // parent:如果是认定的
-    List<Major> findByCertTypeIdAndEduLevelIdAndName(@Param("name") String name, @Param("certTypeId") int certTypeId, @Param("eduLevelId") int eduLevelId);
+    List<Major> findByCertTypeIdAndEduLevelIdAndName(@Param("provinceId") int provinceId, @Param("name") String name, @Param("certTypeId") int certTypeId, @Param("eduLevelId") int eduLevelId);
 
     // childen:如果是认定
     List<Major> findByParentIdAndProvince(@Param("parentId") int parentId, @Param("provinceId") int provinceId);
 
     //根据专业名称查询专业
-    List<Major> findByName(@Param("name") String name);
+    List<Major> findByName(@Param("provinceId") int provinceId, @Param("name") String name);
 
     //非统考第七步所学专业树父节点
     List<Major> findRequestMajorRoot(@Param("provinceId") int provinceId);

@@ -5,6 +5,8 @@ import com.xtuer.constant.SignUpConstants;
 import com.xtuer.constant.UriView;
 import com.xtuer.dto.*;
 import com.xtuer.mapper.CommonMapper;
+import com.xtuer.mapper.DictMapper;
+import com.xtuer.util.IdUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,10 +96,14 @@ public class EnrollmentValidationController {
     // 注册验证 Step3
     @GetMapping(UriView.REST_ENROLL_STEP3)
     @ResponseBody
-    public Result<?> enrollStep3(@RequestParam String idNo, @RequestParam String certNo) {
-        System.out.println(idNo);
+    public Result<?> enrollStep3(@RequestParam Integer idType,@RequestParam String idNo, @RequestParam String certNo) {
+        Dict dict = dictMapper.findById(idType);
+        if (dict.getCode().equals(SignUpConstants.DICT_CODE_ID_NO)) {
+            if (!IdUtils.isIDCard(idNo)) {
+                return new Result(false, "身份证号码不正确");
+            }
+        }
         List<Limitation> limits = commonMapper.findLimitation(idNo, certNo);
-
         if (!limits.isEmpty() && limits.get(0).getStatus() == SignUpConstants.S_REVIEWED) {
             Limitation limitation = limits.get(0);
             Integer limitationType = limitation.getType();
@@ -220,7 +226,12 @@ public class EnrollmentValidationController {
             registration.setCertNo(certNo);
             registration.setIdNo(idNo);
             try {
-                registration.setBirthday(DateUtils.parseDate(historyValid.getBirthday(),DATE_FORMAT));
+                if(historyValid.getBirthday() != null){
+                    String data = historyValid.getBirthday().substring(0,10);
+                    registration.setBirthday(DateUtils.parseDate(data,DATE_FORMAT));
+                }else{
+                    registration.setBirthday(null);
+                }
             } catch (ParseException e) {
                 e.printStackTrace();
             }
@@ -253,4 +264,7 @@ public class EnrollmentValidationController {
 
     @Autowired
     private CommonMapper commonMapper;
+
+    @Autowired
+    private DictMapper dictMapper;
 }

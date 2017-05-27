@@ -32,12 +32,14 @@ function initWebUploader() {
         alert( 'Web Uploader 不支持您的浏览器！如果你使用的是IE浏览器，请尝试升级 flash 播放器,或则使用火狐、谷歌等浏览器');
         throw new Error( 'WebUploader does not support the browser you are using.' );
     }
+    var allMaxSize = 50;
     var uploader = WebUploader.create({
         auto: true,                 // 自动上传
         swf: Urls.WEB_UPLOADER_SWF, // swf 文件路径
         server: Urls.URI_UPLOAD_ENROLL_IMAGE, // 文件接收服务端
         pick: '#filePicker',       // 选择文件的按钮，内部根据当前运行时创建，可能是 input 元素，也可能是 flash.
         resize: true,              // 不压缩 image, 默认如果是 jpeg，文件上传前会压缩一把再上传！
+        fileSizeLimit: 50*1024,//限制大小50k，所有被选文件，超出选择不上
         accept: { // 只允许上传图片
             title: 'Images',
             extensions: 'jpg,jpeg',
@@ -59,11 +61,14 @@ function initWebUploader() {
         uploader.removeFile(file, true); // 启用多次上传
     };
 
-    // 上传成功，例如抛异常
-    // response 为服务器返回来的数据
-    uploader.onUploadError = function(file, response) {
-        // console.log(response);
-    };
+     //  验证大小
+     uploader.on("error",function (type){
+          if(type == "F_DUPLICATE"){
+               alert("系统提示:请不要重复选择文件！");
+          }else if(type == "Q_EXCEED_SIZE_LIMIT"){
+               alert("系统提示:所选附件总大小不可超过" + allMaxSize + "K哦！换个小点的文件吧！");
+          }
+      });
 
     // 上传进度 [0.0, 1.0]
     // fileQueued 时创建进度条，uploadProgress 更新进度条
@@ -376,11 +381,6 @@ StepValidator.validate3thStep = function() {
         return false;
     }
 
-    if (idType.id == 36 && !IdCard.validate(idNo)) {//证件类型为身份证时校验
-        alert('请输入有效的身份证号码');
-        return false;
-    }
-
     if (!CertNo.validate(certNo)) {
         return false;
     }
@@ -394,7 +394,7 @@ StepValidator.validate3thStep = function() {
     // 显示身份证上的信息
     var idCard = new IdCard('', idNo);
     // 查询历史记录，如果有
-    $.rest.get({url: Urls.REST_ENROLL_STEP3, urlParams: {idNo: idCard.idNo, certNo: certNo}, async: false, success: function(result) {
+    $.rest.get({url: Urls.REST_ENROLL_STEP3, urlParams: {idType:idType.id, idNo: idCard.idNo, certNo: certNo}, async: false, success: function(result) {
         if (!result.success) {
             invalid = true;
             invalidMessage = result.message;
@@ -475,9 +475,12 @@ StepValidator.validate3thStep = function() {
     UiUtils.setFormData('certNo', -1, certNo);
 
     UiUtils.setFormData('idNo', -1, idCard.idNo);
-    UiUtils.setFormData('birthday', -1, idCard.birthdayString);
-    UiUtils.setFormData('gender', (idCard.gender === '男') ? 1 : 2, idCard.gender);
-
+    if (idType.name == '身份证'){
+        $("#gender").val((idCard.gender === '男') ? 1 : 2);
+        $("#gender").attr({ disabled: 'true' });
+        $("#birthday-date").val(idCard.birthdayString);
+        $("#birthday-date").attr({ disabled: 'true' });
+    }
     return true;
 };
 
@@ -519,6 +522,11 @@ StepValidator.validate4thStep = function() {
         UiUtils.setFormData('certType', certType.id, certType.name);
         UiUtils.setFormData('recognizeOrg', recognizeOrg.id, recognizeOrg.name);
         UiUtils.setFormData('registerSubject', registerSubject.id, registerSubject.name);
+        UiUtils.setFormData('birthday', -1, $.trim($('#birthday-date').val()));
+        UiUtils.setFormData('gender',$.trim($('#gender').val()), $.trim($('#gender').val()) === '1' ? '男' :'女');
+    }else{
+        UiUtils.setFormData('birthday', -1, $.trim($('#inhistory_birthday').text()));
+        UiUtils.setFormData('gender', $.trim($('#inhistory_gender').text()) === '男' ? '1' :'2',$.trim($('#inhistory_gender').text()));
     }
 
     // 下面的信息不管有没有注册过都需要验证
@@ -556,7 +564,6 @@ StepValidator.validate4thStep = function() {
     UiUtils.setFormData('province', province.id, province.name);
     UiUtils.setFormData('registerOrg', registerOrg.id, registerOrg.name);
     UiUtils.setFormData('teachSubject', teachSubject.id, teachSubject.name);
-
     requestLocalSets(registerOrg.id); // 请求确认点
 
     return true;
@@ -689,6 +696,7 @@ StepValidator.validate7thStep = function() {
     if (!(/^\d{6}$/.test(zipCode))) { alert('通讯地的邮编: 请输入 6 个数字的 "通讯地的邮编"');      return false; }
     if (!(/^\d{11}$/.test(cellphone)))      { alert('手机号码: 请输入 11 个数字的 "手机号码"');         return false; }
 
+
     // 通过验证
 
     var params = {
@@ -772,6 +780,13 @@ function initializeDatePicker() {
         istoday: true
     };
 
+    // 出生日期
+    var birtydayDatePicker = {
+        elem: '#birthday-date',
+        format: 'YYYY-MM-DD',
+        istoday: true
+    };
+
     // 最高学历毕业时间
     var graduationDatePicker = {
         elem: '#graduation-date',
@@ -794,6 +809,7 @@ function initializeDatePicker() {
     };
 
     laydate(certAssignDatePicker);
+    laydate(birtydayDatePicker);
     laydate(startWorkDatePicker);
     laydate(graduationDatePicker);
     laydate(currentWorkStartTime);
@@ -862,9 +878,14 @@ function handleRegisterSubjectsDialog() {
     // 如果 certTypeId 为 -1，则提示选择资格种类
     $('#select-register-subject-button').click(function(event) {
         var certTypeId = UiUtils.getSelectedOption('#certTypes').id;
-
+        var regOrgId = UiUtils.getFormData('#box-4', 'recognizeOrg').id; // 证书上的认定机构
         if (-1 === certTypeId) {
             alert('请先选择 "资格种类"，然后才能选择 "任教学科"');
+            return;
+        }
+
+        if (-1 === regOrgId) {
+            alert('请先选择 "认定机构"，然后才能选择 "任教学科"');
             return;
         }
 
@@ -873,9 +894,9 @@ function handleRegisterSubjectsDialog() {
         // 加载任教学科
         UiUtils.requestDataAndShowInTree($('#register-subjects-dialog .ztree'), function(treeId, treeNode) {
             if(!treeNode) {
-                return Urls.REST_SUBJECTS_BY_CERT_TYPE.format({certTypeId: certTypeId});
+                return Urls.REST_SUBJECTS_BY_CERTTYPE_ORG.format({certTypeId: certTypeId,orgId: regOrgId});
             } else {
-                return Urls.REST_SUBJECTS_BY_PARENT.format({parentId: treeNode.id});
+                return Urls.REST_SUBJECTS_BY_PARENT_BY_CERT_TYPE_ORG.format({parentId: treeNode.id,orgId: regOrgId});
             }
         });
     });
@@ -956,7 +977,7 @@ function handleTeachSubjectsDialog() {
             if(!treeNode) {
                 return Urls.REST_SUBJECTS_TEASUBJECT.format({provinceId: provinceId, teachGradeId: teachGradeId});
             } else {
-                return Urls.REST_SUBJECTS_CHILDREN.format({provinceId: provinceId, parentId: treeNode.id});
+                return Urls.REST_SUBJECTS_CHILDREN.format({provinceId: provinceId, teachGradeId: teachGradeId, parentId: treeNode.id});
             }
         });
     });
@@ -1104,6 +1125,7 @@ function handleMajorsDialog() {
     // 初始化 LeanModal 对话框
     $('#majors-dialog-trigger').leanModal({top: 50, overlay : 0.4});
 
+    alert('provinceId=='+provinceId);
     //tab切换
      $(".major_tab_content").hide(); //Hide all content
      $("ul.major_tabs li:first").addClass("active").show(); //Activate first tab
@@ -1119,6 +1141,7 @@ function handleMajorsDialog() {
 
     // 点击搜索按钮，显示搜索的结果
     $('#majors-dialog .search-button').click(function(event) {
+        var provinceId   = UiUtils.getSelectedOption('#provinces').id;       // 所在省
         var searchValue = $.trim($('#major-search-name').val());
         if(!searchValue){
             alert('请输入搜索内容!');
@@ -1126,7 +1149,7 @@ function handleMajorsDialog() {
         }
         searchValue = encodeURI(encodeURI(searchValue));
         $('#search-major-result tr:gt(0)').empty();
-        $.rest.get({url: Urls.REST_MAJOR_SEARCH_BY_NAME, urlParams: {name: searchValue}, success: function(result) {
+        $.rest.get({url: Urls.REST_MAJOR_SEARCH_BY_NAME, urlParams: {provinceId: provinceId,name: searchValue}, success: function(result) {
             $('#search-major-result').append(template('majorsTemplate', {majors: result.data}));
         }});
     });
@@ -1159,7 +1182,7 @@ function handleMajorsDialog() {
 
     $('#select-major-button').click(function(event) {
         var eduLevelId = UiUtils.getSelectedOption('#edu-levels').id;
-
+         var provinceId   = UiUtils.getSelectedOption('#provinces').id;       // 所在省
         //默认选中所学专业的第一个tab页
         $("ul.major_tabs li:first").addClass("active").show();
         $(".major_tab_content:first").show();
@@ -1184,9 +1207,9 @@ function handleMajorsDialog() {
         // 加载最高学历所学专业
         UiUtils.requestDataAndShowInTree($('#majors-dialog .ztree'), function(treeId, treeNode) {
             if(!treeNode) {
-                return Urls.REST_ZHUCE_MAJOR_PARENT;
+                return Urls.REST_ENROLL_MAJOR_PARENT.format({provinceId:provinceId});
             } else {
-                return Urls.REST_MAJOR_CHILDREN.format({parentId: treeNode.id});
+                return Urls.REST_ENROLL_MAJOR_CHILDREN.format({provinceId:provinceId, parentId: treeNode.id});
             }
         });
     });
@@ -1221,7 +1244,6 @@ function handleTechnicalJobsDialog() {
                 return false;
             }
             searchValue = encodeURI(encodeURI(searchValue));
-            alert(''+searchValue);
             $('#search-technical-jobs-result tr:gt(0)').empty();
             $.rest.get({url: Urls.REST_TECHNICAL_JOB_BY_NAME, urlParams: {name: searchValue}, success: function(result) {
                 $('#search-technical-jobs-result').append(template('technicalJobsTemplate', {technicalJobs: result.data}));

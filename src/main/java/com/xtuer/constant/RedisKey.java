@@ -21,14 +21,17 @@ public interface RedisKey {
 
     String SUBJECTS_ROOT = "subjects_root_%d_%d"; // subjects_root_{provinceId}_{certTypeId}
     String SUBJECTS_CHILDREN = "subjects_children_%d_%d"; // subjects_children_{provinceId}_{parentId}
-    String SUBJECTS_BY_CERTTYPE = "subjects_ct_%d"; // subjects_ct_{certTypeId}
+    String SUBJECTS_BY_CERTTYPE_ORG = "subjects_ct_%d_%d"; // subjects_ct_{certTypeId}_{orgId}
     String SUBJECTS_BY_PARENT = "subjects_p_%d"; // subjects_p_{parentId}
+    String SUBJECTS_BY_PARENT_ORG_STATUS = "subjects_p_%d_%d_%d"; // subjects_p_{parentId}_{orgId}_{status}
     String SUBJECTS_TEASUBJECT = "subjects_t_%d_%d"; // subjects_t_{teachGrade}_{provinceId}
     String REST_REQUEST_SUBJECTS = "subjects_request_root_%d_%d"; // subjects_root_{provinceId}_{teachGrade}非统考第三步加载任教学科父节点
     String REST_REQUEST_SUBJECTS_CHILDREN = "subjects_request_children_%d_%d"; // subjects_root_{provinceId}_{parentId}非统考第三步加载任教学科子节点
 
+
     String DICTS = "dicts"; // dicts
     String DICTS_BY_TYPE = "dicts_%d"; // dicts_{dictTypeId}
+
     String TEAGRADES = "teaGrades"; // teaGrades
     String EDULEVELS = "eduLevels_%d"; // eduLevels_{certTypeId}
     String IDTYPRS = "idTypes_%d"; // idTypes_{certTypeId}
@@ -37,19 +40,15 @@ public interface RedisKey {
 
     String COLLEGES = "colleges"; // colleges
     String COLLEGES_BY_PROVINCE = "colleges_p_%d"; // colleges_p_{provinceId}
-    String DEGREES_BY_CERT_TYPE_EDU_LEVEL = "DEGREES_CERTTYPE_EDULEVEL_%d_%d"; // colleges_p_{provinceId}
-    String DEGREES_BY_STATUS_TYPE ="DEGREES_STATUS_TYPE_%d_%d";
+    String DEGREES_BY_CERT_TYPE_EDU_LEVEL = "degrees_certtype_edulevel_%d_%d"; // degrees_certtype_edulevel_{certTypeId}_{eduLevelId}
+    String DEGREES_BY_STATUS_TYPE ="degrees_status_type_%d_%d"; //degreess_status_type_{status}_{degrees}
 
-    String MAJORS_ZHUCE_ROOT = "majors_root";
-    String MAJORS_REQUEST_ROOT = "majors_request_root_%d";  //majors_root_{provinceId}
+    String MAJORS_ENROLL_ROOT = "majors_enroll_root_%d";//majors_enroll_root_{provinceId}
+    String MAJORS_REQUEST_ROOT = "majors_request_root_%d";  //majors_request_root_{provinceId}
     String MAJORS_REQUEST_ROOT_CERTTYPE_EDULEVEL = "majors_request_root_%d_%d";  //majors_root_{certTypeId}_{eduLevelId}
 
-
-
     String MAJORS_REQUEST_CHILREN = "majors_request_children_%d_%d";  //majors_root_{provinceId}_{parentId}
-    String MAJORS_ZHUCE_CHILREN = "majors_children_%d"; // majors_chilren_{parentId}
-    String MAJORS_RENDING_ROOT = "majors_rending_root_%d_%d"; // majors_rending_root_{certTypeId}_{eduLevelId}
-    String MAJORS_RENDING_CHILDREN = "majors_rending_children_%d_%d"; // majors_rending_children_{provinceId}_{parentId}
+    String MAJORS_ENROLL_CHILREN = "majors_children_%d_%d"; // majors_chilren_{provinceId}_{parentId}
 
     String TECHNICALJOBS = "technical_jobs"; // technical_jobs
     String TECHNICAL_JOB_CHILDREN = "technical_jobs_children_%d"; // technical_jobs_children_{parentId}

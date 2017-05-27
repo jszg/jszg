@@ -7,7 +7,18 @@
 <!--namespace 非常重要：必须是 Mapper 类的全路径-->
 <mapper namespace="com.xtuer.mapper.MajorMapper">
   <select id="findRoot" resultType="Major">
-      SELECT MAJOR_ID as id, NAME as name, MAJOR_CODE as code from T_MAJOR M WHERE M.PARENT_ID IS NULL AND M.STATUS=1 ORDER BY M.MAJOR_CODE
+      SELECT
+        major_id as id,
+        name as name,
+        major_code as code
+      FROM
+        t_major m
+      WHERE
+        m.parent_id is null
+        AND m.status=1
+        AND (m.province=#{provinceId} OR m.province is null)
+      ORDER BY
+        m.major_code
   </select>
 
   <select id="findByParentIdStatus1" resultType="Major">
@@ -29,7 +40,8 @@
         t_major m ON ctle.target_id=m.major_id
       WHERE
         ctle.link_id=(SELECT c.ctl_id FROM t_cert_type_link c WHERE c.ct_id = #{certTypeId} AND c.edu_level_id = #{eduLevelId})
-          AND ctle.target_type=0
+        AND ctle.target_type=0
+        AND (m.province=#{provinceId} or m.province is null)
       ORDER BY
         m.major_code
   </select>
@@ -45,7 +57,8 @@
       LEFT JOIN
         t_major m ON ctle.target_id=m.major_id
       WHERE
-        m.name LIKE #{pattern}
+        (m.province=#{provinceId} OR m.province is null)
+        AND m.name LIKE #{pattern}
         AND ctle.link_id=(SELECT c.ctl_id FROM t_cert_type_link c WHERE c.ct_id = #{certTypeId} AND c.edu_level_id = #{eduLevelId})
         AND ctle.target_type=0
       ORDER BY
@@ -53,22 +66,34 @@
   </select>
 
   <select id="findByParentIdAndProvince" resultType="Major">
-      SELECT M.MAJOR_ID as id, M.NAME as name, M.MAJOR_CODE as code
-      FROM T_MAJOR M
-      WHERE M.PARENT_ID = #{parentId}
-        AND (M.PROVINCE IS NULL OR M.PROVINCE = #{provinceId})
-        AND M.STATUS = 1
-      ORDER BY M.MAJOR_CODE
+      SELECT
+        m.major_id AS id,
+        m.name AS name,
+        m.major_code AS code
+      FROM
+        t_major m
+      WHERE
+        m.parent_id = #{parentId}
+        AND (m.province is null OR m.province = #{provinceId})
+        AND m.status = 1
+      ORDER BY
+        m.major_code
   </select>
 
   <select id="findByName" resultType="Major">
         <bind name="pattern" value="'%' + name + '%'" />
-        SELECT m.major_id as id, m.name as name, p.name as parentName
-        FROM t_major m
-        INNER JOIN t_major p ON m.parent_id = p.major_id
-        WHERE m.name LIKE #{pattern}
+        SELECT
+            m.major_id as id, m.name as name, p.name as parentName
+        FROM
+            t_major m
+        INNER JOIN
+            t_major p ON m.parent_id = p.major_id
+        WHERE
+            m.name LIKE #{pattern}
             AND m.status = 1
-        ORDER BY m.major_code ASC
+            AND (m.province is null OR m.province = #{provinceId})
+        ORDER BY
+            m.major_code ASC
   </select>
   <select id="findRequestMajorRoot" resultType="Major">
       SELECT
@@ -77,7 +102,7 @@
       FROM
           t_major m
       WHERE
-          (m.province IS NULL OR m.province = #{provinceId})
+          (m.province is null OR m.province = #{provinceId})
           AND m.status = 1
           AND m.parent_id IS NULL
       ORDER BY
@@ -90,7 +115,7 @@
       FROM
           t_major m
       WHERE
-          (m.province IS NULL OR m.province = #{provinceId})
+          (m.province is null OR m.province = #{provinceId})
           AND m.status = 1
           AND m.parent_id = #{parentId}
       ORDER BY
