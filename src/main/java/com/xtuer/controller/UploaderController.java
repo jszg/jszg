@@ -44,7 +44,6 @@ public class UploaderController {
 
     public boolean extensionAllowed(String name) {
         String ext = FilenameUtils.getExtension(name).toLowerCase();
-
         return ext.endsWith("jpg") || ext.endsWith("jpeg");
     }
 }

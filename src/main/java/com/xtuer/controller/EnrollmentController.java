@@ -103,24 +103,44 @@ public class EnrollmentController {
 
         // [4] 在认定历史表中
         if (form.getInHistory()) {
-            enrollmentService.saveWhenInHistory(form);
+            try{
+                enrollmentService.saveWhenInHistory(form);
+            } catch (Exception ex) {
+                return Result.error("注册报名失败!");
+            }
         }
 
         // [5] 在认定表中
         if (form.getInRegistration()) {
-            enrollmentService.saveWhenInRegistration(form);
+            try{
+                enrollmentService.saveWhenInRegistration(form);
+            }catch (Exception ex) {
+                return Result.error("注册报名失败!");
+            }
         }
 
         // [6] 既不在认定历史表中，也不在认定表中
         if (!form.getInHistory() && !form.getInRegistration()) {
-            enrollmentService.saveWhenNotInHistoryAndInRegistration(form);
+            try{
+                enrollmentService.saveWhenNotInHistoryAndInRegistration(form);
+            }catch (Exception ex) {
+                return Result.error("注册报名失败!");
+            }
         }
 
         // [7] 保存图片
-        enrollmentService.saveEnrollPhoto(form);
+        try{
+            enrollmentService.saveEnrollPhoto(form);
+        }catch (Exception ex) {
+            return Result.error("注册报名保存图片失败!");
+        }
 
         // [8] 写入日志
-        enrollmentService.saveUserLog(form, request);
+        try{
+            enrollmentService.saveUserLog(form, request);
+        }catch (Exception ex) {
+            return Result.error("注册报名写入日志失败!");
+        }
 
         // [9] remove from ip list
         String ip = CommonUtils.getClientIp(request);

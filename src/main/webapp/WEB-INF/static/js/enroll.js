@@ -32,14 +32,12 @@ function initWebUploader() {
         alert( 'Web Uploader 不支持您的浏览器！如果你使用的是IE浏览器，请尝试升级 flash 播放器,或则使用火狐、谷歌等浏览器');
         throw new Error( 'WebUploader does not support the browser you are using.' );
     }
-    var allMaxSize = 50;
     var uploader = WebUploader.create({
         auto: true,                 // 自动上传
         swf: Urls.WEB_UPLOADER_SWF, // swf 文件路径
         server: Urls.URI_UPLOAD_ENROLL_IMAGE, // 文件接收服务端
         pick: '#filePicker',       // 选择文件的按钮，内部根据当前运行时创建，可能是 input 元素，也可能是 flash.
         resize: true,              // 不压缩 image, 默认如果是 jpeg，文件上传前会压缩一把再上传！
-        fileSizeLimit: 50*1024,//限制大小50k，所有被选文件，超出选择不上
         accept: { // 只允许上传图片
             title: 'Images',
             extensions: 'jpg,jpeg',
@@ -50,7 +48,8 @@ function initWebUploader() {
             width: 114,
             height: 156,
             allowMagnify: false,
-            crop: false // false 为等比缩放
+            crop: false, // false 为等比缩放
+            compressSize: 50*1024
         }
     });
 
@@ -60,15 +59,6 @@ function initWebUploader() {
         UiUtils.setFormData('photo', -1, response.data);
         uploader.removeFile(file, true); // 启用多次上传
     };
-
-     //  验证大小
-     uploader.on("error",function (type){
-          if(type == "F_DUPLICATE"){
-               alert("系统提示:请不要重复选择文件！");
-          }else if(type == "Q_EXCEED_SIZE_LIMIT"){
-               alert("系统提示:所选附件总大小不可超过" + allMaxSize + "K哦！换个小点的文件吧！");
-          }
-      });
 
     // 上传进度 [0.0, 1.0]
     // fileQueued 时创建进度条，uploadProgress 更新进度条
@@ -1124,8 +1114,6 @@ function handleGraduationCollegesDialog() {
 function handleMajorsDialog() {
     // 初始化 LeanModal 对话框
     $('#majors-dialog-trigger').leanModal({top: 50, overlay : 0.4});
-
-    alert('provinceId=='+provinceId);
     //tab切换
      $(".major_tab_content").hide(); //Hide all content
      $("ul.major_tabs li:first").addClass("active").show(); //Activate first tab

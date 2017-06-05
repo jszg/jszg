@@ -82,7 +82,6 @@ public class EnrollmentService {
         //从认定申请表来的数据在定期注册时,要向认定表中回写省级注册计划信息
         ProvinceBatch pb = commonMapper.findByProvinceId(form.getProvinceId());
         registrationMapper.updateEnrollProBatch(pb.getId(),form.getRegisterId());
-        System.out.println("form.getRegisterId()===="+form.getRegisterId());
         // 使用表中现有认定正式表的数据
         RegistrationForm temp = registrationMapper.findRegistrationByRegisterId(form.getRegisterId());
         form.setRegisterId(temp.getRegId());

@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -50,6 +51,7 @@ public class ExamController {
     @Autowired
     RedisAclService redisAclService;
 
+    @Transactional(rollbackFor = Exception.class)
     @PostMapping(UriView.URI_EXAM_SUBMIT)
     @ResponseBody
     public Result<?> submitRequest(@RequestBody @Valid RegistrationForm form, BindingResult result, HttpServletRequest request, @RequestParam String token) {
@@ -79,19 +81,34 @@ public class ExamController {
         form.setPassword(CommonUtils.md5(form.getPassword())); // 使用 MD5 编码密码
         form.setPrintStatus(0);
         // [3] 保存数据
-        examService.save(form,request);
-
+        try{
+            examService.save(form,request);
+        }catch (Exception ex) {
+            return Result.error("认定报名保存数据失败!");
+        }
         //[4]修改对应统考记录为已使用
         examService.updateScoreStatus(form);
 
         // [5] 保存简历信息
-        examService.saveResum(form);
+        try{
+            examService.saveResum(form);
+        }catch (Exception ex) {
+            return Result.error("认定报名保存简历信息失败!");
+        }
 
         // [6] 保存图片
-        examService.saveExamPhoto(form);
+        try{
+            examService.saveExamPhoto(form);
+        }catch (Exception ex) {
+            return Result.error("认定报名保存图片失败!");
+        }
 
         // [7] 写入日志
-        examService.saveUserLog(form, request);
+        try{
+            examService.saveUserLog(form, request);
+        }catch (Exception ex) {
+            return Result.error("认定报名写入日志信息失败!");
+        }
 
         // [8] remove from ip list
         String ip = CommonUtils.getClientIp(request);

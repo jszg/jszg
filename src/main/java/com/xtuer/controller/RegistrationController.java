@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,6 +46,7 @@ public class RegistrationController {
     @Autowired
     RedisAclService redisAclService;
 
+    @Transactional(rollbackFor = Exception.class)
     @PostMapping(UriView.URI_REQUEST_SUBMIT)
     @ResponseBody
     public Result<?> submitRequest(@RequestBody @Valid RegistrationForm form, BindingResult result, HttpServletRequest request,@RequestParam String token) {
@@ -73,15 +75,30 @@ public class RegistrationController {
         form.setScoreCertNo("");
         form.setPrintStatus(0);
         // [3] 保存数据
-        registrationService.save(form);
+        try{
+            registrationService.save(form);
+        }catch (Exception ex) {
+            return Result.error("认定报名保存图片失败!");
+        }
         // [4] 保存简历信息
-        registrationService.saveResum(form);
+        try{
+            registrationService.saveResum(form);
+        }catch (Exception ex) {
+            return Result.error("认定报名保存简历信息失败!");
+        }
 
         // [5] 保存图片
-        registrationService.saveRequestPhoto(form);
-
+        try{
+            registrationService.saveRequestPhoto(form);
+        }catch (Exception ex) {
+            return Result.error("认定报名保存图片失败!");
+        }
         // [6] 写入日志
-        registrationService.saveUserLog(form, request);
+        try{
+            registrationService.saveUserLog(form, request);
+        }catch (Exception ex) {
+            return Result.error("认定报名写入日志失败!");
+        }
 
         // [8] remove from ip list
         String ip = CommonUtils.getClientIp(request);
