@@ -281,7 +281,7 @@ function handleChangeProvincesEvent() {
             var cities = [{id: provinceId, name: $province.text(), provinceCity: true}];
             UiUtils.insertOptions('cities', cities, {templateId: 'provinceOptionTemplate'});
         } else if (-1 != provinceId) {
-            // provinceId 为 -1 表示选择了 "请选择"，则不加载省的城市
+            //  // 加载省下面的市或者省管县
             $.rest.get({url: Urls.REST_CITIES_BY_PROVINCE, urlParams: {provinceId: provinceId}, success: function(result) {
                 UiUtils.insertOptions('cities', result.data);
             }});
@@ -311,6 +311,7 @@ function handleChangeProvincesForCollegeEvent() {
  */
 function handleRequestRegisterOrgs() {
     $('#teach-grades, #cities').change(function(event) {
+        UiUtils.onlyPleaseSelectOption('register-orgs');
         var teachGradeId = UiUtils.getSelectedOption('#teach-grades').id;
         var cityId = UiUtils.getSelectedOption('#cities').id;
         var provinceCity = UiUtils.getSelectedOption('#cities').option.attr('data-province-city') === 'true';
@@ -318,7 +319,6 @@ function handleRequestRegisterOrgs() {
         if (-1 === teachGradeId || -1 === cityId) {
             return;
         }
-
         $.rest.get({url: Urls.REST_ORGS_REG, urlParams: {teachGradeId: teachGradeId, cityId: cityId, provinceCity: provinceCity},
             success: function(result) {
                 UiUtils.insertOptions('register-orgs', result.data);

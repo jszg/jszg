@@ -642,7 +642,7 @@ function handleChangeProvincesEvent() {
                 //UiUtils.insertOptions('cities', cities, {templateId: 'provinceOptionTemplate'});
                 UiUtils.insertOptions('cities', cities, {remainFirstOption: false});
             }else{
-                // provinceId 为 -1 表示选择了 "请选择"，则不加载省的城市
+                // 加载省下面所有的市或者省管县
                 $.rest.get({url: Urls.REST_CITIES_BY_PROVINCE, urlParams: {provinceId: provinceId}, success: function(result) {
                     UiUtils.insertOptions('cities', result.data);
                 }});
@@ -662,13 +662,11 @@ function handleRequestOrgs() {
         var adminLevel = UiUtils.getFormData('#box-4', 'adminLevel').id; // 申请资格种类行政级别
         var provinceId = UiUtils.getSelectedOption('#provinces').id;
         var cityId = UiUtils.getSelectedOption('#cities').id;
-
         if ( -1 == provinceId || -1 === cityId) {
             return;
         }
         $.rest.get({url: Urls.REST_ORGS_REQUEST_BY_CERT_TYPE_PROVINCE_CITY, urlParams: {certTypeId: certTypeId,adminLevel: adminLevel, provinceId: provinceId,cityId: cityId},
             success: function(result) {
-                console.log(result.data);
                 UiUtils.insertOptions('request-orgs', result.data);
         }});
     });

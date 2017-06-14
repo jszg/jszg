@@ -29,7 +29,7 @@ public interface CommonMapper {
     void insertUserPortalLog(UserPortalLog log);
     List<OrgBatchTime> findOrgBatchTimeByOrgBatchId(@Param("orgBatchId") int orgBatchId);
 
-    CityInfo findCityInfoByOrgId(@Param("orgId") int orgId);
+    Organization findCityInfoByOrgId(@Param("orgId") int orgId);
     //根据注册的省份查询省级计划
     ProvinceBatch findByProvinceId(@Param("provinceId") int provinceId);
     CertBatch findByYear(@Param("year") int year);

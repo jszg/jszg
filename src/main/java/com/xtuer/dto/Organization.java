@@ -24,6 +24,7 @@ public class Organization {
     private int orgType;
     private Integer provinceId;
     private String memo;
+    private boolean provinceCity;
 
     public Organization(){
 

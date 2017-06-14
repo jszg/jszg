@@ -642,7 +642,6 @@ function requestDicts() {
     $.rest.get({url: Urls.REST_DICTS, success: function(result) {
         var i = 0;
         var data = result.data;
-
         UiUtils.insertOptions('certTypes', data.certTypes,{templateId:'certTypeOptionTemplate'});       // 资格种类
         UiUtils.insertOptions('provinces', data.provinces, {templateId: 'provinceOptionTemplate'});   // 省
         UiUtils.insertOptions('provinces-for-college', data.provinces, {templateId: 'provinceOptionTemplate'});   // 省
@@ -702,9 +701,9 @@ function handleChangeProvincesEvent() {
             if(7 == certTypeId || $certType.attr('data-admin-level') > 3){
                 var cities = [{id: provinceId, name: '无需选择', provinceCity: true}];
                 //UiUtils.insertOptions('cities', cities, {templateId: 'provinceOptionTemplate'});
-                UiUtils.insertOptions('cities', cities, {remainFirstOption: false}); // 身份证
+                UiUtils.insertOptions('cities', cities, {remainFirstOption: false}); // 所在市
             }else{
-                // provinceId 为 -1 表示选择了 "请选择"，则不加载省的城市
+                // 加载省下面的市或者省管县
                 $.rest.get({url: Urls.REST_CITIES_BY_PROVINCE, urlParams: {provinceId: provinceId}, success: function(result) {
                     UiUtils.insertOptions('cities', result.data);
                 }});
@@ -732,7 +731,6 @@ function handleRequestOrgs() {
         UiUtils.setFormData('request-subject-text', '','');
         $.rest.get({url: Urls.REST_ORGS_REQUEST_BY_CERT_TYPE_PROVINCE_CITY, urlParams: {certTypeId: certTypeId,adminLevel: adminLevel, provinceId: provinceId,cityId: cityId},
             success: function(result) {
-                console.log(result.data);
                 UiUtils.insertOptions('request-orgs', result.data);
         }});
     });

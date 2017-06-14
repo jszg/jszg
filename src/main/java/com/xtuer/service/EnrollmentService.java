@@ -5,10 +5,7 @@ import com.xtuer.bean.RegistrationForm;
 import com.xtuer.bean.Result;
 import com.xtuer.bean.UserPortalLog;
 import com.xtuer.constant.SignUpConstants;
-import com.xtuer.dto.CertBatch;
-import com.xtuer.dto.CityInfo;
-import com.xtuer.dto.HistoryValid;
-import com.xtuer.dto.ProvinceBatch;
+import com.xtuer.dto.*;
 import com.xtuer.mapper.*;
 import com.xtuer.util.BrowserUtils;
 import com.xtuer.util.CommonUtils;
@@ -58,7 +55,6 @@ public class EnrollmentService {
     public void saveWhenInHistory(EnrollmentForm form) {
         // 使用表中现有的认定历史表中数据
         HistoryValid temp = commonMapper.findHistoryValidByRegisterId(form.getRegisterId());
-
         form.setRegisterId(form.getRegisterId());
         form.setIdNo(temp.getIdNo());
         form.setIdTypeId(temp.getIdTypeId());
@@ -72,7 +68,7 @@ public class EnrollmentService {
         form.setCertAssignDate(temp.getCertAssignDate());
         form.setRecognizeOrgName(temp.getRecognizeOrgName());
         form.setSubjectId(temp.getSubjectId());
-        form.setCityId(this.getEnrollCityId(form.getOrgId()));
+        setCityInfo(form);
         form.setStatusMemo("new-cert");
         enrollmentMapper.insertEnrollment(form);
     }
@@ -97,7 +93,7 @@ public class EnrollmentService {
         form.setCertAssignDate(temp.getCertAssign());
         form.setRecognizeOrgName(temp.getOrgName());
         form.setSubjectId(temp.getSubjectId());
-        form.setCityId(this.getEnrollCityId(form.getOrgId()));
+        setCityInfo(form);
         form.setStatusMemo("new-cert");
         enrollmentMapper.insertEnrollment(form);
     }
@@ -151,9 +147,6 @@ public class EnrollmentService {
         reg.setProvinceId(organizationMapper.findProvinceByOrgId(form.getRecognizeOrgId()).getProvinceId());
         reg.setOccupation(dictMapper.findByTypeAndCode(4,20).getId());
         reg.setIp(form.getIp());
-        if(this.getRegCityId(form.getRecognizeOrgId()) != null){
-            reg.setCityId(this.getRegCityId(form.getRecognizeOrgId()));
-        }
         int year = CommonUtils.getCertYearFromRegistration(form.getCertNo(),form.getCertAssignDate());
         CertBatch certBatch = commonMapper.findByYear(year);
         if(certBatch != null){
@@ -169,7 +162,7 @@ public class EnrollmentService {
         registrationMapper.insertRegistration(reg);
         //给enrollment设置值，并会写regId
         form.setRegisterId(reg.getRegId());
-        form.setCityId(this.getEnrollCityId(form.getOrgId()));
+        setCityInfo(form);
         form.setStatusMemo("new-cert");
         enrollmentMapper.insertEnrollment(form);
         return Result.ok();
@@ -202,7 +195,6 @@ public class EnrollmentService {
      * 根据 enrollId 创建注册使用的图片路径
      * 初始文件名为 enrollId 补齐 0 到 10 字符加图片后缀
      * 保存路径: 0000001234.jpg to 00/0001/2345.jpg
-     *
      * @param enrollId
      * @return 图片路径
      */
@@ -210,7 +202,6 @@ public class EnrollmentService {
         String photoName = String.format("%010d.jpg", enrollId);
         String photoPath = dir + File.separator + photoName.substring(0,2) + File.separator +
                 photoName.substring(2,6) + File.separator + photoName.substring(6);
-
         return photoPath;
     }
 
@@ -222,91 +213,17 @@ public class EnrollmentService {
         userPortalLog.setType(UserPortalLog.ENROLL_SUBMIT);
         userPortalLog.setBrowserContent(BrowserUtils.getBrowserContent(request));
         userPortalLog.setBrowserName(BrowserUtils.getBrowserName(request));
-
         commonMapper.insertUserPortalLog(userPortalLog);
-    }
-
-    /**
-     * 获取注册机构所在市的 id
-     *
-     * @param orgId 机构的 id
-     * @return 市的 id
-     */
-    public int getEnrollCityId(int orgId) {
-        CityInfo cityInfo = commonMapper.findCityInfoByOrgId(orgId);
-
-        // 如果是省或者市，返回自己
-        if (cityInfo.getOrgType() == SignUpConstants.T_PROVINCE || cityInfo.getOrgType() == SignUpConstants.T_CITY) {
-            return orgId;
-        }
-
-        // 如果是县
-        if (cityInfo.getOrgType() == SignUpConstants.T_COUNTY) {
-            // 如果上级机构是省(省管县)
-            if (cityInfo.getParentId() != 0 && cityInfo.getParentOrgType() == SignUpConstants.T_PROVINCE) {
-                // 如果是直辖市返回父级机构，否则返回自己
-                if (cityInfo.isProvinceCity()) {
-                    return cityInfo.getParentId();
-                } else {
-                    return orgId;
-                }
-            } else {
-                // 如果不是省级机构(市管县)，返回自己
-                return cityInfo.getParentId();
-            }
-        }
-
-        return orgId;
-    }
-
-    /**
-     * 获取认定机构所在市的 id
-     *
-     * @param orgId 机构的 id
-     * @return 市的 id
-     */
-    public Integer getRegCityId(int orgId) {
-        CityInfo cityInfo = commonMapper.findCityInfoByOrgId(orgId);
-
-        // 如果是省，返回空
-        if (cityInfo.getOrgType() == SignUpConstants.T_PROVINCE){
-            return null;
-        }
-
-        // 如果是市，返回自己
-        if(cityInfo.getOrgType() == SignUpConstants.T_CITY){
-            return orgId;
-        }
-
-        // 如果是县
-        if (cityInfo.getOrgType() == SignUpConstants.T_COUNTY) {
-            // 如果上级机构是省(省管县)
-            if (cityInfo.getParentId() != 0 && cityInfo.getParentOrgType() == SignUpConstants.T_PROVINCE) {
-                // 如果是直辖市返回父级机构，否则返回自己
-                if (cityInfo.isProvinceCity()) {
-                    return cityInfo.getParentId();
-                } else {
-                    return orgId;
-                }
-            } else {
-                // 如果不是省级机构(市管县)，返回自己
-                return cityInfo.getParentId();
-            }
-        }
-        return orgId;
     }
 
     public Result<?> validateParams(EnrollmentForm form, BindingResult result) {
         StringBuffer sb = new StringBuffer();
-
         for (FieldError error : result.getFieldErrors()) {
             sb.append(error.getField() + " : " + error.getDefaultMessage() + "\n");
         }
-
         if (result.hasErrors()) {
             return new Result(false, sb.toString());
         }
-
         // 验证日期
         try {
             // 例如 2012-22-12-12 也是能够被转换为日期，所以最后需要再格式化回去为合法的日期
@@ -324,12 +241,38 @@ public class EnrollmentService {
         } catch (ParseException e) {
             return new Result(false, "时间格式错误，正确格式为 yyyy-MM-dd");
         }
-
         // 验证密码强度
         if (!CommonUtils.passwordHasEnoughStrength(form.getPassword())) {
             return new Result(false, "密码不少于 8 位，必须包含数字、字母和特殊字符，特殊字符需从 “#、%、*、-、_、!、@、$、&” 中选择");
         }
-
         return Result.ok();
+    }
+
+    private void setCityInfo(EnrollmentForm form){
+        Organization org = commonMapper.findCityInfoByOrgId(form.getOrgId());
+        if(org != null){
+            if (org.getOrgType() == SignUpConstants.T_PROVINCE){//如果认定机构选择的是省级机构,所在省为本机构,所在市为本机构,认定机构为本机构
+                form.setProvinceId(org.getId());
+                form.setCityId(org.getId());
+            }else if(org.getOrgType() == SignUpConstants.T_CITY){//如果是市级机构,所在省为省级机构,所在市为本机构,认定机构为本机构
+                form.setProvinceId(org.getProvinceId());
+                form.setCityId(org.getId());
+            }else if(org.getOrgType() == SignUpConstants.T_COUNTY){//如果是县级机构
+                form.setProvinceId(org.getProvinceId());
+                //如果是省管县,所在省为省级机构,市级机构为本机构,认定机构为本机构
+                if(org.getParent() != 0) {
+                    Organization parent = commonMapper.findCityInfoByOrgId(org.getParent());
+                    if (parent != null && parent.getOrgType() == SignUpConstants.T_PROVINCE) {
+                        if(parent.isProvinceCity() == true){
+                            form.setCityId(org.getParent());
+                        }else{//如果为省管县
+                            form.setCityId(org.getId());
+                        }
+                    }else{
+                        form.setCityId(org.getParent());
+                    }
+                }
+            }
+        }
     }
 }
