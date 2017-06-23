@@ -79,7 +79,6 @@ public class ExamValidationController {
         return Result.ok(map);
     }
 
-
     /**
      * 验证统考的认定机构
      *
@@ -154,10 +153,9 @@ public class ExamValidationController {
         return Result.ok(map);
     }
 
-
-
     @Autowired
     private CommonMapper commonMapper;
+
     @Autowired
     private RegistrationMapper registrationMapper;
 }

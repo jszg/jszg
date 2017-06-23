@@ -3,6 +3,7 @@ package com.xtuer.controller;
 import com.xtuer.bean.Result;
 import com.xtuer.constant.UriView;
 import com.xtuer.util.CommonUtils;
+import com.xtuer.util.ImageZipUtil;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
@@ -38,6 +39,8 @@ public class UploaderController {
 
         String tempDir = config.getString("uploadTemp");
         file.transferTo(new File(tempDir + File.separator + tempName));
+        //图片压缩
+        ImageZipUtil.zipImageFile(new File(tempDir + File.separator + tempName),new File(tempDir + File.separator + tempName),114, 156, 1f);
         logger.warn("上传图片结束");
         return Result.ok(tempName);
     }

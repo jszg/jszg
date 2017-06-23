@@ -88,9 +88,10 @@ function initWebUploader() {
         compress: { // 对上传的图片进行裁剪处理
             width: 114,
             height: 156,
+            // 是否允许放大，如果想要生成小图的时候不失真，此选项应该设置为false.
             allowMagnify: false,
-            crop: false, // false 为等比缩放
-            compressSize: 50*1024
+            // 是否允许裁剪。
+            crop: false
         }
     });
 
@@ -491,15 +492,15 @@ StepValidator.validate7thStep = function(){
     };
 
     var passed = false;
-
-    $.rest.create({url: Urls.URI_REQUEST_SUBMIT, data: params, urlParams:{token: $('#token').val()}, async: false, success: function(result) {
+    var token = UiUtils.getFormData(box7, 'token').name; // token
+    $.rest.create({url: Urls.URI_REQUEST_SUBMIT, data: params, urlParams:{token: token}, async: false, success: function(result) {
         if (!result.success) {
-            alert(result.message); // 弹出错误消息
+            alert(result.message);// 弹出错误消息
         } else {
             passed = true;
         }
     }, error: function(error) {
-        alert(error);
+         alert(error);
     }});
 
     if (!passed) { return false; } // 表单提交不成功，不进入第八步

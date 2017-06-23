@@ -1,5 +1,6 @@
 package com.xtuer.interceptor;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,14 +21,14 @@ public class TokenValidator implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if(!"GET".equalsIgnoreCase(request.getMethod())){
             String clientToken = request.getParameter("token");
-            if(clientToken == null || clientToken.isEmpty()){
-                throw new RuntimeException("重复提交表单");
+            if(StringUtils.isEmpty(clientToken) || clientToken.isEmpty()){
+                throw new RuntimeException("信息提交失败，请按照报名流程重新填报");
             }
             String serverToken = redisTemplate.opsForValue().get(clientToken);
-            if(!clientToken.equals(serverToken)){
-                throw new RuntimeException("重复提交表单");
+            if(StringUtils.isEmpty(serverToken) || !clientToken.equals(serverToken)){
+                throw new RuntimeException("信息提交失败，请按照报名流程重新填报");
             }
-            redisTemplate.delete(clientToken);
+            redisTemplate.delete(serverToken);
         }
         return true;
     }

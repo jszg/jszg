@@ -386,7 +386,7 @@
         <span class="form-data" name="certBatchId" data-id="" data-name="-1"></span>
         <span class="form-data" name="localeId" data-id="" data-name="-1"></span>
         <span class="form-data" name="localSetId" data-id="" data-name="-1"></span>
-        <input type="input" name="token" id="token" value="${token!}">
+        <span class="form-data" name="token" data-id="${token!}" data-name="${token!}"></span>
     </div>
 
     <div class="content_bd">

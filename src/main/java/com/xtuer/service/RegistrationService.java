@@ -117,13 +117,11 @@ public class RegistrationService {
         String tempPhotoPath = tempDir + File.separator + tempName; // 临时图片路径
         String photoDir = config.getString("uploadRegPhotoDir"); // 图片的最终目录
         String photoPath = generateRequestPhotoPath(form.getRegId(), photoDir);
-
         try {
             FileUtils.moveFile(new File(tempPhotoPath), new File(photoPath));
         } catch (IOException e) {
             logger.warn("移动图片失败: {}", e.getMessage());
         }
-
         try {
             FileUtils.deleteQuietly(new File(tempPhotoPath));
         } catch (Exception e) {

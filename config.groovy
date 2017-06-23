@@ -48,8 +48,8 @@ environments {
         logDir = 'D:/upload/tmp'
 
         uploadTemp = 'D:/upload/tmp'
-        uploadEnrollPhotoDir = 'D:/upload/tmp'
-        uploadRegPhotoDir = 'D:/upload/tmp'
+        uploadEnrollPhotoDir = 'D:/upload/photo/enroll_photo'
+        uploadRegPhotoDir = 'D:/upload/photo/reg_photo'
 
         jdbc {
             driverClassName = 'oracle.jdbc.driver.OracleDriver'
@@ -114,8 +114,8 @@ environments {
         logDir = 'D:/upload/tmp'
 
         uploadTemp = 'D:/upload/tmp'
-        uploadEnrollPhotoDir = 'D:/upload/tmp'
-        uploadRegPhotoDir = 'D:/upload/tmp'
+        uploadEnrollPhotoDir = 'D:/upload/photo/enroll_photo'
+        uploadRegPhotoDir = 'D:/upload/photo/reg_photo'
 
         jdbc {
             driverClassName = 'oracle.jdbc.driver.OracleDriver'

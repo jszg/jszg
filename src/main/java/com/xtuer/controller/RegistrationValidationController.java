@@ -57,22 +57,18 @@ public class RegistrationValidationController {
         } else if (!ob.getIsOpen()) {
             return new Result(false, "该机构不组织网上采集认定信息，请与该机构联系，了解其认定工作的具体安排");
         }
-
         //[3] 所选机构开展工作的时间是否已经到
         List<OrgBatchTime> orgBatchTimes = commonMapper.findOrgBatchTime(orgId,SignUpConstants.TYPE_CERT); // 查询网报时间段
         if (orgBatchTimes.isEmpty()) {
             orgBatchTimes = commonMapper.findOrgBatchTimeByOrgBatchId(ob.getOrgBatchId());
-
             // 没有则返回错误
             if (orgBatchTimes.isEmpty()) {
                 return new Result(false, "该机构目前未开展认定工作，请与该机构联系，了解其认定工作的时间安排");
             }
-
             // 如果有网报时间，则判断时间是否合法
             StringBuffer buffer = new StringBuffer("");
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy 年 MM 月 dd 日");
             boolean success = true;
-
             for (OrgBatchTime batchTime : orgBatchTimes) {
                 String prependMsg = "";
                 if (batchTime.getValidBeginDate() != null && batchTime.getValidEndDate() != null) {
@@ -86,16 +82,13 @@ public class RegistrationValidationController {
                 buffer.append(String.format("%s: %s 到 %s; ", prependMsg,
                         dateFormat.format(batchTime.getValidBeginDate()),
                         dateFormat.format(batchTime.getValidEndDate())));
-
                 success = false;
             }
-
             return new Result(success, buffer.toString());
         }else{
             map.put("certBatchId", ob.getCertBatchId());
         }
         map.put("orgBatchTimes", orgBatchTimes.get(0));
-
         return Result.ok(map);
     }
 
@@ -148,14 +141,15 @@ public class RegistrationValidationController {
         if(!scoreList.isEmpty() && scoreList.get(0) != null){
             return new Result(false, "请从统考入口报名");
         }
-
         return Result.ok();
     }
 
     @Autowired
     private CommonMapper commonMapper;
+
     @Autowired
     private RegistrationMapper registrationMapper;
+
     @Autowired
     private DictMapper dictMapper;
 }

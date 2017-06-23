@@ -8,33 +8,62 @@
 <mapper namespace="com.xtuer.mapper.CommonMapper">
   <select id="findLimitation" resultType="Limitation">
     SELECT
-      l.LIMIT_ID AS id,
-      l.CERT_NO AS certNo,
-      l.ID_NO AS idNo,
-      l.STATUS AS status,
-      l.TYPE AS type
+      l.limit_id AS id,
+      l.cert_no AS certNo,
+      l.id_no AS idNo,
+      l.status AS status,
+      l.type AS type
     FROM
       t_limitation l
     WHERE
-      l.id_no=#{idNo} AND l.cert_no = #{certNo} AND l.status = 1
+      l.id_no=#{idNo}
+      AND l.cert_no = #{certNo}
+      AND l.status = 1
   </select>
 
   <select id="findEnrollHistory" resultType="EnrollHistory">
-    select eh.ENR_HIS_ID as id, eh.CERT_NO as certNo, eh.ID_NO as idNo,eh.JUDGMINT_STATUS as judgmentStatus, eh.ENROLL_TIME as enrollTime, eh.ENROLL_NUM
-     as enrollNum
-    from t_enroll_history eh
-    where id_no = #{idno} and cert_no=#{certno}
+    SELECT
+      eh.enr_his_id AS id,
+      eh.cert_no AS certNo,
+      eh.id_no AS idNo,
+      eh.judgmint_status AS judgmentStatus,
+      eh.enroll_time AS enrollTime,
+      eh.enroll_num AS enrollNum
+    FROM
+      t_enroll_history eh
+    WHERE
+      id_no = #{idno}
+      and cert_no=#{certno}
   </select>
 
   <select id="findEnrollment" resultType="Enrollment">
-    select  ID_NO as idNo, ID_TYPE as idType, CERT_NO as certNo, IN_HISTORY as inHistory, ENROLL_NUM as enrollNum,
-    PROVINCE as province, CITY_ID as city, ORG_ID as org, IN_REGISTRATION as inRegistration, REG_ID as regId
-    from t_enrollment
-    where ID_NO = #{idno} and CERT_NO = #{certno}
+    SELECT
+      id_no AS idNo,
+      id_type AS idType,
+      cert_no AS certNo,
+      in_history AS inHistory,
+      enroll_num AS enrollNum,
+      province AS province,
+      city_id AS city,
+      org_id AS org,
+      in_registration AS inRegistration,
+      reg_id AS regId
+    FROM
+      t_enrollment
+    WHERE
+      id_no = #{idno} and cert_no = #{certno}
   </select>
 
   <select id="findEnrollmentStatus0" resultType="Enrollment">
-    select ID_NO as idNo, REG_ID as regId from t_enrollment e where e.id_No=#{idno} and e.CERT_NO = #{certno} and e.delete_status=0
+    SELECT
+      id_no AS idNo,
+      reg_id AS regId
+    FROM
+      t_enrollment e
+    WHERE
+      e.id_No=#{idno}
+      AND e.cert_no = #{certno}
+      AND e.delete_status=0
   </select>
 
   <select id="findHistoryValid" resultType="HistoryValid">
@@ -55,8 +84,14 @@
             t.org_name  AS orgName,
             delete_status AS  deleteStatus,
             t.cert_assign AS certAssign
-        FROM t_history_valid t ,t_dict d,t_dict d2, t_cert_type c, t_subject s
-        WHERE id_no = #{idno} AND cert_no = #{certno}
+        FROM
+            t_history_valid t ,
+            t_dict d,t_dict d2,
+            t_cert_type c,
+            t_subject s
+        WHERE
+          id_no = #{idno}
+          AND cert_no = #{certno}
           AND t.nation = d.dic_id
           AND c.ct_id = t.ct_id
           AND t.subject = s.subject_id
@@ -70,28 +105,51 @@
             hv.cert_no  AS certNo
         FROM
             t_history_valid hv
-        WHERE hv.reg_id = #{regId}
+        WHERE
+            hv.reg_id = #{regId}
   </select>
 
   <select id="findRegistration" resultType="Registration">
-    select t.REG_ID as id, t.NAME as name, t.ID_NO as idNo, d2.NAME as idTypeName, t.CERT_NO as certNo,
-      Case when t.SEX =1 then '男'
-      when t.SEX = 2 then '女'
-      else '未知'
-      end as sexName,
-      t.BIRTHDAY as birthday, d.NAME as nationName, c.CT_NAME as certType,  s.NAME as subjectName,
-      t.ORG_NAME as orgName, t.CERT_ASSIGN as certAssign, t.IP as ip
-    from t_registration t ,t_dict d,t_dict d2, T_CERT_TYPE c, T_SUBJECT s
-    where id_no = #{idno} and CERT_NO = #{certno}
-    and t.NATION = d.DIC_ID
-    and c.CT_ID = t.CT_ID
-    and t.SUBJECT = s.SUBJECT_ID
-    and t.ID_TYPE = d2.DIC_ID
+    SELECT
+      t.reg_id AS id,
+      t.name AS name,
+      t.id_no AS idNo,
+      d2.name AS idTypeName,
+      t.cert_no AS certNo,
+      Case WHEN t.SEX =1 THEN '男'
+      WHEN t.sex = 2 THEN '女'
+      ELSE '未知' END AS sexName,
+      t.birthday AS birthday,
+      d.name AS nationName,
+      c.ct_name AS certType,
+      s.name AS subjectName,
+      t.org_name AS orgName,
+      t.cert_assign AS certAssign,
+      t.ip AS ip
+    FROM
+      t_registration t ,
+      t_dict d,t_dict d2,
+      t_cert_type c,
+      t_subject s
+    where
+      id_no = #{idno}
+      AND cert_no = #{certno}
+      AND t.nation = d.dic_id
+      AND c.ct_id = t.ct_id
+      AND t.subject = s.subject_id
+      AND t.id_type = d2.dic_id
   </select>
 
   <select id="findRegistrationById" resultType="Registration">
-    select t.REG_ID as id, t.ID_NO as idNo, t.CERT_NO as certNo, t.IP as ip
-    from t_registration t where t.reg_id =#{regId}
+    SELECT
+      t.reg_id AS id,
+      t.id_no AS idNo,
+      t.cert_no AS certNo,
+      t.ip AS ip
+    FROM
+      t_registration t
+    WHERE
+      t.reg_id =#{regId}
   </select>
 
    <!-- 查询注册机构注册计划 -->
@@ -110,7 +168,9 @@
                t_org_batch ob
                LEFT JOIN t_province_batch pb ON pb.pb_id = ob.pb_id
                LEFT JOIN t_cert_batch cb on cb.cb_id = ob.cb_id
-           WHERE ob.org_id = #{orgId} AND ob.type = #{type}
+           WHERE
+              ob.org_id = #{orgId}
+              AND ob.type = #{type}
            ORDER BY ob.ob_id DESC
        ) WHERE <![CDATA[ ROWNUM <=1 ]]>
    </select>
@@ -131,7 +191,8 @@
                AND ob.type = #{type}
                AND obt.valid_begin_date <![CDATA[ <= ]]> sysdate
                AND obt.valid_end_date >= sysdate
-               ORDER BY obt.obt_id DESC
+           ORDER BY
+               obt.obt_id DESC
        ) WHERE <![CDATA[ ROWNUM <=1 ]]>
    </select>
 
@@ -140,14 +201,20 @@
        SELECT
            obt.valid_begin_date AS validBeginDate,
            obt.valid_end_date   AS validEndDate
-       FROM t_org_batch_time obt WHERE ob_id=#{orgBatchId} ORDER BY obt.valid_begin_date
+       FROM
+            t_org_batch_time obt
+       WHERE
+            ob_id=#{orgBatchId}
+       ORDER BY
+            obt.valid_begin_date
    </select>
 
 
     <insert id="insertUserPortalLog" parameterType="UserPortalLog">
-        INSERT
-        INTO t_user_portal_log (id, user_id, ip, login, type, browser_info, browser_content)
-        VALUES (s_user_portal_log_id.Nextval, #{userId}, #{ip}, #{login}, #{type}, #{browserName}, #{browserContent})
+        INSERT INTO
+            t_user_portal_log (id, user_id, ip, login, type, browser_info, browser_content)
+        VALUES
+            (s_user_portal_log_id.Nextval, #{userId}, #{ip}, #{login}, #{type}, #{browserName}, #{browserContent})
     </insert>
 
     <select id="findCityInfoByOrgId" resultType="Organization">
@@ -165,17 +232,26 @@
     </select>
 
     <select id="findByProvinceId" resultType="ProvinceBatch">
-            SELECT MAX(pb.pb_id) AS id
-            FROM t_province_batch pb
-            WHERE pb.province = #{provinceId} AND pb.type = 2
-            ORDER BY pb.pb_id DESC
+        SELECT
+            MAX(pb.pb_id) AS id
+        FROM
+            t_province_batch pb
+        WHERE
+            pb.province = #{provinceId}
+            AND pb.type = 2
+        ORDER BY
+            pb.pb_id DESC
     </select>
 
     <select id="findByYear" resultType="CertBatch">
         SELECT
-          cb.cb_id AS id
-        FROM t_cert_batch cb
-        WHERE cb.year = #{year} and cb.type=1 and cb.generate=1
+            cb.cb_id AS id
+        FROM
+            t_cert_batch cb
+        WHERE
+            cb.year = #{year}
+            AND cb.type=1
+            AND cb.generate=1
     </select>
 
     <select id="findOrgCertTypeByOrgId" resultType="OrgCertType">
@@ -185,8 +261,8 @@
             t_org_cert_type oct
         WHERE
             oct.org_id = #{orgId}
-
     </select>
+
     <select id="findLimitationByNameAndIdNo" resultType="Limitation">
         SELECT
             l.due_time AS dueTime,
@@ -196,8 +272,10 @@
         WHERE
             l.name = #{name}
             AND l.id_no = #{idNo}
+            AND l.status= 1
             AND (l.due_time IS NULL OR l.due_time > sysdate)
     </select>
+
     <select id="findByUserYear" resultType="HistoryValid">
         SELECT
             ct.ct_name AS certType
@@ -217,6 +295,7 @@
             AND cb.year = #{year}
             AND hv.delete_status = 0
     </select>
+
     <select id="findByUserCertType" resultType="Score">
         SELECT
             *
@@ -240,6 +319,7 @@
             AND hv.subject = #{subjectId}
             AND hv.delete_status = 0
     </select>
+
     <insert id="insertResume" parameterType="Resume">
         <![CDATA[
         INSERT INTO t_resume (
@@ -252,6 +332,7 @@
         )
         ]]>
     </insert>
+
     <select id="findByUserExamNo" resultType="Score">
         SELECT
             s.sco_id        AS id,
@@ -286,6 +367,7 @@
             AND s.id_no=#{idNo}
             AND s.score_cert_no=#{scoreCertNo}
     </select>
+
     <select id="findByScoreId" resultType="Score">
         SELECT
             *
@@ -294,6 +376,7 @@
         WHERE
             s.sco_id=#{scoreId}
     </select>
+
     <update id="updateScoreStatus" parameterType="Score">
         UPDATE
             t_score
@@ -303,6 +386,7 @@
         WHERE
             sco_id=#{scoreId}
     </update>
+
     <select id="findOrgNameLog" resultType="OrgNameLog">
         SELECT DISTINCT
             onl.org_id      AS orgId ,
@@ -315,6 +399,7 @@
         ORDER BY
             onl.change_date desc
     </select>
+
     <select id="findByOldParentId" resultType="OrgNameLog">
         SELECT DISTINCT
             onl.org_id      AS orgId ,
@@ -352,32 +437,34 @@
             oal.parent_id = #{parentId}
             AND oal.annul_type = 1
     </select>
+
     <select id="findByCertTypeAndEduLevel" resultType="CertTypeLink">
         SELECT
             ctl.ctl_id AS id
         FROM
             t_cert_type_link ctl
         WHERE
-          ctl.ct_id = #{certTypeId} AND ctl.edu_level_id = #{eduLevelId}
+          ctl.ct_id = #{certTypeId}
+          AND ctl.edu_level_id = #{eduLevelId}
     </select>
 
     <select id="findHistoryValidByRegisterId" resultType="HistoryValid">
         SELECT
-        hv.reg_id      AS registerId,
-        hv.id_no       AS idNo,
-        hv.name        AS name,
-        hv.ct_id       AS certTypeId,
-        hv.subject     AS subjectId,
-        hv.cert_no     AS certNo,
-        hv.nation      AS nationId,
-        hv.sex         AS genderId,
-        hv.birthday    AS birthday,
-        hv.cert_assign AS certAssignDate,
-        hv.org_name    AS recognizeOrgName,
-        hv.id_type     AS idTypeId
+            hv.reg_id      AS registerId,
+            hv.id_no       AS idNo,
+            hv.name        AS name,
+            hv.ct_id       AS certTypeId,
+            hv.subject     AS subjectId,
+            hv.cert_no     AS certNo,
+            hv.nation      AS nationId,
+            hv.sex         AS genderId,
+            hv.birthday    AS birthday,
+            hv.cert_assign AS certAssignDate,
+            hv.org_name    AS recognizeOrgName,
+            hv.id_type     AS idTypeId
         FROM
-        t_history_valid hv
+            t_history_valid hv
         WHERE
-        hv.reg_id = #{registerId}
+            hv.reg_id = #{registerId}
     </select>
 </mapper>

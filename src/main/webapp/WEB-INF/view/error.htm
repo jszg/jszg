@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>错误</title>
+    </head>
+    <body>
+        错误: ${error!}<br>
+        <#if detail??>
+            <pre>错误细节:<br>${detail}</pre>
+        </#if>
+    </body>
+</html>

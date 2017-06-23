@@ -51,7 +51,7 @@ public class EnrollmentValidationController {
             return new Result(false, "该机构目前未开展注册工作，请与该机构联系，了解其注册工作的时间安排");
         }
 
-            if (orgBatch.getIsOpen() != null && !orgBatch.getIsOpen()) {
+        if (orgBatch.getIsOpen() != null && !orgBatch.getIsOpen()) {
             return new Result(false, "该机构注册工作目前未安排网上采集信息的时间，请与该机构联系，了解其注册工作的时间安排");
         }
 
@@ -107,7 +107,6 @@ public class EnrollmentValidationController {
         if (!limits.isEmpty() && limits.get(0).getStatus() == SignUpConstants.S_REVIEWED) {
             Limitation limitation = limits.get(0);
             Integer limitationType = limitation.getType();
-
             if (limitationType == null) {
                 return new Result(false, "该证书受到限制，不允许注册");
             } else if (limitationType == SignUpConstants.T_CANCEL1 || limitationType == SignUpConstants.T_CANCEL2) {

@@ -107,6 +107,16 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
+    <!--<bean class="com.xtuer.exception.XHandlerExceptionResolver"/>-->
+    <bean id="compositeExceptionResolver" class="org.springframework.web.servlet.handler.HandlerExceptionResolverComposite">
+        <property name="exceptionResolvers">
+            <list>
+                <bean class="com.xtuer.exception.XHandlerExceptionResolver"/>
+            </list>
+        </property>
+        <property name="order" value="0"/>
+    </bean>
+
     <!-- Freemarker 视图解析器 -->
     <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
         <property name="prefix" value=""/>
