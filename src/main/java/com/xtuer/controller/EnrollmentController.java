@@ -144,6 +144,7 @@ public class EnrollmentController {
         String ip = CommonUtils.getClientIp(request);
         // removeFromIpList
         redisAclService.removeFromIpList(ip);
+        redisTemplate.delete(token);
         return Result.ok(form);
     }
 
