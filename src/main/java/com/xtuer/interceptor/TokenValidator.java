@@ -22,11 +22,11 @@ public class TokenValidator implements HandlerInterceptor {
         if(!"GET".equalsIgnoreCase(request.getMethod())){
             String clientToken = request.getParameter("token");
             if(StringUtils.isEmpty(clientToken) || clientToken.isEmpty()){
-                throw new RuntimeException("信息提交失败，请按照报名流程重新填报");
+                throw new RuntimeException("信息提交失败，请按照报名流程重新填报或者更换其他浏览器(比如谷歌或者火狐)");
             }
             String serverToken = redisTemplate.opsForValue().get(clientToken);
-            if(StringUtils.isEmpty(serverToken) || !clientToken.equals(serverToken)){
-                throw new RuntimeException("信息提交失败，请按照报名流程重新填报");
+            if(StringUtils.isEmpty(serverToken) || !clientToken.trim().equalsIgnoreCase(serverToken.trim())){
+                throw new RuntimeException("信息提交失败，请按照报名流程重新填报或者更换其他浏览器(比如谷歌或者火狐)");
             }
             redisTemplate.delete(serverToken);
         }

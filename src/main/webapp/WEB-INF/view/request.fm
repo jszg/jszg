@@ -10,7 +10,6 @@
     <link href="${static}/css/signup.css" rel="stylesheet" type="text/css">
     <link href="${static}/css/generic.css" rel="stylesheet" type="text/css">
 
-
     <link href="${static}/lib/webuploader/webuploader.css" rel="stylesheet" type="text/css">
     <link href="${static}/lib/ztree/zTreeStyle.css" rel="stylesheet" type="text/css">
     <script src="${static}/lib/jquery.js" charset="utf-8"></script>

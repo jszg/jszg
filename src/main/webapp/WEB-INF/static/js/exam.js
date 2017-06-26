@@ -10,7 +10,7 @@ $(document).ready(function() {
     handleTechnicalJobsDialog();//第七步职业技术职务
     handleChangeEduLevelForDegreeEvent(); //第七步根据最高学历选择最高学位
     handleGraduationCollegesDialog(); // 第七步的最高学历毕业学校
-    //StepUtils.toStep(7); // 到第 N 步，测试使用
+    StepUtils.toStep(7); // 到第 N 步，测试使用
     requestDicts(); // 请求字典数据，初始化省，政治面貌等
 
      // 点击取消按钮关闭弹出对话框
@@ -88,7 +88,9 @@ function initWebUploader() {
             // 是否允许放大，如果想要生成小图的时候不失真，此选项应该设置为false.
             allowMagnify: false,
             // 是否允许裁剪。
-            crop: false
+            crop: false,
+            // 图片质量，只有type为`image/jpeg`的时候才有效。
+            quality: 50
         }
     });
 
@@ -347,11 +349,15 @@ StepValidator.validate7thStep = function(){
     if (-1 === normalMajorId)       { alert('请选择 "专业类别"');        return false; }
     if (-1 === learnTypeId)         { alert('请选择 "学习形式"');        return false; }
     if (!workUnit)                  { alert('请输入 "工作单位"');        return false; }
+    if (workUnit.length>60)         { alert('"工作单位"不能超过60个汉字'); return false; }
     if (-1 === occupations)         { alert('请选择 "现从事职业"');      return false; }
     if (-1 === technicalJobId)      { alert('请选择 "专业技术职务"');    return false; }
     if (!residence)                 { alert('请输入 "户籍所在地"');      return false; }
+    if (residence.length>60)         { alert('"户籍所在地"不能超过60个汉字'); return false; }
     if (!birthPlace)                { alert('请输入 "出生地"');          return false; }
+    if (birthPlace.length>60)         { alert('"出生地"不能超过60个汉字'); return false; }
     if (!address)                   { alert('请输入 "通讯地址"');        return false; }
+    if (address.length>100)         { alert('"通讯地址"不能超过100个汉字'); return false; }
     if (!zipCode)                   { alert('请输入 "通讯地的邮编"');    return false; }
     if (!phone)                     { alert('请输入 "联系电话"');        return false; }
     if (!cellphone)                 { alert('请输入 "手机"');            return false; }
@@ -443,7 +449,7 @@ StepValidator.validate7thStep = function(){
 
     var passed = false;
     var token = UiUtils.getFormData(box7, 'token').name; // token
-    $.rest.create({url: Urls.URI_EXAM_SUBMIT, data: params, urlParams:{token: token}, async: false, success: function(result) {
+    $.rest.create({url: Urls.URI_EXAM_SUBMIT, data: params, urlParams:{token: token}, jsonRequestBody: true, async: false, success: function(result) {
         if (!result.success) {
             alert(result.message); // 弹出错误消息
         } else {

@@ -59,7 +59,19 @@ public class Result<T> {
         return new Result (false, "错误", data);
     }
 
+    public static <T> Result<T> error(String msg, T data) {
+        return new Result (false, msg, data);
+    }
+
     public static Result<String> error() {
         return new Result (false, "错误");
+    }
+
+    public static Result<String> fail(String error, String msg) {
+        return new Result (false, error, msg);
+    }
+
+    public static Result<String> ok(String ok, String msg) {
+        return new Result (true, "成功", msg);
     }
 }

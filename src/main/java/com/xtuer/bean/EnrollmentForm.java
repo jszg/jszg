@@ -87,6 +87,7 @@ public class EnrollmentForm {
     private Integer schoolQualeId; // 现任教学校性质
 
     @NotBlank(message="现任教学校不能为空")
+    @Size(min = 1, max = 60, message="现任教学校不能超过60个汉字")
     private String workUnit; // 现任教学校
 
     @NotBlank(message="现任教学校聘用起始日期不能为空")
@@ -113,12 +114,15 @@ public class EnrollmentForm {
     private Integer technicalJobId; // 教师职务（职称）
 
     @NotBlank(message="出生地不能为空")
+    @Size(min = 1, max = 60, message = "出生地不能超过60个汉字")
     private String birthPlace; // 出生地
 
     @NotBlank(message="户籍所在地不能为空")
+    @Size(min = 1, max = 60, message="户籍所在地不能超过60个汉字")
     private String residence; // 户籍所在地
 
     @NotBlank(message="通讯地址不能为空")
+    @Size(min = 1, max = 100,message="通讯地址不能超过100个汉字")
     private String address; // 通讯地址
 
     @NotBlank(message="通讯地的邮编不能为空")

@@ -15,6 +15,7 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
@@ -51,6 +52,9 @@ public class ExamController {
     @Autowired
     RedisAclService redisAclService;
 
+    @Autowired
+    private StringRedisTemplate redisTemplate;
+
     @Transactional(rollbackFor = Exception.class)
     @PostMapping(UriView.URI_EXAM_SUBMIT)
     @ResponseBody
@@ -84,7 +88,7 @@ public class ExamController {
         try{
             examService.save(form,request);
         }catch (Exception ex) {
-            return Result.error("认定报名保存数据失败!");
+            return Result.error("认定报名保存数据失败!","");
         }
         //[4]修改对应统考记录为已使用
         examService.updateScoreStatus(form);
@@ -93,21 +97,21 @@ public class ExamController {
         try{
             examService.saveResum(form);
         }catch (Exception ex) {
-            return Result.error("认定报名保存简历信息失败!");
+            return Result.error("认定报名保存简历信息失败!","");
         }
 
         // [6] 保存图片
         try{
             examService.saveExamPhoto(form);
         }catch (Exception ex) {
-            return Result.error("认定报名保存图片失败!");
+            return Result.error("认定报名保存图片失败!","");
         }
 
         // [7] 写入日志
         try{
             examService.saveUserLog(form, request);
         }catch (Exception ex) {
-            return Result.error("认定报名写入日志信息失败!");
+            return Result.error("认定报名写入日志信息失败!","");
         }
 
         // [8] remove from ip list

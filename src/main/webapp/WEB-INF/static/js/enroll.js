@@ -16,7 +16,7 @@ $(document).ready(function() {
 
     requestDicts();
 
-    //StepUtils.toStep(7); // 到第 N 步，测试使用
+    StepUtils.toStep(7); // 到第 N 步，测试使用
     // requestLocalSets(21);
 
     // 点击取消按钮关闭弹出对话框
@@ -670,14 +670,18 @@ StepValidator.validate7thStep = function() {
     if (-1 === workUnitTypeId)      { alert('请选择 "任教学校所在地"');   return false; }
     if (-1 === schoolQualeId)       { alert('请选择 "现任教学校性质"');   return false; }
     if (!workUnit)                  { alert('请输入 "现任教学校"');       return false; }
+    if (workUnit.length>60)         { alert('"现任教学校"不能超过60个汉字'); return false; }
     if (!workDate)                  { alert('请输入 "现任教学校聘用起始日期"'); return false; }
     if (-1 === postQualeId)         { alert('请选择 "岗位性质"');        return false; }
     if (-1 === pthLevelId)          { alert('请选择 "普通话水平"');      return false; }
     if (!beginWorkYear)             { alert('请输入 "开始参加工作时间"'); return false; }
     if (-1 === technicalJobId)      { alert('请选择 "教师职务（职称）"'); return false; }
     if (!birthPlace)                { alert('请输入 "出生地"');          return false; }
+    if (birthPlace.length>60)         { alert('"出生地"不能超过60个汉字'); return false; }
     if (!residence)                 { alert('请输入 "户籍所在地"');      return false; }
+    if (residence.length>60)         { alert('"户籍所在地"不能超过60个汉字'); return false; }
     if (!address)                   { alert('请输入 "通讯地址"');        return false; }
+    if (address.length>100)         { alert('"通讯地址"不能超过100个汉字'); return false; }
     if (!zipCode)                   { alert('请输入 "通讯地的邮编"');     return false; }
     if (!phone)                     { alert('请输入 "联系电话"');        return false; }
     if (!cellphone)                 { alert('请输入 "手机"');           return false; }
@@ -745,7 +749,7 @@ StepValidator.validate7thStep = function() {
 
     var passed = false;
     var token = UiUtils.getFormData(box7, 'token').name; // token
-    $.rest.create({url: Urls.URI_ENROLL_SUBMIT, data: params, urlParams:{token: token}, async: false, success: function(result) {
+    $.rest.create({url: Urls.URI_ENROLL_SUBMIT, data: params, urlParams:{token: token}, jsonRequestBody: true, async: false, success: function(result) {
         if (!result.success) {
             alert(result.message); // 弹出错误消息
         } else {

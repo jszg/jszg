@@ -13,6 +13,7 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
@@ -46,6 +47,9 @@ public class RegistrationController {
     @Autowired
     RedisAclService redisAclService;
 
+    @Autowired
+    private StringRedisTemplate redisTemplate;
+
     @Transactional(rollbackFor = Exception.class)
     @PostMapping(UriView.URI_REQUEST_SUBMIT)
     @ResponseBody
@@ -78,26 +82,26 @@ public class RegistrationController {
         try{
             registrationService.save(form);
         }catch (Exception ex) {
-            return Result.error("认定报名保存图片失败!");
+            return Result.error("认定报名失败!","");
         }
         // [4] 保存简历信息
         try{
             registrationService.saveResum(form);
         }catch (Exception ex) {
-            return Result.error("认定报名保存简历信息失败!");
+            return Result.error("认定报名保存简历信息失败!","");
         }
 
         // [5] 保存图片
         try{
             registrationService.saveRequestPhoto(form);
         }catch (Exception ex) {
-            return Result.error("认定报名保存图片失败!");
+            return Result.error("认定报名保存图片失败!","");
         }
         // [6] 写入日志
         try{
             registrationService.saveUserLog(form, request);
         }catch (Exception ex) {
-            return Result.error("认定报名写入日志失败!");
+            return Result.error("认定报名写入日志失败!","");
         }
 
         // [8] remove from ip list

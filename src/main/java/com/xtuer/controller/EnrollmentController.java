@@ -16,6 +16,7 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
@@ -49,6 +50,9 @@ public class EnrollmentController {
 
     @Autowired
     RedisAclService redisAclService;
+
+    @Autowired
+    private StringRedisTemplate redisTemplate;
 
     @Transactional(rollbackFor = Exception.class)
     @PostMapping(UriView.URI_ENROLL_SUBMIT)
@@ -100,7 +104,7 @@ public class EnrollmentController {
             try{
                 enrollmentService.saveWhenInHistory(form);
             } catch (Exception ex) {
-                return Result.error("注册报名失败!");
+                return Result.error("注册报名失败!","");
             }
         }
 
@@ -109,7 +113,7 @@ public class EnrollmentController {
             try{
                 enrollmentService.saveWhenInRegistration(form);
             }catch (Exception ex) {
-                return Result.error("注册报名失败!");
+                return Result.error("注册报名失败!","");
             }
         }
 
@@ -118,7 +122,7 @@ public class EnrollmentController {
             try{
                 enrollmentService.saveWhenNotInHistoryAndInRegistration(form);
             }catch (Exception ex) {
-                return Result.error("注册报名失败!");
+                return Result.error("注册报名失败!","");
             }
         }
 
@@ -126,14 +130,14 @@ public class EnrollmentController {
         try{
             enrollmentService.saveEnrollPhoto(form);
         }catch (Exception ex) {
-            return Result.error("注册报名保存图片失败!");
+            return Result.error("注册报名保存图片失败!","");
         }
 
         // [8] 写入日志
         try{
             enrollmentService.saveUserLog(form, request);
         }catch (Exception ex) {
-            return Result.error("注册报名写入日志失败!");
+            return Result.error("注册报名写入日志失败!","");
         }
 
         // [9] remove from ip list
