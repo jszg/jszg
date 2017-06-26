@@ -10,7 +10,7 @@ $(document).ready(function() {
     handleTechnicalJobsDialog();//第七步职业技术职务
     handleChangeEduLevelForDegreeEvent(); //第七步根据最高学历选择最高学位
     handleGraduationCollegesDialog(); // 第七步的最高学历毕业学校
-    StepUtils.toStep(7); // 到第 N 步，测试使用
+    //StepUtils.toStep(7); // 到第 N 步，测试使用
     requestDicts(); // 请求字典数据，初始化省，政治面貌等
 
      // 点击取消按钮关闭弹出对话框
