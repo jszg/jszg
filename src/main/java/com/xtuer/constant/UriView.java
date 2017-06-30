@@ -6,7 +6,7 @@ public interface UriView {
 
     String REST_CERT_TYPE                  = "/rest/signUp/certTypes";
     String REST_PROVINCES                  = "/rest/signUp/provinces";
-    String REST_CITIES_BY_PROVINCE         = "/rest/signUp/provinces/{provinceId}/cities";
+    String REST_CITIES_BY_PROVINCE        = "/rest/signUp/provinces/{provinceId}/cities";
 
     String REST_ORGS_REQUEST_BY_CERT_TYPE_PROVINCE_CITY   = "/rest/signUp/certTypes/{certTypeId}/adminLevel/{adminLevel}/provinces/{provinceId}/cities/{cityId}/orgs";
     String REST_ORGS_BY_ORGTYPE            = "/rest/signUp/orgtypes/{orgType}/orgs";

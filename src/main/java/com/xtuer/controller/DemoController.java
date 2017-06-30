@@ -80,8 +80,7 @@ public class DemoController {
     @GetMapping(UriView.URI_HELLO)
     public String hello(ModelMap model) {
        model.put("name", "Biao");
-
-        return UriView.VIEW_HELLO;
+       return UriView.VIEW_HELLO;
     }
 
     @GetMapping("/ajax")
