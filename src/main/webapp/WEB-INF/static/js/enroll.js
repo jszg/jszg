@@ -44,6 +44,14 @@ function initWebUploader() {
             // mimeTypes: 'image/*'
             mimeTypes: 'image/jpg,image/jpeg'
         },
+        thumb: { // 对上传的图片进行裁剪处理
+            width: 114,
+            height: 156,
+            // 是否允许放大，如果想要生成小图的时候不失真，此选项应该设置为false.
+            allowMagnify: false,
+            // 是否允许裁剪。
+            crop: true
+        },
         compress: { // 对上传的图片进行裁剪处理
             width: 114,
             height: 156,

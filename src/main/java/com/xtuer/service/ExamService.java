@@ -111,7 +111,11 @@ public class ExamService {
                 if(org.getParent() != 0) {
                     Organization parent = commonMapper.findCityInfoByOrgId(org.getParent());
                     if (parent != null && parent.getOrgType() == SignUpConstants.T_PROVINCE) {//如果为省管县
-                        form.setCityId(org.getParent());
+                        if(parent.isProvinceCity() == true){
+                            form.setCityId(org.getParent());
+                        }else{
+                            form.setCityId(org.getId());
+                        }
                     }else{
                         form.setCityId(org.getId());
                     }

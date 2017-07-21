@@ -84,6 +84,7 @@ public interface UriView {
     String URI_REQUEST_SUBMIT              = "/request/submit";
 
     String URI_EXAM_SUBMIT                 = "/exam/submit";
+    String URI_PICTURE_SUBMIT                 = "/picture/submit";
 
     // 访问控制
     String URI_ACL                  = "/a-JSZG-c-649-l-Enroll"; // 访问控制的页面

@@ -113,6 +113,31 @@ public class EnrollmentService {
             e.printStackTrace();
         }
         reg.setOrgId(form.getRecognizeOrgId());
+        Organization org = commonMapper.findCityInfoByOrgId(form.getRecognizeOrgId());
+        if(org != null){
+            if (org.getOrgType() == SignUpConstants.T_PROVINCE){//如果认定机构选择的是省级机构,所在省为本机构,所在市为空,认定机构为本机构
+                reg.setProvinceId(org.getId());
+                reg.setCityId(null);
+            }else if(org.getOrgType() == SignUpConstants.T_CITY){//如果是市级机构,所在省为省级机构,所在市为本机构,认定机构为本机构
+                reg.setProvinceId(org.getProvinceId());
+                reg.setCityId(org.getId());
+            }else if(org.getOrgType() == SignUpConstants.T_COUNTY){//如果是县级机构
+                reg.setProvinceId(org.getProvinceId());
+                //如果是省管县,所在省为省级机构,市级机构为本机构,认定机构为本机构
+                if(org.getParent() != 0) {
+                    Organization parent = commonMapper.findCityInfoByOrgId(org.getParent());
+                    if (parent != null && parent.getOrgType() == SignUpConstants.T_PROVINCE) {//如果为省管县
+                        if(parent.isProvinceCity() == true){
+                            reg.setCityId(org.getParent());
+                        }else{
+                            reg.setCityId(org.getId());
+                        }
+                    }else{
+                        reg.setCityId(org.getId());
+                    }
+                }
+            }
+        }
         reg.setSubjectId(form.getRegisterSubjectId());
         reg.setName(form.getName());
         reg.setSex(form.getGenderId());

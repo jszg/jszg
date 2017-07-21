@@ -131,6 +131,28 @@ environments {
         }
     }
 
+    wxltestlinux { // wenxl的测试环境，Linux 环境，使用 Oracle
+        staticBase = '/new-cert'
+        logDir = '/usr/local/tomcat9/logs'
+
+        uploadTemp = '/var/www/upload/tmp'
+        uploadEnrollPhotoDir = '/opt/photo/enroll_photo'
+        uploadRegPhotoDir = '/opt/photo/reg_photo'
+
+        jdbc {
+            driverClassName = 'oracle.jdbc.driver.OracleDriver'
+            url = 'jdbc:oracle:thin:@192.168.10.154:1521:ORCL'
+            username = 'certification'
+            password = '123456'
+            validationQuery = 'SELECT 1 FROM dual'
+        }
+
+        redis {
+            host = '192.168.10.154'
+            port = 6379
+        }
+    }
+
     jszgtestlinux { // 北师大的测试环境，Linux 环境，使用 Oracle
         staticBase = '/new-cert'
         logDir = '/usr/local/tomcat8.5.6/logs'

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>中国教师资格网</title>
+
+    <link href="${static}/css/signup.css" rel="stylesheet" type="text/css">
+    <link href="${static}/css/generic.css" rel="stylesheet" type="text/css">
+
+     <link href="${static}/lib/webuploader/webuploader.css" rel="stylesheet" type="text/css">
+     <link href="${static}/lib/ztree/zTreeStyle.css" rel="stylesheet" type="text/css">
+     <script src="${static}/lib/jquery.js" charset="utf-8"></script>
+     <script src="${static}/lib/webuploader/webuploader.js" charset="utf-8"></script>
+     <script src="${static}/lib/ztree/jquery.ztree.core.js" charset="utf-8"></script>
+     <script src="${static}/lib/template.js" charset="utf-8"></script>
+
+    <script src="${static}/lib/jquery.leanModal.min.js" charset="utf-8"></script>
+    <script src="${static}/lib/laydate/laydate.js" charset="utf-8"></script>
+    <script src="${static}/js/utils.js" charset="utf-8"></script>
+    <script src="${static}/js/jquery.rest.js" charset="utf-8"></script>
+    <script src="${static}/js/picture.js" charset="utf-8"></script>
+
+    <!--[if lt IE 9]>
+    <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<!-- 服务器时间 -->
+<span id="server-time" style="display: none">${.now?string('yyyy-MM-dd HH:mm:ss')}</span>
+
+<div class="request">
+<h1>欢迎使用中国教师资格网--教师资格定期注册申报系统</h1>
+<div class="declare">
+    <h2>网上申<br>报流程</h2>
+    <ul>
+        <li class="bz bz1 active" style="z-index: 10" data-step="1"><span>申报第一步</span><br/><span>申报人必读</span></li>
+        <li class="bz bz2" style="z-index: 9" data-step="2"><span>申报第二步</span><br/><span>确认服务条款</span></li>
+        <li class="bz bz3" style="z-index: 8" data-step="3"><span>申报第三步</span><br/><span>填写身份信息</span></li>
+        <li class="bz bz4" style="z-index: 7" data-step="4"><span>申报第四步</span><br/><span>选择注册机构</span></li>
+        <li class="bz bz5" style="z-index: 6" data-step="5"><span>申报第五步</span><br/><span>选择确认点</span></li>
+        <li class="bz bz6" style="z-index: 5" data-step="6"><span>申报第六步</span><br/><span>阅读注意事项</span></li>
+        <li class="bz bz7" style="z-index: 4" data-step="7"><span>申报第七步</span><br/><span>填写申请材料</span></li>
+        <li class="bz bz8" style="z-index: 3" data-step="8"><span>申报第八步</span><br>完成</li>
+    </ul>
+</div>
+<!-- 上传图片 -->
+<div id="box-1">
+    <div class="content_bd">
+          <h4>请填写现阶段工作相关信息：<b class="f_red f_size"> (本栏信息请从左至右逐行填写)</b></h4>
+          <div class="ui-body" id="box-7-conct">
+                <table width="960" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                        <td class="operation">照片</td>
+                        <td>
+                            <span id="photo"><img></span><div id="filePicker">选择照片</div>
+                            <span class="form-data" name="photo" data-id="" data-name="" style="display: none">
+                        </td>
+                        <td colspan="4"><span class="description">申请人近 3 个月内的彩色证件照，淡蓝色、红色或白色背景，无边框；正面照，免冠，无头饰。现场确认时提交的照片与此电子照片同一底版，建议照片宽度为 114 像素，高度为 156 像素。  须按照要求由申请人本人上传，且必须与教师资格定期注册申请表上所贴照片底版相同<br><br><spna style="color:red;font-weight:blod;">注意: 图片格式必须为 <b>jpg</b> 格式</span></span></td>
+                    </tr>
+                    <tr>
+                        <td align="right" class="operation">编号</td>
+                        <td><input id="reg_id" type="text"></td>
+                    </tr>
+                </table>
+          </div>
+    </div>
+</div>
+<div class="action-bar">
+    <a href="javascript:void(0)">
+        <img src="${static}/img/signup/button-submit.gif" alt="下一步" border="0" id="box-7-submit">
+    </a>
+</div>
+</body>
+
+</html>

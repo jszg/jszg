@@ -62,6 +62,9 @@ Urls = {
 
     URI_ENROLL_SUBMIT:       '/new-cert/enroll/submit?token={token}',
     URI_ENROLL_REG_PHOTO:    '/new-cert/enroll/reg-photo/{enrollId}',
+
+    URI_PICTURE_SUBMIT:    '/new-cert/picture/submit?photo={photo}&regId={regId}',
+
     URI_UPLOAD_ENROLL_IMAGE: '/new-cert/enroll/upload-enroll-image',
 
     URI_REQUEST_SUBMIT:              '/new-cert/request/submit?token={token}',

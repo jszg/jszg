@@ -108,7 +108,7 @@ public class RegistrationService {
     }
 
     /**
-     * 保存 Enroll 的图片
+     * 保存 reg 的图片
      * @param form
      */
     public void saveRequestPhoto(RegistrationForm form) {
