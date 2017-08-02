@@ -15,4 +15,5 @@
 
     <mvc:view-controller path="/test/rest-view" view-name="test/rest-view.html"/>
     <mvc:view-controller path="/test/cors" view-name="test/cors.html"/>
+    <mvc:view-controller path="/test/test" view-name="test/test.fm"/>
 </beans>

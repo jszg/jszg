@@ -162,6 +162,7 @@ public class EnrollmentService {
         reg.setTechniqueJobId(form.getTechnicalJobId());
         reg.setWorkUnits(form.getWorkUnit());
         reg.setZipCode(form.getZipCode());
+        reg.setGraduateId(null);
         reg.setExam(SignUpConstants.EXAM_TYPE_NO_EXAM );
         reg.setStatus(30);
         reg.setPrintStatus(0);

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>XSS Test</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <form class="" action="/new-cert/a" method="post">
+        <input type="text" name="name" value="">
+        <button type="submit" name="button">提交</button>
+    </form>
+</body>
+</html>

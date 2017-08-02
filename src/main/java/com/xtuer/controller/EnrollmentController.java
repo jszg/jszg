@@ -57,7 +57,7 @@ public class EnrollmentController {
     @Transactional(rollbackFor = Exception.class)
     @PostMapping(UriView.URI_ENROLL_SUBMIT)
     @ResponseBody
-    public Result<?> submitEnroll(@RequestBody @Valid EnrollmentForm form, BindingResult result, HttpServletRequest request,@RequestParam String token) {
+    public Result<?> submitEnroll(@Valid EnrollmentForm form, BindingResult result, HttpServletRequest request,@RequestParam String token) {
         // [1] 数据验证
         Result<?> r = enrollmentService.validateParams(form, result);
         if (!r.isSuccess()) {

@@ -58,7 +58,7 @@ public class ExamController {
     @Transactional(rollbackFor = Exception.class)
     @PostMapping(UriView.URI_EXAM_SUBMIT)
     @ResponseBody
-    public Result<?> submitRequest(@RequestBody @Valid RegistrationForm form, BindingResult result, HttpServletRequest request, @RequestParam String token) {
+    public Result<?> submitRequest(@Valid RegistrationForm form, BindingResult result, HttpServletRequest request, @RequestParam String token) {
         // [1] 数据验证
         Result<?> r = examService.validateParams(form, result);
         if (!r.isSuccess()) {

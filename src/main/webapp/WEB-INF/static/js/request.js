@@ -476,7 +476,7 @@ StepValidator.validate7thStep = function(){
         email:email,
         password: password1,
         sex:genderId,
-        birthday: birthday,
+        birthDay: birthday,
         eduLevelId: eduLevelId,
         degreeId: degreeId,
         nation:nationId,
@@ -495,7 +495,7 @@ StepValidator.validate7thStep = function(){
         address: address,
         zipCode: zipCode,
         phone: phone,
-        cellphone: cellphone,
+        cellPhone: cellphone,
         workUnits: workUnit,
         normalMajor: normalMajorId,
         pthCertNo: pthCertNo,
@@ -507,7 +507,7 @@ StepValidator.validate7thStep = function(){
 
     var passed = false;
     var token = UiUtils.getFormData(box7, 'token').name; // token
-    $.rest.create({url: Urls.URI_REQUEST_SUBMIT, data: params, urlParams:{token: token}, jsonRequestBody: true, async: false, success: function(result) {
+    $.rest.create({url: Urls.URI_REQUEST_SUBMIT, data: params, urlParams:{token: token}, jsonRequestBody: false, async: false, success: function(result) {
         if (!result.success) {
             alert(result.message);// 弹出错误消息
         } else {

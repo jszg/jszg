@@ -18,6 +18,16 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
+    <!-- 防止 XSS 攻击 -->
+    <filter>
+        <filter-name>XSSFilter</filter-name>
+        <filter-class>com.cj.xss.XSSFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>XSSFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <!-- 浏览器的 form 不支持 put, delete 等 method, 由该 filter 将 /blog?_method=delete 转换为标准的 http delete 方法 -->
     <filter>
         <filter-name>HiddenHttpMethodFilter</filter-name>
@@ -43,16 +53,6 @@
     </filter>
     <filter-mapping>
         <filter-name>characterEncodingFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-
-    <!-- 防止 XSS 攻击 -->
-    <filter>
-        <filter-name>XSSFilter</filter-name>
-        <filter-class>com.cj.xss.XSSFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>XSSFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
 

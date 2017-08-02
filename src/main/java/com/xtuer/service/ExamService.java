@@ -134,7 +134,6 @@ public class ExamService {
         form.setExam(form.getExam());
         form.setPassword(form.getPassword()); // 使用 MD5 编码密码
         form.setScoreCertNo(form.getScoreCertNo());
-        System.out.println(form.getScoreCertNo());
         registrationMapper.insertRequestReg(form);
     }
 

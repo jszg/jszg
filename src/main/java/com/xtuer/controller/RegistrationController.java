@@ -53,17 +53,19 @@ public class RegistrationController {
     @Transactional(rollbackFor = Exception.class)
     @PostMapping(UriView.URI_REQUEST_SUBMIT)
     @ResponseBody
-    public Result<?> submitRequest(@RequestBody @Valid RegistrationForm form, BindingResult result, HttpServletRequest request,@RequestParam String token) {
+    public Result<?> submitRequest(@Valid RegistrationForm form, BindingResult result, HttpServletRequest request,@RequestParam String token) {
         // [1] 数据验证
         Result<?> r = registrationService.validateParams(form, result);
         if (!r.isSuccess()) {
             return r;
         }
+        System.out.println(request.getParameter("name"));
         //验证certbatch idNo name 联合唯一
         List<RegistrationForm> regList = registrationMapper.findByCbIdAndIdNoAndName(form.getName(),form.getIdNo(),form.getCertBatchId());
         if(!regList.isEmpty()){
             return new Result(false, "同一批次下已经存在相同的名称和证件号的记录");
         }
+        System.out.println(form.getName());
         // [2] 设置固定信息
         form.setApplyTime(new Date());
         form.setDeleteStatus(SignUpConstants.DELETE_STATUS_NORMAL);// 正常

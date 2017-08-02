@@ -380,6 +380,35 @@ StepValidator.validate3thStep = function() {
         return false;
     }
 
+    if (idType.name == '身份证' && !IdCard.validate(idNo)) {//证件类型为身份证时校验
+        alert('请输入有效的身份证号码');
+        return false;
+    }
+
+    if(!idNo){
+        alert('身份证件号码不能为空!');
+        return false;
+    }else{
+          //判断是否输入有全角
+         for (var i = idNo.length-1; i >= 0; i--){
+    　　　　var unicode=idNo.charCodeAt(i);
+    　　    if (idType.name == '身份证' && unicode>65280 && unicode<65375){
+    　　　　　　alert("输入全角字符'"+$idNo[i]+"',身份证件号码不能输入'全角字符'!");
+                return false;
+    　　　　}
+    　　}
+    }
+
+     if(idType.name == '身份证' && idNo.length != 18){
+        alert('身份证件号码必须为18位!');
+        return false;
+     }
+     var par=/^[0-9]*$/;
+     if(idType.name == '身份证' && !par.test(idNo.substring(0,17))){
+         alert('身份证件号码前17位必须为数字!');
+         return false;
+     }
+
     if (!CertNo.validate(certNo)) {
         return false;
     }

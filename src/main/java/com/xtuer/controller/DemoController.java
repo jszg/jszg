@@ -124,4 +124,11 @@ public class DemoController {
 
         return Result.ok(form);
     }
+
+    @PostMapping("/a")
+    @ResponseBody
+    public String postA(@RequestParam String name) {
+        System.out.println(name);
+        return name;
+    }
 }

@@ -30,21 +30,21 @@
             delete_status,      org_name,                   province_id,                occupation,
             ip,                 city_id,                    enroll_pro_batch_id,        reg_id,
             birthday,           ct_id,                      id_type,                    status_memo,
-            print_status
+            print_status,       graduate_id
         )
         VALUES (
             #{idNo},            #{certNo},                  #{certAssignDate},          #{certBatchId,jdbcType=INTEGER},
             #{orgId},           #{subjectId},               #{name},                    #{sex},
             #{nation},          #{address},                 #{birthPlace},              #{cellPhone},
             #{degreeId},        #{eduLevelId},              #{email},                   #{password},
-            #{graduateSchool},  #{graduateSchoolName},       #{graduaTimeDate},          #{learnType},
+            #{graduateSchool},  #{graduateSchoolName},      #{graduaTimeDate},          #{learnType},
             #{majorId},         #{normalMajor},             #{phone},                   #{political},
             #{pthevelId},       #{residence},               #{techniqueJobId},          #{workUnits},
             #{zipCode},         #{exam},                    #{status},                  #{dataFrom},
             #{deleteStatus},    #{orgName},                 #{provinceId},              #{occupation},
             #{ip},              #{cityId,jdbcType=INTEGER}, #{enrollProBatchId},        #{regId},
             #{birthdayDate},    #{certType},                #{idType},                  #{statusMemo},
-            #{printStatus}
+            #{printStatus},     #{graduateId,jdbcType=INTEGER}
         )
         ]]>
     </insert>
